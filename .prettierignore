@@ -6,10 +6,7 @@
 .DS_Store
 .eslintignore
 *.png
-*.jpg
-*.webp
 *.toml
-*.py
 docker
 .editorconfig
 Dockerfile*
@@ -19,7 +16,4 @@ LICENSE
 .eslintcache
 *.lock
 yarn-error.log
-.idea
-.husky
-.npmrc
-.env.local
+/package.json

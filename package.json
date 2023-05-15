@@ -1,65 +1,66 @@
 {
-  "name": "canisminor-template",
-  "version": "1.0.1",
-  "private": true,
+  "name": "lobe-commit",
+  "version": "1.0.0",
+  "type": "module",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/canisminor1990/canisminor-template.git"
+    "url": "https://github.com/canisminor1990/lobe-commit.git"
   },
   "author": "canisminor1990 <i@canisminor.cc>",
+  "files": [
+    "dist"
+  ],
+  "bin": "dist/cli.js",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
-    "build": "umi build",
-    "dev": "umi dev",
-    "postinstall": "umi setup",
-    "lint": "eslint \"{src,javascript}/**/*.{js,jsx,ts,tsx}\" --fix",
+    "start": "node ./dist/cli.js",
+    "dev": "pkgroll --watch",
+    "build": "pkgroll --minify",
+    "lint": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx",
     "prepare": "husky install",
     "prettier": "prettier -c --write \"**/**\"",
     "release": "semantic-release",
-    "setup": "umi setup",
-    "start": "npm run dev",
-    "stylelint": "stylelint \"src/**/*.{css,less,js,jsx,ts,tsx}\" --fix",
     "test": "npm run lint",
     "type-check": "tsc -p tsconfig-check.json"
   },
   "lint-staged": {
-    "*.{css,less}": [
-      "stylelint --fix",
-      "prettier --write"
-    ],
     "*.{md,json}": [
       "prettier --write --no-error-on-unmatched-pattern"
     ],
     "*.{js,jsx}": [
-      "stylelint --fix",
       "eslint --fix",
       "prettier --write"
     ],
     "*.{ts,tsx}": [
-      "stylelint --fix",
       "eslint --fix",
       "prettier --parser=typescript --write"
     ]
   },
   "dependencies": {
-    "@ant-design/icons": "^5",
+    "@inkjs/ui": "^1",
     "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "@types/styled-components": "^5",
-    "@umijs/lint": "^4",
-    "ahooks": "^3",
-    "antd": "^5",
-    "antd-style": "^3",
-    "babel-plugin-styled-components": "^2",
+    "chalk": "^5.2.0",
+    "cliui": "^8.0.1",
+    "conf": "^11.0.1",
+    "ink": "^4",
+    "meow": "^12",
+    "path-exists": "^5.0.0",
     "polished": "^4",
     "react": "^18",
-    "react-dom": "^18",
-    "styled-components": "^5",
-    "umi": "^4",
+    "update-notifier": "^6.0.2",
     "zustand": "^4"
   },
   "devDependencies": {
     "@commitlint/cli": "^17",
     "@types/node": "^18",
+    "@umijs/lint": "^4",
     "commitlint": "^17",
     "commitlint-config-gitmoji": "^2",
     "eslint": "^8",
@@ -67,17 +68,13 @@
     "eslint-import-resolver-typescript": "^3",
     "husky": "^8",
     "lint-staged": "^13",
-    "postcss-less": "^6",
-    "postcss-styled-syntax": "^0.4",
+    "pkgroll": "^1",
     "prettier": "^2",
     "prettier-plugin-organize-imports": "^3",
     "prettier-plugin-packagejson": "^2",
+    "prop-types": "^15",
     "semantic-release": "^21",
     "semantic-release-config-gitmoji": "^1",
-    "stylelint": "^15",
-    "stylelint-config-clean-order": "^5",
-    "stylelint-config-recommended": "^12",
-    "stylelint-order": "^6",
     "typescript": "^5"
   }
 }

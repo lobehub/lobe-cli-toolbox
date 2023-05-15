@@ -1,0 +1,90 @@
+[
+  {
+    "emoji": "✨",
+    "entity": "&#x2728;",
+    "code": ":sparkles:",
+    "description": "feat: introduce new features | 添加新功能",
+    "name": "sparkles",
+    "semver": "minor"
+  },
+  {
+    "emoji": "🐛",
+    "entity": "&#x1f41b;",
+    "code": ":bug:",
+    "description": "fix: a bug | 修复 bug",
+    "name": "bug",
+    "semver": "patch"
+  },
+  {
+    "emoji": "🔧",
+    "entity": "&#x1f527;",
+    "code": ":wrench:",
+    "description": "chore: add or update configuration files | 修改配置文件",
+    "name": "wrench",
+    "semver": "patch"
+  },
+  {
+    "emoji": "💄",
+    "entity": "&#ff99cc;",
+    "code": ":lipstick:",
+    "description": "style: add or update the ui and style files | 更新 UI 和样式文件",
+    "name": "lipstick",
+    "semver": "patch"
+  },
+  {
+    "emoji": "🏗️",
+    "entity": "&#1f3d7;",
+    "code": ":building_construction:",
+    "description": "refactor: refactor code | 重构代码",
+    "name": "building-construction",
+    "semver": null
+  },
+  {
+    "emoji": "⚡️",
+    "entity": "&#x26a1;",
+    "code": ":zap:",
+    "description": "perf: improve performance | 提升性能",
+    "name": "zap",
+    "semver": "patch"
+  },
+  {
+    "emoji": "✅",
+    "entity": "&#x2705;",
+    "code": ":white_check_mark:",
+    "description": "test: add or update tests | 增加测试",
+    "name": "white-check-mark",
+    "semver": null
+  },
+  {
+    "emoji": "📝",
+    "entity": "&#x1f4dd;",
+    "code": ":memo:",
+    "description": "docs: add or update documentation | 撰写文档",
+    "name": "memo",
+    "semver": null
+  },
+  {
+    "emoji": "🚧",
+    "entity": "&#x1f6a7;",
+    "code": ":construction:",
+    "description": "wip: work in progress | 进行中",
+    "name": "construction",
+    "semver": null
+  },
+  {
+    "emoji": "📦️",
+    "entity": "&#1f4e6;",
+    "code": ":package:",
+    "description": "build: add or update compiled files or packages | 更新编译的文件或包",
+    "name": "package",
+    "semver": "patch"
+  },
+  {
+    "emoji": "💥",
+    "entity": "&#x1f4a5;",
+    "code": ":boom:",
+    "description": "BREAKING CHANGE: breaking change | 破坏性变更",
+    "name": "boom",
+    "semver": "major"
+  }
+]
