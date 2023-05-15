@@ -1,11 +1,19 @@
 {
+  "extends": "@sindresorhus/tsconfig",
+  "include": ["src", "*.ts"],
   "compilerOptions": {
     "target": "ES2020",
     "module": "Node16",
+    "declaration": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
     "strict": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "resolveJsonModule": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "include": ["src"],
+    "outDir": "dist"
   }
 }
