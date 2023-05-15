@@ -1,21 +1,25 @@
 import { Box, Text } from 'ink';
-import React from 'react';
-import gitmojis from '../../constants/gitmojis-lite';
+import React, { Fragment } from 'react';
+import gitmojis from '../../constants/gitmojis';
 
 const List: React.FC = () => (
   <>
     {gitmojis.map((item) => (
-      <Box key={item.name}>
-        <Box>
-          <Text>{item.emoji}</Text>
-          <Text>{Array.from({ length: item.emoji.length + 1 }).join('1')}</Text>
+      <Fragment key={item.name}>
+        <Box marginBottom={1}>
+          <Box marginRight={1} width={20}>
+            <Text backgroundColor="#000" color="#fff">
+              {` ${item.emoji} ${item.type} `}
+            </Text>
+          </Box>
+          <Box marginRight={1} width={40}>
+            <Text color="#999">{`- ${item.descEN}`}</Text>
+          </Box>
+          <Box>
+            <Text color="#999">{item.descCN}</Text>
+          </Box>
         </Box>
-
-        <Box width={16}>
-          <Text>{item.description.split(': ')[0]}</Text>
-        </Box>
-        <Text>{item.description.split(': ')[1]}</Text>
-      </Box>
+      </Fragment>
     ))}
   </>
 );

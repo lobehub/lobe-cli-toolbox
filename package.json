@@ -22,7 +22,7 @@
   "scripts": {
     "start": "node ./dist/cli.js",
     "dev": "pkgroll --watch",
-    "build": "pkgroll --minify",
+    "build": "pkgroll --minify && node .\\scripts\\addShebangs.cjs\n",
     "lint": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx,.cjs",
     "prepare": "husky install",
     "prettier": "prettier -c --write \"**/**\"",
@@ -50,6 +50,7 @@
     "cliui": "^8.0.1",
     "conf": "^11.0.1",
     "ink": "^3",
+    "ink-select-input": "^5.0.0",
     "meow": "^12",
     "path-exists": "^5.0.0",
     "polished": "^4",
