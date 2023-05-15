@@ -60,7 +60,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17",
     "@sindresorhus/tsconfig": "^3.0.1",
-    "@types/node": "^18",
+    "@types/node": "^20",
     "@umijs/lint": "^4",
     "commitlint": "^17",
     "commitlint-config-gitmoji": "^2",
