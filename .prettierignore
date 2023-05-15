@@ -17,3 +17,7 @@ LICENSE
 *.lock
 yarn-error.log
 /package.json
+.husky
+.idea
+.npmrc
+public/*

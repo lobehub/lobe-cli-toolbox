@@ -23,7 +23,7 @@
     "start": "node ./dist/cli.js",
     "dev": "pkgroll --watch",
     "build": "pkgroll --minify",
-    "lint": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx",
+    "lint": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx,.cjs",
     "prepare": "husky install",
     "prettier": "prettier -c --write \"**/**\"",
     "release": "semantic-release",
@@ -34,7 +34,7 @@
     "*.{md,json}": [
       "prettier --write --no-error-on-unmatched-pattern"
     ],
-    "*.{js,jsx}": [
+    "*.{js,jsx,cjs}": [
       "eslint --fix",
       "prettier --write"
     ],
