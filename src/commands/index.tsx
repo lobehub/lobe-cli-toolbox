@@ -1,6 +1,8 @@
 import { Text } from 'ink';
 import React from 'react';
 import Commit from './Commit';
+import HookCreate from './Hook/HookCreate';
+import HookRemove from './Hook/HookRemove';
 import List from './List';
 import Update from './Update';
 interface AppProps {
@@ -23,9 +25,9 @@ const App: React.FC<AppProps> = (props) => {
   } else if (props.config) {
     return <Text>config</Text>;
   } else if (props.init) {
-    return <Text>init</Text>;
+    return <HookCreate />;
   } else if (props.remove) {
-    return <Text>remove</Text>;
+    return <HookRemove />;
   } else if (props.update) {
     return <Update />;
   } else if (props.version) {
