@@ -2,17 +2,12 @@ import { TextInput } from '@inkjs/ui';
 import { Box, Text } from 'ink';
 import SelectInput from 'ink-select-input';
 import React, { useMemo, useState } from 'react';
+import { Tabs } from '../../components';
+import configStore from '../../constants/config.js';
 import gitmojis from '../../constants/gitmojis';
-import Header from './Header';
+import genCommitMessage from '../../utils/genCommitMessage';
 import RunGitCommit from './RunGitCommit';
-import { genMessage } from './utlis';
-
-const steps: any = [
-  { step: 0, title: 'Select commit type' },
-  { step: 1, title: 'Input commit scope (optional)' },
-  { step: 2, title: 'Input commit subject' },
-  { step: 3, title: 'Link issues (optional)' },
-];
+import StepHeader from './StepHeader';
 
 interface CommitProps {
   hook?: boolean;
@@ -25,13 +20,17 @@ const Commit: React.FC<CommitProps> = ({ hook }) => {
   const [scope, setScope] = useState<string>('');
   const [subject, setSubject] = useState<string>('');
   const [issues, setIssues] = useState<string>('');
+
+  const emojiFormatConfig = configStore.get('emojiFormat');
+
+  const commitMessage = genCommitMessage({ type, scope, subject, issues });
   const handleSelect = (item: any) => {
     if (!item) return;
     setType(item.value);
     setStep(1);
   };
 
-  const types = useMemo(() => {
+  const types: any[] = useMemo(() => {
     let data = gitmojis;
     if (typeKeywords) {
       data = data.filter((item) => item.type.includes(typeKeywords));
@@ -45,18 +44,20 @@ const Commit: React.FC<CommitProps> = ({ hook }) => {
           <Text color="#999">{` - ${item.descEN}`}</Text>
         </>
       ),
-      value: `${item.emoji} ${item.type}`,
+      value: `${emojiFormatConfig ? item.emoji : item.code} ${item.type}`,
     }));
   }, [typeKeywords]);
 
-  if (step === 4)
-    return <RunGitCommit hook={hook} message={genMessage({ type, scope, subject, issues })} />;
-
-  return (
-    <>
-      <Header step={step} steps={steps} />
-      {step === 0 && <SelectInput items={types} onSelect={handleSelect} />}
-      {step === 1 && (
+  const steps: any = [
+    {
+      key: 0,
+      title: 'Select commit type',
+      children: <SelectInput items={types} onSelect={handleSelect} />,
+    },
+    {
+      key: 1,
+      title: 'Input commit scope (optional)',
+      children: (
         <Box>
           <Text color="blue">❯ </Text>
           <TextInput
@@ -65,8 +66,12 @@ const Commit: React.FC<CommitProps> = ({ hook }) => {
             onSubmit={() => setStep(2)}
           />
         </Box>
-      )}
-      {step === 2 && (
+      ),
+    },
+    {
+      key: 2,
+      title: 'Input commit subject',
+      children: (
         <Box>
           <Text color="blue">❯ </Text>
           <TextInput
@@ -75,8 +80,12 @@ const Commit: React.FC<CommitProps> = ({ hook }) => {
             onSubmit={() => setStep(3)}
           />
         </Box>
-      )}
-      {step === 3 && (
+      ),
+    },
+    {
+      key: 3,
+      title: 'Link issues (optional)',
+      children: (
         <Box>
           <Text color="blue">❯ </Text>
           <TextInput
@@ -85,13 +94,22 @@ const Commit: React.FC<CommitProps> = ({ hook }) => {
             onSubmit={() => setStep(4)}
           />
         </Box>
-      )}
+      ),
+    },
+  ];
+
+  if (step === 4) return <RunGitCommit hook={hook} message={commitMessage} />;
+
+  return (
+    <>
+      <StepHeader step={step} steps={steps} />
+      <Tabs items={steps} activeKey={step} />
       <Box borderStyle="round" borderColor="#333">
         <Text> </Text>
         {step === 0 ? (
           <TextInput placeholder="Search commit <type>..." onChange={setTpeKeywords} />
         ) : (
-          <Text>{genMessage({ type, scope, subject, issues })}</Text>
+          <Text>{commitMessage}</Text>
         )}
       </Box>
     </>

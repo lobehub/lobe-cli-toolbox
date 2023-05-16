@@ -1,5 +1,5 @@
 import pangu from 'pangu';
-export const genMessage = ({
+export default ({
   type,
   scope,
   subject,

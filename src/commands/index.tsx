@@ -1,6 +1,6 @@
-import { Text } from 'ink';
 import React from 'react';
 import Commit from './Commit';
+import Config from './Config';
 import HookCreate from './Hook/HookCreate';
 import HookRemove from './Hook/HookRemove';
 import List from './List';
@@ -23,7 +23,7 @@ const App: React.FC<AppProps> = (props) => {
   } else if (props.commit) {
     return <Commit />;
   } else if (props.config) {
-    return <Text>config</Text>;
+    return <Config />;
   } else if (props.init) {
     return <HookCreate />;
   } else if (props.remove) {

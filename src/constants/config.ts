@@ -1,18 +1,17 @@
 import Conf from 'conf';
 
 const schema = {
-  autoAdd: {
-    type: 'boolean',
-    default: true,
-  },
   emojiFormat: {
     type: 'boolean',
     default: true,
   },
-  gitmojisUrl: {
+  openaiToken: {
     type: 'string',
-    format: 'url',
-    default: 'https://lobehub.com',
+    default: '',
+  },
+  githubToken: {
+    type: 'string',
+    default: '',
   },
 };
 

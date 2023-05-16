@@ -65,6 +65,7 @@
     "@commitlint/cli": "^17",
     "@sindresorhus/tsconfig": "^3",
     "@types/node": "^20",
+    "@types/pangu": "^4.0.0",
     "@umijs/lint": "^4",
     "commitlint": "^17",
     "commitlint-config-gitmoji": "^2",
