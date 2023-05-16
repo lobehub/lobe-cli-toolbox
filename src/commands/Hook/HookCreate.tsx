@@ -7,7 +7,7 @@ export const HOOK = {
   PERMISSIONS: 0o775,
   FILENAME: 'prepare-commit-msg',
   CONTENTS:
-    '#!/usr/bin/env bash\n# lobe-commit as a commit hook\n' +
+    '#!/usr/bin/env sh\n# lobe-commit as a commit hook\n' +
     'if npx -v >&/dev/null\n' +
     'then\n' +
     '  exec < /dev/tty\n  npx -c "lobe-commit --hook $1 $2"\n' +
@@ -26,7 +26,7 @@ const Header: React.FC = () => {
     }, []);
     if (loading) return <Spinner label=" Loading..." />;
     return <Alert variant="success">{` Lobe-commit hook created successfully!`}</Alert>;
-  } catch (e) {
+  } catch (error: any) {
     return <Alert variant="error">{` ${error.message}`}</Alert>;
   }
 };
