@@ -54,7 +54,7 @@
     "execa": "^7",
     "gitconfig": "^2",
     "github-api": "^3",
-    "ink": "^3",
+    "ink": "^4",
     "ink-select-input": "^5",
     "isomorphic-fetch": "^3",
     "meow": "^12",
