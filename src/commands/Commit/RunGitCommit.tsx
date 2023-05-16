@@ -30,7 +30,7 @@ const RunGitCommit: React.FC<RunGitCommitProps> = ({ hook, message }) => {
     if (loading) return <Spinner label=" Committing..." />;
     if (err) return <Alert variant="error">{` ${err}`}</Alert>;
     return <Alert variant="success">{` Successfully committed!`}</Alert>;
-  } catch (e) {
+  } catch (error: any) {
     return <Alert variant="error">{` ${error.message}`}</Alert>;
   }
 };

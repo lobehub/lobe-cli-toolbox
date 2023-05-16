@@ -1,9 +1,10 @@
 import cliui from 'cliui';
+import { IFlags } from '../constants/flags.js';
 
-export default (flagsConst) => {
+export default (flagsConst: IFlags) => {
   // @ts-ignore
   const ui = cliui();
-  const flags = {};
+  const flags: any = {};
   const options = Object.entries(flagsConst)
     .map((item) => {
       if (!item[1].desc) return '';

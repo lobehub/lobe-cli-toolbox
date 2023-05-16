@@ -1,11 +1,11 @@
 import { Box, Text } from 'ink';
 import React from 'react';
 
-interface HeaderProps {
+interface StepHeaderProps {
   step: number;
   steps: any[];
 }
-const Header: React.FC<HeaderProps> = ({ step, steps }) => {
+const StepHeader: React.FC<StepHeaderProps> = ({ step, steps }) => {
   return (
     <Box justifyContent="center" borderStyle="round" borderColor="#333">
       <Text color="#000" backgroundColor="#fff">
@@ -17,4 +17,4 @@ const Header: React.FC<HeaderProps> = ({ step, steps }) => {
   );
 };
 
-export default React.memo(Header);
+export default React.memo(StepHeader);

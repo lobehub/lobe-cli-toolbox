@@ -1,4 +1,4 @@
-interface IFlags {
+export interface IFlags {
   [flag: string]: {
     type: 'boolean' | 'string';
     shortFlag?: string;

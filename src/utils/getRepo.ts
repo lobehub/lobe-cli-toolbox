@@ -9,7 +9,7 @@ export default async () => {
 
     const repoUrl = config.remote.origin.url;
 
-    const match = gitHubRepoRegEx.exec(repoUrl);
+    const match: any = gitHubRepoRegEx.exec(repoUrl);
 
     const [owner, repoName] = match.slice(3);
 
