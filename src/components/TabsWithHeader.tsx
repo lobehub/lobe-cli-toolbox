@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Header } from './index';
+import Header from './Header';
 
 export interface TabsWithHeaderItem {
   title: string;

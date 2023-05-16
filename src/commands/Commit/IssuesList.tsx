@@ -32,10 +32,12 @@ const IssuesList: React.FC<IssuesListProps> = ({ onChange, onSubmit }) => {
       <MultiSelect options={items} onChange={(v) => onChange(v.join(','))} onSubmit={onSubmit} />
     );
   return (
-    <Box>
-      <Text color="blue">❯ </Text>
-      <TextInput placeholder="Input linked <issues>..." onChange={onChange} onSubmit={onSubmit} />
-    </Box>
+    <>
+      <Box>
+        <Text color="blue">❯ </Text>
+        <TextInput placeholder="Input linked <issues>..." onChange={onChange} onSubmit={onSubmit} />
+      </Box>
+    </>
   );
 };
 

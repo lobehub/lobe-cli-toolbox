@@ -8,6 +8,7 @@ export interface IFlags {
 
 const FLAGS: IFlags = {
   commit: { type: 'boolean', shortFlag: 'c', desc: 'Interactively commit using the prompts' },
+  ai: { type: 'boolean', shortFlag: 'a', desc: 'Generate prompts by ChatGPT' },
   config: { type: 'boolean', shortFlag: 'o', desc: 'Setup lobe-commit preferences' },
   help: { type: 'boolean', shortFlag: 'h', desc: 'Print basic options' },
   init: { type: 'boolean', shortFlag: 'i', desc: 'Initialize lobe-commit as a commit hook' },

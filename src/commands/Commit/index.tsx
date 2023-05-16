@@ -6,6 +6,7 @@ import { Tabs } from '../../components';
 import configStore from '../../constants/config.js';
 import gitmojis from '../../constants/gitmojis';
 import genCommitMessage from '../../utils/genCommitMessage';
+import AiCommit from './AiCommit.js';
 import IssuesList from './IssuesList';
 import RunGitCommit from './RunGitCommit';
 import StepHeader from './StepHeader';
@@ -27,8 +28,12 @@ const Commit: React.FC<CommitProps> = ({ hook }) => {
   const commitMessage = genCommitMessage({ type, scope, subject, issues });
   const handleSelect = (item: any) => {
     if (!item) return;
-    setType(item.value);
-    setStep(1);
+    if (item.value === 'ai') {
+      setStep(100);
+    } else {
+      setType(item.value);
+      setStep(1);
+    }
   };
 
   const types: any[] = useMemo(() => {
@@ -36,7 +41,7 @@ const Commit: React.FC<CommitProps> = ({ hook }) => {
     if (typeKeywords) {
       data = data.filter((item) => item.type.includes(typeKeywords));
     }
-    return data.map((item) => ({
+    let selection = data.map((item) => ({
       label: (
         <>
           <Text backgroundColor="#000" color="#fff">
@@ -47,6 +52,22 @@ const Commit: React.FC<CommitProps> = ({ hook }) => {
       ),
       value: `${emojiFormatConfig ? item.emoji : item.code} ${item.type}`,
     }));
+
+    selection = [
+      {
+        label: (
+          <>
+            <Text backgroundColor="#000" color="#fff">
+              {' 🤯 Use AI Commit '}
+            </Text>
+            <Text color="#999">{` - generate commit message by ChatGPT`}</Text>
+          </>
+        ),
+        value: 'ai',
+      },
+      ...selection,
+    ];
+    return selection;
   }, [typeKeywords]);
 
   const steps: any = [
@@ -90,6 +111,7 @@ const Commit: React.FC<CommitProps> = ({ hook }) => {
     },
   ];
 
+  if (step === 100) return <AiCommit hook={hook} />;
   if (step === 4) return <RunGitCommit hook={hook} message={commitMessage} />;
 
   return (

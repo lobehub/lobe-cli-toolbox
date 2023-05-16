@@ -1,4 +1,5 @@
 import React from 'react';
+import Ai from './Ai';
 import Commit from './Commit';
 import Config from './Config';
 import HookCreate from './Hook/HookCreate';
@@ -15,6 +16,7 @@ interface AppProps {
   update: boolean;
   version: boolean;
   hook: boolean;
+  ai: boolean;
 }
 
 const App: React.FC<AppProps> = (props) => {
@@ -34,6 +36,8 @@ const App: React.FC<AppProps> = (props) => {
     return null;
   } else if (props.hook) {
     return <Commit hook />;
+  } else if (props.ai) {
+    return <Ai />;
   }
   return <Commit />;
 };
