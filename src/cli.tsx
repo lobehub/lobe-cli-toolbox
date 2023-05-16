@@ -6,6 +6,10 @@ import packageJson from '../package.json';
 import App from './commands';
 import FLAGS_CONST from './constants/flags';
 import createMeowSetting from './utils/createMeowSetting';
+import getRepo from './utils/getRepo.js';
+
+const data = getRepo();
+console.log(JSON.stringify(data));
 
 const notifier = updateNotifier({ pkg: packageJson });
 

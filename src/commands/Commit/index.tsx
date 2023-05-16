@@ -55,11 +55,7 @@ const Commit: React.FC<CommitProps> = ({ hook }) => {
   return (
     <>
       <Header step={step} steps={steps} />
-      {step === 0 && (
-        <>
-          <SelectInput items={types} onSelect={handleSelect} />
-        </>
-      )}
+      {step === 0 && <SelectInput items={types} onSelect={handleSelect} />}
       {step === 1 && (
         <Box>
           <Text color="blue">❯ </Text>
