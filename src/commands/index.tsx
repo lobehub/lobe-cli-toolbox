@@ -36,7 +36,7 @@ const App: React.FC<AppProps> = (props) => {
   if (props.version) {
     return null;
   }
-  return <Text>888</Text>;
+  return <Commit />;
 };
 
 export default App;

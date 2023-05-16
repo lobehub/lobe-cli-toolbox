@@ -6,7 +6,7 @@ const List: React.FC = () => (
   <>
     {gitmojis.map((item) => (
       <Fragment key={item.name}>
-        <Box marginBottom={1}>
+        <Box>
           <Box marginRight={1} width={20}>
             <Text backgroundColor="#000" color="#fff">
               {` ${item.emoji} ${item.type} `}
@@ -24,4 +24,4 @@ const List: React.FC = () => (
   </>
 );
 
-export default List;
+export default React.memo(List);
