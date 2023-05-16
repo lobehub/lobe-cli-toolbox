@@ -1,5 +1,11 @@
 # Changelog
 
+# [1.2.0](https://github.com/canisminor1990/lobe-commit/compare/v1.1.0...v1.2.0) (2023-05-16)
+
+### ✨ Features
+
+- **ai**: add ChatGPT-generated commit message ([7383ca4](https://github.com/canisminor1990/lobe-commit/commit/7383ca4))
+
 # [1.1.0](https://github.com/canisminor1990/lobe-commit/compare/v1.0.0...v1.1.0) (2023-05-16)
 
 ### ✨ Features
