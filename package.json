@@ -22,7 +22,7 @@
   "scripts": {
     "start": "node ./dist/cli.js",
     "dev": "pkgroll --watch",
-    "build": "pkgroll --minify && node .\\scripts\\addShebangs.cjs\n",
+    "build": "pkgroll --minify && node ./scripts/addShebangs.cjs\n",
     "lint": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx,.cjs",
     "prepare": "husky install",
     "prettier": "prettier -c --write \"**/**\"",
