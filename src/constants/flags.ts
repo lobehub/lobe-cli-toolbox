@@ -1,8 +1,8 @@
 interface IFlags {
   [flag: string]: {
     type: 'boolean' | 'string';
-    shortFlag: string;
-    desc: string;
+    shortFlag?: string;
+    desc?: string;
   };
 }
 
@@ -14,6 +14,7 @@ const FLAGS: IFlags = {
   list: { type: 'boolean', shortFlag: 'l', desc: 'List all the available commit type' },
   remove: { type: 'boolean', shortFlag: 'r', desc: 'Remove a previously initialized commit hook' },
   version: { type: 'boolean', shortFlag: 'v', desc: 'Print lobe-commit installed version' },
+  hook: { type: 'boolean' },
 };
 
 export default FLAGS;

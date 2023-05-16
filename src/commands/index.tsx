@@ -4,37 +4,34 @@ import Commit from './Commit';
 import List from './List';
 import Update from './Update';
 interface AppProps {
-  list: true;
-  commit: false;
-  config: false;
-  help: false;
-  init: false;
-  remove: false;
-  update: false;
-  version: false;
+  list: boolean;
+  commit: boolean;
+  config: boolean;
+  help: boolean;
+  init: boolean;
+  remove: boolean;
+  update: boolean;
+  version: boolean;
+  hook: boolean;
 }
 
 const App: React.FC<AppProps> = (props) => {
   if (props.list) {
     return <List />;
-  }
-  if (props.commit) {
+  } else if (props.commit) {
     return <Commit />;
-  }
-  if (props.config) {
+  } else if (props.config) {
     return <Text>config</Text>;
-  }
-  if (props.init) {
+  } else if (props.init) {
     return <Text>init</Text>;
-  }
-  if (props.remove) {
+  } else if (props.remove) {
     return <Text>remove</Text>;
-  }
-  if (props.update) {
+  } else if (props.update) {
     return <Update />;
-  }
-  if (props.version) {
+  } else if (props.version) {
     return null;
+  } else if (props.hook) {
+    return <Commit hook />;
   }
   return <Commit />;
 };

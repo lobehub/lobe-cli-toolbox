@@ -14,7 +14,11 @@ const steps: any = [
   { step: 3, title: 'Link issues (optional)' },
 ];
 
-const Commit: React.FC = () => {
+interface CommitProps {
+  hook?: boolean;
+}
+
+const Commit: React.FC<CommitProps> = ({ hook }) => {
   const [step, setStep] = useState<number>(0);
   const [typeKeywords, setTpeKeywords] = useState<string>('');
   const [type, setType] = useState<string>('');
@@ -45,7 +49,8 @@ const Commit: React.FC = () => {
     }));
   }, [typeKeywords]);
 
-  if (step === 4) return <RunGitCommit message={genMessage({ type, scope, subject, issues })} />;
+  if (step === 4)
+    return <RunGitCommit hook={hook} message={genMessage({ type, scope, subject, issues })} />;
 
   return (
     <>

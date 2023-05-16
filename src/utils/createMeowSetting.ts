@@ -6,12 +6,14 @@ export default (flagsConst) => {
   const flags = {};
   const options = Object.entries(flagsConst)
     .map((item) => {
+      if (!item[1].desc) return '';
       flags[item[0]] = {
         shortFlag: item[1].shortFlag,
         type: item[1].type,
       };
       return `--${item[0]}, -${item[1].shortFlag}\t ${item[1].desc}`;
     })
+    .filter(Boolean)
     .join('\n');
 
   ui.div({
