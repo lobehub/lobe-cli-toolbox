@@ -8,7 +8,9 @@ const genPrompt = (diff: string): string =>
   `I want you to act as the author of a commit message in git.` +
   `I'll enter a git diff, and your job is to convert it into a useful commit message.` +
   `Do not preface the commit with anything, use the present tense, use the conventional commits specification <type>(<optional scope>): <subject>,` +
-  `return 1 message: ${diff}`;
+  `choose the type in \n${gitmojis
+    .map((item) => `-${item.type}(${item.descEN})`)
+    .join('|')}\nand return pure commit message: ${diff}`;
 
 const addEmoji = (message: string) => {
   const [type, ...rest]: any = message.split(': ');

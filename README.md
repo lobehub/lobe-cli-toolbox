@@ -1,10 +1,10 @@
 <p align="center">
-  <img width="160" src="https://avatars.githubusercontent.com/u/17870709?v=4">
+  <img width="160" src="https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/logo.webp">
 </p>
-<h1 align="center">CanisMinor Template</h1>
+<h1 align="center">Lobe Commit</h1>
 
 <div align="center">
-  This is a template repo for canisminor1990
+  A Gitmoji CLI that writes your git commit messages by ChatGPT.
 <br/>
 <br/>
 
@@ -15,6 +15,12 @@
 </div>
 
 <br/>
+
+> 🤯🤯🤯 WIP: IN DEVING
+
+## ✨ Features
+
+## 📦 Installation
 
 ## ⌨️ Local Development
 
@@ -47,6 +53,13 @@ $ npm start
 </a>
 
 <!-- CONTRIBUTION END -->
+
+<br/>
+
+## 🔗 Credits
+
+- gitmoji-cli: https://github.com/carloscuesta/gitmoji-cli
+- ai-commit: https://github.com/insulineru/ai-commit
 
 <!-- SHIELD LINK GROUP -->
 

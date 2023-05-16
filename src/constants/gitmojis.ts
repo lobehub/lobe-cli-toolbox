@@ -63,7 +63,7 @@ export default [
     emoji: '📝',
     entity: '&#x1f4dd;',
     code: ':memo:',
-    descEN: 'Add or update documentation',
+    descEN: 'Add or update README and documentation',
     descCN: '添加或更新文档',
     name: 'memo',
     semver: null,
