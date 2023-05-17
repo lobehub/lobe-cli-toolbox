@@ -1,5 +1,11 @@
 # Changelog
 
+# [1.1.0](https://github.com/canisminor1990/lobe-commit/compare/v1.0.1...v1.1.0) (2023-05-17)
+
+### ✨ Features
+
+- add issues fliter ([0338452](https://github.com/canisminor1990/lobe-commit/commit/0338452))
+
 ## [1.0.1](https://github.com/canisminor1990/lobe-commit/compare/v1.0.0...v1.0.1) (2023-05-17)
 
 # 1.0.0 (2023-05-17)
