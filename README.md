@@ -18,6 +18,8 @@
 
 > 🚧🚧🚧 Work in Progress: Currently in development.
 
+<br/>
+
 ## ✨ Features
 
 - [x] 🤯 Supports auto-generating commit messages based on diffs using ChatGPT
@@ -28,6 +30,8 @@
 - [ ] 🚧 Supports multi-language commit messages
 - [ ] 🚧 Supports custom prompts
 
+<br/>
+
 ## 📦 Installation
 
 To install Lobe Commit, run the following command:
@@ -35,6 +39,8 @@ To install Lobe Commit, run the following command:
 ```bash
 npm install -g lobe-commit
 ```
+
+<br/>
 
 ## 🤯 Usage
 
@@ -98,6 +104,8 @@ Lobe Commit supports the following options:
 --version -v       Print lobe-commit installed version
 ```
 
+<br/>
+
 ## ⌨️ Local Development
 
 You can use Gitpod for online development:
@@ -133,6 +141,7 @@ $ npm start
 
 <!-- CONTRIBUTION END -->
 
+<br/>
 <br/>
 
 ## 🔗 Credits
