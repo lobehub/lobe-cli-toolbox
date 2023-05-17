@@ -4,7 +4,7 @@
 <h1 align="center">Lobe Commit</h1>
 
 <div align="center">
-  Lobe Commit is a CLI tool that uses ChatGPT to generate Gitmoji-based commit messages
+  Lobe Commit 是一款使用 ChatGPT 生成基于 Gitmoji 的 CLI 提交工具
 <br/>
 
 <!-- SHIELD GROUP -->
@@ -15,25 +15,25 @@
 
 ![](https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/preview.webp)
 
-English | [简体中文](./README-zh_CN.md)
+[English](./README.md) | 简体中文
 
 <br/>
 
-## ✨ Features
+## ✨ 特性
 
-- [x] 🤯 Supports auto-generating commit messages based on diffs using ChatGPT
-- [x] 🛠️ Supports streamlined commit message editing workflow
-- [x] 😜 Supports adding Gitmojis
-- [x] 📝 Supports Conventional Commits specification
-- [x] ⚡️ Supports pulling a list of issues and convenient binding
-- [ ] 🚧 Supports multi-language commit messages
-- [ ] 🚧 Supports custom prompts
+- [x] 🤯 支持使用 ChatGPT 根据 git diffs 自动生成提交信息
+- [x] 🛠️ 流畅的提交信息编辑流程
+- [x] 😜 支持添加 Gitmoji
+- [x] 📝 支持 Conventional Commits 规范
+- [x] ⚡️ 支持拉取 issues 列表并便捷绑定
+- [ ] 🚧 支持多语言提交信息
+- [ ] 🚧 支持自定义 Prompt
 
 <br/>
 
-## 📦 Installation
+## 📦 安装
 
-To install Lobe Commit, run the following command:
+要安装 Lobe Commit，请运行以下命令：
 
 ```bash
 npm install -g @lobehub/commit-cli
@@ -41,30 +41,30 @@ npm install -g @lobehub/commit-cli
 
 <br/>
 
-## 🤯 Usage
+## 🤯 使用
 
-You can use the `lobe-commit` command to generate a commit message for your staged changes:
+使用 `lobe-commit` 命令为暂生成提交信息信息：
 
 ```shell
 $ git add <files...>
 $ lobe-commit
 ```
 
-> 👉 Tip: Use the `lobe` alias if `lobe-commit` is too long for you.
+> 👉 提示：如果认为 `lobe-commit` 太长了，可以使用`lobe`别名
 
-#### AI mode
+#### AI 模式
 
-With AI mode, you can generate a complete commit message using ChatGPT.
+在 AI 模式下，可以使用 ChatGPT 生成完整的提交信息
 
 ![](https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/preview-ai.webp)
 
-> 👉 Tip: If you have special network requirements, you can add OpenAI's forwarding address in the settings.
+> 👉 提示：如果有特殊的网络要求，可以在设置中添加 OpenAI 的转发地址
 
-#### Editor mode
+#### 编辑器模式
 
-In Editor mode, you can choose the `<type>(<optional scope>): <subject> [<issues>]` format by following a simple flow.
+在编辑器模式下，可以通过简单的流程生成 `<type>(<optional scope>): <subject> [<issues>]` 格式的提交信息
 
-> 👉 Tip: If your project is a GitHub repository, the Editor mode feature will automatically fetch the issues associated with your repository. You can select multiple issues to link to your commit message by <kbd>space</kbd> .
+> 👉 提示：如果项目是 GitHub Repo，则将自动获取该仓库的 issues，可以使用 <kbd>空格</kbd> 选择多个问题将其链接到提交信息中
 
 ![](https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/preview-editor.webp)
 
@@ -72,62 +72,62 @@ In Editor mode, you can choose the `<type>(<optional scope>): <subject> [<issues
 
 ### Git hook
 
-You can integrate Lobe Commit with Git via the `prepare-commit-msg` hook. This allows you to use Git as you normally would and edit the commit message before committing.
+可以通过 `prepare-commit-msg`钩子将 Lobe Commit 与 Git 集成, 允许像往常一样使用 Git 并在提交之前编辑提交信息
 
-#### Install
+#### 安装
 
-To install the hook in the Git repository, run the following command:
+要在项目中安装 hook，请运行以下命令：
 
 ```shell
-$ lobe-coomit --init   # or use short flag -i
+$ lobe-coomit --init   # 或使用短标志 -i
 ```
 
-#### Uninstall
+#### 卸载
 
-To uninstall the hook from the Git repository, run the following command:
-
-```shell
-$ lobe-coomit --remove   # or use short flag -r
-```
-
-<br/>
-
-### Configuration
-
-To configure Lobe Commit, run the following command:
+要从项目中卸载 hook，请运行以下命令：
 
 ```shell
-$ lobe-coomit --config   # or use short flag -o
-```
-
-- To use AI auto-generation, you need to fill in your [OpenAI token](<(https://platform.openai.com/account/api-keys)>) in the settings.
-- To automatically pull private issues, you need to fill in your [GitHub token](https://github.com/settings/tokens) with repo permissions in the settings.
-
-<br/>
-
-### Options
-
-Lobe Commit supports the following options:
-
-```shell
---commit  -c       Interactively commit using the prompts
---config  -o       Setup lobe-commit preferences
---help    -h       Print basic options
---init    -i       Initialize lobe-commit as a commit hook
---remove  -r       Remove a previously initialized commit hook
---list    -l       List all the available commit type
---version -v       Print lobe-commit installed version
+$ lobe-coomit --remove   # 或使用短标志 -r
 ```
 
 <br/>
 
-## ⌨️ Local Development
+### 配置
 
-You can use Gitpod for online development:
+要配置 Lobe Commit，请运行以下命令：
+
+```shell
+$ lobe-coomit --config   # 或使用短标志 -o
+```
+
+- 要使用 AI 自动生成，需要在设置中填写 [OpenAI 令牌](<(https://platform.openai.com/account/api-keys)>)
+- 要自动拉取私人仓库 issues，需要在设置中填写具有 repo 权限的 [GitHub 令牌](https://github.com/settings/tokens)
+
+<br/>
+
+### 选项
+
+Lobe Commit 支持以下选项：
+
+```shell
+--commit  -c       使用提示交互式提交
+--config  -o       设置lobe-commit首选项
+--help    -h       打印基本选项
+--init    -i       将lobe-commit初始化为提交钩子
+--remove  -r       删除先前初始化的提交钩子
+--list    -l       列出所有可用的提交类型
+--version -v       打印lobe-commit安装版本
+```
+
+<br/>
+
+## ⌨️ 本地开发
+
+可以使用 Gitpod 进行在线开发：
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/canisminor1990/lobe-commit)
 
-Alternatively, you can clone the repository and run the following commands for local development:
+或者，可以克隆存储库并运行以下命令进行本地开发：
 
 ```bash
 $ git clone https://github.com/canisminor1990/lobe-commit.git
@@ -138,11 +138,11 @@ $ npm start
 
 <br/>
 
-## 🤝 Contributing
+## 🤝 参与贡献
 
 <!-- CONTRIBUTION GROUP -->
 
-> 📊 Total: <kbd>**3**</kbd>
+> 📊 总计：<kbd>**3**</kbd>
 
 <a href="https://github.com/canisminor1990" title="canisminor1990">
   <img src="https://avatars.githubusercontent.com/u/17870709?v=4" width="50" />
@@ -159,7 +159,7 @@ $ npm start
 <br/>
 <br/>
 
-## 🔗 Credits
+## 🔗 链接
 
 - gitmoji-cli: https://github.com/carloscuesta/gitmoji-cli
 - ai-commit: https://github.com/insulineru/ai-commit
