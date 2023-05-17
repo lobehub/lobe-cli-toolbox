@@ -55,7 +55,7 @@ $ lobe-commit
 
 With AI mode, you can generate a complete commit message using ChatGPT.
 
-![](https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/usage-ai.webp)
+![](https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/preview-ai.webp)
 
 > 👉 Tip: If you have special network requirements, you can add OpenAI's forwarding address in the settings.
 
@@ -65,7 +65,7 @@ In Editor mode, you can choose the `<type>(<optional scope>): <subject> [<issues
 
 > 👉 Tip: If your project is a GitHub repository, the Editor mode feature will automatically fetch the issues associated with your repository. You can select multiple issues to link to your commit message by using the space bar.
 
-![](https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/usage-editor.webp)
+![](https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/preview-editor.webp)
 
 <br/>
 
