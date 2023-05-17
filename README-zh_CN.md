@@ -60,7 +60,9 @@ $ lobe-commit
 
 ![](https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/preview-ai.webp)
 
-> 👉 提示：如果有特殊的网络要求，可以在设置中添加 OpenAI 的转发地址
+> 👉 提示：需要在设置中 `lobe-commit -o` 配置 OpenAI 令牌，同时如果有特殊的网络要求，也可以在设置中配置 OpenAI 的转发地址
+
+<br/>
 
 #### 编辑器模式
 
@@ -102,7 +104,7 @@ $ lobe-coomit --remove   # 或使用短标志 -r
 $ lobe-coomit --config   # 或使用短标志 -o
 ```
 
-- 要使用 AI 自动生成，需要在设置中填写 [OpenAI 令牌](<(https://platform.openai.com/account/api-keys)>)
+- 要使用 AI 自动生成，需要在设置中填写 [OpenAI 令牌](https://platform.openai.com/account/api-keys)
 - 要自动拉取私人仓库 issues，需要在设置中填写具有 repo 权限的 [GitHub 令牌](https://github.com/settings/tokens)
 
 <br/>
