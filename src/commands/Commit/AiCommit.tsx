@@ -2,7 +2,7 @@ import { Spinner } from '@inkjs/ui';
 import { Box, Text } from 'ink';
 import SelectInput from 'ink-select-input';
 import React, { useEffect, useState } from 'react';
-import generateSingleCommit from '../../utils/generateSingleCommit';
+import genAiCommit from '../../utils/genAiCommit';
 import RunGitCommit from './RunGitCommit.js';
 
 interface AiCommitProps {
@@ -14,7 +14,7 @@ const AiCommit: React.FC<AiCommitProps> = ({ hook }) => {
   const [msg, setMsg] = useState<string>('');
   const [runCommit, setRunCommit] = useState<boolean>(false);
   useEffect(() => {
-    generateSingleCommit().then((text: any) => {
+    genAiCommit().then((text: any) => {
       setMsg(text);
     });
   }, [count]);

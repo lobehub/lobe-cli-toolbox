@@ -4,7 +4,7 @@
 <h1 align="center">Lobe Commit</h1>
 
 <div align="center">
-  A Gitmoji CLI that writes your git commit messages by ChatGPT
+  Lobe Commit is a CLI tool that uses ChatGPT to generate Gitmoji-based commit messages
 <br/>
 <br/>
 
@@ -16,11 +16,87 @@
 
 <br/>
 
-> 🤯🤯🤯 WIP: IN DEVING
+> 🚧🚧🚧 Work in Progress: Currently in development.
 
 ## ✨ Features
 
+- [x] 🤯 Supports auto-generating commit messages based on diffs using ChatGPT
+- [x] 🛠️ Supports streamlined commit message editing workflow
+- [x] 😜 Supports adding Gitmojis
+- [x] 📝 Supports Conventional Commits specification
+- [x] ⚡️ Supports pulling a list of issues and convenient binding
+- [ ] 🚧 Supports multi-language commit messages
+- [ ] 🚧 Supports custom prompts
+
 ## 📦 Installation
+
+To install Lobe Commit, run the following command:
+
+```bash
+npm install -g lobe-commit
+```
+
+## 🤯 Usage
+
+You can use the `lobe-commit` command to generate a commit message for your staged changes:
+
+```shell
+$ git add <files...>
+$ lobe-commit
+```
+
+> 👉 Tip: Use the `lobe` alias if `lobe-commit` is too long for you.
+
+<br/>
+
+### Git hook
+
+You can integrate Lobe Commit with Git via the `prepare-commit-msg` hook. This allows you to use Git as you normally would and edit the commit message before committing.
+
+#### Install
+
+To install the hook in the Git repository, run the following command:
+
+```shell
+$ lobe-coomit --init   # or use short flag -i
+```
+
+#### Uninstall
+
+To uninstall the hook from the Git repository, run the following command:
+
+```shell
+$ lobe-coomit -remove   # or use short flag -r
+```
+
+<br/>
+
+### Configuration
+
+To configure Lobe Commit, run the following command:
+
+```shell
+$ lobe-coomit --config   # or use short flag -o
+```
+
+- To use AI auto-generation, you need to fill in your [OpenAI token](<(https://platform.openai.com/account/api-keys)>) in the settings.
+- To automatically pull private issues, you need to fill in your [GitHub token](https://github.com/settings/tokens) with repo permissions in the settings.
+
+<br/>
+
+### Options
+
+Lobe Commit supports the following options:
+
+```shell
+--commit  -c       Interactively commit using the prompts
+--config  -o       Setup lobe-commit preferences
+--help    -h       Print basic options
+--init    -i       Initialize lobe-commit as a commit hook
+--remove  -r       Remove a previously initialized commit hook
+--list    -l       List all the available commit type
+--version -v       Print lobe-commit installed version
+```
 
 ## ⌨️ Local Development
 
@@ -28,7 +104,7 @@ You can use Gitpod for online development:
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/canisminor1990/lobe-commit)
 
-Or clone it for local development:
+Alternatively, you can clone the repository and run the following commands for local development:
 
 ```bash
 $ git clone https://github.com/canisminor1990/lobe-commit.git

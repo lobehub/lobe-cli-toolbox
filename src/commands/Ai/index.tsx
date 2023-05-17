@@ -1,12 +1,12 @@
 import { Spinner } from '@inkjs/ui';
 import { Box, Text } from 'ink';
 import React, { useEffect, useState } from 'react';
-import generateSingleCommit from '../../utils/generateSingleCommit';
+import genAiCommit from '../../utils/genAiCommit';
 
 const Ai: React.FC = () => {
   const [msg, setMsg] = useState<string>('');
   useEffect(() => {
-    generateSingleCommit().then((text: any) => {
+    genAiCommit().then((text: any) => {
       setMsg(text);
     });
   }, []);

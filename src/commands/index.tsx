@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Ai from './Ai';
 import Commit from './Commit';
 import Config from './Config';
@@ -6,6 +6,10 @@ import HookCreate from './Hook/HookCreate';
 import HookRemove from './Hook/HookRemove';
 import List from './List';
 import Update from './Update';
+// @ts-ignore
+import updateNotifier from 'update-notifier';
+import packageJson from '../../package.json';
+
 interface AppProps {
   list: boolean;
   commit: boolean;
@@ -20,6 +24,11 @@ interface AppProps {
 }
 
 const App: React.FC<AppProps> = (props) => {
+  useEffect(() => {
+    const notifier = updateNotifier({ pkg: packageJson });
+    notifier.notify();
+  }, []);
+
   if (props.list) {
     return <List />;
   } else if (props.commit) {

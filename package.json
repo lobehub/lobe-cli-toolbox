@@ -1,7 +1,7 @@
 {
   "name": "lobe-commit",
   "version": "0.0.0-semantic-release",
-  "description": "A Gitmoji CLI that writes your git commit messages by ChatGPT",
+  "description": "Lobe Commit is a CLI tool that uses ChatGPT to generate Gitmoji-based commit messages",
   "keywords": [
     "ai",
     "git",
