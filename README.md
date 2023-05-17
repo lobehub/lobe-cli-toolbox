@@ -4,7 +4,7 @@
 <h1 align="center">Lobe Commit</h1>
 
 <div align="center">
-  A Gitmoji CLI that writes your git commit messages by ChatGPT.
+  A Gitmoji CLI that writes your git commit messages by ChatGPT
 <br/>
 <br/>
 

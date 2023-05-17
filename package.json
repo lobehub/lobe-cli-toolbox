@@ -1,32 +1,35 @@
 {
   "name": "lobe-commit",
-  "version": "1.2.0",
-  "type": "module",
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
-  },
-  "license": "MIT",
+  "version": "0.0.0-semantic-release",
+  "description": "A Gitmoji CLI that writes your git commit messages by ChatGPT",
+  "keywords": [
+    "ai",
+    "git",
+    "commit"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/canisminor1990/lobe-commit.git"
   },
+  "license": "MIT",
   "author": "canisminor1990 <i@canisminor.cc>",
+  "type": "module",
+  "bin": {
+    "lobe": "dist/cli.js",
+    "lobe-commit": "dist/cli.js"
+  },
   "files": [
     "dist"
   ],
-  "bin": "dist/cli.js",
-  "engines": {
-    "node": ">=18"
-  },
   "scripts": {
-    "start": "node ./dist/cli.js",
-    "dev": "pkgroll --watch",
     "build": "pkgroll --minify && node ./scripts/addShebangs.cjs",
+    "dev": "pkgroll --watch",
     "lint": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx,.cjs",
+    "prepack": "pnpm build && clean-pkg-json",
     "prepare": "husky install",
     "prettier": "prettier -c --write \"**/**\"",
     "release": "semantic-release",
+    "start": "node ./dist/cli.js",
     "test": "npm run lint",
     "type-check": "tsc -p tsconfig-check.json"
   },
@@ -56,11 +59,9 @@
     "github-api": "^3",
     "ink": "^4",
     "ink-select-input": "^5",
-    "isomorphic-fetch": "^3",
     "meow": "^12",
     "pangu": "^4",
     "path-exists": "^5",
-    "polished": "^4",
     "react": "^18",
     "update-notifier": "^6",
     "zustand": "^4"
@@ -70,6 +71,7 @@
     "@sindresorhus/tsconfig": "^3",
     "@types/node": "^20",
     "@umijs/lint": "^4",
+    "clean-pkg-json": "^1",
     "commitlint": "^17",
     "commitlint-config-gitmoji": "^2",
     "eslint": "^8",
@@ -81,9 +83,15 @@
     "prettier": "^2",
     "prettier-plugin-organize-imports": "^3",
     "prettier-plugin-packagejson": "^2",
-    "prop-types": "^15",
     "semantic-release": "^21",
     "semantic-release-config-gitmoji": "^1",
     "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }
