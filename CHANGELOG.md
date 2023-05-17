@@ -1,5 +1,7 @@
 # Changelog
 
+## [1.0.1](https://github.com/canisminor1990/lobe-commit/compare/v1.0.0...v1.0.1) (2023-05-17)
+
 # 1.0.0 (2023-05-17)
 
 ### ✨ Features
