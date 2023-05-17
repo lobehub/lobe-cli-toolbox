@@ -54,13 +54,17 @@ $ lobe-commit
 
 > 👉 Tip: Use the `lobe` alias if `lobe-commit` is too long for you.
 
+<br/>
+
 #### AI mode
 
 With AI mode, you can generate a complete commit message using ChatGPT.
 
+> 👉 Tip: To use AI auto-generation, you need to fill in your OpenAI token in the settings by `lobe-commit -o`. and if you have special network requirements, you can add OpenAI's forwarding address in the settings.
+
 ![](https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/preview-ai.webp)
 
-> 👉 Tip: If you have special network requirements, you can add OpenAI's forwarding address in the settings.
+<br/>
 
 #### Editor mode
 
@@ -76,6 +80,8 @@ In Editor mode, you can choose the `<type>(<optional scope>): <subject> [<issues
 
 You can integrate Lobe Commit with Git via the `prepare-commit-msg` hook. This allows you to use Git as you normally would and edit the commit message before committing.
 
+<br/>
+
 #### Install
 
 To install the hook in the Git repository, run the following command:
@@ -83,6 +89,8 @@ To install the hook in the Git repository, run the following command:
 ```shell
 $ lobe-coomit --init   # or use short flag -i
 ```
+
+<br/>
 
 #### Uninstall
 
