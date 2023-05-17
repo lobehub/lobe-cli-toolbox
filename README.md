@@ -151,8 +151,8 @@ $ npm start
 
 <!-- release -->
 
-[release-shield]: https://img.shields.io/github/v/release/canisminor1990/lobe-commit?style=flat&sort=semver&logo=github
-[release-url]: https://github.com/canisminor1990/lobe-commit/releases
+[release-shield]: https://img.shields.io/npm/v/@lobehub/commit-cli?label=%F0%9F%A4%AF%20NPM
+[release-url]: https://www.npmjs.com/package/@lobehub/commit-cli
 
 <!-- releaseDate -->
 
