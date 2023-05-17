@@ -54,13 +54,15 @@ $ lobe-commit
 
 > 👉 提示：如果认为 `lobe-commit` 太长了，可以使用`lobe`别名
 
+<br/>
+
 #### AI 模式
 
 在 AI 模式下，可以使用 ChatGPT 生成完整的提交信息
 
-![](https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/preview-ai.webp)
-
 > 👉 提示：需要在设置中 `lobe-commit -o` 配置 OpenAI 令牌，同时如果有特殊的网络要求，也可以在设置中配置 OpenAI 的转发地址
+> 
+![](https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/preview-ai.webp)
 
 <br/>
 
@@ -78,6 +80,8 @@ $ lobe-commit
 
 可以通过 `prepare-commit-msg`钩子将 Lobe Commit 与 Git 集成, 允许像往常一样使用 Git 并在提交之前编辑提交信息
 
+<br/>
+
 #### 安装
 
 要在项目中安装 hook，请运行以下命令：
@@ -85,6 +89,8 @@ $ lobe-commit
 ```shell
 $ lobe-coomit --init   # 或使用短标志 -i
 ```
+
+<br/>
 
 #### 卸载
 
