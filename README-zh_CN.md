@@ -5,6 +5,8 @@
 
 <div align="center">
   Lobe Commit 是一款使用 ChatGPT 生成基于 Gitmoji 的 CLI 提交工具
+
+<br/>
 <br/>
 
 <!-- SHIELD GROUP -->
