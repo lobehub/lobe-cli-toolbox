@@ -9,6 +9,10 @@ const schema = {
     type: 'string',
     default: '',
   },
+  apiBaseUrl: {
+    type: 'string',
+    default: '',
+  },
   githubToken: {
     type: 'string',
     default: '',

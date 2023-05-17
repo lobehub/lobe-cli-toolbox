@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="160" src="https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/logo.webp">
+  <img width="200" src="https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/logo.webp">
 </p>
 <h1 align="center">Lobe Commit</h1>
 
@@ -8,15 +8,13 @@
 <br/>
 <br/>
 
+![](https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/preview.webp)
+
 <!-- SHIELD GROUP -->
 
 [![release][release-shield]][release-url] [![releaseDate][release-date-shield]][release-date-url] [![ciTest][ci-test-shield]][ci-test-url] [![ciRelease][ci-release-shield]][ci-release-url] <br/> [![contributors][contributors-shield]][contributors-url] [![forks][forks-shield]][forks-url] [![stargazers][stargazers-shield]][stargazers-url] [![issues][issues-shield]][issues-url]
 
 </div>
-
-<br/>
-
-> 🚧🚧🚧 Work in Progress: Currently in development.
 
 <br/>
 
@@ -37,7 +35,7 @@
 To install Lobe Commit, run the following command:
 
 ```bash
-npm install -g lobe-commit
+npm install -g @lobehub/commit-cli
 ```
 
 <br/>

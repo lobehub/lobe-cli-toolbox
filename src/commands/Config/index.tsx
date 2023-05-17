@@ -9,6 +9,7 @@ const Config: React.FC = () => {
   const [tab, setTab] = useState<string>('home');
   const emojiFormatConfig = configStore.get('emojiFormat');
   const openaiTokenConfig = configStore.get('openaiToken');
+  const apiBaseUrlConfig = configStore.get('apiBaseUrl');
   const githubTokenConfig = configStore.get('githubToken');
 
   const selection: any = [
@@ -29,6 +30,19 @@ const Config: React.FC = () => {
         </Text>
       ),
       value: 'openaiToken',
+    },
+    {
+      label: (
+        <Text>
+          {`OpenAI API Proxy `}
+          {apiBaseUrlConfig ? (
+            <Badge color="green">modify</Badge>
+          ) : (
+            <Badge color="blue">default</Badge>
+          )}
+        </Text>
+      ),
+      value: 'apiBaseUrl',
     },
     {
       label: (
@@ -75,8 +89,23 @@ const Config: React.FC = () => {
       children: (
         <TextInput
           placeholder="Input OpenAI token..."
+          defaultValue={openaiTokenConfig}
           onSubmit={(token) => {
             configStore.set('openaiToken', token);
+            setTab('home');
+          }}
+        />
+      ),
+    },
+    {
+      title: '🤯 OpenAI API Proxy',
+      key: 'apiBaseUrl',
+      children: (
+        <TextInput
+          placeholder="Set openAI api proxy, default value: https://api.openai.com/v1/..."
+          defaultValue={apiBaseUrlConfig}
+          onSubmit={(url) => {
+            configStore.set('apiBaseUrl', url);
             setTab('home');
           }}
         />
@@ -88,6 +117,7 @@ const Config: React.FC = () => {
       children: (
         <TextInput
           placeholder="Input Github token..."
+          defaultValue={githubTokenConfig}
           onSubmit={(token) => {
             configStore.set('githubToken', token);
             setTab('home');
