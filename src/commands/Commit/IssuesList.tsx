@@ -17,7 +17,7 @@ const IssuesList: React.FC<IssuesListProps> = ({ onChange, onSubmit }) => {
           label: (
             <Text>
               {` `}
-              <Text backgroundColor="#000" color="#fff">{` #${item.number} `}</Text>
+              <Text backgroundColor="#222" color="#fff">{` #${item.number} `}</Text>
               {` ${item.title}`}
             </Text>
           ),

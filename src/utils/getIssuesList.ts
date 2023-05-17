@@ -1,6 +1,5 @@
 // @ts-ignore
 import GitHub from 'github-api';
-import 'isomorphic-fetch';
 import configStore from '../constants/config.js';
 import getRepo from './getRepo.js';
 
