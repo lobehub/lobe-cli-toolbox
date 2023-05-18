@@ -1,13 +1,14 @@
-<p align="center">
-  <img width="200" src="https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/logo.webp">
-</p>
-<h1 align="center">Lobe Commit</h1>
+<a name="readme-top"></a>
 
 <div align="center">
-  Lobe Commit is a CLI tool that uses ChatGPT to generate Gitmoji-based commit messages
+  
+<img width="200" src="https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/logo.webp">
 
-<br/>
-<br/>
+<h1 align="center">Lobe Commit</h1>
+
+Lobe Commit is a CLI tool that uses ChatGPT to generate Gitmoji-based commit messages
+  
+English · [简体中文](./README-zh_CN.md) · [Changelog](./CHANGELOG.md) · [Report Bug][issues-url] · [Request Feature][issues-url]
 
 <!-- SHIELD GROUP -->
 
@@ -16,10 +17,6 @@
 </div>
 
 ![](https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/preview.webp)
-
-English | [简体中文](./README-zh_CN.md)
-
-<br/>
 
 ## ✨ Features
 
@@ -31,7 +28,11 @@ English | [简体中文](./README-zh_CN.md)
 - [ ] 🚧 Supports multi-language commit messages
 - [ ] 🚧 Supports custom prompts
 
-<br/>
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
 
 ## 📦 Installation
 
@@ -41,7 +42,11 @@ To install Lobe Commit, run the following command:
 npm install -g @lobehub/commit-cli
 ```
 
-<br/>
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
 
 ## 🤯 Usage
 
@@ -129,13 +134,17 @@ Lobe Commit supports the following options:
 --version -v       Print lobe-commit installed version
 ```
 
-<br/>
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
 
 ## ⌨️ Local Development
 
 You can use Gitpod for online development:
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/canisminor1990/lobe-commit)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)][gitpod-url]
 
 Alternatively, you can clone the repository and run the following commands for local development:
 
@@ -166,15 +175,39 @@ $ npm start
 
 <!-- CONTRIBUTION END -->
 
-<br/>
-<br/>
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
 
 ## 🔗 Credits
 
 - gitmoji-cli: https://github.com/carloscuesta/gitmoji-cli
 - ai-commit: https://github.com/insulineru/ai-commit
 
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
+
+---
+#### 📝 License
+
+Copyright © 2023 [CanisMinor][profile-url]. <br />
+This project is [MIT](./LICENSE) licensed. 
+
+
+<!-- LINK GROUP -->
+
+[profile-url]: https://github.com/canisminor1990
+[issues-url]: https://github.com/canisminor1990/lobe-commit/issues/new/choose
+[gitpod-url]: https://gitpod.io/#https://github.com/canisminor1990/lobe-commit
+
 <!-- SHIELD LINK GROUP -->
+
+[back-to-top]: https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square
 
 <!-- release -->
 
