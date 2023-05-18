@@ -1,13 +1,14 @@
-<p align="center">
-  <img width="200" src="https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/logo.webp">
-</p>
-<h1 align="center">Lobe Commit</h1>
+<a name="readme-top"></a>
 
 <div align="center">
-  Lobe Commit 是一款使用 ChatGPT 生成基于 Gitmoji 的 CLI 提交工具
+  
+<img width="200" src="https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/logo.webp">
 
-<br/>
-<br/>
+<h1 align="center">Lobe Commit</h1>
+
+Lobe Commit 是一款使用 ChatGPT 生成基于 Gitmoji 的 CLI 提交工具
+
+[English](./README.md) · 简体中文 · [Changelog](./CHANGELOG.md) · [Report Bug][issues-url] · [Request Feature][issues-url]
 
 <!-- SHIELD GROUP -->
 
@@ -16,10 +17,6 @@
 </div>
 
 ![](https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/preview.webp)
-
-[English](./README.md) | 简体中文
-
-<br/>
 
 ## ✨ 特性
 
@@ -31,7 +28,11 @@
 - [ ] 🚧 支持多语言提交信息
 - [ ] 🚧 支持自定义 Prompt
 
-<br/>
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
 
 ## 📦 安装
 
@@ -41,7 +42,11 @@
 npm install -g @lobehub/commit-cli
 ```
 
-<br/>
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
 
 ## 🤯 使用
 
@@ -74,7 +79,11 @@ $ lobe-commit
 
 ![](https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/preview-editor.webp)
 
-<br/>
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
 
 ### Git hook
 
@@ -100,7 +109,11 @@ $ lobe-coomit --init   # 或使用短标志 -i
 $ lobe-coomit --remove   # 或使用短标志 -r
 ```
 
-<br/>
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
 
 ### 配置
 
@@ -113,7 +126,11 @@ $ lobe-coomit --config   # 或使用短标志 -o
 - 要使用 AI 自动生成，需要在设置中填写 [OpenAI 令牌](https://platform.openai.com/account/api-keys)
 - 要自动拉取私人仓库 issues，需要在设置中填写具有 repo 权限的 [GitHub 令牌](https://github.com/settings/tokens)
 
-<br/>
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
 
 ### 选项
 
@@ -129,13 +146,17 @@ Lobe Commit 支持以下选项：
 --version -v       打印lobe-commit安装版本
 ```
 
-<br/>
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
 
 ## ⌨️ 本地开发
 
 可以使用 Gitpod 进行在线开发：
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/canisminor1990/lobe-commit)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)][gitpod-url]
 
 或者，可以克隆存储库并运行以下命令进行本地开发：
 
@@ -146,7 +167,11 @@ $ npm install
 $ npm start
 ```
 
-<br/>
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
 
 ## 🤝 参与贡献
 
@@ -166,15 +191,39 @@ $ npm start
 
 <!-- CONTRIBUTION END -->
 
-<br/>
-<br/>
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
 
 ## 🔗 链接
 
 - gitmoji-cli: https://github.com/carloscuesta/gitmoji-cli
 - ai-commit: https://github.com/insulineru/ai-commit
 
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
+
+---
+#### 📝 License
+
+Copyright © 2023 [CanisMinor][profile-url]. <br />
+This project is [MIT](./LICENSE) licensed. 
+
+
+<!-- LINK GROUP -->
+
+[profile-url]: https://github.com/canisminor1990
+[issues-url]: https://github.com/canisminor1990/lobe-commit/issues/new/choose
+[gitpod-url]: https://gitpod.io/#https://github.com/canisminor1990/lobe-commit
+
 <!-- SHIELD LINK GROUP -->
+
+[back-to-top]: https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square
 
 <!-- release -->
 
