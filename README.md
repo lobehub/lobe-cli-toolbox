@@ -79,7 +79,11 @@ In Editor mode, you can choose the `<type>(<optional scope>): <subject> [<issues
 
 ![](https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/preview-editor.webp)
 
-<br/>
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
 
 ### Git hook
 
@@ -105,7 +109,11 @@ To uninstall the hook from the Git repository, run the following command:
 $ lobe-coomit --remove   # or use short flag -r
 ```
 
-<br/>
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
 
 ### Configuration
 
@@ -118,7 +126,11 @@ $ lobe-coomit --config   # or use short flag -o
 - To use AI auto-generation, you need to fill in your [OpenAI token](<(https://platform.openai.com/account/api-keys)>) in the settings.
 - To automatically pull private issues, you need to fill in your [GitHub token](https://github.com/settings/tokens) with repo permissions in the settings.
 
-<br/>
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
 
 ### Options
 
@@ -155,7 +167,11 @@ $ npm install
 $ npm start
 ```
 
-<br/>
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
 
 ## 🤝 Contributing
 
