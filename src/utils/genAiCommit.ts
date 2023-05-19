@@ -2,15 +2,20 @@ import chalk from 'chalk';
 import { ChatGPTAPI } from 'chatgpt';
 import { execSync } from 'child_process';
 import 'isomorphic-fetch';
-import storeConfig from '../constants/config';
+import storeConfig, { CONFIG_NAME } from '../constants/config';
+import configStore from '../constants/config.js';
 import gitmojis from '../constants/gitmojis.js';
 
 const typesExample = gitmojis.map((item) => `${item.type}(${item.descEN})`).join('\n');
-const genPrompt = (diff: string): string =>
-  `I want you to act as the author of a commit message in git.` +
-  `I'll enter a git diff, and your job is to convert it into a useful commit message.` +
-  `Do not preface the commit with anything, use the present tense, use the conventional commits specification <type>(<optional scope>): <subject>,` +
-  `choose the type in [${typesExample}], and return pure commit message: ${diff}`;
+const genPrompt = (diff: string): string => {
+  const custionPrompt = configStore.get(CONFIG_NAME.PROMPT);
+  let prompt =
+    `I want you to act as the author of a commit message in git.` +
+    `I'll enter a git diff, and your job is to convert it into a useful commit message.` +
+    `Do not preface the commit with anything, use the present tense, use the conventional commits specification <type>(<optional scope>): <subject>`;
+  if (custionPrompt) prompt = custionPrompt;
+  return prompt + `,choose the type in [${typesExample}], and return pure commit message: ${diff}`;
+};
 
 const addEmoji = (message: string) => {
   const [type, ...rest]: any = message.split(': ');

@@ -1,19 +1,31 @@
 import Conf from 'conf';
 
+export const CONFIG_NAME = {
+  EMOJI_FORMAT: 'emojiFormat',
+  PROMPT: 'prompt',
+  OPENAI_TOKEN: 'openaiToken',
+  API_BASE_URL: 'apiBaseUrl',
+  GITHUB_TOKEN: 'githubToken',
+};
+
 const schema = {
-  emojiFormat: {
+  [CONFIG_NAME.EMOJI_FORMAT]: {
     type: 'boolean',
     default: true,
   },
-  openaiToken: {
+  [CONFIG_NAME.OPENAI_TOKEN]: {
     type: 'string',
     default: '',
   },
-  apiBaseUrl: {
+  [CONFIG_NAME.API_BASE_URL]: {
     type: 'string',
     default: '',
   },
-  githubToken: {
+  [CONFIG_NAME.GITHUB_TOKEN]: {
+    type: 'string',
+    default: '',
+  },
+  [CONFIG_NAME.PROMPT]: {
     type: 'string',
     default: '',
   },

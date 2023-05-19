@@ -4,7 +4,7 @@ import { Box, Text } from 'ink';
 import SelectInput from 'ink-select-input';
 import React, { useMemo, useState } from 'react';
 import { Tabs } from '../../components';
-import configStore from '../../constants/config.js';
+import configStore, { CONFIG_NAME } from '../../constants/config.js';
 import gitmojis from '../../constants/gitmojis';
 import genCommitMessage from '../../utils/genCommitMessage';
 import getAbsoluteHooksPath from '../../utils/getAbsoluteHooksPath.js';
@@ -26,7 +26,7 @@ const Commit: React.FC<CommitProps> = ({ hook }) => {
   const [subject, setSubject] = useState<string>('');
   const [issues, setIssues] = useState<string>('');
 
-  const emojiFormatConfig = configStore.get('emojiFormat');
+  const emojiFormatConfig = configStore.get(CONFIG_NAME.EMOJI_FORMAT);
 
   const commitMessage = genCommitMessage({ type, scope, subject, issues });
   const handleSelect = (item: any) => {

@@ -7,7 +7,7 @@
 <h1 align="center">Lobe Commit</h1>
 
 Lobe Commit is a CLI tool that uses ChatGPT to generate Gitmoji-based commit messages
-  
+
 English · [简体中文](./README-zh_CN.md) · [Changelog](./CHANGELOG.md) · [Report Bug][issues-url] · [Request Feature][issues-url]
 
 <!-- SHIELD GROUP -->
@@ -25,8 +25,8 @@ English · [简体中文](./README-zh_CN.md) · [Changelog](./CHANGELOG.md) · [
 - [x] 😜 Supports adding Gitmojis
 - [x] 📝 Supports Conventional Commits specification
 - [x] ⚡️ Supports pulling a list of issues and convenient binding
+- [x] 💄 Supports custom prompts
 - [ ] 🚧 Supports multi-language commit messages
-- [ ] 🚧 Supports custom prompts
 
 <div align="right">
 
@@ -209,11 +209,10 @@ $ npm start
 </div>
 
 ---
+
 #### 📝 License
 
-Copyright © 2023 [CanisMinor][profile-url]. <br />
-This project is [MIT](./LICENSE) licensed. 
-
+Copyright © 2023 [CanisMinor][profile-url]. <br /> This project is [MIT](./LICENSE) licensed.
 
 <!-- LINK GROUP -->
 

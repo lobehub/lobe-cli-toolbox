@@ -51,7 +51,7 @@ const IssuesList: React.FC<IssuesListProps> = ({ onChange, onSubmit }) => {
         <>
           <Spinner label=" Loading issues..." />
           <TextInput
-            placeholder="Input linked <issues>..."
+            placeholder="Input linked <issues>, or press [Enter] to skip..."
             onChange={onChange}
             onSubmit={onSubmit}
           />
@@ -59,10 +59,13 @@ const IssuesList: React.FC<IssuesListProps> = ({ onChange, onSubmit }) => {
       );
     return (
       <>
+        <Text>⌨️ Use [Space] to multi-select: </Text>
         <MultiSelect options={items} onChange={(v) => onChange(v.join(','))} onSubmit={onSubmit} />
         <TextInput
           placeholder={
-            items?.length > 0 ? 'Fliter issues...' : 'No issues found, press [Enter] to skip...'
+            items?.length > 0
+              ? 'Input to keywords to filter issues, press [Enter] to confirm or skip...'
+              : 'No issues found, press [Enter] to skip...'
           }
           onChange={(v) => setKeywords(v.replace(/ /g, ''))}
         />

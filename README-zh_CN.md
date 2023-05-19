@@ -25,8 +25,8 @@ Lobe Commit 是一款使用 ChatGPT 生成基于 Gitmoji 的 CLI 提交工具
 - [x] 😜 支持添加 Gitmoji
 - [x] 📝 支持 Conventional Commits 规范
 - [x] ⚡️ 支持拉取 issues 列表并便捷绑定
+- [x] 💄 支持自定义 Prompt
 - [ ] 🚧 支持多语言提交信息
-- [ ] 🚧 支持自定义 Prompt
 
 <div align="right">
 
@@ -66,8 +66,8 @@ $ lobe-commit
 在 AI 模式下，可以使用 ChatGPT 生成完整的提交信息
 
 > 👉 提示：需要在设置中 `lobe-commit -o` 配置 OpenAI 令牌，同时如果有特殊的网络要求，也可以在设置中配置 OpenAI 的转发地址
-> 
-![](https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/preview-ai.webp)
+>
+> ![](https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/preview-ai.webp)
 
 <br/>
 
@@ -209,11 +209,10 @@ $ npm start
 </div>
 
 ---
+
 #### 📝 License
 
-Copyright © 2023 [CanisMinor][profile-url]. <br />
-This project is [MIT](./LICENSE) licensed. 
-
+Copyright © 2023 [CanisMinor][profile-url]. <br /> This project is [MIT](./LICENSE) licensed.
 
 <!-- LINK GROUP -->
 
