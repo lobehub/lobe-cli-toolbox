@@ -83,7 +83,7 @@ const Commit: React.FC<CommitProps> = ({ hook }) => {
         <Box>
           <Text color="blue">❯ </Text>
           <TextInput
-            placeholder="Input commit <scope>..."
+            placeholder="Input commit <scope>, or press [Enter] to skip..."
             onChange={setScope}
             onSubmit={() => setStep(2)}
           />

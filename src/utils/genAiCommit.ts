@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 import { ChatGPTAPI } from 'chatgpt';
 import { execSync } from 'child_process';
+import 'isomorphic-fetch';
 import storeConfig from '../constants/config';
 import gitmojis from '../constants/gitmojis.js';
 
