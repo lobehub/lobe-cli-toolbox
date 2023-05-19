@@ -1,4 +1,5 @@
-import { TextInput } from '@inkjs/ui';
+import { Alert, TextInput } from '@inkjs/ui';
+import fs from 'fs';
 import { Box, Text } from 'ink';
 import SelectInput from 'ink-select-input';
 import React, { useMemo, useState } from 'react';
@@ -6,6 +7,8 @@ import { Tabs } from '../../components';
 import configStore from '../../constants/config.js';
 import gitmojis from '../../constants/gitmojis';
 import genCommitMessage from '../../utils/genCommitMessage';
+import getAbsoluteHooksPath from '../../utils/getAbsoluteHooksPath.js';
+import { HOOK } from '../Hook/HookCreate.js';
 import AiCommit from './AiCommit.js';
 import IssuesList from './IssuesList';
 import RunGitCommit from './RunGitCommit';
@@ -110,6 +113,14 @@ const Commit: React.FC<CommitProps> = ({ hook }) => {
       children: <IssuesList onChange={setIssues} onSubmit={() => setStep(4)} />,
     },
   ];
+
+  const hookFile = getAbsoluteHooksPath(HOOK.FILENAME);
+
+  if (!hook && fs.existsSync(hookFile)) {
+    return (
+      <Alert variant="warning">{`Lobe Commit is in hook mode, use "git commit" instead.`}</Alert>
+    );
+  }
 
   if (step === 100) return <AiCommit hook={hook} />;
   if (step === 4) return <RunGitCommit hook={hook} message={commitMessage} />;
