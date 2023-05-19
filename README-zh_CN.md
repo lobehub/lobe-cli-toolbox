@@ -42,6 +42,8 @@ Lobe Commit 是一款使用 ChatGPT 生成基于 Gitmoji 的 CLI 提交工具
 npm install -g @lobehub/commit-cli
 ```
 
+> 👉 提示：请确保 Node.js 版本 >= 18
+
 <div align="right">
 
 [![][back-to-top]](#readme-top)
