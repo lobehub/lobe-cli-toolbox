@@ -16,7 +16,7 @@ body:
       required: true
   - type: textarea
     attributes:
-      label: '🌐 CLI 版本 | CLI Version
+      label: '🌐 CLI 版本 | CLI Version'
     validations:
       required: true
   - type: textarea
