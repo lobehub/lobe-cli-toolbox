@@ -1,5 +1,11 @@
 # Changelog
 
+# [1.3.0](https://github.com/canisminor1990/lobe-commit/compare/v1.2.0...v1.3.0) (2023-05-19)
+
+### ✨ Features
+
+- Supports custom prompts ([531b97a](https://github.com/canisminor1990/lobe-commit/commit/531b97a))
+
 # [1.2.0](https://github.com/canisminor1990/lobe-commit/compare/v1.1.2...v1.2.0) (2023-05-19)
 
 ### ✨ Features
