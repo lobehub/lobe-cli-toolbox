@@ -1,5 +1,11 @@
 # Changelog
 
+# [1.5.0](https://github.com/canisminor1990/lobe-commit/compare/v1.4.0...v1.5.0) (2023-05-19)
+
+### ✨ Features
+
+- Supports multi-language commit messages ([f4a09e8](https://github.com/canisminor1990/lobe-commit/commit/f4a09e8))
+
 # [1.4.0](https://github.com/canisminor1990/lobe-commit/compare/v1.3.1...v1.4.0) (2023-05-19)
 
 ### ✨ Features
