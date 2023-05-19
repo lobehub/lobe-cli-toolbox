@@ -14,15 +14,9 @@ body:
         - Other
     validations:
       required: true
-  - type: dropdown
+  - type: textarea
     attributes:
-      label: '🌐 浏览器 | Browser'
-      options:
-        - Chrome
-        - Edge
-        - Safari
-        - Firefox
-        - Other
+      label: '🌐 CLI 版本 | CLI Version
     validations:
       required: true
   - type: textarea
