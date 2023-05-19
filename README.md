@@ -26,7 +26,7 @@ English · [简体中文](./README-zh_CN.md) · [Changelog](./CHANGELOG.md) · [
 - [x] 📝 Supports Conventional Commits specification
 - [x] ⚡️ Supports pulling a list of issues and convenient binding
 - [x] 💄 Supports custom prompts
-- [ ] 🚧 Supports multi-language commit messages
+- [x] 🗺️ Supports multi-language commit messages
 
 <div align="right">
 
