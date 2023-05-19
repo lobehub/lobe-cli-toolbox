@@ -1,5 +1,11 @@
 # Changelog
 
+# [1.4.0](https://github.com/canisminor1990/lobe-commit/compare/v1.3.1...v1.4.0) (2023-05-19)
+
+### ✨ Features
+
+- **Commit**: introduce AI commit message generator and add dependencies ([b0abbd5](https://github.com/canisminor1990/lobe-commit/commit/b0abbd5))
+
 ## [1.3.1](https://github.com/canisminor1990/lobe-commit/compare/v1.3.0...v1.3.1) (2023-05-19)
 
 # [1.3.0](https://github.com/canisminor1990/lobe-commit/compare/v1.2.0...v1.3.0) (2023-05-19)
