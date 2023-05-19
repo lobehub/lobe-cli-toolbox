@@ -6,7 +6,7 @@ export interface HeaderProps {
 }
 const Header: React.FC<HeaderProps> = ({ title }) => {
   return (
-    <Box justifyContent="center" borderStyle="round" borderColor="#333">
+    <Box justifyContent="center" borderStyle="round" borderColor="gray">
       <Text>{title}</Text>
     </Box>
   );

@@ -7,7 +7,7 @@ interface StepHeaderProps {
 }
 const StepHeader: React.FC<StepHeaderProps> = ({ step, steps }) => {
   return (
-    <Box justifyContent="center" borderStyle="round" borderColor="#333">
+    <Box justifyContent="center" borderStyle="round" borderColor="gray">
       <Text color="#000" backgroundColor="#fff">
         {` ${step + 1}/${steps.length} `}
       </Text>

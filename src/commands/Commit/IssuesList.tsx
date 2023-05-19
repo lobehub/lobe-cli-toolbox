@@ -1,8 +1,9 @@
 import { MultiSelect, Spinner, TextInput } from '@inkjs/ui';
-import { Box, Text } from 'ink';
+import { Text } from 'ink';
 import React, { useEffect, useState } from 'react';
+import { View } from '../../components/index';
 import getIssuesList from '../../utils/getIssuesList';
-import getRepo from '../../utils/getRepo.js';
+import getRepo from '../../utils/getRepo';
 
 interface IssuesListProps {
   onChange: (value: string) => void;
@@ -13,7 +14,7 @@ const IssuesList: React.FC<IssuesListProps> = ({ onChange, onSubmit }) => {
   const [isGithubReop, setIsGithubRepo] = useState<boolean>(false);
   const [keywords, setKeywords] = useState<string>('');
   const [list, setList] = useState<any>();
-  const [items, setItems] = useState();
+  const [items, setItems] = useState<any[]>([]);
   useEffect(() => {
     getRepo().then((data) => {
       if (data) {
@@ -49,40 +50,52 @@ const IssuesList: React.FC<IssuesListProps> = ({ onChange, onSubmit }) => {
     if (!items)
       return (
         <>
-          <Spinner label=" Loading issues..." />
-          <TextInput
-            placeholder="Input linked <issues>, or press [Enter] to skip..."
-            onChange={onChange}
-            onSubmit={onSubmit}
-          />
+          <View>
+            <TextInput
+              placeholder="Input linked <issues>, or press [Enter] to skip..."
+              onChange={onChange}
+              onSubmit={onSubmit}
+            />
+          </View>
+          <View>
+            <Spinner label=" Loading issues..." />
+          </View>
         </>
       );
     return (
       <>
-        <Text>⌨️ Use [Space] to multi-select: </Text>
-        <MultiSelect options={items} onChange={(v) => onChange(v.join(','))} onSubmit={onSubmit} />
-        <TextInput
-          placeholder={
-            items?.length > 0
-              ? 'Input to keywords to filter issues, press [Enter] to confirm or skip...'
-              : 'No issues found, press [Enter] to skip...'
-          }
-          onChange={(v) => setKeywords(v.replace(/ /g, ''))}
-        />
+        <View>
+          <TextInput
+            placeholder={
+              items?.length > 0
+                ? 'Input to keywords to filter issues, press [Enter] to confirm or skip...'
+                : 'No issues found, press [Enter] to skip...'
+            }
+            onChange={(v) => setKeywords(v.replace(/ /g, ''))}
+          />
+        </View>
+        <View>
+          <Text color="gray">Use [Space] to multi-select:</Text>
+          <MultiSelect
+            options={items}
+            onChange={(v) => onChange(v.join(','))}
+            onSubmit={onSubmit}
+          />
+        </View>
       </>
     );
   }
 
   return (
     <>
-      <Box>
+      <View>
         <Text color="blue">❯ </Text>
         <TextInput
           placeholder="Input linked <issues>, or press [Enter] to skip..."
           onChange={onChange}
           onSubmit={onSubmit}
         />
-      </Box>
+      </View>
     </>
   );
 };

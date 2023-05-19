@@ -2,9 +2,8 @@ import chalk from 'chalk';
 import { ChatGPTAPI } from 'chatgpt';
 import { execSync } from 'child_process';
 import 'isomorphic-fetch';
-import storeConfig, { CONFIG_NAME } from '../constants/config';
-import configStore from '../constants/config.js';
-import gitmojis from '../constants/gitmojis.js';
+import { CONFIG_NAME, default as configStore, default as storeConfig } from '../constants/config';
+import gitmojis from '../constants/gitmojis';
 
 const typesExample = gitmojis.map((item) => `${item.type}(${item.descEN})`).join('\n');
 const genPrompt = (diff: string): string => {

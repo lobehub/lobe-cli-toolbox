@@ -3,13 +3,13 @@ import fs from 'fs';
 import { Box, Text } from 'ink';
 import SelectInput from 'ink-select-input';
 import React, { useMemo, useState } from 'react';
-import { Tabs } from '../../components';
-import configStore, { CONFIG_NAME } from '../../constants/config.js';
+import { Tabs, View } from '../../components';
+import configStore, { CONFIG_NAME } from '../../constants/config';
 import gitmojis from '../../constants/gitmojis';
 import genCommitMessage from '../../utils/genCommitMessage';
-import getAbsoluteHooksPath from '../../utils/getAbsoluteHooksPath.js';
-import { HOOK } from '../Hook/HookCreate.js';
-import AiCommit from './AiCommit.js';
+import getAbsoluteHooksPath from '../../utils/getAbsoluteHooksPath';
+import { HOOK } from '../Hook/HookCreate';
+import AiCommit from './AiCommit';
 import IssuesList from './IssuesList';
 import RunGitCommit from './RunGitCommit';
 import StepHeader from './StepHeader';
@@ -57,6 +57,7 @@ const Commit: React.FC<CommitProps> = ({ hook }) => {
     }));
 
     selection = [
+      ...selection,
       {
         label: (
           <>
@@ -68,7 +69,6 @@ const Commit: React.FC<CommitProps> = ({ hook }) => {
         ),
         value: 'ai',
       },
-      ...selection,
     ];
     return selection;
   }, [typeKeywords]);
@@ -77,34 +77,42 @@ const Commit: React.FC<CommitProps> = ({ hook }) => {
     {
       key: 0,
       title: 'Select commit type',
-      children: <SelectInput items={types} onSelect={handleSelect} />,
+      children: (
+        <View>
+          <SelectInput items={types} onSelect={handleSelect} />
+        </View>
+      ),
     },
     {
       key: 1,
       title: 'Input commit scope (optional)',
       children: (
-        <Box>
-          <Text color="blue">❯ </Text>
-          <TextInput
-            placeholder="Input commit <scope>, or press [Enter] to skip..."
-            onChange={setScope}
-            onSubmit={() => setStep(2)}
-          />
-        </Box>
+        <View>
+          <Box>
+            <Text color="blue">❯ </Text>
+            <TextInput
+              placeholder="Input commit <scope>, or press [Enter] to skip..."
+              onChange={setScope}
+              onSubmit={() => setStep(2)}
+            />
+          </Box>
+        </View>
       ),
     },
     {
       key: 2,
       title: 'Input commit subject',
       children: (
-        <Box>
-          <Text color="blue">❯ </Text>
-          <TextInput
-            placeholder="Input commit <subject>..."
-            onChange={setSubject}
-            onSubmit={() => subject && setStep(3)}
-          />
-        </Box>
+        <View>
+          <Box>
+            <Text color="blue">❯ </Text>
+            <TextInput
+              placeholder="Input commit <subject>..."
+              onChange={setSubject}
+              onSubmit={() => subject && setStep(3)}
+            />
+          </Box>
+        </View>
       ),
     },
     {
@@ -128,14 +136,22 @@ const Commit: React.FC<CommitProps> = ({ hook }) => {
   return (
     <>
       <StepHeader step={step} steps={steps} />
-      <Tabs items={steps} activeKey={step} />
-      <Box borderStyle="round" borderColor="#333">
-        <Text> </Text>
-        {step === 0 ? (
-          <TextInput placeholder="Search commit <type>..." onChange={setTpeKeywords} />
-        ) : (
-          <Text>{commitMessage}</Text>
-        )}
+      <Box
+        borderStyle="round"
+        borderColor="gray"
+        paddingLeft={1}
+        paddingRight={1}
+        flexDirection={'column'}
+      >
+        <Box>
+          <Text> </Text>
+          {step === 0 ? (
+            <TextInput placeholder="Search commit <type>..." onChange={setTpeKeywords} />
+          ) : (
+            <Text>{commitMessage}</Text>
+          )}
+        </Box>
+        <Tabs items={steps} activeKey={step} />
       </Box>
     </>
   );

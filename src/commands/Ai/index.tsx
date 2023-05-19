@@ -12,7 +12,7 @@ const Ai: React.FC = () => {
   }, []);
 
   return (
-    <Box borderStyle="round" borderColor="#333" paddingLeft={2} paddingRight={2}>
+    <Box borderStyle="round" borderColor="gray" paddingLeft={2} paddingRight={2}>
       {msg ? <Text>{msg}</Text> : <Spinner label=" Generating..." />}
     </Box>
   );

@@ -1,5 +1,5 @@
 import cliui from 'cliui';
-import { IFlags } from '../constants/flags.js';
+import { IFlags } from '../constants/flags';
 
 export default (flagsConst: IFlags) => {
   // @ts-ignore
