@@ -9,6 +9,7 @@ const typesExample = gitmojis.map((item) => `- ${item.type}: ${item.descEN}`).jo
 const genPrompt = (diff: string): string => {
   const custionPrompt: string | any = storeConfig.get(CONFIG_NAME.PROMPT);
   const maxLength: number | any = storeConfig.get(CONFIG_NAME.MAX_LENGTH);
+  const locale: number | any = storeConfig.get(CONFIG_NAME.LOCALE);
   let prompt: string =
     `I want you to act as the author of a commit message in git.` +
     `I'll enter a git diff, and your job is to convert it into a useful commit message.` +
@@ -16,11 +17,14 @@ const genPrompt = (diff: string): string => {
   if (custionPrompt) prompt = custionPrompt;
   return [
     prompt,
+    locale && `Commit message language: ${locale}`,
     `Commit message must be a maximum of ${maxLength} characters.`,
     `Choose only one type from the type-to-description below:`,
     typesExample,
     `Return pure commit message describes the git diff: ${diff}`,
-  ].join('\n');
+  ]
+    .filter(Boolean)
+    .join('\n');
 };
 
 const addEmoji = (message: string) => {

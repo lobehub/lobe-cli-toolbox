@@ -14,6 +14,7 @@ const Config: React.FC = () => {
   const promptConfig: string | any = configStore.get(CONFIG_NAME.PROMPT);
   const maxLengthConfig: number | any = configStore.get(CONFIG_NAME.MAX_LENGTH);
   const timeoutConfig: number | any = configStore.get(CONFIG_NAME.TIMEOUT);
+  const localeConfig: number | any = configStore.get(CONFIG_NAME.LOCALE);
 
   const updateConfig = (key: string, value: string | number | boolean) => {
     configStore.set(key, value);
@@ -30,6 +31,16 @@ const Config: React.FC = () => {
         />
       ),
       value: CONFIG_NAME.EMOJI_FORMAT,
+    },
+    {
+      label: (
+        <ConfigTitle
+          title="AI message locale"
+          color={localeConfig ? 'green' : 'blue'}
+          badge={localeConfig || 'EN'}
+        />
+      ),
+      value: CONFIG_NAME.LOCALE,
     },
     {
       label: (
@@ -90,7 +101,7 @@ const Config: React.FC = () => {
       children: <SelectInput items={selection} onSelect={(item: any) => setTab(item.value)} />,
     },
     {
-      title: '🤯 Emoji Format Setting',
+      title: '🤯 Emoji Format Config',
       key: CONFIG_NAME.EMOJI_FORMAT,
       children: (
         <SelectInput
@@ -111,7 +122,20 @@ const Config: React.FC = () => {
       ),
     },
     {
-      title: '🤯 Prompt Setting',
+      title: '🤯 Commit Message Locale Config',
+      key: CONFIG_NAME.LOCALE,
+      children: (
+        <TextInput
+          placeholder="Input commit messge locale..."
+          defaultValue={localeConfig}
+          onSubmit={(v) => {
+            updateConfig(CONFIG_NAME.LOCALE, v);
+          }}
+        />
+      ),
+    },
+    {
+      title: '🤯 Prompt Config',
       key: CONFIG_NAME.PROMPT,
       children: (
         <TextInput
@@ -124,12 +148,12 @@ const Config: React.FC = () => {
       ),
     },
     {
-      title: '🤯 Commit Message Max-Length',
-      key: CONFIG_NAME.API_BASE_URL,
+      title: '🤯 Commit Message Max-Length Config',
+      key: CONFIG_NAME.MAX_LENGTH,
       children: (
         <TextInput
           placeholder="The maximum character length of the generated commit message, default 100..."
-          defaultValue={maxLengthConfig}
+          defaultValue={String(maxLengthConfig)}
           onSubmit={(v) => {
             updateConfig(CONFIG_NAME.MAX_LENGTH, Number(v));
           }}
@@ -137,7 +161,7 @@ const Config: React.FC = () => {
       ),
     },
     {
-      title: '🤯 OpenAI Token Setting',
+      title: '🤯 OpenAI Token Config',
       key: CONFIG_NAME.OPENAI_TOKEN,
       children: (
         <TextInput
@@ -150,7 +174,7 @@ const Config: React.FC = () => {
       ),
     },
     {
-      title: '🤯 OpenAI API Proxy',
+      title: '🤯 OpenAI API Proxy Config',
       key: CONFIG_NAME.API_BASE_URL,
       children: (
         <TextInput
@@ -163,12 +187,12 @@ const Config: React.FC = () => {
       ),
     },
     {
-      title: '🤯 OpenAI Timeout',
-      key: CONFIG_NAME.API_BASE_URL,
+      title: '🤯 OpenAI Timeout Config',
+      key: CONFIG_NAME.TIMEOUT,
       children: (
         <TextInput
           placeholder="The timeout for network requests to the OpenAI API in milliseconds, default 10000..."
-          defaultValue={timeoutConfig}
+          defaultValue={String(timeoutConfig)}
           onSubmit={(v) => {
             updateConfig(CONFIG_NAME.TIMEOUT, Number(v));
           }}
@@ -176,7 +200,7 @@ const Config: React.FC = () => {
       ),
     },
     {
-      title: '🤯 Github Token Setting',
+      title: '🤯 Github Token Config',
       key: CONFIG_NAME.GITHUB_TOKEN,
       children: (
         <TextInput

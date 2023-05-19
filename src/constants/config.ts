@@ -8,6 +8,7 @@ export const CONFIG_NAME = {
   GITHUB_TOKEN: 'githubToken',
   MAX_LENGTH: 'maxLength',
   TIMEOUT: 'timeout',
+  LOCALE: 'locale',
 };
 
 const schema = {
@@ -28,6 +29,10 @@ const schema = {
     default: '',
   },
   [CONFIG_NAME.PROMPT]: {
+    type: 'string',
+    default: '',
+  },
+  [CONFIG_NAME.LOCALE]: {
     type: 'string',
     default: '',
   },
