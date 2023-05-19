@@ -48,6 +48,7 @@
   },
   "dependencies": {
     "@inkjs/ui": "^1",
+    "@types/lodash-es": "^4.17.7",
     "@types/pangu": "^4",
     "@types/react": "^18",
     "chalk": "^5",
@@ -60,6 +61,7 @@
     "ink": "^4",
     "ink-select-input": "^5",
     "isomorphic-fetch": "^3",
+    "lodash-es": "^4.17.21",
     "meow": "^12",
     "pangu": "^4",
     "path-exists": "^5",

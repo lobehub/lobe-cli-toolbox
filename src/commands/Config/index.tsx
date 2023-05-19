@@ -7,13 +7,13 @@ import ConfigTitle from './ConfigTitle';
 
 const Config: React.FC = () => {
   const [tab, setTab] = useState<string>('home');
-  const emojiFormatConfig = configStore.get(CONFIG_NAME.EMOJI_FORMAT);
-  const openaiTokenConfig = configStore.get(CONFIG_NAME.OPENAI_TOKEN);
-  const apiBaseUrlConfig = configStore.get(CONFIG_NAME.API_BASE_URL);
-  const githubTokenConfig = configStore.get(CONFIG_NAME.GITHUB_TOKEN);
-  const promptConfig = configStore.get(CONFIG_NAME.PROMPT);
+  const emojiFormatConfig: boolean | any = configStore.get(CONFIG_NAME.EMOJI_FORMAT);
+  const openaiTokenConfig: string | any = configStore.get(CONFIG_NAME.OPENAI_TOKEN);
+  const apiBaseUrlConfig: string | any = configStore.get(CONFIG_NAME.API_BASE_URL);
+  const githubTokenConfig: string | any = configStore.get(CONFIG_NAME.GITHUB_TOKEN);
+  const promptConfig: string | any = configStore.get(CONFIG_NAME.PROMPT);
 
-  const updateConfig = (key, value) => {
+  const updateConfig = (key: string, value: string | boolean) => {
     configStore.set(key, value);
     setTab('home');
   };
@@ -92,7 +92,7 @@ const Config: React.FC = () => {
               value: 'code',
             },
           ]}
-          onSelect={(item: any) => {
+          onSelect={(item: { label: string; value: string }) => {
             updateConfig(CONFIG_NAME.EMOJI_FORMAT, item.value === 'emoji');
           }}
         />

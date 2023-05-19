@@ -2,7 +2,7 @@ import { Spinner } from '@inkjs/ui';
 import { Text } from 'ink';
 import SelectInput from 'ink-select-input';
 import React, { useEffect, useState } from 'react';
-import { View } from '../../components/index';
+import { BorderView, Header, View } from '../../components';
 import genAiCommit from '../../utils/genAiCommit';
 import RunGitCommit from './RunGitCommit';
 
@@ -33,20 +33,23 @@ const AiCommit: React.FC<AiCommitProps> = ({ hook }) => {
 
   return (
     <>
-      <View>{msg ? <Text>{msg}</Text> : <Spinner label=" Generating..." />}</View>
-      {msg ? (
-        <View>
-          <SelectInput
-            items={[
-              { label: '🔄️ Regenerate commit message', value: 'reload' },
-              { label: '✅ Use this message', value: 'confirm' },
-            ]}
-            onSelect={handleSelect}
-          />
-        </View>
-      ) : (
-        <Text></Text>
-      )}
+      <Header title={`🤯 AI Commit Generator`} />
+      <BorderView>
+        {msg ? <Text>{msg}</Text> : <Spinner label=" Generating..." />}
+        {msg ? (
+          <View>
+            <SelectInput
+              items={[
+                { label: '🔄️ Regenerate commit message', value: 'reload' },
+                { label: '✅ Use this message', value: 'confirm' },
+              ]}
+              onSelect={handleSelect}
+            />
+          </View>
+        ) : (
+          <Text />
+        )}
+      </BorderView>
     </>
   );
 };

@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import BorderView from './BorderView';
 import Header from './Header';
 
 export interface TabsWithHeaderItem {
@@ -20,7 +21,7 @@ const TabsWithHeader: React.FC<TabsWithHeaderProps> = ({ activeKey, items }) => 
           activeKey === item.key && (
             <Fragment key={item.key}>
               <Header title={item.title} />
-              {item.children}
+              <BorderView>{item.children}</BorderView>
             </Fragment>
           ),
       )}

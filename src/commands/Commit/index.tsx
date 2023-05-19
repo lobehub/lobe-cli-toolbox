@@ -2,8 +2,9 @@ import { Alert, TextInput } from '@inkjs/ui';
 import fs from 'fs';
 import { Box, Text } from 'ink';
 import SelectInput from 'ink-select-input';
+import { debounce } from 'lodash-es';
 import React, { useMemo, useState } from 'react';
-import { Tabs, View } from '../../components';
+import { BorderView, Tabs, View } from '../../components';
 import configStore, { CONFIG_NAME } from '../../constants/config';
 import gitmojis from '../../constants/gitmojis';
 import genCommitMessage from '../../utils/genCommitMessage';
@@ -79,7 +80,7 @@ const Commit: React.FC<CommitProps> = ({ hook }) => {
       title: 'Select commit type',
       children: (
         <View>
-          <SelectInput items={types} onSelect={handleSelect} />
+          <SelectInput items={types} onSelect={debounce(handleSelect, 100)} />
         </View>
       ),
     },
@@ -92,7 +93,7 @@ const Commit: React.FC<CommitProps> = ({ hook }) => {
             <Text color="blue">❯ </Text>
             <TextInput
               placeholder="Input commit <scope>, or press [Enter] to skip..."
-              onChange={setScope}
+              onChange={debounce(setScope, 100)}
               onSubmit={() => setStep(2)}
             />
           </Box>
@@ -108,7 +109,7 @@ const Commit: React.FC<CommitProps> = ({ hook }) => {
             <Text color="blue">❯ </Text>
             <TextInput
               placeholder="Input commit <subject>..."
-              onChange={setSubject}
+              onChange={debounce(setSubject, 100)}
               onSubmit={() => subject && setStep(3)}
             />
           </Box>
@@ -118,7 +119,7 @@ const Commit: React.FC<CommitProps> = ({ hook }) => {
     {
       key: 3,
       title: 'Link issues (optional)',
-      children: <IssuesList onChange={setIssues} onSubmit={() => setStep(4)} />,
+      children: <IssuesList onChange={debounce(setIssues, 100)} onSubmit={() => setStep(4)} />,
     },
   ];
 
@@ -136,23 +137,19 @@ const Commit: React.FC<CommitProps> = ({ hook }) => {
   return (
     <>
       <StepHeader step={step} steps={steps} />
-      <Box
-        borderStyle="round"
-        borderColor="gray"
-        paddingLeft={1}
-        paddingRight={1}
-        flexDirection={'column'}
-      >
+      <BorderView>
         <Box>
-          <Text> </Text>
           {step === 0 ? (
-            <TextInput placeholder="Search commit <type>..." onChange={setTpeKeywords} />
+            <TextInput
+              placeholder="Search commit <type>..."
+              onChange={debounce(setTpeKeywords, 100)}
+            />
           ) : (
             <Text>{commitMessage}</Text>
           )}
         </Box>
         <Tabs items={steps} activeKey={step} />
-      </Box>
+      </BorderView>
     </>
   );
 };

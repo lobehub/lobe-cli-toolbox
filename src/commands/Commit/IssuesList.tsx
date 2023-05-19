@@ -1,5 +1,6 @@
 import { MultiSelect, Spinner, TextInput } from '@inkjs/ui';
 import { Text } from 'ink';
+import { debounce } from 'lodash-es';
 import React, { useEffect, useState } from 'react';
 import { View } from '../../components/index';
 import getIssuesList from '../../utils/getIssuesList';
@@ -46,6 +47,10 @@ const IssuesList: React.FC<IssuesListProps> = ({ onChange, onSubmit }) => {
     setItems(newItems);
   }, [list, keywords]);
 
+  const handleKeywors = (v: string) => {
+    setKeywords(v.replace(/ /g, ''));
+  };
+
   if (isGithubReop) {
     if (!items)
       return (
@@ -71,7 +76,7 @@ const IssuesList: React.FC<IssuesListProps> = ({ onChange, onSubmit }) => {
                 ? 'Input to keywords to filter issues, press [Enter] to confirm or skip...'
                 : 'No issues found, press [Enter] to skip...'
             }
-            onChange={(v) => setKeywords(v.replace(/ /g, ''))}
+            onChange={debounce(handleKeywors, 100)}
           />
         </View>
         <View>

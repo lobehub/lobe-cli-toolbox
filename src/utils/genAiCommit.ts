@@ -7,8 +7,8 @@ import gitmojis from '../constants/gitmojis';
 
 const typesExample = gitmojis.map((item) => `${item.type}(${item.descEN})`).join('\n');
 const genPrompt = (diff: string): string => {
-  const custionPrompt = configStore.get(CONFIG_NAME.PROMPT);
-  let prompt =
+  const custionPrompt: string | any = configStore.get(CONFIG_NAME.PROMPT);
+  let prompt: string =
     `I want you to act as the author of a commit message in git.` +
     `I'll enter a git diff, and your job is to convert it into a useful commit message.` +
     `Do not preface the commit with anything, use the present tense, use the conventional commits specification <type>(<optional scope>): <subject>`;

@@ -5,7 +5,6 @@ import Config from './Config';
 import HookCreate from './Hook/HookCreate';
 import HookRemove from './Hook/HookRemove';
 import List from './List';
-import Update from './Update';
 // @ts-ignore
 import updateNotifier from 'update-notifier';
 import packageJson from '../../package.json';
@@ -39,8 +38,6 @@ const App: React.FC<AppProps> = (props) => {
     return <HookCreate />;
   } else if (props.remove) {
     return <HookRemove />;
-  } else if (props.update) {
-    return <Update />;
   } else if (props.version) {
     return null;
   } else if (props.hook) {
