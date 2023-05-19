@@ -42,6 +42,8 @@ To install Lobe Commit, run the following command:
 npm install -g @lobehub/commit-cli
 ```
 
+> 👉 Tip: Make sure your node version >= 18
+
 <div align="right">
 
 [![][back-to-top]](#readme-top)
