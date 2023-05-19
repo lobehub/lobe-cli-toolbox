@@ -6,6 +6,8 @@ export const CONFIG_NAME = {
   OPENAI_TOKEN: 'openaiToken',
   API_BASE_URL: 'apiBaseUrl',
   GITHUB_TOKEN: 'githubToken',
+  MAX_LENGTH: 'maxLength',
+  TIMEOUT: 'timeout',
 };
 
 const schema = {
@@ -28,6 +30,14 @@ const schema = {
   [CONFIG_NAME.PROMPT]: {
     type: 'string',
     default: '',
+  },
+  [CONFIG_NAME.MAX_LENGTH]: {
+    type: 'number',
+    default: 100,
+  },
+  [CONFIG_NAME.TIMEOUT]: {
+    type: 'number',
+    default: 10000,
   },
 };
 

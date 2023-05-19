@@ -7,7 +7,7 @@ interface BorderViewProps {
 const BorderView: React.FC<BorderViewProps> = ({ children }) => (
   <Box
     borderStyle="round"
-    borderColor="gray"
+    borderColor="#333"
     paddingLeft={1}
     paddingRight={1}
     flexDirection={'column'}

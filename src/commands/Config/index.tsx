@@ -12,8 +12,10 @@ const Config: React.FC = () => {
   const apiBaseUrlConfig: string | any = configStore.get(CONFIG_NAME.API_BASE_URL);
   const githubTokenConfig: string | any = configStore.get(CONFIG_NAME.GITHUB_TOKEN);
   const promptConfig: string | any = configStore.get(CONFIG_NAME.PROMPT);
+  const maxLengthConfig: number | any = configStore.get(CONFIG_NAME.MAX_LENGTH);
+  const timeoutConfig: number | any = configStore.get(CONFIG_NAME.TIMEOUT);
 
-  const updateConfig = (key: string, value: string | boolean) => {
+  const updateConfig = (key: string, value: string | number | boolean) => {
     configStore.set(key, value);
     setTab('home');
   };
@@ -22,7 +24,7 @@ const Config: React.FC = () => {
     {
       label: (
         <ConfigTitle
-          title="Emoji Format"
+          title="Emoji format"
           color="blue"
           badge={emojiFormatConfig ? 'emoji' : 'code'}
         />
@@ -32,7 +34,7 @@ const Config: React.FC = () => {
     {
       label: (
         <ConfigTitle
-          title="Custom Prompt"
+          title="Custom prompt"
           color={promptConfig ? 'green' : 'blue'}
           badge={promptConfig ? 'modify' : 'default'}
         />
@@ -41,8 +43,14 @@ const Config: React.FC = () => {
     },
     {
       label: (
+        <ConfigTitle title="Commit message max-Length" color={'#fff'} badge={maxLengthConfig} />
+      ),
+      value: CONFIG_NAME.MAX_LENGTH,
+    },
+    {
+      label: (
         <ConfigTitle
-          title="OpenAI Token"
+          title="OpenAI token"
           color={openaiTokenConfig ? 'green' : 'red'}
           badge={openaiTokenConfig ? 'set' : 'unset'}
         />
@@ -52,7 +60,7 @@ const Config: React.FC = () => {
     {
       label: (
         <ConfigTitle
-          title="OpenAI API Proxy"
+          title="OpenAI API proxy"
           color={apiBaseUrlConfig ? 'green' : 'blue'}
           badge={apiBaseUrlConfig ? 'modify' : 'default'}
         />
@@ -60,9 +68,13 @@ const Config: React.FC = () => {
       value: CONFIG_NAME.API_BASE_URL,
     },
     {
+      label: <ConfigTitle title="OpenAI timeout" color={'#fff'} badge={timeoutConfig + 'ms'} />,
+      value: CONFIG_NAME.TIMEOUT,
+    },
+    {
       label: (
         <ConfigTitle
-          title="Github Token"
+          title="Github token"
           color={githubTokenConfig ? 'green' : 'red'}
           badge={githubTokenConfig ? 'set' : 'unset'}
         />
@@ -112,6 +124,19 @@ const Config: React.FC = () => {
       ),
     },
     {
+      title: '🤯 Commit Message Max-Length',
+      key: CONFIG_NAME.API_BASE_URL,
+      children: (
+        <TextInput
+          placeholder="The maximum character length of the generated commit message, default 100..."
+          defaultValue={maxLengthConfig}
+          onSubmit={(v) => {
+            updateConfig(CONFIG_NAME.MAX_LENGTH, Number(v));
+          }}
+        />
+      ),
+    },
+    {
       title: '🤯 OpenAI Token Setting',
       key: CONFIG_NAME.OPENAI_TOKEN,
       children: (
@@ -133,6 +158,19 @@ const Config: React.FC = () => {
           defaultValue={apiBaseUrlConfig}
           onSubmit={(v) => {
             updateConfig(CONFIG_NAME.API_BASE_URL, v);
+          }}
+        />
+      ),
+    },
+    {
+      title: '🤯 OpenAI Timeout',
+      key: CONFIG_NAME.API_BASE_URL,
+      children: (
+        <TextInput
+          placeholder="The timeout for network requests to the OpenAI API in milliseconds, default 10000..."
+          defaultValue={timeoutConfig}
+          onSubmit={(v) => {
+            updateConfig(CONFIG_NAME.TIMEOUT, Number(v));
           }}
         />
       ),

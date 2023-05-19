@@ -8,9 +8,10 @@ interface ConfigTitleProps {
 }
 
 const ConfigTitle: React.FC<ConfigTitleProps> = ({ title, color, badge }) => {
+  const newTitle = title + new Array(30 - title.length).fill(null).join(' ');
   return (
     <Text>
-      {`${title} `}
+      {`${newTitle} `}
       <Badge color={color}>{badge}</Badge>
     </Text>
   );

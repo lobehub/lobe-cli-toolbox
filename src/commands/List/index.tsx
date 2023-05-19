@@ -1,9 +1,10 @@
 import { Box, Text } from 'ink';
 import React, { Fragment } from 'react';
+import { BorderView } from '../../components/index.js';
 import gitmojis from '../../constants/gitmojis';
 
 const List: React.FC = () => (
-  <>
+  <BorderView>
     {gitmojis.map((item) => (
       <Fragment key={item.name}>
         <Box>
@@ -12,16 +13,11 @@ const List: React.FC = () => (
               {` ${item.emoji} ${item.type} `}
             </Text>
           </Box>
-          <Box marginRight={1} width={40}>
-            <Text color="#999">{`- ${item.descEN}`}</Text>
-          </Box>
-          <Box>
-            <Text color="#999">{item.descCN}</Text>
-          </Box>
+          <Text color="#999">{`- ${item.descEN}`}</Text>
         </Box>
       </Fragment>
     ))}
-  </>
+  </BorderView>
 );
 
 export default React.memo(List);

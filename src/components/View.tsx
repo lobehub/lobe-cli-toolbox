@@ -7,7 +7,7 @@ interface ViewProps {
 const View: React.FC<ViewProps> = ({ children }) => (
   <Box
     borderStyle="round"
-    borderColor="gray"
+    borderColor="#333"
     borderLeft={false}
     borderRight={false}
     borderBottom={false}

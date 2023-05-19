@@ -7,8 +7,10 @@ import createMeowSetting from './utils/createMeowSetting';
 const { help, flags } = createMeowSetting(FLAGS_CONST);
 
 const cli = meow(help, {
+  // @ts-ignore
   importMeta: import.meta,
   flags,
 });
 
+// @ts-ignore
 render(<App {...cli.flags} />);
