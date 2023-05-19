@@ -1,5 +1,11 @@
 # Changelog
 
+# [1.2.0](https://github.com/canisminor1990/lobe-commit/compare/v1.1.2...v1.2.0) (2023-05-19)
+
+### ✨ Features
+
+- add hook mode check ([a4795ce](https://github.com/canisminor1990/lobe-commit/commit/a4795ce))
+
 ## [1.1.2](https://github.com/canisminor1990/lobe-commit/compare/v1.1.1...v1.1.2) (2023-05-19)
 
 ### 🐛 Bug Fixes
