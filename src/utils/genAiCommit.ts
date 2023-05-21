@@ -76,6 +76,5 @@ export default async () => {
   const { text } = await api.sendMessage(genPrompt(diff), {
     timeoutMs,
   });
-
-  return addEmoji(text);
+  return addEmoji(text.replace(/\((.*?)\):/, (match, p1) => match && `(${p1.toLowerCase()}):`));
 };

@@ -12,7 +12,7 @@ export default ({
 }): string => {
   if (!type) return 'waiting for selection...';
   let message = type;
-  if (scope) message = `${message}(${scope})`;
+  if (scope) message = `${message}(${scope.toLowerCase()})`;
   message = `${message}: ${pangu.spacing(subject)}`;
   if (issues) {
     const issuesGroup = issues
