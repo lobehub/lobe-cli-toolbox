@@ -10,21 +10,31 @@ const genPrompt = (diff: string): string => {
   const custionPrompt: string | any = storeConfig.get(CONFIG_NAME.PROMPT);
   const maxLength: number | any = storeConfig.get(CONFIG_NAME.MAX_LENGTH);
   const locale: number | any = storeConfig.get(CONFIG_NAME.LOCALE);
+  const diffLength: number | any = storeConfig.get(CONFIG_NAME.DIFF_LENGTH);
+
   let prompt: string =
     `I want you to act as the author of a commit message in git.` +
     `I'll enter a git diff, and your job is to convert it into a useful commit message.` +
     `Do not preface the commit with anything, use the present tense, use the conventional commits specification <type>(<optional scope>): <subject>`;
   if (custionPrompt) prompt = custionPrompt;
-  return [
+
+  const finalPrompt = [
     prompt,
     locale && `Commit message language: ${locale}`,
     `Commit message must be a maximum of ${maxLength} characters.`,
     `Choose only one type from the type-to-description below:`,
     typesExample,
-    `Return pure commit message describes the git diff: ${diff}`,
+    `Return pure commit message describes the git diff: `,
   ]
     .filter(Boolean)
     .join('\n');
+
+  let diffMessage = diff;
+  if (diffMessage.length > diffLength - finalPrompt.length) {
+    diffMessage = diff.substring(0, diffLength - finalPrompt.length);
+  }
+
+  return [finalPrompt, diffMessage].filter(Boolean).join('\n');
 };
 
 const addEmoji = (message: string) => {
@@ -37,7 +47,8 @@ const addEmoji = (message: string) => {
 };
 
 export default async () => {
-  const apiKey: any = storeConfig.get('openaiToken');
+  const apiKey: string | any = storeConfig.get(CONFIG_NAME.OPENAI_TOKEN);
+
   if (!apiKey) {
     console.log(chalk.red.bgBlack(' 🤯 Please set the OpenAI Token by lobe-commit --config '));
     process.exit(1);
@@ -45,10 +56,6 @@ export default async () => {
   }
 
   let diff = execSync('git diff --staged').toString();
-
-  if (diff.length > 5000) {
-    diff = diff.substring(0, 5000);
-  }
 
   if (!diff) {
     console.log(chalk.yellow.bgBlack(' 🤯 No changes to commit '));

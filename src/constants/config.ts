@@ -9,6 +9,7 @@ export const CONFIG_NAME = {
   MAX_LENGTH: 'maxLength',
   TIMEOUT: 'timeout',
   LOCALE: 'locale',
+  DIFF_LENGTH: 'diffLength',
 };
 
 const schema = {
@@ -43,6 +44,10 @@ const schema = {
   [CONFIG_NAME.TIMEOUT]: {
     type: 'number',
     default: 10000,
+  },
+  [CONFIG_NAME.DIFF_LENGTH]: {
+    type: 'number',
+    default: 5000,
   },
 };
 

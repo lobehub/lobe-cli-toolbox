@@ -15,6 +15,7 @@ const Config: React.FC = () => {
   const maxLengthConfig: number | any = configStore.get(CONFIG_NAME.MAX_LENGTH);
   const timeoutConfig: number | any = configStore.get(CONFIG_NAME.TIMEOUT);
   const localeConfig: number | any = configStore.get(CONFIG_NAME.LOCALE);
+  const diffLength: number | any = configStore.get(CONFIG_NAME.DIFF_LENGTH);
 
   const updateConfig = (key: string, value: string | number | boolean) => {
     configStore.set(key, value);
@@ -51,6 +52,10 @@ const Config: React.FC = () => {
         />
       ),
       value: CONFIG_NAME.PROMPT,
+    },
+    {
+      label: <ConfigTitle title="Diff max-Length" color={'#fff'} badge={diffLength} />,
+      value: CONFIG_NAME.DIFF_LENGTH,
     },
     {
       label: (
@@ -143,6 +148,19 @@ const Config: React.FC = () => {
           defaultValue={promptConfig}
           onSubmit={(v) => {
             updateConfig(CONFIG_NAME.PROMPT, v);
+          }}
+        />
+      ),
+    },
+    {
+      title: '🤯 Diff Max-Length Config',
+      key: CONFIG_NAME.DIFF_LENGTH,
+      children: (
+        <TextInput
+          placeholder="The maximum character length of diff log, default 5000..."
+          defaultValue={String(diffLength)}
+          onSubmit={(v) => {
+            updateConfig(CONFIG_NAME.DIFF_LENGTH, Number(v));
           }}
         />
       ),
