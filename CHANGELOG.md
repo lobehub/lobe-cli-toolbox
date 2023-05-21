@@ -1,5 +1,11 @@
 # Changelog
 
+# [1.6.0](https://github.com/canisminor1990/lobe-commit/compare/v1.5.0...v1.6.0) (2023-05-21)
+
+### ✨ Features
+
+- **Config**: Add option to configure maximum length of diff log ([ca33a51](https://github.com/canisminor1990/lobe-commit/commit/ca33a51))
+
 # [1.5.0](https://github.com/canisminor1990/lobe-commit/compare/v1.4.0...v1.5.0) (2023-05-19)
 
 ### ✨ Features
