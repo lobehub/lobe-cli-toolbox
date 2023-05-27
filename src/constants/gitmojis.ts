@@ -77,7 +77,7 @@ export default [
     descCN: '添加或更新 CI 构建系统',
     name: 'construction-worker',
     semver: null,
-    type: 'ops',
+    type: 'ci',
   },
   {
     emoji: '🔧',
