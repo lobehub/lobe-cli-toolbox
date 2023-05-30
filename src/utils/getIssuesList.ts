@@ -1,5 +1,6 @@
 // @ts-ignore
 import GitHub from 'github-api';
+
 import configStore, { CONFIG_NAME } from '../constants/config';
 import getRepo from './getRepo';
 

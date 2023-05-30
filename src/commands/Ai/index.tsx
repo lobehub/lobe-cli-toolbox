@@ -1,9 +1,10 @@
 import { Spinner } from '@inkjs/ui';
 import { Box, Text } from 'ink';
-import React, { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
+
 import genAiCommit from '../../utils/genAiCommit';
 
-const Ai: React.FC = () => {
+const Ai = memo(() => {
   const [msg, setMsg] = useState<string>('');
   useEffect(() => {
     genAiCommit().then((text: any) => {
@@ -12,10 +13,10 @@ const Ai: React.FC = () => {
   }, []);
 
   return (
-    <Box borderStyle="round" borderColor="#333" paddingLeft={2} paddingRight={2}>
+    <Box borderColor="#333" borderStyle="round" paddingLeft={2} paddingRight={2}>
       {msg ? <Text>{msg}</Text> : <Spinner label=" Generating..." />}
     </Box>
   );
-};
+});
 
-export default React.memo(Ai);
+export default Ai;

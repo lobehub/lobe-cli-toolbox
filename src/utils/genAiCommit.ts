@@ -1,7 +1,9 @@
+import 'isomorphic-fetch';
+
 import chalk from 'chalk';
 import { ChatGPTAPI } from 'chatgpt';
 import { execSync } from 'child_process';
-import 'isomorphic-fetch';
+
 import { CONFIG_NAME, default as storeConfig } from '../constants/config';
 import gitmojis from '../constants/gitmojis';
 

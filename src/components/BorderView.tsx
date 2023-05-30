@@ -1,19 +1,19 @@
 import { Box } from 'ink';
-import React from 'react';
+import { memo, type ReactNode } from 'react';
 
 interface BorderViewProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
-const BorderView: React.FC<BorderViewProps> = ({ children }) => (
+const BorderView = memo<BorderViewProps>(({ children }) => (
   <Box
-    borderStyle="round"
     borderColor="#333"
+    borderStyle="round"
+    flexDirection={'column'}
     paddingLeft={1}
     paddingRight={1}
-    flexDirection={'column'}
   >
     {children}
   </Box>
-);
+));
 
-export default React.memo(BorderView);
+export default BorderView;

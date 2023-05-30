@@ -3,7 +3,8 @@ import fs from 'fs';
 import { Box, Text } from 'ink';
 import SelectInput from 'ink-select-input';
 import { debounce } from 'lodash-es';
-import React, { useMemo, useState } from 'react';
+import { memo, useMemo, useState } from 'react';
+
 import { BorderView, Tabs, View } from '../../components';
 import configStore, { CONFIG_NAME } from '../../constants/config';
 import gitmojis from '../../constants/gitmojis';
@@ -19,7 +20,7 @@ interface CommitProps {
   hook?: boolean;
 }
 
-const Commit: React.FC<CommitProps> = ({ hook }) => {
+const Commit = memo<CommitProps>(({ hook }) => {
   const [step, setStep] = useState<number>(0);
   const [typeKeywords, setTpeKeywords] = useState<string>('');
   const [type, setType] = useState<string>('');
@@ -92,9 +93,9 @@ const Commit: React.FC<CommitProps> = ({ hook }) => {
           <Box>
             <Text color="blue">❯ </Text>
             <TextInput
-              placeholder="Input commit <scope>, or press [Enter] to skip..."
               onChange={debounce(setScope, 100)}
               onSubmit={() => setStep(2)}
+              placeholder="Input commit <scope>, or press [Enter] to skip..."
             />
           </Box>
         </View>
@@ -108,9 +109,9 @@ const Commit: React.FC<CommitProps> = ({ hook }) => {
           <Box>
             <Text color="blue">❯ </Text>
             <TextInput
-              placeholder="Input commit <subject>..."
               onChange={debounce(setSubject, 100)}
               onSubmit={() => subject && setStep(3)}
+              placeholder="Input commit <subject>..."
             />
           </Box>
         </View>
@@ -141,17 +142,17 @@ const Commit: React.FC<CommitProps> = ({ hook }) => {
         <Box>
           {step === 0 ? (
             <TextInput
-              placeholder="Search commit <type>..."
               onChange={debounce(setTpeKeywords, 100)}
+              placeholder="Search commit <type>..."
             />
           ) : (
             <Text>{commitMessage}</Text>
           )}
         </Box>
-        <Tabs items={steps} activeKey={step} />
+        <Tabs activeKey={step} items={steps} />
       </BorderView>
     </>
   );
-};
+});
 
-export default React.memo(Commit);
+export default Commit;

@@ -1,14 +1,15 @@
 import pangu from 'pangu';
+
 export default ({
   type,
   scope,
   subject,
   issues,
 }: {
-  type: string;
+  issues?: string;
   scope?: string;
   subject: string;
-  issues?: string;
+  type: string;
 }): string => {
   if (!type) return 'waiting for selection...';
   let message = type;

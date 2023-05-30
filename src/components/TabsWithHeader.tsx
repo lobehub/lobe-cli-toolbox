@@ -1,11 +1,12 @@
-import React, { Fragment } from 'react';
+import { Fragment, memo, type ReactNode } from 'react';
+
 import BorderView from './BorderView';
 import Header from './Header';
 
 export interface TabsWithHeaderItem {
-  title: string;
+  children: ReactNode;
   key: string | number;
-  children: React.ReactNode;
+  title: string;
 }
 
 interface TabsWithHeaderProps {
@@ -13,7 +14,7 @@ interface TabsWithHeaderProps {
   items: TabsWithHeaderItem[];
 }
 
-const TabsWithHeader: React.FC<TabsWithHeaderProps> = ({ activeKey, items }) => {
+const TabsWithHeader = memo<TabsWithHeaderProps>(({ activeKey, items }) => {
   return (
     <>
       {items.map(
@@ -27,6 +28,6 @@ const TabsWithHeader: React.FC<TabsWithHeaderProps> = ({ activeKey, items }) => 
       )}
     </>
   );
-};
+});
 
-export default React.memo(TabsWithHeader);
+export default TabsWithHeader;

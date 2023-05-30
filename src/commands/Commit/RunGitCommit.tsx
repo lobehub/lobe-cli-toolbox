@@ -1,12 +1,13 @@
 import { Alert, Spinner } from '@inkjs/ui';
 import { execaSync } from 'execa';
 import fs from 'fs';
-import React, { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
+
 interface RunGitCommitProps {
-  message: string;
   hook?: boolean;
+  message: string;
 }
-const RunGitCommit: React.FC<RunGitCommitProps> = ({ hook, message }) => {
+const RunGitCommit = memo<RunGitCommitProps>(({ hook, message }) => {
   const [loading, setLoading] = useState<boolean>(true);
   try {
     useEffect(() => {
@@ -28,6 +29,6 @@ const RunGitCommit: React.FC<RunGitCommitProps> = ({ hook, message }) => {
   } catch (error: any) {
     return <Alert variant="error">{` ${error.message}`}</Alert>;
   }
-};
+});
 
-export default React.memo(RunGitCommit);
+export default RunGitCommit;

@@ -1,15 +1,15 @@
 import { Box, Text } from 'ink';
-import React from 'react';
+import { memo } from 'react';
 
 export interface HeaderProps {
   title: string;
 }
-const Header: React.FC<HeaderProps> = ({ title }) => {
+const Header = memo<HeaderProps>(({ title }) => {
   return (
-    <Box justifyContent="center" borderStyle="round" borderColor="#333">
+    <Box borderColor="#333" borderStyle="round" justifyContent="center">
       <Text>{title}</Text>
     </Box>
   );
-};
+});
 
-export default React.memo(Header);
+export default Header;

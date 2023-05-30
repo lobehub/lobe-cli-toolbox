@@ -1,20 +1,20 @@
 import { Box, Text } from 'ink';
-import React from 'react';
+import { memo } from 'react';
 
 interface StepHeaderProps {
   step: number;
   steps: any[];
 }
-const StepHeader: React.FC<StepHeaderProps> = ({ step, steps }) => {
+const StepHeader = memo<StepHeaderProps>(({ step, steps }) => {
   return (
-    <Box justifyContent="center" borderStyle="round" borderColor="#333">
-      <Text color="#000" backgroundColor="#fff">
+    <Box borderColor="#333" borderStyle="round" justifyContent="center">
+      <Text backgroundColor="#fff" color="#000">
         {` ${step + 1}/${steps.length} `}
       </Text>
       <Text> </Text>
       <Text>{steps[step].title}</Text>
     </Box>
   );
-};
+});
 
-export default React.memo(StepHeader);
+export default StepHeader;

@@ -1,6 +1,7 @@
 import { Alert, Spinner } from '@inkjs/ui';
 import fs from 'fs';
-import React, { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
+
 import getAbsoluteHooksPath from '../../utils/getAbsoluteHooksPath';
 
 export const HOOK = {
@@ -16,7 +17,7 @@ export const HOOK = {
     'fi',
 };
 
-const Header: React.FC = () => {
+const HookCreate = memo(() => {
   const [loading, setLoading] = useState<boolean>(true);
   try {
     useEffect(() => {
@@ -29,6 +30,6 @@ const Header: React.FC = () => {
   } catch (error: any) {
     return <Alert variant="error">{` ${error.message}`}</Alert>;
   }
-};
+});
 
-export default React.memo(Header);
+export default HookCreate;

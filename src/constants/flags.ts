@@ -1,8 +1,8 @@
 export interface IFlags {
   [flag: string]: {
-    type: 'boolean' | 'string';
-    shortFlag?: string;
     desc?: string;
+    shortFlag?: string;
+    type: 'boolean' | 'string';
   };
 }
 

@@ -1,4 +1,5 @@
 import cliui from 'cliui';
+
 import { IFlags } from '../constants/flags';
 
 export default (flagsConst: IFlags) => {

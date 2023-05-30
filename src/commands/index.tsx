@@ -1,28 +1,29 @@
-import React, { useEffect } from 'react';
+import { memo, useEffect } from 'react';
+// @ts-ignore
+import updateNotifier from 'update-notifier';
+
+import packageJson from '../../package.json';
 import Ai from './Ai';
 import Commit from './Commit';
 import Config from './Config';
 import HookCreate from './Hook/HookCreate';
 import HookRemove from './Hook/HookRemove';
 import List from './List';
-// @ts-ignore
-import updateNotifier from 'update-notifier';
-import packageJson from '../../package.json';
 
 interface AppProps {
-  list: boolean;
+  ai: boolean;
   commit: boolean;
   config: boolean;
   help: boolean;
+  hook: boolean;
   init: boolean;
+  list: boolean;
   remove: boolean;
   update: boolean;
   version: boolean;
-  hook: boolean;
-  ai: boolean;
 }
 
-const App: React.FC<AppProps> = (props) => {
+const App = memo<AppProps>((props) => {
   useEffect(() => {
     const notifier = updateNotifier({ pkg: packageJson });
     notifier.notify();
@@ -46,6 +47,6 @@ const App: React.FC<AppProps> = (props) => {
     return <Ai />;
   }
   return <Commit />;
-};
+});
 
 export default App;

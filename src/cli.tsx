@@ -1,5 +1,6 @@
 import { render } from 'ink';
 import meow from 'meow';
+
 import App from './commands';
 import FLAGS_CONST from './constants/flags';
 import createMeowSetting from './utils/createMeowSetting';

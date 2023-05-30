@@ -1,20 +1,20 @@
 import { Box } from 'ink';
-import React from 'react';
+import { memo, type ReactNode } from 'react';
 
 interface ViewProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
-const View: React.FC<ViewProps> = ({ children }) => (
+const View = memo<ViewProps>(({ children }) => (
   <Box
-    borderStyle="round"
+    borderBottom={false}
     borderColor="#333"
     borderLeft={false}
     borderRight={false}
-    borderBottom={false}
+    borderStyle="round"
     flexDirection={'column'}
   >
     {children}
   </Box>
-);
+));
 
-export default React.memo(View);
+export default View;

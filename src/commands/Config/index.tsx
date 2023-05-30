@@ -1,11 +1,12 @@
 import { TextInput } from '@inkjs/ui';
 import SelectInput from 'ink-select-input';
-import React, { useState } from 'react';
+import { memo, useState } from 'react';
+
 import { TabsWithHeader, TabsWithHeaderItem } from '../../components';
 import configStore, { CONFIG_NAME } from '../../constants/config';
 import ConfigTitle from './ConfigTitle';
 
-const Config: React.FC = () => {
+const Config = memo(() => {
   const [tab, setTab] = useState<string>('home');
   const emojiFormatConfig: boolean | any = configStore.get(CONFIG_NAME.EMOJI_FORMAT);
   const openaiTokenConfig: string | any = configStore.get(CONFIG_NAME.OPENAI_TOKEN);
@@ -26,9 +27,9 @@ const Config: React.FC = () => {
     {
       label: (
         <ConfigTitle
-          title="Emoji format"
-          color="blue"
           badge={emojiFormatConfig ? 'emoji' : 'code'}
+          color="blue"
+          title="Emoji format"
         />
       ),
       value: CONFIG_NAME.EMOJI_FORMAT,
@@ -36,9 +37,9 @@ const Config: React.FC = () => {
     {
       label: (
         <ConfigTitle
-          title="AI message locale"
-          color={localeConfig ? 'green' : 'blue'}
           badge={localeConfig || 'EN'}
+          color={localeConfig ? 'green' : 'blue'}
+          title="AI message locale"
         />
       ),
       value: CONFIG_NAME.LOCALE,
@@ -46,29 +47,29 @@ const Config: React.FC = () => {
     {
       label: (
         <ConfigTitle
-          title="Custom prompt"
-          color={promptConfig ? 'green' : 'blue'}
           badge={promptConfig ? 'modify' : 'default'}
+          color={promptConfig ? 'green' : 'blue'}
+          title="Custom prompt"
         />
       ),
       value: CONFIG_NAME.PROMPT,
     },
     {
-      label: <ConfigTitle title="Diff max-Length" color={'#fff'} badge={diffLength} />,
+      label: <ConfigTitle badge={diffLength} color={'#fff'} title="Diff max-Length" />,
       value: CONFIG_NAME.DIFF_LENGTH,
     },
     {
       label: (
-        <ConfigTitle title="Commit message max-Length" color={'#fff'} badge={maxLengthConfig} />
+        <ConfigTitle badge={maxLengthConfig} color={'#fff'} title="Commit message max-Length" />
       ),
       value: CONFIG_NAME.MAX_LENGTH,
     },
     {
       label: (
         <ConfigTitle
-          title="OpenAI token"
-          color={openaiTokenConfig ? 'green' : 'red'}
           badge={openaiTokenConfig ? 'set' : 'unset'}
+          color={openaiTokenConfig ? 'green' : 'red'}
+          title="OpenAI token"
         />
       ),
       value: CONFIG_NAME.OPENAI_TOKEN,
@@ -76,23 +77,23 @@ const Config: React.FC = () => {
     {
       label: (
         <ConfigTitle
-          title="OpenAI API proxy"
-          color={apiBaseUrlConfig ? 'green' : 'blue'}
           badge={apiBaseUrlConfig ? 'modify' : 'default'}
+          color={apiBaseUrlConfig ? 'green' : 'blue'}
+          title="OpenAI API proxy"
         />
       ),
       value: CONFIG_NAME.API_BASE_URL,
     },
     {
-      label: <ConfigTitle title="OpenAI timeout" color={'#fff'} badge={timeoutConfig + 'ms'} />,
+      label: <ConfigTitle badge={timeoutConfig + 'ms'} color={'#fff'} title="OpenAI timeout" />,
       value: CONFIG_NAME.TIMEOUT,
     },
     {
       label: (
         <ConfigTitle
-          title="Github token"
-          color={githubTokenConfig ? 'green' : 'red'}
           badge={githubTokenConfig ? 'set' : 'unset'}
+          color={githubTokenConfig ? 'green' : 'red'}
+          title="Github token"
         />
       ),
       value: CONFIG_NAME.GITHUB_TOKEN,
@@ -131,11 +132,11 @@ const Config: React.FC = () => {
       key: CONFIG_NAME.LOCALE,
       children: (
         <TextInput
-          placeholder="Input commit messge locale..."
           defaultValue={localeConfig}
           onSubmit={(v) => {
             updateConfig(CONFIG_NAME.LOCALE, v);
           }}
+          placeholder="Input commit messge locale..."
         />
       ),
     },
@@ -144,11 +145,11 @@ const Config: React.FC = () => {
       key: CONFIG_NAME.PROMPT,
       children: (
         <TextInput
-          placeholder="Input ChatGPT prompt..."
           defaultValue={promptConfig}
           onSubmit={(v) => {
             updateConfig(CONFIG_NAME.PROMPT, v);
           }}
+          placeholder="Input ChatGPT prompt..."
         />
       ),
     },
@@ -157,11 +158,11 @@ const Config: React.FC = () => {
       key: CONFIG_NAME.DIFF_LENGTH,
       children: (
         <TextInput
-          placeholder="The maximum character length of diff log, default 5000..."
           defaultValue={String(diffLength)}
           onSubmit={(v) => {
             updateConfig(CONFIG_NAME.DIFF_LENGTH, Number(v));
           }}
+          placeholder="The maximum character length of diff log, default 5000..."
         />
       ),
     },
@@ -170,11 +171,11 @@ const Config: React.FC = () => {
       key: CONFIG_NAME.MAX_LENGTH,
       children: (
         <TextInput
-          placeholder="The maximum character length of the generated commit message, default 100..."
           defaultValue={String(maxLengthConfig)}
           onSubmit={(v) => {
             updateConfig(CONFIG_NAME.MAX_LENGTH, Number(v));
           }}
+          placeholder="The maximum character length of the generated commit message, default 100..."
         />
       ),
     },
@@ -183,11 +184,11 @@ const Config: React.FC = () => {
       key: CONFIG_NAME.OPENAI_TOKEN,
       children: (
         <TextInput
-          placeholder="Input OpenAI token..."
           defaultValue={openaiTokenConfig}
           onSubmit={(v) => {
             updateConfig(CONFIG_NAME.OPENAI_TOKEN, v);
           }}
+          placeholder="Input OpenAI token..."
         />
       ),
     },
@@ -196,11 +197,11 @@ const Config: React.FC = () => {
       key: CONFIG_NAME.API_BASE_URL,
       children: (
         <TextInput
-          placeholder="Set openAI api proxy, default value: https://api.openai.com/v1/..."
           defaultValue={apiBaseUrlConfig}
           onSubmit={(v) => {
             updateConfig(CONFIG_NAME.API_BASE_URL, v);
           }}
+          placeholder="Set openAI api proxy, default value: https://api.openai.com/v1/..."
         />
       ),
     },
@@ -209,11 +210,11 @@ const Config: React.FC = () => {
       key: CONFIG_NAME.TIMEOUT,
       children: (
         <TextInput
-          placeholder="The timeout for network requests to the OpenAI API in milliseconds, default 10000..."
           defaultValue={String(timeoutConfig)}
           onSubmit={(v) => {
             updateConfig(CONFIG_NAME.TIMEOUT, Number(v));
           }}
+          placeholder="The timeout for network requests to the OpenAI API in milliseconds, default 10000..."
         />
       ),
     },
@@ -222,16 +223,16 @@ const Config: React.FC = () => {
       key: CONFIG_NAME.GITHUB_TOKEN,
       children: (
         <TextInput
-          placeholder="Input Github token..."
           defaultValue={githubTokenConfig}
           onSubmit={(v) => {
             updateConfig(CONFIG_NAME.GITHUB_TOKEN, v);
           }}
+          placeholder="Input Github token..."
         />
       ),
     },
   ];
-  return <TabsWithHeader items={items} activeKey={tab} />;
-};
+  return <TabsWithHeader activeKey={tab} items={items} />;
+});
 
 export default Config;

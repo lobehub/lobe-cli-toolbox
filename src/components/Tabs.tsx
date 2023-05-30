@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react';
+import { Fragment, memo, type ReactNode } from 'react';
 
 export interface TabItem {
+  children: ReactNode;
   key: string | number;
-  children: React.ReactNode;
 }
 
 export interface TabsProps {
@@ -10,7 +10,7 @@ export interface TabsProps {
   items: TabItem[];
 }
 
-const Tabs: React.FC<TabsProps> = ({ activeKey, items }) => {
+const Tabs = memo<TabsProps>(({ activeKey, items }) => {
   return (
     <>
       {items.map(
@@ -18,6 +18,6 @@ const Tabs: React.FC<TabsProps> = ({ activeKey, items }) => {
       )}
     </>
   );
-};
+});
 
-export default React.memo(Tabs);
+export default Tabs;

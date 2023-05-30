@@ -1,9 +1,10 @@
 import { Box, Text } from 'ink';
-import React, { Fragment } from 'react';
+import { Fragment, memo } from 'react';
+
 import { BorderView } from '../../components/index.js';
 import gitmojis from '../../constants/gitmojis';
 
-const List: React.FC = () => (
+const List = memo(() => (
   <BorderView>
     {gitmojis.map((item) => (
       <Fragment key={item.name}>
@@ -18,6 +19,6 @@ const List: React.FC = () => (
       </Fragment>
     ))}
   </BorderView>
-);
+));
 
-export default React.memo(List);
+export default List;
