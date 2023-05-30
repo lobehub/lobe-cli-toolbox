@@ -1,5 +1,11 @@
 # Changelog
 
+# [1.7.0](https://github.com/canisminor1990/lobe-commit/compare/v1.6.0...v1.7.0) (2023-05-30)
+
+### ✨ Features
+
+- add eslint config rules ([19f8e70](https://github.com/canisminor1990/lobe-commit/commit/19f8e70))
+
 # [1.6.0](https://github.com/canisminor1990/lobe-commit/compare/v1.5.0...v1.6.0) (2023-05-21)
 
 ### ✨ Features
