@@ -1,5 +1,5 @@
 import { Box } from 'ink';
-import { memo, type ReactNode } from 'react';
+import { type ReactNode, memo } from 'react';
 
 interface BorderViewProps {
   children: ReactNode;

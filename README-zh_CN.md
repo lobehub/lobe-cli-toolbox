@@ -226,8 +226,8 @@ $ npm start
 
 ## 🔗 链接
 
-- gitmoji-cli: https://github.com/carloscuesta/gitmoji-cli
-- ai-commit: https://github.com/insulineru/ai-commit
+- gitmoji-cli: <https://github.com/carloscuesta/gitmoji-cli>
+- ai-commit: <https://github.com/insulineru/ai-commit>
 
 <div align="right">
 

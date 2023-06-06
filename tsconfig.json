@@ -1,6 +1,4 @@
 {
-  "extends": "@sindresorhus/tsconfig",
-  "include": ["src", "*.ts"],
   "compilerOptions": {
     "target": "ESNext",
     "module": "Node16",
@@ -15,5 +13,7 @@
     "baseUrl": ".",
     "include": ["src"],
     "outDir": "dist"
-  }
+  },
+  "extends": "@sindresorhus/tsconfig",
+  "include": ["src", "*.ts"]
 }

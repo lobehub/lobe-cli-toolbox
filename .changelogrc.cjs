@@ -1,3 +1,1 @@
-module.exports = {
-  displayTypes: ['feat', 'fix', 'styles', 'pref'],
-};
+module.exports = require('@lobehub/lint/dist/commitlint');
