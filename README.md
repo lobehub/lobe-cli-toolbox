@@ -1,7 +1,7 @@
 <a name="readme-top"></a>
 
 <div align="center">
-  
+
 <img width="200" src="https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/logo.webp">
 
 <h1 align="center">Lobe Commit</h1>
@@ -18,15 +18,40 @@ English · [简体中文](./README-zh_CN.md) · [Changelog](./CHANGELOG.md) · [
 
 ![](https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/preview.webp)
 
+<details>
+<summary><kbd>Table of contents</kbd></summary>
+
+#### TOC
+
+- [✨ Features](#-features)
+
+- [📦 Installation](#-installation)
+
+- [🤯 Usage](#-usage)
+
+  - [Git hook](#git-hook)
+  - [Configuration](#configuration)
+  - [Options](#options)
+
+- [⌨️ Local Development](#️-local-development)
+
+- [🤝 Contributing](#-contributing)
+
+- [🔗 Credits](#-credits)
+
+####
+
+</details>
+
 ## ✨ Features
 
-- [x] 🤯 Supports auto-generating commit messages based on diffs using ChatGPT
-- [x] 🛠️ Supports streamlined commit message editing workflow
-- [x] 😜 Supports adding Gitmojis
-- [x] 📝 Supports Conventional Commits specification
-- [x] ⚡️ Supports pulling a list of issues and convenient binding
-- [x] 💄 Supports custom prompts
-- [x] 🗺️ Supports multi-language commit messages
+- 🤯 Supports auto-generating commit messages based on diffs using ChatGPT
+- 🛠️ Supports streamlined commit message editing workflow
+- 😜 Supports adding Gitmojis
+- 📝 Supports Conventional Commits specification
+- ⚡️ Supports pulling a list of issues and convenient binding
+- 💄 Supports custom prompts
+- 🗺️ Supports multi-language commit messages
 
 <div align="right">
 

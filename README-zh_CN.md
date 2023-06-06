@@ -1,7 +1,7 @@
 <a name="readme-top"></a>
 
 <div align="center">
-  
+
 <img width="200" src="https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/logo.webp">
 
 <h1 align="center">Lobe Commit</h1>
@@ -18,15 +18,40 @@ Lobe Commit 是一款使用 ChatGPT 生成基于 Gitmoji 的 CLI 提交工具
 
 ![](https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/preview.webp)
 
+<details>
+<summary><kbd>文档目录</kbd></summary>
+
+#### TOC
+
+- [✨ 特性](#-特性)
+
+- [📦 安装](#-安装)
+
+- [🤯 使用](#-使用)
+
+  - [Git hook](#git-hook)
+  - [配置](#配置)
+  - [选项](#选项)
+
+- [⌨️ 本地开发](#️-本地开发)
+
+- [🤝 参与贡献](#-参与贡献)
+
+- [🔗 链接](#-链接)
+
+####
+
+</details>
+
 ## ✨ 特性
 
-- [x] 🤯 支持使用 ChatGPT 根据 git diffs 自动生成提交信息
-- [x] 🛠️ 流畅的提交信息编辑流程
-- [x] 😜 支持添加 Gitmoji
-- [x] 📝 支持 Conventional Commits 规范
-- [x] ⚡️ 支持拉取 issues 列表并便捷绑定
-- [x] 💄 支持自定义 Prompt
-- [x] 🗺️ 支持多语言提交信息
+- 🤯 支持使用 ChatGPT 根据 git diffs 自动生成提交信息
+- 🛠️ 流畅的提交信息编辑流程
+- 😜 支持添加 Gitmoji
+- 📝 支持 Conventional Commits 规范
+- ⚡️ 支持拉取 issues 列表并便捷绑定
+- 💄 支持自定义 Prompt
+- 🗺️ 支持多语言提交信息
 
 <div align="right">
 
