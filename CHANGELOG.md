@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.7.1](https://github.com/lobehub/lobe-commit/compare/v1.7.0...v1.7.1) (2023-06-08)
+
+### 🎫 Chores
+
+- Update ignore files ([abf1376](https://github.com/lobehub/lobe-commit/commit/abf1376))
+- update lint config ([065eb85](https://github.com/lobehub/lobe-commit/commit/065eb85))
+- update package.json ([5593751](https://github.com/lobehub/lobe-commit/commit/5593751))
+- Update package.json ([02276bd](https://github.com/lobehub/lobe-commit/commit/02276bd))
+
+### 💄 Styles
+
+- **utils**: Update genCommitMessage.ts to use square brackets for issues group ([721a38a](https://github.com/lobehub/lobe-commit/commit/721a38a))
+
+### 📝 Documentation
+
+- add toc ([697b2ac](https://github.com/lobehub/lobe-commit/commit/697b2ac))
+
 # [1.7.0](https://github.com/canisminor1990/lobe-commit/compare/v1.6.0...v1.7.0) (2023-05-30)
 
 ### ✨ Features
