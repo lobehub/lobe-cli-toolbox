@@ -12,7 +12,7 @@ English · [简体中文](./README-zh_CN.md) · [Changelog](./CHANGELOG.md) · [
 
 <!-- SHIELD GROUP -->
 
-[![release][release-shield]][release-url] [![releaseDate][release-date-shield]][release-date-url] [![ciTest][ci-test-shield]][ci-test-url] [![ciRelease][ci-release-shield]][ci-release-url] <br/> [![contributors][contributors-shield]][contributors-url] [![forks][forks-shield]][forks-url] [![stargazers][stargazers-shield]][stargazers-url] [![issues][issues-shield]][issues-url]
+[![release][release-shield]][release-url] ![][release-download-shield] [![releaseDate][release-date-shield]][release-date-url] [![ciTest][ci-test-shield]][ci-test-url] [![ciRelease][ci-release-shield]][ci-release-url] <br/> [![contributors][contributors-shield]][contributors-url] [![forks][forks-shield]][forks-url] [![stargazers][stargazers-shield]][stargazers-url] [![issues][issues-shield]][issues-url]
 
 </div>
 
@@ -244,7 +244,6 @@ Copyright © 2023 [CanisMinor][profile-url]. <br /> This project is [MIT](./LICE
 <!-- LINK GROUP -->
 
 [profile-url]: https://github.com/canisminor1990
-[issues-url]: https://github.com/canisminor1990/lobe-commit/issues/new/choose
 [gitpod-url]: https://gitpod.io/#https://github.com/canisminor1990/lobe-commit
 
 <!-- SHIELD LINK GROUP -->
@@ -260,6 +259,10 @@ Copyright © 2023 [CanisMinor][profile-url]. <br /> This project is [MIT](./LICE
 
 [release-date-shield]: https://img.shields.io/github/release-date/canisminor1990/lobe-commit?style=flat
 [release-date-url]: https://github.com/canisminor1990/lobe-commit/releases
+
+<!-- releaseDownload -->
+
+[release-download-shield]: https://img.shields.io/npm/dt/@lobehub/commit-cli
 
 <!-- ciTest -->
 
@@ -289,4 +292,4 @@ Copyright © 2023 [CanisMinor][profile-url]. <br /> This project is [MIT](./LICE
 <!-- issues -->
 
 [issues-shield]: https://img.shields.io/github/issues/canisminor1990/lobe-commit.svg?style=flat
-[issues-url]: https://img.shields.io/github/issues/canisminor1990/lobe-commit.svg?style=flat
+[issues-url]: https://github.com/canisminor1990/lobe-commit/issues/new/choose
