@@ -5,11 +5,22 @@
   "keywords": [
     "ai",
     "git",
-    "commit"
+    "commit",
+    "openai",
+    "gpt",
+    "gitmoji-cli",
+    "git-commits",
+    "chatgpt",
+    "aicommit",
+    "ai-commit"
   ],
+  "homepage": "https://github.com/lobehub/lobe-commit",
+  "bugs": {
+    "url": "https://github.com/lobehub/lobe-commit/issues/new"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/canisminor1990/lobe-commit.git"
+    "url": "https://github.com/lobe-commit.git"
   },
   "license": "MIT",
   "author": "canisminor1990 <i@canisminor.cc>",
