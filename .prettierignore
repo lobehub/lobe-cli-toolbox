@@ -47,6 +47,11 @@ logs
 docker
 Dockerfile*
 
+# image
+*.webp
+*.gif
+*.png
+*.jpg
+
 # misc
 # add other ignore file below
-*.webp

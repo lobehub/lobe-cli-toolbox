@@ -23,7 +23,7 @@ export default ({
       .split(',')
       .filter(Boolean)
       .map((i) => '#' + i);
-    message = `${message} (${issuesGroup.join(',')})`;
+    message = `${message} [${issuesGroup.join(',')}]`;
   }
   return message.replace(/\s+/g, ' ');
 };
