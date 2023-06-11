@@ -1,7 +1,6 @@
 export default [
   {
     emoji: '✨',
-    entity: '&#x2728;',
     code: ':sparkles:',
     descEN: 'Introduce new features',
     descCN: '引入新功能',
@@ -11,7 +10,6 @@ export default [
   },
   {
     emoji: '🐛',
-    entity: '&#x1f41b;',
     code: ':bug:',
     descEN: 'Fix a bug',
     descCN: '修复 bug',
@@ -21,17 +19,15 @@ export default [
   },
   {
     emoji: '♻️',
-    entity: '&#x267b;',
     code: ':recycle:',
     descEN: 'Refactor code that neither fixes a bug nor adds a feature',
     descCN: '重构代码',
     name: 'recycle',
-    semver: null,
+    semver: 'patch',
     type: 'refactor',
   },
   {
     emoji: '⚡',
-    entity: '&#x26a1;',
     code: ':zap:',
     descEN: 'A code change that improves performance',
     descCN: '提高性能',
@@ -41,7 +37,6 @@ export default [
   },
   {
     emoji: '💄',
-    entity: '&#ff99cc;',
     code: ':lipstick:',
     descEN: 'Add or update style files that do not affect the meaning of the code',
     descCN: '添加或更新 UI 和样式文件',
@@ -51,7 +46,6 @@ export default [
   },
   {
     emoji: '✅',
-    entity: '&#x2705;',
     code: ':white_check_mark:',
     descEN: 'Adding missing tests or correcting existing tests',
     descCN: '添加、更新或通过测试',
@@ -61,7 +55,6 @@ export default [
   },
   {
     emoji: '📝',
-    entity: '&#x1f4dd;',
     code: ':memo:',
     descEN: 'Documentation only changes',
     descCN: '添加或更新文档',
@@ -71,7 +64,6 @@ export default [
   },
   {
     emoji: '👷',
-    entity: '&#x1f477;',
     code: ':construction_worker:',
     descEN: 'Changes to our CI configuration files and scripts',
     descCN: '添加或更新 CI 构建系统',
@@ -81,17 +73,24 @@ export default [
   },
   {
     emoji: '🔧',
-    entity: '&#x1f527;',
     code: ':wrench:',
     descEN: 'Other changes that dont modify src or test file',
     descCN: '添加或更新配置文件',
     name: 'wrench',
-    semver: 'patch',
+    semver: null,
     type: 'chore',
   },
   {
+    emoji: '📦',
+    code: ':package:',
+    descEN: 'Make architectural changes',
+    descCN: '打包更新',
+    name: 'package',
+    semver: null,
+    type: 'build',
+  },
+  {
     emoji: '🚧',
-    entity: '&#x1f6a7;',
     code: ':construction:',
     descEN: 'Work in progress',
     descCN: '正在进行中',
@@ -101,7 +100,6 @@ export default [
   },
   {
     emoji: '💥',
-    entity: '&#x1f4a5;',
     code: ':boom:',
     descEN: 'Introduce breaking changes',
     descCN: '引入破坏性更改',
