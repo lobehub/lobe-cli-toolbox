@@ -1,21 +1,13 @@
 # Changelog
 
-## [Version 1.7.2](https://github.com/lobehub/lobe-commit/compare/v1.7.1...v1.7.2)
+### Version 1.7.2
 
 <sup>Released on **2023-06-11**</sup>
-
-#### 👷 Build System
-
-- **misc**: Make architectural changes in gitmoji constants file.
 
 <br/>
 
 <details>
 <summary><kbd>Improvements and Fixes</kbd></summary>
-
-##### Build system
-
-- **misc**: Make architectural changes in gitmoji constants file ([d80a446](https://github.com/lobehub/lobe-commit/commit/d80a446))
 
 </details>
 
@@ -25,87 +17,337 @@
 
 </div>
 
-## [1.7.1](https://github.com/lobehub/lobe-commit/compare/v1.7.0...v1.7.1) (2023-06-08)
+### Version 1.7.1
 
-### 🎫 Chores
+<sup>Released on **2023-06-08**</sup>
 
-- Update ignore files ([abf1376](https://github.com/lobehub/lobe-commit/commit/abf1376))
-- update lint config ([065eb85](https://github.com/lobehub/lobe-commit/commit/065eb85))
-- update package.json ([5593751](https://github.com/lobehub/lobe-commit/commit/5593751))
-- Update package.json ([02276bd](https://github.com/lobehub/lobe-commit/commit/02276bd))
+<br/>
 
-### 💄 Styles
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
 
-- **utils**: Update genCommitMessage.ts to use square brackets for issues group ([721a38a](https://github.com/lobehub/lobe-commit/commit/721a38a))
+</details>
 
-### 📝 Documentation
+<div align="right">
 
-- add toc ([697b2ac](https://github.com/lobehub/lobe-commit/commit/697b2ac))
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
 
-# [1.7.0](https://github.com/canisminor1990/lobe-commit/compare/v1.6.0...v1.7.0) (2023-05-30)
+</div>
 
-### ✨ Features
+## Version 1.7.0
 
-- add eslint config rules ([19f8e70](https://github.com/canisminor1990/lobe-commit/commit/19f8e70))
+<sup>Released on **2023-05-30**</sup>
 
-# [1.6.0](https://github.com/canisminor1990/lobe-commit/compare/v1.5.0...v1.6.0) (2023-05-21)
+#### ♻ Code Refactoring
 
-### ✨ Features
+- **utils**: Lowercase scope values in genAiCommit.ts and genCommitMessage.ts.
 
-- **Config**: Add option to configure maximum length of diff log ([ca33a51](https://github.com/canisminor1990/lobe-commit/commit/ca33a51))
+#### ✨ Features
 
-# [1.5.0](https://github.com/canisminor1990/lobe-commit/compare/v1.4.0...v1.5.0) (2023-05-19)
+- **misc**: Add eslint config rules.
 
-### ✨ Features
+<br/>
 
-- Supports multi-language commit messages ([f4a09e8](https://github.com/canisminor1990/lobe-commit/commit/f4a09e8))
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
 
-# [1.4.0](https://github.com/canisminor1990/lobe-commit/compare/v1.3.1...v1.4.0) (2023-05-19)
+#### Code refactoring
 
-### ✨ Features
+- **utils**: Lowercase scope values in genAiCommit.ts and genCommitMessage.ts ([b4b85e4](https://github.com/lobehub/lobe-commit/commit/b4b85e4))
 
-- **Commit**: introduce AI commit message generator and add dependencies ([b0abbd5](https://github.com/canisminor1990/lobe-commit/commit/b0abbd5))
+#### What's improved
 
-## [1.3.1](https://github.com/canisminor1990/lobe-commit/compare/v1.3.0...v1.3.1) (2023-05-19)
+- **misc**: Add eslint config rules ([19f8e70](https://github.com/lobehub/lobe-commit/commit/19f8e70))
 
-# [1.3.0](https://github.com/canisminor1990/lobe-commit/compare/v1.2.0...v1.3.0) (2023-05-19)
+</details>
 
-### ✨ Features
+<div align="right">
 
-- Supports custom prompts ([531b97a](https://github.com/canisminor1990/lobe-commit/commit/531b97a))
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
 
-# [1.2.0](https://github.com/canisminor1990/lobe-commit/compare/v1.1.2...v1.2.0) (2023-05-19)
+</div>
 
-### ✨ Features
+## Version 1.6.0
 
-- add hook mode check ([a4795ce](https://github.com/canisminor1990/lobe-commit/commit/a4795ce))
+<sup>Released on **2023-05-21**</sup>
 
-## [1.1.2](https://github.com/canisminor1990/lobe-commit/compare/v1.1.1...v1.1.2) (2023-05-19)
+#### ✨ Features
 
-### 🐛 Bug Fixes
+- **Config**: Add option to configure maximum length of diff log.
 
-- **deps**: fetch polyfill ([e41ce38](https://github.com/canisminor1990/lobe-commit/commit/e41ce38))
+<br/>
 
-## [1.1.1](https://github.com/canisminor1990/lobe-commit/compare/v1.1.0...v1.1.1) (2023-05-17)
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
 
-### 🐛 Bug Fixes
+#### What's improved
 
-- issues fliter space ([d27aea6](https://github.com/canisminor1990/lobe-commit/commit/d27aea6))
+- **Config**: Add option to configure maximum length of diff log ([ca33a51](https://github.com/lobehub/lobe-commit/commit/ca33a51))
 
-# [1.1.0](https://github.com/canisminor1990/lobe-commit/compare/v1.0.1...v1.1.0) (2023-05-17)
+</details>
 
-### ✨ Features
+<div align="right">
 
-- add issues fliter ([0338452](https://github.com/canisminor1990/lobe-commit/commit/0338452))
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
 
-## [1.0.1](https://github.com/canisminor1990/lobe-commit/compare/v1.0.0...v1.0.1) (2023-05-17)
+</div>
 
-# 1.0.0 (2023-05-17)
+## Version 1.5.0
 
-### ✨ Features
+<sup>Released on **2023-05-19**</sup>
 
-- add config ([0f266a1](https://github.com/canisminor1990/lobe-commit/commit/0f266a1))
-- add hook ([ed15d31](https://github.com/canisminor1990/lobe-commit/commit/ed15d31))
-- add issues list ([2357f49](https://github.com/canisminor1990/lobe-commit/commit/2357f49))
-- **ai**: add ChatGPT-generated commit message ([7383ca4](https://github.com/canisminor1990/lobe-commit/commit/7383ca4))
-- **config**: Add ability to set OpenAI API proxy URL ([2da618e](https://github.com/canisminor1990/lobe-commit/commit/2da618e))
+#### ♻ Code Refactoring
+
+- **Config**: Update config settings UI and logic.
+
+#### ✨ Features
+
+- **misc**: Supports multi-language commit messages.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **Config**: Update config settings UI and logic ([4388275](https://github.com/lobehub/lobe-commit/commit/4388275))
+
+#### What's improved
+
+- **misc**: Supports multi-language commit messages ([f4a09e8](https://github.com/lobehub/lobe-commit/commit/f4a09e8))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+## Version 1.4.0
+
+<sup>Released on **2023-05-19**</sup>
+
+#### ✨ Features
+
+- **Commit**: Introduce AI commit message generator and add dependencies.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **Commit**: Introduce AI commit message generator and add dependencies ([b0abbd5](https://github.com/lobehub/lobe-commit/commit/b0abbd5))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### Version 1.3.1
+
+<sup>Released on **2023-05-19**</sup>
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+## Version 1.3.0
+
+<sup>Released on **2023-05-19**</sup>
+
+#### ✨ Features
+
+- **misc**: Add hook mode check, Supports custom prompts.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add hook mode check ([a4795ce](https://github.com/lobehub/lobe-commit/commit/a4795ce))
+- **misc**: Supports custom prompts ([531b97a](https://github.com/lobehub/lobe-commit/commit/531b97a))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### Version 1.1.2
+
+<sup>Released on **2023-05-19**</sup>
+
+#### 🐛 Bug Fixes
+
+- **deps**: Fetch polyfill.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **deps**: Fetch polyfill ([e41ce38](https://github.com/lobehub/lobe-commit/commit/e41ce38))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### Version 1.1.1
+
+<sup>Released on **2023-05-17**</sup>
+
+#### ✨ Features
+
+- **misc**: Add issues fliter.
+
+#### 🐛 Bug Fixes
+
+- **misc**: Issues fliter space.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add issues fliter ([0338452](https://github.com/lobehub/lobe-commit/commit/0338452))
+
+#### What's fixed
+
+- **misc**: Issues fliter space ([d27aea6](https://github.com/lobehub/lobe-commit/commit/d27aea6))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### Version 1.0.1
+
+<sup>Released on **2023-05-17**</sup>
+
+#### ✨ Features
+
+- **config**: Add ability to set OpenAI API proxy URL.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **config**: Add ability to set OpenAI API proxy URL ([2da618e](https://github.com/lobehub/lobe-commit/commit/2da618e))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+## Version 1.2.0
+
+<sup>Released on **2023-05-16**</sup>
+
+#### ✨ Features
+
+- **ai**: Add ChatGPT-generated commit message.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **ai**: Add ChatGPT-generated commit message ([7383ca4](https://github.com/lobehub/lobe-commit/commit/7383ca4))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+## Version 1.1.0
+
+<sup>Released on **2023-05-16**</sup>
+
+#### ✨ Features
+
+- **misc**: Add config, add issues list.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add config ([0f266a1](https://github.com/lobehub/lobe-commit/commit/0f266a1))
+- **misc**: Add issues list ([2357f49](https://github.com/lobehub/lobe-commit/commit/2357f49))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+## Version 1.0.0
+
+<sup>Released on **2023-05-16**</sup>
+
+#### ✨ Features
+
+- **misc**: Add hook.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add hook ([ed15d31](https://github.com/lobehub/lobe-commit/commit/ed15d31))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
