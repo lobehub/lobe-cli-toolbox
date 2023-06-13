@@ -65,9 +65,6 @@
   },
   "dependencies": {
     "@inkjs/ui": "^1",
-    "@types/lodash-es": "^4",
-    "@types/pangu": "^4",
-    "@types/react": "^18",
     "chalk": "^5",
     "chatgpt": "^5",
     "cliui": "^8",
@@ -87,14 +84,14 @@
     "zustand": "^4"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17",
     "@lobehub/lint": "latest",
     "@sindresorhus/tsconfig": "^3",
+    "@types/lodash-es": "^4",
     "@types/node": "^20",
+    "@types/pangu": "^4",
+    "@types/react": "^18",
     "@umijs/lint": "^4",
     "clean-pkg-json": "^1",
-    "commitlint": "^17",
-    "commitlint-config-gitmoji": "^2",
     "eslint": "^8",
     "husky": "^8",
     "lint-staged": "^13",
