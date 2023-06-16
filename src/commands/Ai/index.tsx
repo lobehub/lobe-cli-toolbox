@@ -5,16 +5,16 @@ import { memo, useEffect, useState } from 'react';
 import genAiCommit from '../../utils/genAiCommit';
 
 const Ai = memo(() => {
-  const [msg, setMsg] = useState<string>('');
+  const [message, setMessage] = useState<string>('');
   useEffect(() => {
     genAiCommit().then((text: any) => {
-      setMsg(text);
+      setMessage(text);
     });
   }, []);
 
   return (
     <Box borderColor="#333" borderStyle="round" paddingLeft={2} paddingRight={2}>
-      {msg ? <Text>{msg}</Text> : <Spinner label=" Generating..." />}
+      {message ? <Text>{message}</Text> : <Spinner label=" Generating..." />}
     </Box>
   );
 });

@@ -14,6 +14,6 @@ export default async () => {
     const res = await issues.listIssues({ state: 'open' });
     return res.data;
   } catch {
-    return undefined;
+    return;
   }
 };

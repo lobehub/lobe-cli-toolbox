@@ -123,7 +123,7 @@ $ lobe-commit
 要在项目中安装 hook，请运行以下命令：
 
 ```shell
-$ lobe-coomit --init   # 或使用短标志 -i
+$ lobe-coomit --init # 或使用短标志 -i
 ```
 
 <br/>
@@ -133,7 +133,7 @@ $ lobe-coomit --init   # 或使用短标志 -i
 要从项目中卸载 hook，请运行以下命令：
 
 ```shell
-$ lobe-coomit --remove   # 或使用短标志 -r
+$ lobe-coomit --remove # 或使用短标志 -r
 ```
 
 <div align="right">
@@ -147,7 +147,7 @@ $ lobe-coomit --remove   # 或使用短标志 -r
 要配置 Lobe Commit，请运行以下命令：
 
 ```shell
-$ lobe-coomit --config   # 或使用短标志 -o
+$ lobe-coomit --config # 或使用短标志 -o
 ```
 
 - 要使用 AI 自动生成，需要在设置中填写 [OpenAI 令牌](https://platform.openai.com/account/api-keys)
@@ -164,13 +164,13 @@ $ lobe-coomit --config   # 或使用短标志 -o
 Lobe Commit 支持以下选项：
 
 ```shell
---commit  -c       使用提示交互式提交
---config  -o       设置lobe-commit首选项
---help    -h       打印基本选项
---init    -i       将lobe-commit初始化为提交钩子
---remove  -r       删除先前初始化的提交钩子
---list    -l       列出所有可用的提交类型
---version -v       打印lobe-commit安装版本
+--commit -c 使用提示交互式提交
+--config -o 设置lobe-commit首选项
+--help -h 打印基本选项
+--init -i 将lobe-commit初始化为提交钩子
+--remove -r 删除先前初始化的提交钩子
+--list -l 列出所有可用的提交类型
+--version -v 打印lobe-commit安装版本
 ```
 
 <div align="right">

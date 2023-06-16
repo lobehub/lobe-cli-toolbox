@@ -19,28 +19,28 @@ export default (flagsConst: IFlags) => {
     .join('\n');
 
   ui.div({
+    padding: [1, 0, 0, 0],
     text: 'Usage',
-    padding: [1, 0, 0, 0],
   });
 
   ui.div({
-    text: '$ lobe-commit  [option] [command]',
     padding: [0, 0, 0, 4],
+    text: '$ lobe-commit  [option] [command]',
   });
 
   ui.div({
-    text: 'Options',
     padding: [1, 0, 0, 0],
+    text: 'Options',
   });
 
   ui.div({
+    padding: [0, 0, 0, 4],
     text: options,
     width: 800,
-    padding: [0, 0, 0, 4],
   });
 
   return {
-    help: ui.toString(),
     flags,
+    help: ui.toString(),
   };
 };

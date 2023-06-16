@@ -9,7 +9,11 @@ interface ConfigTitleProps {
 }
 
 const ConfigTitle = memo<ConfigTitleProps>(({ title, color, badge }) => {
-  const newTitle = title + new Array(30 - title.length).fill(null).join(' ');
+  const newTitle =
+    title +
+    Array.from({ length: 30 - title.length })
+      .fill('')
+      .join(' ');
   return (
     <Text>
       {`${newTitle} `}

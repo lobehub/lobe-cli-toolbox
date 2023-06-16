@@ -1,53 +1,53 @@
 import Conf from 'conf';
 
 export const CONFIG_NAME = {
-  EMOJI_FORMAT: 'emojiFormat',
-  PROMPT: 'prompt',
-  OPENAI_TOKEN: 'openaiToken',
   API_BASE_URL: 'apiBaseUrl',
-  GITHUB_TOKEN: 'githubToken',
-  MAX_LENGTH: 'maxLength',
-  TIMEOUT: 'timeout',
-  LOCALE: 'locale',
   DIFF_LENGTH: 'diffLength',
+  EMOJI_FORMAT: 'emojiFormat',
+  GITHUB_TOKEN: 'githubToken',
+  LOCALE: 'locale',
+  MAX_LENGTH: 'maxLength',
+  OPENAI_TOKEN: 'openaiToken',
+  PROMPT: 'prompt',
+  TIMEOUT: 'timeout',
 };
 
 const schema = {
   [CONFIG_NAME.EMOJI_FORMAT]: {
-    type: 'boolean',
     default: true,
+    type: 'boolean',
   },
   [CONFIG_NAME.OPENAI_TOKEN]: {
-    type: 'string',
     default: '',
+    type: 'string',
   },
   [CONFIG_NAME.API_BASE_URL]: {
-    type: 'string',
     default: '',
+    type: 'string',
   },
   [CONFIG_NAME.GITHUB_TOKEN]: {
-    type: 'string',
     default: '',
+    type: 'string',
   },
   [CONFIG_NAME.PROMPT]: {
-    type: 'string',
     default: '',
+    type: 'string',
   },
   [CONFIG_NAME.LOCALE]: {
-    type: 'string',
     default: '',
+    type: 'string',
   },
   [CONFIG_NAME.MAX_LENGTH]: {
-    type: 'number',
     default: 100,
+    type: 'number',
   },
   [CONFIG_NAME.TIMEOUT]: {
+    default: 10_000,
     type: 'number',
-    default: 10000,
   },
   [CONFIG_NAME.DIFF_LENGTH]: {
-    type: 'number',
     default: 5000,
+    type: 'number',
   },
 };
 

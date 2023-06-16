@@ -40,7 +40,7 @@ const App = memo<AppProps>((props) => {
   } else if (props.remove) {
     return <HookRemove />;
   } else if (props.version) {
-    return null;
+    return false;
   } else if (props.hook) {
     return <Commit hook />;
   } else if (props.ai) {

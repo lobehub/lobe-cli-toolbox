@@ -13,31 +13,31 @@ interface AiCommitProps {
 
 const AiCommit = memo<AiCommitProps>(({ hook }) => {
   const [count, setCount] = useState<number>(0);
-  const [msg, setMsg] = useState<string>('');
+  const [message, setMessage] = useState<string>('');
   const [runCommit, setRunCommit] = useState<boolean>(false);
   useEffect(() => {
     genAiCommit().then((text: any) => {
-      setMsg(text);
+      setMessage(text);
     });
   }, [count]);
 
   const handleSelect = (item: any) => {
     if (item.value === 'reload') {
-      setMsg('');
+      setMessage('');
       setCount(count + 1);
     } else if (item.value === 'confirm') {
       setRunCommit(true);
     }
   };
 
-  if (runCommit) return <RunGitCommit hook={hook} message={msg} />;
+  if (runCommit) return <RunGitCommit hook={hook} message={message} />;
 
   return (
     <>
       <Header title={`🤯 AI Commit Generator`} />
       <BorderView>
-        {msg ? <Text>{msg}</Text> : <Spinner label=" Generating..." />}
-        {msg ? (
+        {message ? <Text>{message}</Text> : <Spinner label=" Generating..." />}
+        {message ? (
           <View>
             <SelectInput
               items={[

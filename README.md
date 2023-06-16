@@ -123,7 +123,7 @@ You can integrate Lobe Commit with Git via the `prepare-commit-msg` hook. This a
 To install the hook in the Git repository, run the following command:
 
 ```shell
-$ lobe-coomit --init   # or use short flag -i
+$ lobe-coomit --init # or use short flag -i
 ```
 
 <br/>
@@ -133,7 +133,7 @@ $ lobe-coomit --init   # or use short flag -i
 To uninstall the hook from the Git repository, run the following command:
 
 ```shell
-$ lobe-coomit --remove   # or use short flag -r
+$ lobe-coomit --remove # or use short flag -r
 ```
 
 <div align="right">
@@ -147,7 +147,7 @@ $ lobe-coomit --remove   # or use short flag -r
 To configure Lobe Commit, run the following command:
 
 ```shell
-$ lobe-coomit --config   # or use short flag -o
+$ lobe-coomit --config # or use short flag -o
 ```
 
 - To use AI auto-generation, you need to fill in your [OpenAI token](<(https://platform.openai.com/account/api-keys)>) in the settings.
@@ -164,13 +164,13 @@ $ lobe-coomit --config   # or use short flag -o
 Lobe Commit supports the following options:
 
 ```shell
---commit  -c       Interactively commit using the prompts
---config  -o       Setup lobe-commit preferences
---help    -h       Print basic options
---init    -i       Initialize lobe-commit as a commit hook
---remove  -r       Remove a previously initialized commit hook
---list    -l       List all the available commit type
---version -v       Print lobe-commit installed version
+--commit -c Interactively commit using the prompts
+--config -o Setup lobe-commit preferences
+--help -h Print basic options
+--init -i Initialize lobe-commit as a commit hook
+--remove -r Remove a previously initialized commit hook
+--list -l List all the available commit type
+--version -v Print lobe-commit installed version
 ```
 
 <div align="right">

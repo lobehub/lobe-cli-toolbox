@@ -1,7 +1,6 @@
-import chalk from 'chalk';
 import { ChatGPTAPI } from 'chatgpt';
-import { execSync } from 'child_process';
 import 'isomorphic-fetch';
+import { execSync } from 'node:child_process';
 
 import { CONFIG_NAME, default as storeConfig } from '../constants/config';
 import gitmojis from '../constants/gitmojis';
@@ -32,7 +31,7 @@ const genPrompt = (diff: string): string => {
 
   let diffMessage = diff;
   if (diffMessage.length > diffLength - finalPrompt.length) {
-    diffMessage = diff.substring(0, diffLength - finalPrompt.length);
+    diffMessage = diff.slice(0, Math.max(0, diffLength - finalPrompt.length));
   }
 
   return [finalPrompt, diffMessage].filter(Boolean).join('\n');
@@ -41,34 +40,27 @@ const genPrompt = (diff: string): string => {
 const addEmoji = (message: string) => {
   const [type, ...rest]: any = message.split(': ');
   let emoji: string = '🔧';
-  gitmojis.forEach((item) => {
+  for (const item of gitmojis) {
     if (type.includes(item.type)) emoji = item.emoji;
-  });
+  }
   return `${emoji} ${type}: ${rest.join(': ')}`;
 };
 
 export default async () => {
   const apiKey: string | any = storeConfig.get(CONFIG_NAME.OPENAI_TOKEN);
 
-  if (!apiKey) {
-    console.log(chalk.red.bgBlack(' 🤯 Please set the OpenAI Token by lobe-commit --config '));
-    process.exit(1);
-    return;
-  }
+  if (!apiKey) throw new Error('🤯 Please set the OpenAI Token by lobe-commit --config ');
 
   let diff = execSync('git diff --staged').toString();
 
-  if (!diff) {
-    console.log(chalk.yellow.bgBlack(' 🤯 No changes to commit '));
-    process.exit(1);
-  }
+  if (!diff) throw new Error('🤯 No changes to commit');
 
   const apiBaseUrl: any = storeConfig.get('apiBaseUrl');
   const api = new ChatGPTAPI(
     apiBaseUrl
       ? {
-          apiKey,
           apiBaseUrl,
+          apiKey,
         }
       : { apiKey },
   );

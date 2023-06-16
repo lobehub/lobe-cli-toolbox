@@ -18,12 +18,12 @@ export default ({
   if (issues) {
     const issuesGroup = issues
       .replace('#', '')
-      .replace(/\s+/g, ' ')
-      .replace(/[，|.|||/| ]/g, ',')
+      .replaceAll(/\s+/g, ' ')
+      .replaceAll(/[ ./|，]/g, ',')
       .split(',')
       .filter(Boolean)
-      .map((i) => '#' + i);
+      .map((index) => '#' + index);
     message = `${message} [${issuesGroup.join(',')}]`;
   }
-  return message.replace(/\s+/g, ' ');
+  return message.replaceAll(/\s+/g, ' ');
 };

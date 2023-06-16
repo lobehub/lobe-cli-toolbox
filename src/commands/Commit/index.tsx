@@ -1,8 +1,8 @@
 import { Alert, TextInput } from '@inkjs/ui';
-import fs from 'fs';
 import { Box, Text } from 'ink';
 import SelectInput from 'ink-select-input';
 import { debounce } from 'lodash-es';
+import fs from 'node:fs';
 import { memo, useMemo, useState } from 'react';
 
 import { BorderView, Tabs, View } from '../../components';
@@ -30,7 +30,7 @@ const Commit = memo<CommitProps>(({ hook }) => {
 
   const emojiFormatConfig = configStore.get(CONFIG_NAME.EMOJI_FORMAT);
 
-  const commitMessage = genCommitMessage({ type, scope, subject, issues });
+  const commitMessage = genCommitMessage({ issues, scope, subject, type });
   const handleSelect = (item: any) => {
     if (!item) return;
     if (item.value === 'ai') {
@@ -77,17 +77,15 @@ const Commit = memo<CommitProps>(({ hook }) => {
 
   const steps: any = [
     {
-      key: 0,
-      title: 'Select commit type',
       children: (
         <View>
           <SelectInput items={types} onSelect={debounce(handleSelect, 100)} />
         </View>
       ),
+      key: 0,
+      title: 'Select commit type',
     },
     {
-      key: 1,
-      title: 'Input commit scope (optional)',
       children: (
         <View>
           <Box>
@@ -100,10 +98,10 @@ const Commit = memo<CommitProps>(({ hook }) => {
           </Box>
         </View>
       ),
+      key: 1,
+      title: 'Input commit scope (optional)',
     },
     {
-      key: 2,
-      title: 'Input commit subject',
       children: (
         <View>
           <Box>
@@ -116,11 +114,13 @@ const Commit = memo<CommitProps>(({ hook }) => {
           </Box>
         </View>
       ),
+      key: 2,
+      title: 'Input commit subject',
     },
     {
+      children: <IssuesList onChange={debounce(setIssues, 100)} onSubmit={() => setStep(4)} />,
       key: 3,
       title: 'Link issues (optional)',
-      children: <IssuesList onChange={debounce(setIssues, 100)} onSubmit={() => setStep(4)} />,
     },
   ];
 

@@ -1,6 +1,6 @@
 import { Alert, Spinner } from '@inkjs/ui';
 import { execaSync } from 'execa';
-import fs from 'fs';
+import fs from 'node:fs';
 import { memo, useEffect, useState } from 'react';
 
 interface RunGitCommitProps {

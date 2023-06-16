@@ -7,15 +7,15 @@ export interface IFlags {
 }
 
 const FLAGS: IFlags = {
-  commit: { type: 'boolean', shortFlag: 'c', desc: 'Interactively commit using the prompts' },
-  ai: { type: 'boolean', shortFlag: 'a', desc: 'Generate prompts by ChatGPT' },
-  config: { type: 'boolean', shortFlag: 'o', desc: 'Setup lobe-commit preferences' },
-  help: { type: 'boolean', shortFlag: 'h', desc: 'Print basic options' },
-  init: { type: 'boolean', shortFlag: 'i', desc: 'Initialize lobe-commit as a commit hook' },
-  list: { type: 'boolean', shortFlag: 'l', desc: 'List all the available commit type' },
-  remove: { type: 'boolean', shortFlag: 'r', desc: 'Remove a previously initialized commit hook' },
-  version: { type: 'boolean', shortFlag: 'v', desc: 'Print lobe-commit installed version' },
+  ai: { desc: 'Generate prompts by ChatGPT', shortFlag: 'a', type: 'boolean' },
+  commit: { desc: 'Interactively commit using the prompts', shortFlag: 'c', type: 'boolean' },
+  config: { desc: 'Setup lobe-commit preferences', shortFlag: 'o', type: 'boolean' },
+  help: { desc: 'Print basic options', shortFlag: 'h', type: 'boolean' },
   hook: { type: 'boolean' },
+  init: { desc: 'Initialize lobe-commit as a commit hook', shortFlag: 'i', type: 'boolean' },
+  list: { desc: 'List all the available commit type', shortFlag: 'l', type: 'boolean' },
+  remove: { desc: 'Remove a previously initialized commit hook', shortFlag: 'r', type: 'boolean' },
+  version: { desc: 'Print lobe-commit installed version', shortFlag: 'v', type: 'boolean' },
 };
 
 export default FLAGS;

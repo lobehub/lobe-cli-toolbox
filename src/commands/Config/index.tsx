@@ -102,13 +102,11 @@ const Config = memo(() => {
 
   const items: TabsWithHeaderItem[] = [
     {
-      title: '🤯 Lobe Commit Config',
-      key: 'home',
       children: <SelectInput items={selection} onSelect={(item: any) => setTab(item.value)} />,
+      key: 'home',
+      title: '🤯 Lobe Commit Config',
     },
     {
-      title: '🤯 Emoji Format Config',
-      key: CONFIG_NAME.EMOJI_FORMAT,
       children: (
         <SelectInput
           items={[
@@ -126,10 +124,10 @@ const Config = memo(() => {
           }}
         />
       ),
+      key: CONFIG_NAME.EMOJI_FORMAT,
+      title: '🤯 Emoji Format Config',
     },
     {
-      title: '🤯 Commit Message Locale Config',
-      key: CONFIG_NAME.LOCALE,
       children: (
         <TextInput
           defaultValue={localeConfig}
@@ -139,10 +137,10 @@ const Config = memo(() => {
           placeholder="Input commit messge locale..."
         />
       ),
+      key: CONFIG_NAME.LOCALE,
+      title: '🤯 Commit Message Locale Config',
     },
     {
-      title: '🤯 Prompt Config',
-      key: CONFIG_NAME.PROMPT,
       children: (
         <TextInput
           defaultValue={promptConfig}
@@ -152,10 +150,10 @@ const Config = memo(() => {
           placeholder="Input ChatGPT prompt..."
         />
       ),
+      key: CONFIG_NAME.PROMPT,
+      title: '🤯 Prompt Config',
     },
     {
-      title: '🤯 Diff Max-Length Config',
-      key: CONFIG_NAME.DIFF_LENGTH,
       children: (
         <TextInput
           defaultValue={String(diffLength)}
@@ -165,10 +163,10 @@ const Config = memo(() => {
           placeholder="The maximum character length of diff log, default 5000..."
         />
       ),
+      key: CONFIG_NAME.DIFF_LENGTH,
+      title: '🤯 Diff Max-Length Config',
     },
     {
-      title: '🤯 Commit Message Max-Length Config',
-      key: CONFIG_NAME.MAX_LENGTH,
       children: (
         <TextInput
           defaultValue={String(maxLengthConfig)}
@@ -178,10 +176,10 @@ const Config = memo(() => {
           placeholder="The maximum character length of the generated commit message, default 100..."
         />
       ),
+      key: CONFIG_NAME.MAX_LENGTH,
+      title: '🤯 Commit Message Max-Length Config',
     },
     {
-      title: '🤯 OpenAI Token Config',
-      key: CONFIG_NAME.OPENAI_TOKEN,
       children: (
         <TextInput
           defaultValue={openaiTokenConfig}
@@ -191,10 +189,10 @@ const Config = memo(() => {
           placeholder="Input OpenAI token..."
         />
       ),
+      key: CONFIG_NAME.OPENAI_TOKEN,
+      title: '🤯 OpenAI Token Config',
     },
     {
-      title: '🤯 OpenAI API Proxy Config',
-      key: CONFIG_NAME.API_BASE_URL,
       children: (
         <TextInput
           defaultValue={apiBaseUrlConfig}
@@ -204,10 +202,10 @@ const Config = memo(() => {
           placeholder="Set openAI api proxy, default value: https://api.openai.com/v1/..."
         />
       ),
+      key: CONFIG_NAME.API_BASE_URL,
+      title: '🤯 OpenAI API Proxy Config',
     },
     {
-      title: '🤯 OpenAI Timeout Config',
-      key: CONFIG_NAME.TIMEOUT,
       children: (
         <TextInput
           defaultValue={String(timeoutConfig)}
@@ -217,10 +215,10 @@ const Config = memo(() => {
           placeholder="The timeout for network requests to the OpenAI API in milliseconds, default 10000..."
         />
       ),
+      key: CONFIG_NAME.TIMEOUT,
+      title: '🤯 OpenAI Timeout Config',
     },
     {
-      title: '🤯 Github Token Config',
-      key: CONFIG_NAME.GITHUB_TOKEN,
       children: (
         <TextInput
           defaultValue={githubTokenConfig}
@@ -230,6 +228,8 @@ const Config = memo(() => {
           placeholder="Input Github token..."
         />
       ),
+      key: CONFIG_NAME.GITHUB_TOKEN,
+      title: '🤯 Github Token Config',
     },
   ];
   return <TabsWithHeader activeKey={tab} items={items} />;

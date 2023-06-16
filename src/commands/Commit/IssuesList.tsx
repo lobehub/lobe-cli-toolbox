@@ -49,7 +49,7 @@ const IssuesList = memo<IssuesListProps>(({ onChange, onSubmit }) => {
   }, [list, keywords]);
 
   const handleKeywors = (v: string) => {
-    setKeywords(v.replace(/ /g, ''));
+    setKeywords(v.replaceAll(' ', ''));
   };
 
   if (isGithubReop) {

@@ -1,12 +1,10 @@
 import { Alert, Spinner } from '@inkjs/ui';
-import fs from 'fs';
+import fs from 'node:fs';
 import { memo, useEffect, useState } from 'react';
 
 import getAbsoluteHooksPath from '../../utils/getAbsoluteHooksPath';
 
 export const HOOK = {
-  PERMISSIONS: 0o775,
-  FILENAME: 'prepare-commit-msg',
   CONTENTS:
     '#!/usr/bin/env sh\n# lobe-commit as a commit hook\n' +
     'if npx -v >&/dev/null\n' +
@@ -15,6 +13,8 @@ export const HOOK = {
     'else\n' +
     '  exec < /dev/tty\n  lobe-commit --hook $1 $2\n' +
     'fi',
+  FILENAME: 'prepare-commit-msg',
+  PERMISSIONS: 0o775,
 };
 
 const HookCreate = memo(() => {

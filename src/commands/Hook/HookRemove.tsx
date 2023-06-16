@@ -1,5 +1,5 @@
 import { Alert, Spinner } from '@inkjs/ui';
-import fs from 'fs';
+import fs from 'node:fs';
 import { memo, useEffect, useState } from 'react';
 
 import getAbsoluteHooksPath from '../../utils/getAbsoluteHooksPath';

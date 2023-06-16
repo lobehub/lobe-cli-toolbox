@@ -18,6 +18,6 @@ export default async () => {
       repoName,
     };
   } catch {
-    return undefined;
+    return;
   }
 };
