@@ -2,7 +2,9 @@
 
 <div align="center">
 
-<img width="200" src="https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/logo.webp">
+<img height="120" src="https://npm.elemecdn.com/@lobehub/assets-logo@1.0.0/assets/logo-3d.webp">
+<img height="120" src="https://gw.alipayobjects.com/zos/kitchen/qJ3l3EPsdW/split.svg">
+<img height="120" src="https://npm.elemecdn.com/fluentui-emoji/icons/modern/love-letter.svg">
 
 <h1 align="center">Lobe Commit</h1>
 
