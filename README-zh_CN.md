@@ -123,7 +123,7 @@ $ lobe-commit
 要在项目中安装 hook，请运行以下命令：
 
 ```shell
-$ lobe-coomit --init # 或使用短标志 -i
+$ lobe-commit --init # 或使用短标志 -i
 ```
 
 <br/>
@@ -133,7 +133,7 @@ $ lobe-coomit --init # 或使用短标志 -i
 要从项目中卸载 hook，请运行以下命令：
 
 ```shell
-$ lobe-coomit --remove # 或使用短标志 -r
+$ lobe-commit --remove # 或使用短标志 -r
 ```
 
 <div align="right">
@@ -147,7 +147,7 @@ $ lobe-coomit --remove # 或使用短标志 -r
 要配置 Lobe Commit，请运行以下命令：
 
 ```shell
-$ lobe-coomit --config # 或使用短标志 -o
+$ lobe-commit --config # 或使用短标志 -o
 ```
 
 - 要使用 AI 自动生成，需要在设置中填写 [OpenAI 令牌](https://platform.openai.com/account/api-keys)
