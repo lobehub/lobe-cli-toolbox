@@ -34,7 +34,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "pkgroll --minify && node ./scripts/addShebangs.cjs",
+    "build": "npm run type-check && pkgroll --minify -p tsconfig.prod.json && node ./scripts/addShebangs.cjs",
     "dev": "pkgroll --watch",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --fix",
     "lint:md": "remark . --quiet --output",
@@ -43,8 +43,8 @@
     "prettier": "prettier -c --write \"**/**\"",
     "release": "semantic-release",
     "start": "node ./dist/cli.js",
-    "test": "npm run lint",
-    "type-check": "tsc -p tsconfig-check.json"
+    "test": "npm run type-check && npm run lint",
+    "type-check": "tsc --noEmit"
   },
   "lint-staged": {
     "*.md": [
@@ -66,7 +66,6 @@
   "dependencies": {
     "@inkjs/ui": "^1",
     "chalk": "^5",
-    "chatgpt": "^5",
     "cliui": "^8",
     "conf": "^11",
     "execa": "^7",
@@ -75,6 +74,7 @@
     "ink": "^4",
     "ink-select-input": "^5",
     "isomorphic-fetch": "^3",
+    "langchain": "latest",
     "lodash-es": "^4",
     "meow": "^12",
     "pangu": "^4",

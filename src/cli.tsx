@@ -9,9 +9,7 @@ const { help, flags } = createMeowSetting(FLAGS_CONST);
 
 const cli = meow(help, {
   flags,
-  // @ts-ignore
   importMeta: import.meta,
-});
+}) as any;
 
-// @ts-ignore
 render(<App {...cli.flags} />);

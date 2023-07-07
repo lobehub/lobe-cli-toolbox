@@ -4,10 +4,12 @@ import { memo, useState } from 'react';
 
 import { TabsWithHeader, TabsWithHeaderItem } from '../../components';
 import configStore, { CONFIG_NAME } from '../../constants/config';
+import { useTheme } from '../../hooks/useTheme';
 import ConfigTitle from './ConfigTitle';
 
 const Config = memo(() => {
   const [tab, setTab] = useState<string>('home');
+  const theme = useTheme();
   const emojiFormatConfig: boolean | any = configStore.get(CONFIG_NAME.EMOJI_FORMAT);
   const openaiTokenConfig: string | any = configStore.get(CONFIG_NAME.OPENAI_TOKEN);
   const apiBaseUrlConfig: string | any = configStore.get(CONFIG_NAME.API_BASE_URL);
@@ -16,7 +18,7 @@ const Config = memo(() => {
   const maxLengthConfig: number | any = configStore.get(CONFIG_NAME.MAX_LENGTH);
   const timeoutConfig: number | any = configStore.get(CONFIG_NAME.TIMEOUT);
   const localeConfig: number | any = configStore.get(CONFIG_NAME.LOCALE);
-  const diffLength: number | any = configStore.get(CONFIG_NAME.DIFF_LENGTH);
+  const diffChunkSize: number | any = configStore.get(CONFIG_NAME.DIFF_CHUNK_SIZE);
 
   const updateConfig = (key: string, value: string | number | boolean) => {
     configStore.set(key, value);
@@ -28,7 +30,7 @@ const Config = memo(() => {
       label: (
         <ConfigTitle
           badge={emojiFormatConfig ? 'emoji' : 'code'}
-          color="blue"
+          color={theme.colorInfo}
           title="Emoji format"
         />
       ),
@@ -38,7 +40,7 @@ const Config = memo(() => {
       label: (
         <ConfigTitle
           badge={localeConfig || 'EN'}
-          color={localeConfig ? 'green' : 'blue'}
+          color={localeConfig ? theme.colorSuccess : theme.colorInfo}
           title="AI message locale"
         />
       ),
@@ -48,19 +50,25 @@ const Config = memo(() => {
       label: (
         <ConfigTitle
           badge={promptConfig ? 'modify' : 'default'}
-          color={promptConfig ? 'green' : 'blue'}
+          color={promptConfig ? theme.colorSuccess : theme.colorInfo}
           title="Custom prompt"
         />
       ),
       value: CONFIG_NAME.PROMPT,
     },
     {
-      label: <ConfigTitle badge={diffLength} color={'#fff'} title="Diff max-Length" />,
-      value: CONFIG_NAME.DIFF_LENGTH,
+      label: (
+        <ConfigTitle badge={diffChunkSize} color={theme.colorText} title="Diff split chunk size" />
+      ),
+      value: CONFIG_NAME.DIFF_CHUNK_SIZE,
     },
     {
       label: (
-        <ConfigTitle badge={maxLengthConfig} color={'#fff'} title="Commit message max-Length" />
+        <ConfigTitle
+          badge={maxLengthConfig}
+          color={theme.colorText}
+          title="Commit message max-Length"
+        />
       ),
       value: CONFIG_NAME.MAX_LENGTH,
     },
@@ -68,7 +76,7 @@ const Config = memo(() => {
       label: (
         <ConfigTitle
           badge={openaiTokenConfig ? 'set' : 'unset'}
-          color={openaiTokenConfig ? 'green' : 'red'}
+          color={openaiTokenConfig ? theme.colorSuccess : theme.colorError}
           title="OpenAI token"
         />
       ),
@@ -78,21 +86,23 @@ const Config = memo(() => {
       label: (
         <ConfigTitle
           badge={apiBaseUrlConfig ? 'modify' : 'default'}
-          color={apiBaseUrlConfig ? 'green' : 'blue'}
+          color={apiBaseUrlConfig ? theme.colorSuccess : theme.colorInfo}
           title="OpenAI API proxy"
         />
       ),
       value: CONFIG_NAME.API_BASE_URL,
     },
     {
-      label: <ConfigTitle badge={timeoutConfig + 'ms'} color={'#fff'} title="OpenAI timeout" />,
+      label: (
+        <ConfigTitle badge={timeoutConfig + 'ms'} color={theme.colorText} title="OpenAI timeout" />
+      ),
       value: CONFIG_NAME.TIMEOUT,
     },
     {
       label: (
         <ConfigTitle
           badge={githubTokenConfig ? 'set' : 'unset'}
-          color={githubTokenConfig ? 'green' : 'red'}
+          color={githubTokenConfig ? theme.colorSuccess : theme.colorError}
           title="Github token"
         />
       ),
@@ -156,15 +166,15 @@ const Config = memo(() => {
     {
       children: (
         <TextInput
-          defaultValue={String(diffLength)}
+          defaultValue={String(diffChunkSize)}
           onSubmit={(v) => {
-            updateConfig(CONFIG_NAME.DIFF_LENGTH, Number(v));
+            updateConfig(CONFIG_NAME.DIFF_CHUNK_SIZE, Number(v));
           }}
           placeholder="The maximum character length of diff log, default 5000..."
         />
       ),
-      key: CONFIG_NAME.DIFF_LENGTH,
-      title: '🤯 Diff Max-Length Config',
+      key: CONFIG_NAME.DIFF_CHUNK_SIZE,
+      title: '🤯 Diff Split Chunk Size Config',
     },
     {
       children: (

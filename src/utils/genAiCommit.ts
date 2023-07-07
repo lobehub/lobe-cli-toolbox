@@ -1,42 +1,18 @@
-import { ChatGPTAPI } from 'chatgpt';
 import 'isomorphic-fetch';
+import { loadSummarizationChain } from 'langchain/chains';
+import { ChatOpenAI } from 'langchain/chat_models/openai';
+import { HumanMessage, SystemMessage } from 'langchain/schema';
+import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { execSync } from 'node:child_process';
 
 import { CONFIG_NAME, default as storeConfig } from '../constants/config';
 import gitmojis from '../constants/gitmojis';
+import template from './template';
 
-const typesExample = gitmojis.map((item) => `- ${item.type}: ${item.descEN}`).join('\n');
-const genPrompt = (diff: string): string => {
-  const custionPrompt: string | any = storeConfig.get(CONFIG_NAME.PROMPT);
-  const maxLength: number | any = storeConfig.get(CONFIG_NAME.MAX_LENGTH);
-  const locale: number | any = storeConfig.get(CONFIG_NAME.LOCALE);
-  const diffLength: number | any = storeConfig.get(CONFIG_NAME.DIFF_LENGTH);
-
-  let prompt: string =
-    `I want you to act as the author of a commit message in git.` +
-    `I'll enter a git diff, and your job is to convert it into a useful commit message.` +
-    `Do not preface the commit with anything, use the present tense, use the conventional commits specification <type>(<optional scope>): <subject>`;
-  if (custionPrompt) prompt = custionPrompt;
-
-  const finalPrompt = [
-    prompt,
-    locale && `Commit message language: ${locale}`,
-    `Commit message must be a maximum of ${maxLength} characters.`,
-    `Choose only one type from the type-to-description below:`,
-    typesExample,
-    `Return pure commit message describes the git diff: `,
-  ]
-    .filter(Boolean)
-    .join('\n');
-
-  let diffMessage = diff;
-  if (diffMessage.length > diffLength - finalPrompt.length) {
-    diffMessage = diff.slice(0, Math.max(0, diffLength - finalPrompt.length));
-  }
-
-  return [finalPrompt, diffMessage].filter(Boolean).join('\n');
-};
-
+const diffChunkSize: number | any = storeConfig.get(CONFIG_NAME.DIFF_CHUNK_SIZE) || 1000;
+const timeout: number | any = storeConfig.get(CONFIG_NAME.TIMEOUT) || 10_000;
+const basePath: string | any = storeConfig.get(CONFIG_NAME.API_BASE_URL);
+const openAIApiKey: string | any = storeConfig.get(CONFIG_NAME.OPENAI_TOKEN);
 const addEmoji = (message: string) => {
   const [type, ...rest]: any = message.split(': ');
   let emoji: string = '🔧';
@@ -47,27 +23,43 @@ const addEmoji = (message: string) => {
 };
 
 export default async () => {
-  const apiKey: string | any = storeConfig.get(CONFIG_NAME.OPENAI_TOKEN);
-
-  if (!apiKey) throw new Error('🤯 Please set the OpenAI Token by lobe-commit --config ');
+  if (!openAIApiKey) throw new Error('🤯 Please set the OpenAI Token by lobe-commit --config');
 
   let diff = execSync('git diff --staged').toString();
 
   if (!diff) throw new Error('🤯 No changes to commit');
 
-  const apiBaseUrl: any = storeConfig.get('apiBaseUrl');
-  const api = new ChatGPTAPI(
-    apiBaseUrl
-      ? {
-          apiBaseUrl,
-          apiKey,
-        }
-      : { apiKey },
+  const chat = new ChatOpenAI(
+    {
+      maxRetries: 0,
+      openAIApiKey,
+      temperature: 0.5,
+      timeout,
+    },
+    {
+      basePath,
+    },
   );
 
-  const timeoutMs: number | any = storeConfig.get(CONFIG_NAME.TIMEOUT);
-  const { text } = await api.sendMessage(genPrompt(diff), {
-    timeoutMs,
+  const textSplitter = new RecursiveCharacterTextSplitter({ chunkSize: diffChunkSize });
+  const diffDocument = await textSplitter.createDocuments([diff]);
+  const chain = loadSummarizationChain(chat, { type: 'map_reduce' });
+  const diffSummary = await chain.call({
+    input_documents: diffDocument,
   });
-  return addEmoji(text.replace(/\((.*?)\):/, (match, p1) => match && `(${p1.toLowerCase()}):`));
+
+  if (!diffSummary['text']) throw new Error('🤯 Diff summary failed');
+
+  const res = await chat.call([
+    new SystemMessage(template),
+    new HumanMessage(
+      `Return only 1 type commit message describes the git diff summary: ${diffSummary['text']}`,
+    ),
+  ]);
+
+  if (!res['text']) throw new Error('🤯 Diff summary failed');
+
+  return addEmoji(
+    res['text'].replace(/\((.*?)\):/, (match, p1) => match && `(${p1.toLowerCase()}):`),
+  );
 };

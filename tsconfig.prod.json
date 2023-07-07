@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "noEmit": true
+    "module": "Node16"
   },
   "extends": "./tsconfig.json"
 }

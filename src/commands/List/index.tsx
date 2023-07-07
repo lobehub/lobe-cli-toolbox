@@ -3,22 +3,26 @@ import { Fragment, memo } from 'react';
 
 import { BorderView } from '../../components/index.js';
 import gitmojis from '../../constants/gitmojis';
+import { useTheme } from '../../hooks/useTheme';
 
-const List = memo(() => (
-  <BorderView>
-    {gitmojis.map((item) => (
-      <Fragment key={item.name}>
-        <Box>
-          <Box marginRight={1} width={20}>
-            <Text backgroundColor="#000" color="#fff">
-              {` ${item.emoji} ${item.type} `}
-            </Text>
+const List = memo(() => {
+  const theme = useTheme();
+  return (
+    <BorderView>
+      {gitmojis.map((item) => (
+        <Fragment key={item.name}>
+          <Box>
+            <Box marginRight={1} width={20}>
+              <Text backgroundColor={theme.colorBgLayout} color={theme.colorText}>
+                {` ${item.emoji} ${item.type} `}
+              </Text>
+            </Box>
+            <Text color={theme.colorTextDescription}>{`- ${item.descEN}`}</Text>
           </Box>
-          <Text color="#999">{`- ${item.descEN}`}</Text>
-        </Box>
-      </Fragment>
-    ))}
-  </BorderView>
-));
+        </Fragment>
+      ))}
+    </BorderView>
+  );
+});
 
 export default List;

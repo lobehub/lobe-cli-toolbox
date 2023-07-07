@@ -4,6 +4,7 @@ import { debounce } from 'lodash-es';
 import { memo, useEffect, useState } from 'react';
 
 import { View } from '../../components/index';
+import { useTheme } from '../../hooks/useTheme';
 import getIssuesList from '../../utils/getIssuesList';
 import getRepo from '../../utils/getRepo';
 
@@ -17,6 +18,8 @@ const IssuesList = memo<IssuesListProps>(({ onChange, onSubmit }) => {
   const [keywords, setKeywords] = useState<string>('');
   const [list, setList] = useState<any>();
   const [items, setItems] = useState<any[]>([]);
+  const theme = useTheme();
+
   useEffect(() => {
     getRepo().then((data) => {
       if (data) {
@@ -39,7 +42,10 @@ const IssuesList = memo<IssuesListProps>(({ onChange, onSubmit }) => {
       label: (
         <Text>
           {` `}
-          <Text backgroundColor="#222" color="#fff">{` #${item.number} `}</Text>
+          <Text
+            backgroundColor={theme.colorBgContainer}
+            color={theme.colorText}
+          >{` #${item.number} `}</Text>
           {` ${item.title}`}
         </Text>
       ),
@@ -81,7 +87,7 @@ const IssuesList = memo<IssuesListProps>(({ onChange, onSubmit }) => {
           />
         </View>
         <View>
-          <Text color="gray">Use [Space] to multi-select:</Text>
+          <Text color={theme.colorTextDescription}>Use [Space] to multi-select:</Text>
           <MultiSelect
             onChange={(v) => onChange(v.join(','))}
             onSubmit={onSubmit}
@@ -94,7 +100,7 @@ const IssuesList = memo<IssuesListProps>(({ onChange, onSubmit }) => {
 
   return (
     <View>
-      <Text color="blue">❯ </Text>
+      <Text color={theme.colorInfo}>❯ </Text>
       <TextInput
         onChange={onChange}
         onSubmit={onSubmit}

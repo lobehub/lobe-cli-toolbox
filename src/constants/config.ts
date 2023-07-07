@@ -2,7 +2,7 @@ import Conf from 'conf';
 
 export const CONFIG_NAME = {
   API_BASE_URL: 'apiBaseUrl',
-  DIFF_LENGTH: 'diffLength',
+  DIFF_CHUNK_SIZE: 'diffChunkSize',
   EMOJI_FORMAT: 'emojiFormat',
   GITHUB_TOKEN: 'githubToken',
   LOCALE: 'locale',
@@ -45,8 +45,8 @@ const schema = {
     default: 10_000,
     type: 'number',
   },
-  [CONFIG_NAME.DIFF_LENGTH]: {
-    default: 5000,
+  [CONFIG_NAME.DIFF_CHUNK_SIZE]: {
+    default: 1000,
     type: 'number',
   },
 };

@@ -8,6 +8,7 @@ import { memo, useMemo, useState } from 'react';
 import { BorderView, Tabs, View } from '../../components';
 import configStore, { CONFIG_NAME } from '../../constants/config';
 import gitmojis from '../../constants/gitmojis';
+import { useTheme } from '../../hooks/useTheme';
 import genCommitMessage from '../../utils/genCommitMessage';
 import getAbsoluteHooksPath from '../../utils/getAbsoluteHooksPath';
 import { HOOK } from '../Hook/HookCreate';
@@ -27,6 +28,7 @@ const Commit = memo<CommitProps>(({ hook }) => {
   const [scope, setScope] = useState<string>('');
   const [subject, setSubject] = useState<string>('');
   const [issues, setIssues] = useState<string>('');
+  const theme = useTheme();
 
   const emojiFormatConfig = configStore.get(CONFIG_NAME.EMOJI_FORMAT);
 
@@ -49,10 +51,10 @@ const Commit = memo<CommitProps>(({ hook }) => {
     let selection = data.map((item) => ({
       label: (
         <>
-          <Text backgroundColor="#000" color="#fff">
+          <Text backgroundColor={theme.colorBgLayout} color={theme.colorText}>
             {` ${item.emoji} ${item.type} `}
           </Text>
-          <Text color="#999">{` - ${item.descEN}`}</Text>
+          <Text color={theme.colorTextDescription}>{` - ${item.descEN}`}</Text>
         </>
       ),
       value: `${emojiFormatConfig ? item.emoji : item.code} ${item.type}`,
@@ -63,10 +65,12 @@ const Commit = memo<CommitProps>(({ hook }) => {
       {
         label: (
           <>
-            <Text backgroundColor="#000" color="#fff">
+            <Text backgroundColor={theme.colorBgLayout} color={theme.colorText}>
               {' 🤯 Use AI Commit '}
             </Text>
-            <Text color="#999">{` - generate commit message by ChatGPT`}</Text>
+            <Text
+              color={theme.colorTextDescription}
+            >{` - generate commit message by ChatGPT`}</Text>
           </>
         ),
         value: 'ai',
@@ -89,7 +93,7 @@ const Commit = memo<CommitProps>(({ hook }) => {
       children: (
         <View>
           <Box>
-            <Text color="blue">❯ </Text>
+            <Text color={theme.colorInfo}>❯ </Text>
             <TextInput
               onChange={debounce(setScope, 100)}
               onSubmit={() => setStep(2)}
@@ -105,7 +109,7 @@ const Commit = memo<CommitProps>(({ hook }) => {
       children: (
         <View>
           <Box>
-            <Text color="blue">❯ </Text>
+            <Text color={theme.colorInfo}>❯ </Text>
             <TextInput
               onChange={debounce(setSubject, 100)}
               onSubmit={() => subject && setStep(3)}
