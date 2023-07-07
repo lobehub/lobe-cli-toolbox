@@ -125,7 +125,7 @@ You can integrate Lobe Commit with Git via the `prepare-commit-msg` hook. This a
 To install the hook in the Git repository, run the following command:
 
 ```shell
-$ lobe-coomit --init # or use short flag -i
+$ lobe-commit --init # or use short flag -i
 ```
 
 <br/>
@@ -135,7 +135,7 @@ $ lobe-coomit --init # or use short flag -i
 To uninstall the hook from the Git repository, run the following command:
 
 ```shell
-$ lobe-coomit --remove # or use short flag -r
+$ lobe-commit --remove # or use short flag -r
 ```
 
 <div align="right">
@@ -149,7 +149,7 @@ $ lobe-coomit --remove # or use short flag -r
 To configure Lobe Commit, run the following command:
 
 ```shell
-$ lobe-coomit --config # or use short flag -o
+$ lobe-commit --config # or use short flag -o
 ```
 
 - To use AI auto-generation, you need to fill in your [OpenAI token](<(https://platform.openai.com/account/api-keys)>) in the settings.
