@@ -25,7 +25,9 @@ const addEmoji = (message: string) => {
 export default async () => {
   if (!openAIApiKey) throw new Error('🤯 Please set the OpenAI Token by lobe-commit --config');
 
-  let diff = execSync('git diff --staged').toString();
+  let diff = execSync('git diff --staged', {
+    maxBuffer: 1024 ** 6,
+  }).toString();
 
   if (!diff) throw new Error('🤯 No changes to commit');
 
