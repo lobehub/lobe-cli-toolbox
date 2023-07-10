@@ -16,7 +16,6 @@ const Config = memo(() => {
   const githubTokenConfig: string | any = configStore.get(CONFIG_NAME.GITHUB_TOKEN);
   const promptConfig: string | any = configStore.get(CONFIG_NAME.PROMPT);
   const maxLengthConfig: number | any = configStore.get(CONFIG_NAME.MAX_LENGTH);
-  const timeoutConfig: number | any = configStore.get(CONFIG_NAME.TIMEOUT);
   const localeConfig: number | any = configStore.get(CONFIG_NAME.LOCALE);
   const diffChunkSize: number | any = configStore.get(CONFIG_NAME.DIFF_CHUNK_SIZE);
 
@@ -91,12 +90,6 @@ const Config = memo(() => {
         />
       ),
       value: CONFIG_NAME.API_BASE_URL,
-    },
-    {
-      label: (
-        <ConfigTitle badge={timeoutConfig + 'ms'} color={theme.colorText} title="OpenAI timeout" />
-      ),
-      value: CONFIG_NAME.TIMEOUT,
     },
     {
       label: (
@@ -214,19 +207,6 @@ const Config = memo(() => {
       ),
       key: CONFIG_NAME.API_BASE_URL,
       title: '🤯 OpenAI API Proxy Config',
-    },
-    {
-      children: (
-        <TextInput
-          defaultValue={String(timeoutConfig)}
-          onSubmit={(v) => {
-            updateConfig(CONFIG_NAME.TIMEOUT, Number(v));
-          }}
-          placeholder="The timeout for network requests to the OpenAI API in milliseconds, default 10000..."
-        />
-      ),
-      key: CONFIG_NAME.TIMEOUT,
-      title: '🤯 OpenAI Timeout Config',
     },
     {
       children: (

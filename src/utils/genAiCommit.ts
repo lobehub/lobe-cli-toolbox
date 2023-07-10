@@ -10,7 +10,7 @@ import gitmojis from '../constants/gitmojis';
 import template from './template';
 
 const diffChunkSize: number | any = storeConfig.get(CONFIG_NAME.DIFF_CHUNK_SIZE) || 1000;
-const timeout: number | any = storeConfig.get(CONFIG_NAME.TIMEOUT) || 10_000;
+// const timeout: number | any = storeConfig.get(CONFIG_NAME.TIMEOUT) || 10_000;
 const basePath: string | any = storeConfig.get(CONFIG_NAME.API_BASE_URL);
 const openAIApiKey: string | any = storeConfig.get(CONFIG_NAME.OPENAI_TOKEN);
 const addEmoji = (message: string) => {
@@ -36,23 +36,22 @@ export default async () => {
       maxRetries: 10,
       openAIApiKey,
       temperature: 0.5,
-      timeout,
     },
     {
       basePath,
     },
   );
-
+  console.time(' ✅  Split diff info');
   const textSplitter = new RecursiveCharacterTextSplitter({ chunkSize: diffChunkSize });
   const diffDocument = await textSplitter.createDocuments([diff]);
+  console.timeEnd(' ✅  Split diff info');
+  console.time(' ✅  Generate diff summary');
   const chain = loadSummarizationChain(chat, { type: 'map_reduce' });
   const diffSummary = await chain.call({
     input_documents: diffDocument,
-    timeout,
   });
-
   if (!diffSummary['text']) throw new Error('🤯 Diff summary failed');
-
+  console.timeEnd(' ✅  Generate diff summary');
   const res = await chat.call([
     new SystemMessage(template),
     new HumanMessage(

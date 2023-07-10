@@ -9,7 +9,6 @@ export const CONFIG_NAME = {
   MAX_LENGTH: 'maxLength',
   OPENAI_TOKEN: 'openaiToken',
   PROMPT: 'prompt',
-  TIMEOUT: 'timeout',
 };
 
 const schema = {
@@ -39,10 +38,6 @@ const schema = {
   },
   [CONFIG_NAME.MAX_LENGTH]: {
     default: 100,
-    type: 'number',
-  },
-  [CONFIG_NAME.TIMEOUT]: {
-    default: 10_000,
     type: 'number',
   },
   [CONFIG_NAME.DIFF_CHUNK_SIZE]: {
