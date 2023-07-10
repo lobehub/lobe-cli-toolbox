@@ -33,7 +33,7 @@ export default async () => {
 
   const chat = new ChatOpenAI(
     {
-      maxRetries: 0,
+      maxRetries: 10,
       openAIApiKey,
       temperature: 0.5,
       timeout,
@@ -48,6 +48,7 @@ export default async () => {
   const chain = loadSummarizationChain(chat, { type: 'map_reduce' });
   const diffSummary = await chain.call({
     input_documents: diffDocument,
+    timeout,
   });
 
   if (!diffSummary['text']) throw new Error('🤯 Diff summary failed');
