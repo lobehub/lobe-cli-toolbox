@@ -2,7 +2,7 @@ import { Text } from 'ink';
 import { render } from 'ink-testing-library';
 import { describe, expect, it } from 'vitest';
 
-import { Panel } from '@/index';
+import Panel from './index';
 
 describe('Panel', () => {
   it('render', () => {

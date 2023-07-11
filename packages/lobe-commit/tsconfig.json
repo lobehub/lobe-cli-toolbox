@@ -5,9 +5,11 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@lobehub/cli-ui": ["./packages/lobe-cli-ui/src"],
+      "@lobehub/cli-ui/*": ["./packages/lobe-cli-ui/src/*"]
     }
   },
   "extends": "../../tsconfig.json",
-  "include": ["src", "**/*.ts", "**/*.tsx"]
+  "include": ["src", "**/*.ts", "**/*.d.ts", "**/*.tsx"]
 }

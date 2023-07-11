@@ -44,18 +44,23 @@ export default async () => {
   );
   const textSplitter = new RecursiveCharacterTextSplitter({ chunkSize: diffChunkSize });
   const diffDocument = await textSplitter.createDocuments([diff]);
-  console.log(` ✅  Split diff info to [${diffDocument.length}] by ${diffChunkSize} chunk size`);
-  console.time(' ✅  Generate diff summary');
-  const chain = loadSummarizationChain(chat, { type: 'map_reduce' });
-  const diffSummary = await chain.call({
-    input_documents: diffDocument,
-  });
-  if (!diffSummary['text']) throw new Error('🤯 Diff summary failed');
-  console.timeEnd(' ✅  Generate diff summary');
+  let summary = diff;
+  if (diffDocument.length > 1) {
+    console.log(` ✅  Split diff info to [${diffDocument.length}] by ${diffChunkSize} chunk size`);
+    console.time(' ✅  Generate diff summary');
+    const chain = loadSummarizationChain(chat, { type: 'map_reduce' });
+    const diffSummary = await chain.call({
+      input_documents: diffDocument,
+    });
+    if (!diffSummary['text']) throw new Error('🤯 Diff summary failed');
+    console.timeEnd(' ✅  Generate diff summary');
+    summary = diffSummary['text'];
+  }
+
   const res = await chat.call([
     new SystemMessage(template),
     new HumanMessage(
-      `Return only 1 type commit message describes the git diff summary: ${diffSummary['text']}`,
+      `Return only 1 type commit message describes the git diff summary: ${summary}`,
     ),
   ]);
 

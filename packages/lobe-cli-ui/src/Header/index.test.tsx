@@ -1,7 +1,7 @@
 import { render } from 'ink-testing-library';
 import { describe, expect, it } from 'vitest';
 
-import { Header } from '@/index';
+import Header from './index';
 
 describe('Header', () => {
   it('render', () => {

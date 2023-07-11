@@ -2,7 +2,7 @@ import { Text } from 'ink';
 import { render } from 'ink-testing-library';
 import { describe, expect, it } from 'vitest';
 
-import { TabsWithHeader } from '@/index';
+import TabsWithHeader from './index';
 
 describe('TabsWithHeader', () => {
   it('render', () => {
