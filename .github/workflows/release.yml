@@ -1,13 +1,15 @@
-name: Build and Release
-
+name: Release CI
 on:
   push:
     branches:
       - master
+      - alpha
+      - beta
+      - rc
 
 jobs:
-  test:
-    name: Test
+  release:
+    name: Release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -15,34 +17,12 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 7
+          version: latest
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
-
-      - name: Install deps
-        run: pnpm install
-
-      - name: Test
-        run: pnpm run test
-  build:
-    needs: test
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 7
-
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
+          node-version: '16'
 
       - name: Install deps
         run: pnpm install
@@ -50,9 +30,11 @@ jobs:
       - name: Build
         run: pnpm run build
 
+      - name: Setup npm 7
+        run: npm i -g npm@7 --registry=https://registry.npmjs.org
+
       - name: Release
-        id: release
         run: pnpm run release
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

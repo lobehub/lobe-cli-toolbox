@@ -22,7 +22,7 @@
     "lint:md": "remark . --quiet --output",
     "prepare": "husky install",
     "prettier": "prettier -c --write \"**/**\"",
-    "release": "semantic-release",
+    "release": "multi-semantic-release",
     "test": "lerna run test --parallel && npm run lint"
   },
   "lint-staged": {
@@ -55,6 +55,7 @@
     "husky": "^8",
     "lerna": "^4",
     "lint-staged": "^13",
+    "multi-semantic-release": "^3",
     "pkgroll": "^1",
     "prettier": "^3",
     "remark": "^14",
