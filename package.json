@@ -16,15 +16,14 @@
     "packages/*"
   ],
   "scripts": {
-    "build:commit": "npm run build --prefix=packages/lobe-commit",
+    "build": "lerna run build --parallel",
     "dev:commit": "npm run dev --prefix=packages/lobe-commit",
     "lint": "eslint \"{src,packages}/**/*.{js,jsx,ts,tsx}\" --fix",
     "lint:md": "remark . --quiet --output",
     "prepare": "husky install",
     "prettier": "prettier -c --write \"**/**\"",
     "release": "semantic-release",
-    "test": "npm run test:commit && npm run lint",
-    "test:commit": "npm run test --prefix=packages/lobe-commit"
+    "test": "lerna run test --parallel && npm run lint"
   },
   "lint-staged": {
     "*.md": [
@@ -54,6 +53,7 @@
     "clean-pkg-json": "^1",
     "eslint": "^8",
     "husky": "^8",
+    "lerna": "^4",
     "lint-staged": "^13",
     "pkgroll": "^1",
     "prettier": "^3",
