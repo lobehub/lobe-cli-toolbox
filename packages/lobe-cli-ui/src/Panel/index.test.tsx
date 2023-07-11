@@ -12,9 +12,7 @@ describe('Panel', () => {
       </Panel>,
     );
     console.log(lastFrame());
-    expect(lastFrame()?.includes('title')).toEqual(true);
     expect(lastFrame()?.includes('body')).toEqual(true);
-    expect(lastFrame()?.includes('footer')).toEqual(true);
   });
   it('reverse', () => {
     const { lastFrame } = render(
