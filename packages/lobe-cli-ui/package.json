@@ -2,7 +2,7 @@
   "name": "@lobehub/cli-ui",
   "version": "1.1.0",
   "description": "Lobe CLI uikits",
-  "homepage": "https://github.com/lobehub/commit-cli",
+  "homepage": "https://github.com/lobehub/lobe-commit/tree/master/packages/lobe-cli-ui",
   "bugs": {
     "url": "https://github.com/lobehub/commit-cli/issues/new"
   },
@@ -32,7 +32,7 @@
     "prepare": "npm run build",
     "prepublishOnly": "npm run build",
     "start": "node ./dist/cli.js",
-    "test": "npm run type-check && vitest --passWithNoTests",
+    "test": "vitest --passWithNoTests",
     "test:coverage": "vitest run --coverage  --passWithNoTests",
     "test:update": "vitest -u",
     "type-check": "tsc --noEmit"

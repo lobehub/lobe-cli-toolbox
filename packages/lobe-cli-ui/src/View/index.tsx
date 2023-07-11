@@ -14,7 +14,7 @@ const View = memo<ViewProps>(({ children }) => {
       borderColor={theme.colorBorder}
       borderLeft={false}
       borderRight={false}
-      borderStyle="round"
+      borderStyle={'single'}
       flexDirection={'column'}
     >
       {children}

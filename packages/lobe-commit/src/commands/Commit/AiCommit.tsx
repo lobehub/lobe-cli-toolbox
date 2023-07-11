@@ -1,58 +1,61 @@
 import { Spinner } from '@inkjs/ui';
-import { BorderView, Header, View } from '@lobehub/cli-ui';
-import { Text } from 'ink';
-import SelectInput from 'ink-select-input';
-import { memo, useEffect, useState } from 'react';
+import { Panel, SelectInput } from '@lobehub/cli-ui';
+import { Text, useInput } from 'ink';
+import { memo, useCallback, useEffect, useState } from 'react';
 
+import { useCommitStore } from '@/store/commitStore';
 import genAiCommit from '@/utils/genAiCommit';
 
-import RunGitCommit from './RunGitCommit';
-
-interface AiCommitProps {
-  hook?: boolean;
-}
-
-const AiCommit = memo<AiCommitProps>(({ hook }) => {
+const AiCommit = memo(() => {
+  const { message, setMessage, setStep } = useCommitStore((st) => ({
+    message: st.message,
+    setMessage: st.setMessage,
+    setStep: st.setStep,
+  }));
+  useInput(useCallback((_, key) => key.tab && setStep('feat'), []));
+  const [loading, setLoading] = useState<boolean>(true);
+  const [loadingInfo, setLoadingInfo] = useState<string>(' Generating...');
   const [count, setCount] = useState<number>(0);
-  const [message, setMessage] = useState<string>('');
-  const [runCommit, setRunCommit] = useState<boolean>(false);
   useEffect(() => {
-    genAiCommit().then((text: any) => {
+    genAiCommit(setLoadingInfo).then((text: any) => {
       setMessage(text);
+      setLoading(false);
+      setLoadingInfo(' Generating...');
     });
   }, [count]);
 
-  const handleSelect = (item: any) => {
-    if (item.value === 'reload') {
-      setMessage('');
-      setCount(count + 1);
-    } else if (item.value === 'confirm') {
-      setRunCommit(true);
-    }
-  };
-
-  if (runCommit) return <RunGitCommit hook={hook} message={message} />;
+  const handleSelect = useCallback(
+    (item: any) => {
+      if (item.value === 'reload') {
+        setMessage('');
+        setCount(count + 1);
+        setLoading(true);
+      } else if (item.value === 'confirm') {
+        setStep('commit');
+      }
+    },
+    [count],
+  );
 
   return (
-    <>
-      <Header title={`🤯 AI Commit Generator`} />
-      <BorderView>
-        {message ? <Text>{message}</Text> : <Spinner label=" Generating..." />}
-        {message ? (
-          <View>
-            <SelectInput
-              items={[
-                { label: '🔄️ Regenerate commit message', value: 'reload' },
-                { label: '✅ Use this message', value: 'confirm' },
-              ]}
-              onSelect={handleSelect}
-            />
-          </View>
-        ) : (
-          <Text />
-        )}
-      </BorderView>
-    </>
+    <Panel
+      footer={
+        !loading &&
+        message && (
+          <SelectInput
+            items={[
+              { label: '🔄️ Regenerate commit message', value: 'reload' },
+              { label: '✅ Use this message', value: 'confirm' },
+            ]}
+            onSelect={handleSelect}
+          />
+        )
+      }
+      reverse
+      title={`🤯 AI Commit Generator`}
+    >
+      {!loading && message ? <Text>{message}</Text> : <Spinner label={loadingInfo} />}
+    </Panel>
   );
 });
 

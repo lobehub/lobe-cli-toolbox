@@ -1,10 +1,10 @@
 import { Text } from 'ink';
-import { memo } from 'react';
+import { type ReactNode, memo } from 'react';
 
 export interface ItemProps {
   highlightColor: string;
   isSelected?: boolean;
-  label: string;
+  label: string | ReactNode;
 }
 
 const Item = memo<ItemProps>(({ highlightColor, isSelected = false, label }) => {

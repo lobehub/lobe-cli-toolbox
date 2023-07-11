@@ -16,10 +16,11 @@ const colors = {
 };
 
 const typeColors = {
-  colorError: colors.pink,
-  colorInfo: colors.blue,
-  colorSuccess: colors.lime,
-  colorWarning: colors.gold,
+  colorError: 'red',
+  colorInfo: 'blue',
+  colorPrimary: 'cyan',
+  colorSuccess: 'green',
+  colorWarning: 'yellow',
 };
 
 export default {

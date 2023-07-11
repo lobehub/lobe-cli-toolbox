@@ -1,10 +1,10 @@
 import { ThemeProvider, defaultTheme, extendTheme } from '@inkjs/ui';
+import { useTheme } from '@lobehub/cli-ui';
 import { memo, useEffect } from 'react';
 // @ts-ignore
 import updateNotifier from 'update-notifier';
 
 import packageJson from '@/../package.json';
-import { useTheme } from '@/hooks/useTheme';
 
 import App, { type AppProps } from './App';
 
@@ -28,16 +28,14 @@ const Index = memo<AppProps>((props) => {
 
             if (isSelected) {
               color = theme.colorSuccess;
-            }
-
-            if (isFocused) {
-              color = theme.colorInfo;
+            } else if (isFocused) {
+              color = theme.colorPrimary;
             }
 
             return { color };
           },
           selectedIndicator: () => ({
-            color: theme.colorSuccess,
+            color: theme.colorPrimary,
           }),
         },
       },

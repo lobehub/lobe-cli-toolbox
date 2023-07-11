@@ -1,229 +1,188 @@
 import { TextInput } from '@inkjs/ui';
-import { TabsWithHeader, TabsWithHeaderItem } from '@lobehub/cli-ui';
-import SelectInput from 'ink-select-input';
-import { memo, useState } from 'react';
+import { ConfigPanel, type ConfigPanelProps, SelectInput } from '@lobehub/cli-ui';
+import { memo, useCallback, useMemo, useState } from 'react';
 
-import configStore, { CONFIG_NAME } from '@/constants/config';
-import { useTheme } from '@/hooks/useTheme';
-
-import ConfigTitle from './ConfigTitle';
+import configStore, { CONFIG_NAME, schema } from '@/constants/config';
+import { BASE_PROMPT } from '@/constants/template';
 
 const Config = memo(() => {
-  const [tab, setTab] = useState<string>('home');
-  const theme = useTheme();
-  const emojiFormatConfig: boolean | any = configStore.get(CONFIG_NAME.EMOJI_FORMAT);
-  const openaiTokenConfig: string | any = configStore.get(CONFIG_NAME.OPENAI_TOKEN);
-  const apiBaseUrlConfig: string | any = configStore.get(CONFIG_NAME.API_BASE_URL);
-  const githubTokenConfig: string | any = configStore.get(CONFIG_NAME.GITHUB_TOKEN);
-  const promptConfig: string | any = configStore.get(CONFIG_NAME.PROMPT);
-  const maxLengthConfig: number | any = configStore.get(CONFIG_NAME.MAX_LENGTH);
-  const localeConfig: number | any = configStore.get(CONFIG_NAME.LOCALE);
-  const diffChunkSize: number | any = configStore.get(CONFIG_NAME.DIFF_CHUNK_SIZE);
+  const [active, setActive] = useState<string>();
+  const [count, setCount] = useState<number>(0);
+  const localConfig = useMemo(
+    () => ({
+      apiBaseUrl: configStore.get(CONFIG_NAME.API_BASE_URL) as string,
+      diffChunkSize: configStore.get(CONFIG_NAME.DIFF_CHUNK_SIZE) as number,
+      emojiFormat: configStore.get(CONFIG_NAME.EMOJI_FORMAT) as 'emoji' | 'code',
+      githubToken: configStore.get(CONFIG_NAME.GITHUB_TOKEN) as string,
+      locale: configStore.get(CONFIG_NAME.LOCALE) as string,
+      maxLength: configStore.get(CONFIG_NAME.MAX_LENGTH) as number,
+      openaiToken: configStore.get(CONFIG_NAME.OPENAI_TOKEN) as string,
+      prompt: configStore.get(CONFIG_NAME.PROMPT) as string,
+    }),
+    [count],
+  );
 
-  const updateConfig = (key: string, value: string | number | boolean) => {
-    configStore.set(key, value);
-    setTab('home');
-  };
+  const updateConfig = useCallback(
+    (key: string, value: string | number | boolean) => {
+      configStore.set(key, value);
+      setCount(count + 1);
+      setActive('');
+    },
+    [count],
+  );
 
-  const selection: any = [
-    {
-      label: (
-        <ConfigTitle
-          badge={emojiFormatConfig ? 'emoji' : 'code'}
-          color={theme.colorInfo}
-          title="Emoji format"
-        />
-      ),
-      value: CONFIG_NAME.EMOJI_FORMAT,
-    },
-    {
-      label: (
-        <ConfigTitle
-          badge={localeConfig || 'EN'}
-          color={localeConfig ? theme.colorSuccess : theme.colorInfo}
-          title="AI message locale"
-        />
-      ),
-      value: CONFIG_NAME.LOCALE,
-    },
-    {
-      label: (
-        <ConfigTitle
-          badge={promptConfig ? 'modify' : 'default'}
-          color={promptConfig ? theme.colorSuccess : theme.colorInfo}
-          title="Custom prompt"
-        />
-      ),
-      value: CONFIG_NAME.PROMPT,
-    },
-    {
-      label: (
-        <ConfigTitle badge={diffChunkSize} color={theme.colorText} title="Diff split chunk size" />
-      ),
-      value: CONFIG_NAME.DIFF_CHUNK_SIZE,
-    },
-    {
-      label: (
-        <ConfigTitle
-          badge={maxLengthConfig}
-          color={theme.colorText}
-          title="Commit message max-Length"
-        />
-      ),
-      value: CONFIG_NAME.MAX_LENGTH,
-    },
-    {
-      label: (
-        <ConfigTitle
-          badge={openaiTokenConfig ? 'set' : 'unset'}
-          color={openaiTokenConfig ? theme.colorSuccess : theme.colorError}
-          title="OpenAI token"
-        />
-      ),
-      value: CONFIG_NAME.OPENAI_TOKEN,
-    },
-    {
-      label: (
-        <ConfigTitle
-          badge={apiBaseUrlConfig ? 'modify' : 'default'}
-          color={apiBaseUrlConfig ? theme.colorSuccess : theme.colorInfo}
-          title="OpenAI API proxy"
-        />
-      ),
-      value: CONFIG_NAME.API_BASE_URL,
-    },
-    {
-      label: (
-        <ConfigTitle
-          badge={githubTokenConfig ? 'set' : 'unset'}
-          color={githubTokenConfig ? theme.colorSuccess : theme.colorError}
-          title="Github token"
-        />
-      ),
-      value: CONFIG_NAME.GITHUB_TOKEN,
-    },
-  ];
+  const items: ConfigPanelProps['items'] = useMemo(
+    () => [
+      {
+        children: (
+          <SelectInput
+            items={[
+              {
+                label: '😄',
+                value: 'emoji',
+              },
+              {
+                label: ':smile:',
+                value: 'code',
+              },
+            ]}
+            onSelect={(item) => updateConfig(CONFIG_NAME.EMOJI_FORMAT, item.value)}
+          />
+        ),
+        defaultValue: schema?.[CONFIG_NAME.EMOJI_FORMAT]?.default,
+        key: CONFIG_NAME.EMOJI_FORMAT,
+        label: 'Emoji format',
+        value: localConfig.emojiFormat,
+      },
+      {
+        children: (
+          <TextInput
+            defaultValue={localConfig.locale}
+            onSubmit={(v) => {
+              updateConfig(CONFIG_NAME.LOCALE, v);
+            }}
+            placeholder="Input commit message locale..."
+          />
+        ),
+        defaultValue: schema?.[CONFIG_NAME.LOCALE]?.default || 'en_US',
+        desc: 'Commit message locale, default as en_US',
+        key: CONFIG_NAME.LOCALE,
+        label: 'AI message locale',
+        value: localConfig.locale || 'en_US',
+      },
+      {
+        children: (
+          <TextInput
+            defaultValue={localConfig.prompt}
+            onSubmit={(v) => {
+              updateConfig(CONFIG_NAME.PROMPT, v);
+            }}
+            placeholder="Input ChatGPT prompt..."
+          />
+        ),
+        defaultValue: schema?.[CONFIG_NAME.PROMPT]?.default || BASE_PROMPT,
+        desc: BASE_PROMPT,
+        key: CONFIG_NAME.PROMPT,
+        label: 'Custom prompt',
+        showValue: false,
+        value: localConfig.prompt || BASE_PROMPT,
+      },
+      {
+        children: (
+          <TextInput
+            defaultValue={String(localConfig.diffChunkSize)}
+            onSubmit={(v) => {
+              updateConfig(CONFIG_NAME.DIFF_CHUNK_SIZE, Number(v));
+            }}
+            placeholder={`Input diff split chunk size ...`}
+          />
+        ),
+        defaultValue: schema?.[CONFIG_NAME.DIFF_CHUNK_SIZE]?.default,
+        desc: `Default chunk size as ${schema?.[CONFIG_NAME.DIFF_CHUNK_SIZE]?.default}`,
+        key: CONFIG_NAME.DIFF_CHUNK_SIZE,
+        label: 'Diff split chunk size',
+        value: localConfig.diffChunkSize,
+      },
+      {
+        children: (
+          <TextInput
+            defaultValue={String(localConfig.maxLength)}
+            onSubmit={(v) => {
+              updateConfig(CONFIG_NAME.MAX_LENGTH, Number(v));
+            }}
+            placeholder={`Input maximum character length of the generated commit message...`}
+          />
+        ),
+        defaultValue: schema?.[CONFIG_NAME.MAX_LENGTH]?.default,
+        desc: `The maximum character length of the generated commit message, default max-length as ${schema?.[
+          CONFIG_NAME.MAX_LENGTH
+        ]?.default}`,
+        key: CONFIG_NAME.MAX_LENGTH,
+        label: 'Commit message max-length',
+        value: localConfig.maxLength,
+      },
+      {
+        children: (
+          <TextInput
+            defaultValue={localConfig.openaiToken}
+            onSubmit={(v) => {
+              updateConfig(CONFIG_NAME.OPENAI_TOKEN, v);
+            }}
+            placeholder="Input OpenAI token..."
+          />
+        ),
+        defaultValue: schema?.[CONFIG_NAME.OPENAI_TOKEN]?.default,
+        key: CONFIG_NAME.OPENAI_TOKEN,
+        label: 'OpenAI token',
+        showValue: false,
+        value: localConfig.openaiToken,
+      },
+      {
+        children: (
+          <TextInput
+            defaultValue={localConfig.apiBaseUrl}
+            onSubmit={(v) => {
+              updateConfig(CONFIG_NAME.API_BASE_URL, v);
+            }}
+            placeholder="Set openAI API proxy, default value: https://api.openai.com/v1/..."
+          />
+        ),
+        defaultValue: schema?.[CONFIG_NAME.API_BASE_URL]?.default,
+        desc: 'OpenAI API proxy, default value: https://api.openai.com/v1/',
+        key: CONFIG_NAME.API_BASE_URL,
+        label: 'OpenAI API proxy',
+        showValue: false,
+        value: localConfig.apiBaseUrl,
+      },
+      {
+        children: (
+          <TextInput
+            defaultValue={localConfig.githubToken}
+            onSubmit={(v) => {
+              updateConfig(CONFIG_NAME.GITHUB_TOKEN, v);
+            }}
+            placeholder="Input Github token..."
+          />
+        ),
+        defaultValue: schema?.[CONFIG_NAME.GITHUB_TOKEN]?.default,
+        key: CONFIG_NAME.GITHUB_TOKEN,
+        label: 'Github token',
+        showValue: false,
+        value: localConfig.githubToken,
+      },
+    ],
+    [localConfig],
+  );
 
-  const items: TabsWithHeaderItem[] = [
-    {
-      children: <SelectInput items={selection} onSelect={(item: any) => setTab(item.value)} />,
-      key: 'home',
-      title: '🤯 Lobe Commit Config',
-    },
-    {
-      children: (
-        <SelectInput
-          items={[
-            {
-              label: '😄',
-              value: 'emoji',
-            },
-            {
-              label: ':smile:',
-              value: 'code',
-            },
-          ]}
-          onSelect={(item: { label: string; value: string }) => {
-            updateConfig(CONFIG_NAME.EMOJI_FORMAT, item.value === 'emoji');
-          }}
-        />
-      ),
-      key: CONFIG_NAME.EMOJI_FORMAT,
-      title: '🤯 Emoji Format Config',
-    },
-    {
-      children: (
-        <TextInput
-          defaultValue={localeConfig}
-          onSubmit={(v) => {
-            updateConfig(CONFIG_NAME.LOCALE, v);
-          }}
-          placeholder="Input commit messge locale..."
-        />
-      ),
-      key: CONFIG_NAME.LOCALE,
-      title: '🤯 Commit Message Locale Config',
-    },
-    {
-      children: (
-        <TextInput
-          defaultValue={promptConfig}
-          onSubmit={(v) => {
-            updateConfig(CONFIG_NAME.PROMPT, v);
-          }}
-          placeholder="Input ChatGPT prompt..."
-        />
-      ),
-      key: CONFIG_NAME.PROMPT,
-      title: '🤯 Prompt Config',
-    },
-    {
-      children: (
-        <TextInput
-          defaultValue={String(diffChunkSize)}
-          onSubmit={(v) => {
-            updateConfig(CONFIG_NAME.DIFF_CHUNK_SIZE, Number(v));
-          }}
-          placeholder="The maximum character length of diff log, default 5000..."
-        />
-      ),
-      key: CONFIG_NAME.DIFF_CHUNK_SIZE,
-      title: '🤯 Diff Split Chunk Size Config',
-    },
-    {
-      children: (
-        <TextInput
-          defaultValue={String(maxLengthConfig)}
-          onSubmit={(v) => {
-            updateConfig(CONFIG_NAME.MAX_LENGTH, Number(v));
-          }}
-          placeholder="The maximum character length of the generated commit message, default 100..."
-        />
-      ),
-      key: CONFIG_NAME.MAX_LENGTH,
-      title: '🤯 Commit Message Max-Length Config',
-    },
-    {
-      children: (
-        <TextInput
-          defaultValue={openaiTokenConfig}
-          onSubmit={(v) => {
-            updateConfig(CONFIG_NAME.OPENAI_TOKEN, v);
-          }}
-          placeholder="Input OpenAI token..."
-        />
-      ),
-      key: CONFIG_NAME.OPENAI_TOKEN,
-      title: '🤯 OpenAI Token Config',
-    },
-    {
-      children: (
-        <TextInput
-          defaultValue={apiBaseUrlConfig}
-          onSubmit={(v) => {
-            updateConfig(CONFIG_NAME.API_BASE_URL, v);
-          }}
-          placeholder="Set openAI api proxy, default value: https://api.openai.com/v1/..."
-        />
-      ),
-      key: CONFIG_NAME.API_BASE_URL,
-      title: '🤯 OpenAI API Proxy Config',
-    },
-    {
-      children: (
-        <TextInput
-          defaultValue={githubTokenConfig}
-          onSubmit={(v) => {
-            updateConfig(CONFIG_NAME.GITHUB_TOKEN, v);
-          }}
-          placeholder="Input Github token..."
-        />
-      ),
-      key: CONFIG_NAME.GITHUB_TOKEN,
-      title: '🤯 Github Token Config',
-    },
-  ];
-  return <TabsWithHeader activeKey={tab} items={items} />;
+  return (
+    <ConfigPanel
+      active={active}
+      items={items}
+      logo="🤯"
+      setActive={setActive}
+      title="Lobe Commit Config"
+    />
+  );
 });
 
 export default Config;

@@ -37,8 +37,6 @@ Lobe Commit 是一款使用 ChatGPT 生成基于 Gitmoji 的 CLI 提交工具
 
 - [⌨️ 本地开发](#️-本地开发)
 
-- [🤝 参与贡献](#-参与贡献)
-
 - [🔗 链接](#-链接)
 
 ####
@@ -195,30 +193,6 @@ $ cd lobe-commit
 $ npm install
 $ npm start
 ```
-
-<div align="right">
-
-[![][back-to-top]](#readme-top)
-
-</div>
-
-## 🤝 参与贡献
-
-<!-- CONTRIBUTION GROUP -->
-
-> 📊 总计：<kbd>**3**</kbd>
-
-<a href="https://github.com/canisminor1990" title="canisminor1990">
-  <img src="https://avatars.githubusercontent.com/u/17870709?v=4" width="50" />
-</a>
-<a href="https://github.com/apps/dependabot" title="dependabot[bot]">
-  <img src="https://avatars.githubusercontent.com/in/29110?v=4" width="50" />
-</a>
-<a href="https://github.com/actions-user" title="actions-user">
-  <img src="https://avatars.githubusercontent.com/u/65916846?v=4" width="50" />
-</a>
-
-<!-- CONTRIBUTION END -->
 
 <div align="right">
 

@@ -14,7 +14,7 @@
     "aicommit",
     "ai-commit"
   ],
-  "homepage": "https://github.com/lobehub/commit-cli",
+  "homepage": "https://github.com/lobehub/lobe-commit/tree/master/packages/lobe-commit",
   "bugs": {
     "url": "https://github.com/lobehub/commit-cli/issues/new"
   },

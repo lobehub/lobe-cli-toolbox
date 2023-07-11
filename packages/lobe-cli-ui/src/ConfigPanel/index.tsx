@@ -1,10 +1,11 @@
-import { type BoxProps } from 'ink';
-import { Text } from 'ink';
-import { ReactNode, memo, useMemo, useState } from 'react';
+import { type BoxProps, Text, useApp } from 'ink';
+import { ReactNode, memo, useCallback, useMemo, useState } from 'react';
 
 import Panel from '@/Panel';
-import SelectInput, { type SelectInputProps } from '@/SelectInput';
+import SelectInput, { type SelectInputItem, type SelectInputProps } from '@/SelectInput';
 import { useTheme } from '@/hooks/useTheme';
+
+import ConfigSelectLabel from './ConfigSelectLabel';
 
 export interface ConfigPanelItem {
   children: ReactNode;
@@ -16,49 +17,76 @@ export interface ConfigPanelItem {
   value: any;
 }
 export interface ConfigPanelProps extends BoxProps {
+  active?: string;
   items: ConfigPanelItem[];
   logo?: string;
+  maxLength?: number;
+  setActive?: (key: string) => void;
   show?: boolean;
   title?: string;
 }
-const ConfigPanel = memo<ConfigPanelProps>(({ show = true, items, logo, title, ...props }) => {
-  const [active, setActive] = useState<string>();
-  const [activeItem, setAciveItem] = useState<ConfigPanelItem>();
-  const theme = useTheme();
+const ConfigPanel = memo<ConfigPanelProps>(
+  ({ active, setActive, maxLength = 30, show = true, items, logo, title, ...props }) => {
+    const [activeItem, setAciveItem] = useState<ConfigPanelItem>();
+    const theme = useTheme();
+    const { exit } = useApp();
+    const options: SelectInputProps['items'] = useMemo(
+      () => [
+        ...items.map((item) => ({
+          label: (
+            <ConfigSelectLabel
+              defaultValue={item.defaultValue}
+              label={item.label}
+              maxLength={maxLength}
+              showValue={item.showValue}
+              value={item.value}
+            />
+          ),
+          value: item.key,
+        })),
+        {
+          label: 'Exit',
+          value: 'exit',
+        },
+      ],
+      [items],
+    );
 
-  const options: SelectInputProps['items'] = useMemo(
-    () =>
-      items.map((item) => ({
-        label: item.label,
-        value: item.key,
-      })),
-    [items],
-  );
+    const handleSelect = useCallback(
+      () => (e: SelectInputItem) => {
+        if (e.value === 'exit') exit();
+        const activeOption = items.find((item) => item.key === e.value);
+        if (activeOption) {
+          setAciveItem(activeOption);
+          setActive?.(e.value);
+        }
+      },
+      [],
+    );
 
-  const handleSelect: SelectInputProps['onSelect'] = (e) => {
-    const active = items.find((item) => item.key === e.value);
-    if (active) {
-      setAciveItem(active);
-      setActive(e.value);
-    }
-  };
+    if (!show) return;
 
-  if (!show) return;
-
-  return activeItem ? (
-    <Panel
-      footer={activeItem.desc && <Text color={theme.colorTextDescription}>{activeItem.desc}</Text>}
-      reverse
-      title={[logo, activeItem.label].filter(Boolean).join(' ')}
-      {...props}
-    >
-      {activeItem.children}
-    </Panel>
-  ) : (
-    <Panel show={!active} title={[logo, title].filter(Boolean).join(' ')} {...props}>
-      <SelectInput items={options} onSelect={handleSelect} />
-    </Panel>
-  );
-});
+    return active && activeItem ? (
+      <Panel
+        footer={
+          activeItem.desc && (
+            <Text color={theme.colorTextDescription}>
+              <Text bold>{`👉NOTE: `}</Text>
+              {activeItem.desc}
+            </Text>
+          )
+        }
+        title={[logo, activeItem.label].filter(Boolean).join(' ')}
+        {...props}
+      >
+        {activeItem.children}
+      </Panel>
+    ) : (
+      <Panel show={!active} title={[logo, title].filter(Boolean).join(' ')} {...props}>
+        <SelectInput items={options} onSelect={handleSelect} />
+      </Panel>
+    );
+  },
+);
 
 export default ConfigPanel;

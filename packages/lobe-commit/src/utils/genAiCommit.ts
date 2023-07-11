@@ -7,8 +7,7 @@ import { execSync } from 'node:child_process';
 
 import { CONFIG_NAME, default as storeConfig } from '@/constants/config';
 import gitmojis from '@/constants/gitmojis';
-
-import template from './template';
+import template from '@/constants/template';
 
 const diffChunkSize: number | any = storeConfig.get(CONFIG_NAME.DIFF_CHUNK_SIZE) || 1000;
 // const timeout: number | any = storeConfig.get(CONFIG_NAME.TIMEOUT) || 10_000;
@@ -23,7 +22,7 @@ const addEmoji = (message: string) => {
   return `${emoji} ${type}: ${rest.join(': ')}`;
 };
 
-export default async () => {
+export default async (setLoadingInfo: (text: string) => void) => {
   if (!openAIApiKey) throw new Error('🤯 Please set the OpenAI Token by lobe-commit --config');
 
   let diff = execSync('git diff --staged', {
@@ -46,17 +45,21 @@ export default async () => {
   const diffDocument = await textSplitter.createDocuments([diff]);
   let summary = diff;
   if (diffDocument.length > 1) {
-    console.log(` ✅  Split diff info to [${diffDocument.length}] by ${diffChunkSize} chunk size`);
-    console.time(' ✅  Generate diff summary');
+    setLoadingInfo(
+      ` [1/3] Split diff info to (${diffDocument.length}) by ${diffChunkSize} chunk size...`,
+    );
     const chain = loadSummarizationChain(chat, { type: 'map_reduce' });
+    setLoadingInfo(
+      ` [2/3] Split diff info to (${diffDocument.length} * ${diffChunkSize} chunk-size), generate summary...`,
+    );
     const diffSummary = await chain.call({
       input_documents: diffDocument,
     });
     if (!diffSummary['text']) throw new Error('🤯 Diff summary failed');
-    console.timeEnd(' ✅  Generate diff summary');
     summary = diffSummary['text'];
   }
 
+  setLoadingInfo(` [3/3] Generate commit message...`);
   const res = await chat.call([
     new SystemMessage(template),
     new HumanMessage(

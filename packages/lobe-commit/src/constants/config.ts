@@ -3,7 +3,7 @@ import Conf from 'conf';
 export const CONFIG_NAME = {
   API_BASE_URL: 'apiBaseUrl',
   DIFF_CHUNK_SIZE: 'diffChunkSize',
-  EMOJI_FORMAT: 'emojiFormat',
+  EMOJI_FORMAT: 'emoji',
   GITHUB_TOKEN: 'githubToken',
   LOCALE: 'locale',
   MAX_LENGTH: 'maxLength',
@@ -11,10 +11,10 @@ export const CONFIG_NAME = {
   PROMPT: 'prompt',
 };
 
-const schema = {
+export const schema = {
   [CONFIG_NAME.EMOJI_FORMAT]: {
-    default: true,
-    type: 'boolean',
+    default: 'emoji',
+    type: 'string',
   },
   [CONFIG_NAME.OPENAI_TOKEN]: {
     default: '',
@@ -41,7 +41,7 @@ const schema = {
     type: 'number',
   },
   [CONFIG_NAME.DIFF_CHUNK_SIZE]: {
-    default: 1000,
+    default: 5000,
     type: 'number',
   },
 };

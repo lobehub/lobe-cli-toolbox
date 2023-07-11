@@ -1,4 +1,5 @@
 export { default as BorderView, type BorderViewProps } from './BorderView';
+export { default as ConfigPanel, type ConfigPanelItem, type ConfigPanelProps } from './ConfigPanel';
 export { default as Header, type HeaderProps } from './Header';
 export { useTheme } from './hooks/useTheme';
 export { default as Panel, type PanelProps } from './Panel';

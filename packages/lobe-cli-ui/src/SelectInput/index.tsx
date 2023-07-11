@@ -1,7 +1,7 @@
 import arrayRotate from 'arr-rotate';
 import isEqual from 'fast-deep-equal';
 import { Box, useInput } from 'ink';
-import { type FC, createElement, memo } from 'react';
+import { type FC, type ReactNode, createElement, memo, useMemo } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useTheme } from '@/hooks/useTheme';
@@ -13,7 +13,7 @@ import type { ItemProps } from './Item.js';
 
 export interface SelectInputItem {
   key?: string;
-  label: string;
+  label: string | ReactNode;
   value: string;
 }
 
@@ -120,22 +120,24 @@ const SelectInput = memo<SelectInputProps>(
       { isActive: isFocused },
     );
 
-    const slicedItems = hasLimit ? arrayRotate(items, rotateIndex).slice(0, limit) : items;
+    const slicedItems = useMemo(
+      () => (hasLimit ? arrayRotate(items, rotateIndex).slice(0, limit) : items),
+      [hasLimit, rotateIndex, limit],
+    );
 
     return (
       <Box flexDirection="column">
         {slicedItems.map((item, index) => {
           const isSelected = index === selectedIndex;
-
           return (
             <Box key={item.key ?? item.value}>
               {createElement(indicatorComponent, {
-                highlightColor: highlightColor ?? theme.colorInfo,
+                highlightColor: highlightColor ?? theme.colorPrimary,
                 isSelected,
               })}
               {createElement(itemComponent, {
                 ...item,
-                highlightColor: highlightColor ?? theme.colorInfo,
+                highlightColor: highlightColor ?? theme.colorPrimary,
                 isSelected,
               })}
             </Box>

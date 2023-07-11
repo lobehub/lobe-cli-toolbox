@@ -2,12 +2,20 @@ import { Alert, Spinner } from '@inkjs/ui';
 import { execaSync } from 'execa';
 import fs from 'node:fs';
 import { memo, useEffect, useState } from 'react';
+import { shallow } from 'zustand/shallow';
+
+import { useCommitStore } from '@/store/commitStore';
 
 interface RunGitCommitProps {
   hook?: boolean;
-  message: string;
 }
-const RunGitCommit = memo<RunGitCommitProps>(({ hook, message }) => {
+const RunGitCommit = memo<RunGitCommitProps>(({ hook }) => {
+  const { message } = useCommitStore(
+    (st) => ({
+      message: st.message,
+    }),
+    shallow,
+  );
   const [loading, setLoading] = useState<boolean>(true);
   try {
     useEffect(() => {

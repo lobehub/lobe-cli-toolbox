@@ -17,7 +17,9 @@
   ],
   "scripts": {
     "build": "lerna run build --parallel",
+    "dev": "lerna run dev --parallel",
     "dev:commit": "npm run dev --prefix=packages/lobe-commit",
+    "dev:ui": "npm run dev --prefix=packages/lobe-cli-ui",
     "lint": "eslint \"{src,packages}/**/*.{js,jsx,ts,tsx}\" --fix",
     "lint:md": "remark . --quiet --output",
     "prepare": "husky install",

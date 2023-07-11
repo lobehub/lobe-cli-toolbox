@@ -1,18 +1,20 @@
 import pangu from 'pangu';
 
 export default ({
+  emoji,
   type,
   scope,
   subject,
   issues,
 }: {
+  emoji?: string;
   issues?: string;
   scope?: string;
   subject: string;
   type: string;
 }): string => {
   if (!type) return 'waiting for selection...';
-  let message = type;
+  let message = [emoji, type].filter(Boolean).join(' ');
   if (scope) message = `${message}(${scope.toLowerCase()})`;
   message = `${message}: ${pangu.spacing(subject)}`;
   if (issues) {

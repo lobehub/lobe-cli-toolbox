@@ -13,7 +13,7 @@ export interface ConfigSelectLabelProps {
 }
 
 const ConfigSelectLabel = memo<ConfigSelectLabelProps>(
-  ({ maxLength = 30, defaultValue, label, showValue, value }) => {
+  ({ maxLength = 30, defaultValue, label, showValue = true, value }) => {
     const theme = useTheme();
 
     const spacedLabel = useMemo(
@@ -35,7 +35,7 @@ const ConfigSelectLabel = memo<ConfigSelectLabelProps>(
             {showValue ? value : isDefault ? 'DEFAULT' : 'CUSTOM'}
           </Badge>
         ) : (
-          <Badge color={isDefault ? theme.colorWarning : theme.colorSuccess}>
+          <Badge color={isDefault ? theme.colorError : theme.colorSuccess}>
             {showValue ? value : isDefault ? 'UNSET' : 'SET'}
           </Badge>
         )}
