@@ -23,8 +23,8 @@
     "prepare": "husky install",
     "prettier": "prettier -c --write \"**/**\"",
     "release": "semantic-release",
-    "test": "npm run type-check && npm run lint",
-    "type-check": "tsc --noEmit"
+    "test": "npm run test:commit && npm run lint",
+    "test:commit": "npm run test --prefix=packages/lobe-commit"
   },
   "lint-staged": {
     "*.md": [

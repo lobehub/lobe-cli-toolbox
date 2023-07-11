@@ -43,7 +43,7 @@
     "prepack": "npm build && clean-pkg-json",
     "prepublishOnly": "npm run build",
     "start": "node ./dist/cli.js",
-    "test": "npm run type-check && npm run lint",
+    "test": "npm run type-check",
     "type-check": "tsc --noEmit"
   },
   "lint-staged": {
