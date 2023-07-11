@@ -1,18 +1,14 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
     "declaration": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
-    "moduleResolution": "bundler",
     "strict": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "jsx": "react-jsx",
-    "baseUrl": ".",
-    "outDir": "dist"
+    "baseUrl": "."
   },
   "extends": "@sindresorhus/tsconfig",
-  "include": ["src", "*.ts"]
+  "include": ["packages", "**/*.ts", "**/*.tsx"]
 }

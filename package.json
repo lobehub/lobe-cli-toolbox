@@ -1,48 +1,28 @@
 {
-  "name": "@lobehub/commit-cli",
-  "version": "1.10.1",
-  "description": "Lobe Commit is a CLI tool that uses ChatGPT to generate Gitmoji-based commit messages",
-  "keywords": [
-    "ai",
-    "git",
-    "commit",
-    "openai",
-    "gpt",
-    "gitmoji-cli",
-    "git-commits",
-    "chatgpt",
-    "aicommit",
-    "ai-commit"
-  ],
-  "homepage": "https://github.com/lobehub/lobe-commit",
+  "name": "commit-cli",
+  "version": "0.0.0",
+  "private": true,
+  "homepage": "https://github.com/lobehub/commit-cli",
   "bugs": {
-    "url": "https://github.com/lobehub/lobe-commit/issues/new"
+    "url": "https://github.com/lobehub/commit-cli/issues/new"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lobehub/lobe-commit.git"
+    "url": "https://github.com/lobehub/commit-cli.git"
   },
   "license": "MIT",
   "author": "canisminor1990 <i@canisminor.cc>",
-  "sideEffects": false,
-  "type": "module",
-  "bin": {
-    "lobe": "dist/cli.js",
-    "lobe-commit": "dist/cli.js"
-  },
-  "files": [
-    "dist"
+  "workspaces": [
+    "packages/*"
   ],
   "scripts": {
-    "build": "npm run type-check && pkgroll --minify -p tsconfig.prod.json && node ./scripts/addShebangs.cjs",
-    "dev": "pkgroll --watch",
-    "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --fix",
+    "build:commit": "npm run build --prefix=packages/lobe-commit",
+    "dev:commit": "npm run dev --prefix=packages/lobe-commit",
+    "lint": "eslint \"{src,packages}/**/*.{js,jsx,ts,tsx}\" --fix",
     "lint:md": "remark . --quiet --output",
-    "prepack": "pnpm build && clean-pkg-json",
     "prepare": "husky install",
     "prettier": "prettier -c --write \"**/**\"",
     "release": "semantic-release",
-    "start": "node ./dist/cli.js",
     "test": "npm run type-check && npm run lint",
     "type-check": "tsc --noEmit"
   },
@@ -63,26 +43,6 @@
       "eslint --fix"
     ]
   },
-  "dependencies": {
-    "@inkjs/ui": "^1",
-    "chalk": "^5",
-    "cliui": "^8",
-    "conf": "^11",
-    "execa": "^7",
-    "gitconfig": "^2",
-    "github-api": "^3",
-    "ink": "^4",
-    "ink-select-input": "^5",
-    "isomorphic-fetch": "^3",
-    "langchain": "latest",
-    "lodash-es": "^4",
-    "meow": "^12",
-    "pangu": "^4",
-    "path-exists": "^5",
-    "react": "^18",
-    "update-notifier": "^6",
-    "zustand": "^4"
-  },
   "devDependencies": {
     "@lobehub/lint": "latest",
     "@sindresorhus/tsconfig": "^3",
@@ -100,11 +60,11 @@
     "remark": "^14",
     "remark-cli": "^11",
     "semantic-release": "^21",
+    "stylelint": "latest",
     "typescript": "^5"
   },
   "engines": {
-    "node": ">=18",
-    "react": ">=18"
+    "node": ">=18"
   },
   "publishConfig": {
     "access": "public",

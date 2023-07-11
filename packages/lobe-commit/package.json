@@ -1,0 +1,97 @@
+{
+  "name": "@lobehub/commit-cli",
+  "version": "1.10.1",
+  "description": "Lobe Commit is a CLI tool that uses ChatGPT to generate Gitmoji-based commit messages",
+  "keywords": [
+    "ai",
+    "git",
+    "commit",
+    "openai",
+    "gpt",
+    "gitmoji-cli",
+    "git-commits",
+    "chatgpt",
+    "aicommit",
+    "ai-commit"
+  ],
+  "homepage": "https://github.com/lobehub/commit-cli",
+  "bugs": {
+    "url": "https://github.com/lobehub/commit-cli/issues/new"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lobehub/commit-cli.git"
+  },
+  "license": "MIT",
+  "author": "canisminor1990 <i@canisminor.cc>",
+  "sideEffects": false,
+  "type": "module",
+  "imports": {
+    "@": "./src",
+    "/* @shebangs */": "#!/usr/bin/env node"
+  },
+  "bin": {
+    "lobe": "dist/cli.js",
+    "lobe-commit": "dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "npm run type-check && pkgroll --minify -p tsconfig.prod.json --env.NODE_ENV=production",
+    "dev": "pkgroll -p tsconfig.prod.json --env.NODE_ENV=development --watch",
+    "prepack": "npm build && clean-pkg-json",
+    "prepublishOnly": "npm run build",
+    "start": "node ./dist/cli.js",
+    "test": "npm run type-check && npm run lint",
+    "type-check": "tsc --noEmit"
+  },
+  "lint-staged": {
+    "*.md": [
+      "remark --quiet --output --",
+      "prettier --write --no-error-on-unmatched-pattern"
+    ],
+    "*.json": [
+      "prettier --write --no-error-on-unmatched-pattern"
+    ],
+    "*.{js,jsx,cjs,mjs}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.{ts,tsx}": [
+      "prettier --parser=typescript --write",
+      "eslint --fix"
+    ]
+  },
+  "dependencies": {
+    "@inkjs/ui": "^1",
+    "chalk": "^5",
+    "cliui": "^8",
+    "conf": "^11",
+    "execa": "^7",
+    "gitconfig": "^2",
+    "github-api": "^3",
+    "ink": "^4",
+    "ink-select-input": "^5",
+    "isomorphic-fetch": "^3",
+    "langchain": "latest",
+    "lodash-es": "^4",
+    "meow": "^12",
+    "pangu": "^4",
+    "path-exists": "^5",
+    "react": "^18",
+    "update-notifier": "^6",
+    "zustand": "^4"
+  },
+  "peerDependencies": {
+    "ink": ">=4",
+    "react": ">=18"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}
