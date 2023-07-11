@@ -1,7 +1,8 @@
 import { Fragment, type ReactNode, memo } from 'react';
 
-import BorderView from './BorderView';
-import Header from './Header';
+import { Header } from '@/index';
+
+import BorderView from '../BorderView';
 
 export interface TabsWithHeaderItem {
   children: ReactNode;

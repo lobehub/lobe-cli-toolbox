@@ -1,11 +1,11 @@
 import { Alert, TextInput } from '@inkjs/ui';
+import { BorderView, Tabs, View } from '@lobehub/cli-ui';
 import { Box, Text } from 'ink';
 import SelectInput from 'ink-select-input';
 import { debounce } from 'lodash-es';
 import fs from 'node:fs';
 import { memo, useMemo, useState } from 'react';
 
-import { BorderView, Tabs, View } from '@/components';
 import configStore, { CONFIG_NAME } from '@/constants/config';
 import gitmojis from '@/constants/gitmojis';
 import { useTheme } from '@/hooks/useTheme';

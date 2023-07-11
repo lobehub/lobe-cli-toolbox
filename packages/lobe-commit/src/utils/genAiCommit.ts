@@ -42,10 +42,9 @@ export default async () => {
       basePath,
     },
   );
-  console.time(' ✅  Split diff info');
   const textSplitter = new RecursiveCharacterTextSplitter({ chunkSize: diffChunkSize });
   const diffDocument = await textSplitter.createDocuments([diff]);
-  console.timeEnd(' ✅  Split diff info');
+  console.log(` ✅  Split diff info to [${diffDocument.length}] by ${diffChunkSize} chunk size`);
   console.time(' ✅  Generate diff summary');
   const chain = loadSummarizationChain(chat, { type: 'map_reduce' });
   const diffSummary = await chain.call({

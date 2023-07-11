@@ -3,23 +3,22 @@ import { type ReactNode, memo } from 'react';
 
 import { useTheme } from '@/hooks/useTheme';
 
-interface ViewProps {
+export interface BorderViewProps {
   children: ReactNode;
 }
-const View = memo<ViewProps>(({ children }) => {
+const BorderView = memo<BorderViewProps>(({ children }) => {
   const theme = useTheme();
   return (
     <Box
-      borderBottom={false}
       borderColor={theme.colorBorder}
-      borderLeft={false}
-      borderRight={false}
       borderStyle="round"
       flexDirection={'column'}
+      paddingLeft={1}
+      paddingRight={1}
     >
       {children}
     </Box>
   );
 });
 
-export default View;
+export default BorderView;

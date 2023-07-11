@@ -1,9 +1,9 @@
 import { MultiSelect, Spinner, TextInput } from '@inkjs/ui';
+import { View } from '@lobehub/cli-ui';
 import { Text } from 'ink';
 import { debounce } from 'lodash-es';
 import { memo, useEffect, useState } from 'react';
 
-import { View } from '@/components';
 import { useTheme } from '@/hooks/useTheme';
 import getIssuesList from '@/utils/getIssuesList';
 import getRepo from '@/utils/getRepo';

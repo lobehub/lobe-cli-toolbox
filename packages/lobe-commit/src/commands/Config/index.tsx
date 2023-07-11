@@ -1,8 +1,8 @@
 import { TextInput } from '@inkjs/ui';
+import { TabsWithHeader, TabsWithHeaderItem } from '@lobehub/cli-ui';
 import SelectInput from 'ink-select-input';
 import { memo, useState } from 'react';
 
-import { TabsWithHeader, TabsWithHeaderItem } from '@/components';
 import configStore, { CONFIG_NAME } from '@/constants/config';
 import { useTheme } from '@/hooks/useTheme';
 

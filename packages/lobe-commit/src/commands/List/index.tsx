@@ -1,7 +1,7 @@
+import { BorderView } from '@lobehub/cli-ui';
 import { Box, Text } from 'ink';
 import { Fragment, memo } from 'react';
 
-import { BorderView } from '@/components';
 import gitmojis from '@/constants/gitmojis';
 import { useTheme } from '@/hooks/useTheme';
 

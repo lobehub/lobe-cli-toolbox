@@ -50,9 +50,12 @@
     "@types/pangu": "^4",
     "@types/react": "^18",
     "@umijs/lint": "^4",
+    "@vitest/coverage-v8": "latest",
     "clean-pkg-json": "^1",
     "eslint": "^8",
     "husky": "^8",
+    "ink-testing-library": "^3",
+    "jsdom": "^22",
     "lerna": "^4",
     "lint-staged": "^13",
     "multi-semantic-release": "^3",
@@ -62,7 +65,9 @@
     "remark-cli": "^11",
     "semantic-release": "^21",
     "stylelint": "latest",
-    "typescript": "^5"
+    "ts-node": "^10",
+    "typescript": "^5",
+    "vitest": "latest"
   },
   "engines": {
     "node": ">=18"

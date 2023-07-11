@@ -7,8 +7,9 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "jsx": "react-jsx",
+    "types": ["vitest/globals"],
     "baseUrl": "."
   },
   "extends": "@sindresorhus/tsconfig",
-  "include": ["packages", "**/*.ts", "**/*.tsx"]
+  "include": ["packages", "**/*.ts", "**/*.d.ts", "**/*.tsx"]
 }

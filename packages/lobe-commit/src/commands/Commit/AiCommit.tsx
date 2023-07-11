@@ -1,9 +1,9 @@
 import { Spinner } from '@inkjs/ui';
+import { BorderView, Header, View } from '@lobehub/cli-ui';
 import { Text } from 'ink';
 import SelectInput from 'ink-select-input';
 import { memo, useEffect, useState } from 'react';
 
-import { BorderView, Header, View } from '@/components';
 import genAiCommit from '@/utils/genAiCommit';
 
 import RunGitCommit from './RunGitCommit';
