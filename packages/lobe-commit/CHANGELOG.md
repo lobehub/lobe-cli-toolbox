@@ -2,48 +2,6 @@
 
 # Changelog
 
-## Version 1.0.0
-
-<sup>Released on **2023-07-11**</sup>
-
-#### ♻ Code Refactoring
-
-- **misc**: Update file names, move files, update import statements, and modify configurations.
-
-#### ✨ Features
-
-- **misc**: Add lerna dependency and create lobe-commit package, Update links in README files, add .changelogrc.cjs, rename CHANGELOG.md.
-
-#### 🐛 Bug Fixes
-
-- **misc**: Replace "npm build" with "npm run build" in prepack script.
-
-<br/>
-
-<details>
-<summary><kbd>Improvements and Fixes</kbd></summary>
-
-#### Code refactoring
-
-- **misc**: Update file names, move files, update import statements, and modify configurations ([d7d441e](https://github.com/lobehub/commit-cli/commit/d7d441e))
-
-#### What's improved
-
-- **misc**: Add lerna dependency and create lobe-commit package ([7166b2b](https://github.com/lobehub/commit-cli/commit/7166b2b))
-- **misc**: Update links in README files, add .changelogrc.cjs, rename CHANGELOG.md ([c4eebbd](https://github.com/lobehub/commit-cli/commit/c4eebbd))
-
-#### What's fixed
-
-- **misc**: Replace "npm build" with "npm run build" in prepack script ([79bb4b7](https://github.com/lobehub/commit-cli/commit/79bb4b7))
-
-</details>
-
-<div align="right">
-
-[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
-
-</div>
-
 ### [Version 1.10.1](https://github.com/lobehub/lobe-commit/compare/v1.10.0...v1.10.1)
 
 <sup>Released on **2023-07-10**</sup>
