@@ -40,7 +40,7 @@
   "scripts": {
     "build": "npm run type-check && pkgroll --minify -p tsconfig.prod.json --env.NODE_ENV=production",
     "dev": "pkgroll -p tsconfig.prod.json --env.NODE_ENV=development --watch",
-    "prepack": "npm build && clean-pkg-json",
+    "prepack": "npm run build && clean-pkg-json",
     "prepublishOnly": "npm run build",
     "start": "node ./dist/cli.js",
     "test": "npm run type-check",
