@@ -2,6 +2,36 @@
 
 # Changelog
 
+## [Version 2.3.0](https://github.com/lobehub/commit-cli/compare/@lobehub/commit-cli@2.2.0...@lobehub/commit-cli@2.3.0)
+
+<sup>Released on **2023-07-12**</sup>
+
+#### ✨ Features
+
+- **misc**: Improve functionality and user experience, Remove "show" prop from InputIssues, InputScope, InputSubject, and InputType components.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Improve functionality and user experience ([8aca960](https://github.com/lobehub/commit-cli/commit/8aca960))
+- **misc**: Remove "show" prop from InputIssues, InputScope, InputSubject, and InputType components ([4643463](https://github.com/lobehub/commit-cli/commit/4643463))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### Dependencies
+
+- **@lobehub/cli-ui:** upgraded to 1.3.0
+
 ## [Version 2.2.0](https://github.com/lobehub/commit-cli/compare/@lobehub/commit-cli@2.1.1...@lobehub/commit-cli@2.2.0)
 
 <sup>Released on **2023-07-11**</sup>
