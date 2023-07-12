@@ -10,7 +10,7 @@ import { useCommitStore } from '@/store/commitStore';
 
 import Header from './Header';
 
-const InputIssues = memo<{ show: boolean }>(({ show }) => {
+const InputIssues = memo(() => {
   const { message, setIssues, setStep, issues, fetchIssuesList, isGithubRepo, issuesLoading } =
     useCommitStore(
       (st) => ({
@@ -80,7 +80,6 @@ const InputIssues = memo<{ show: boolean }>(({ show }) => {
     <Panel
       footer={<Text>{message}</Text>}
       header={<Header step={4} steps={4} title="Link issues (optional)" />}
-      show={show}
     >
       {isGithubRepo ? (
         issuesLoading ? (

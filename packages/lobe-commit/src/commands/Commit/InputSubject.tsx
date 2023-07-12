@@ -9,7 +9,7 @@ import { useCommitStore } from '@/store/commitStore';
 
 import Header from './Header';
 
-const InputScope = memo<{ show: boolean }>(({ show }) => {
+const InputScope = memo(() => {
   const { message, setSubject, setStep, subject } = useCommitStore(
     (st) => ({
       message: st.message,
@@ -25,12 +25,11 @@ const InputScope = memo<{ show: boolean }>(({ show }) => {
     <Panel
       footer={<Text>{message}</Text>}
       header={<Header step={3} steps={4} title="Input commit subject" />}
-      show={show}
     >
       <TextInput
         defaultValue={subject}
         onChange={debounce(setSubject, 100)}
-        onSubmit={() => setStep('issues')}
+        onSubmit={() => subject && setStep('issues')}
         placeholder="Input commit <subject>..."
       />
     </Panel>

@@ -9,7 +9,7 @@ import { useCommitStore } from '@/store/commitStore';
 
 import Header from './Header';
 
-const InputScope = memo<{ show: boolean }>(({ show }) => {
+const InputScope = memo(() => {
   const { message, setScope, setStep, scope } = useCommitStore(
     (st) => ({
       message: st.message,
@@ -19,13 +19,12 @@ const InputScope = memo<{ show: boolean }>(({ show }) => {
     }),
     shallow,
   );
-  useInput(useCallback((_, key) => key.tab && setStep('feat'), []));
+  useInput(useCallback((_, key) => key.tab && setStep('type'), []));
 
   return (
     <Panel
       footer={<Text>{message}</Text>}
       header={<Header step={2} steps={4} title="Input commit scope (optional)" />}
-      show={show}
     >
       <TextInput
         defaultValue={scope}

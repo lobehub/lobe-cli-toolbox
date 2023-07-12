@@ -27,7 +27,7 @@ const aiItem: SelectInputItem = {
   value: 'ai',
 };
 
-const InputType = memo<{ show: boolean }>(({ show }) => {
+const InputType = memo(() => {
   const { setType, setStep, setEmoji, type } = useCommitStore(
     (st) => ({
       setEmoji: st.setEmoji,
@@ -74,7 +74,6 @@ const InputType = memo<{ show: boolean }>(({ show }) => {
       }
       header={<Header step={1} steps={4} title="Select commit type" />}
       reverse
-      show={show}
     >
       <SelectInput
         itemComponent={({ label }) => label}

@@ -36,14 +36,11 @@ const Commit = memo<CommitProps>(({ hook }) => {
 
   if (step === 'commit') return <RunGitCommit hook={hook} />;
   if (step === 'ai') return <AiCommit />;
-  return (
-    <>
-      <InputType show={step === 'feat'} />
-      <InputScope show={step === 'scope'} />
-      <InputSubject show={step === 'subject'} />
-      <InputIssues show={step === 'issues'} />
-    </>
-  );
+  if (step === 'type') return <InputType />;
+  if (step === 'scope') return <InputScope />;
+  if (step === 'subject') return <InputSubject />;
+  if (step === 'issues') return <InputIssues />;
+  return;
 });
 
 export default Commit;

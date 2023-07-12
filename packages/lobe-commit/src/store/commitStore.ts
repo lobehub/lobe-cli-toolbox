@@ -5,7 +5,7 @@ import genCommitMessage from '@/utils/genCommitMessage';
 import getIssuesList from '@/utils/getIssuesList';
 import getRepo from '@/utils/getRepo';
 
-export type Step = 'feat' | 'scope' | 'subject' | 'issues' | 'ai' | 'commit' | 'done';
+export type Step = 'type' | 'scope' | 'subject' | 'issues' | 'ai' | 'commit';
 export interface CommitStore {
   emoji: string;
   fetchIssuesList: () => void;
@@ -80,7 +80,7 @@ export const useCommitStore = create<CommitStore>((set, get) => ({
     set({ type });
     get().refreshMessage();
   },
-  step: 'feat',
+  step: 'type',
   subject: '',
   type: '',
 }));
