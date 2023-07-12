@@ -14,7 +14,15 @@ English · [简体中文](./packages/lobe-commit/README-zh_CN.md) · [Changelog]
 
 <!-- SHIELD GROUP -->
 
-[![release][release-shield]][release-url] ![][release-download-shield] [![releaseDate][release-date-shield]][release-date-url] [![ciTest][ci-test-shield]][ci-test-url] [![ciRelease][ci-release-shield]][ci-release-url] <br/> [![contributors][contributors-shield]][contributors-url] [![forks][forks-shield]][forks-url] [![stargazers][stargazers-shield]][stargazers-url] [![issues][issues-shield]][issues-url]
+[![release][release-shield]][release-url]
+![][release-download-shield]
+[![releaseDate][release-date-shield]][release-date-url]
+[![ciTest][ci-test-shield]][ci-test-url]
+[![ciRelease][ci-release-shield]][ci-release-url]<br/>
+[![contributors][contributors-shield]][contributors-url]
+[![forks][forks-shield]][forks-url]
+[![stargazers][stargazers-shield]][stargazers-url]
+[![issues][issues-shield]][issues-url]
 
 </div>
 
@@ -24,6 +32,8 @@ English · [简体中文](./packages/lobe-commit/README-zh_CN.md) · [Changelog]
 <summary><kbd>Table of contents</kbd></summary>
 
 #### TOC
+
+- [📦 Packages](#-packages)
 
 - [✨ Features](#-features)
 
@@ -44,6 +54,30 @@ English · [简体中文](./packages/lobe-commit/README-zh_CN.md) · [Changelog]
 ####
 
 </details>
+
+## 📦 Packages
+
+| NAME                | REPO                                  | NPM                              | DOWNLOAD             |
+| ------------------- | ------------------------------------- | -------------------------------- | -------------------- |
+| @lobehub/commit-cli | [packages/lobe-commit][commit-github] | [![][commit-shield]][commit-url] | ![][commit-download] |
+| @lobehub/cli-ui     | [packages/lobe-cli-ui][ui-github]     | [![][ui-shield]][ui-url]         | ![][ui-download]     |
+
+<!-- PACKAGE GROUP -->
+
+[commit-github]: https://github.com/lobehub/lobe-commit/tree/master/packages/lobe-commit
+[commit-shield]: https://img.shields.io/npm/v/@lobehub/commit-cli?label=%F0%9F%A4%AF%20NPM
+[commit-url]: https://www.npmjs.com/package/@lobehub/commit-cli
+[commit-download]: https://img.shields.io/npm/dt/@lobehub/commit-cli
+[ui-github]: https://github.com/lobehub/lobe-commit/tree/master/packages/lobe-cli-ui
+[ui-shield]: https://img.shields.io/npm/v/@lobehub/cli-ui?label=%F0%9F%A4%AF%20NPM
+[ui-url]: https://www.npmjs.com/package/@lobehub/cliui
+[ui-download]: https://img.shields.io/npm/dt/@lobehub/cli-ui
+
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
 
 ## ✨ Features
 
@@ -275,8 +309,8 @@ Copyright © 2023 [CanisMinor][profile-url]. <br /> This project is [MIT](./LICE
 
 <!-- ciRelease -->
 
-[ci-release-shield]: https://github.com/canisminor1990/lobe-commit/workflows/Build%20and%20Release/badge.svg
-[ci-release-url]: https://github.com/canisminor1990/lobe-commit/actions/workflows/release.yml
+[ci-release-shield]: https://github.com/lobehub/lobe-commit/actions/workflows/release.yml/badge.svg
+[ci-release-url]: https://github.com/lobehub/lobe-commit/actions/workflows/release.yml
 
 <!-- contributors -->
 

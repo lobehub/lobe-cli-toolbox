@@ -14,7 +14,15 @@ English · [简体中文](./README-zh_CN.md) · [Changelog](./CHANGELOG.md) · [
 
 <!-- SHIELD GROUP -->
 
-[![release][release-shield]][release-url] ![][release-download-shield] [![releaseDate][release-date-shield]][release-date-url] [![ciTest][ci-test-shield]][ci-test-url] [![ciRelease][ci-release-shield]][ci-release-url] <br/> [![contributors][contributors-shield]][contributors-url] [![forks][forks-shield]][forks-url] [![stargazers][stargazers-shield]][stargazers-url] [![issues][issues-shield]][issues-url]
+[![release][release-shield]][release-url]
+![][release-download-shield]
+[![releaseDate][release-date-shield]][release-date-url]
+[![ciTest][ci-test-shield]][ci-test-url]
+[![ciRelease][ci-release-shield]][ci-release-url]<br/>
+[![contributors][contributors-shield]][contributors-url]
+[![forks][forks-shield]][forks-url]
+[![stargazers][stargazers-shield]][stargazers-url]
+[![issues][issues-shield]][issues-url]
 
 </div>
 
@@ -249,8 +257,8 @@ Copyright © 2023 [CanisMinor][profile-url]. <br /> This project is [MIT](./LICE
 
 <!-- ciRelease -->
 
-[ci-release-shield]: https://github.com/canisminor1990/lobe-commit/workflows/Build%20and%20Release/badge.svg
-[ci-release-url]: https://github.com/canisminor1990/lobe-commit/actions/workflows/release.yml
+[ci-release-shield]: https://github.com/lobehub/lobe-commit/actions/workflows/release.yml/badge.svg
+[ci-release-url]: https://github.com/lobehub/lobe-commit/actions/workflows/release.yml
 
 <!-- contributors -->
 

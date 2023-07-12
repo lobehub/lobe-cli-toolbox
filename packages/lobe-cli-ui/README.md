@@ -15,6 +15,7 @@ Lobe Cli UI is an open-source UI component library for building _AIGC_ cli apps
 <!-- SHIELD GROUP -->
 
 [![release][release-shield]][release-url]
+![][release-download-shield]
 [![releaseDate][release-date-shield]][release-date-url]
 [![ciTest][ci-test-shield]][ci-test-url]
 [![ciRelease][ci-release-shield]][ci-release-url] <br/>
@@ -105,8 +106,8 @@ This project is [MIT](./LICENSE) licensed.
 
 <!-- release -->
 
-[release-shield]: https://img.shields.io/npm/v/@lobehub/commit-cli?label=%F0%9F%A4%AF%20NPM
-[release-url]: https://www.npmjs.com/package/@lobehub/commit-cli
+[release-shield]: https://img.shields.io/npm/v/@lobehub/cli-ui?label=%F0%9F%A4%AF%20NPM
+[release-url]: https://www.npmjs.com/package/@lobehub/cli-ui
 
 <!-- releaseDate -->
 
@@ -115,7 +116,7 @@ This project is [MIT](./LICENSE) licensed.
 
 <!-- releaseDownload -->
 
-[release-download-shield]: https://img.shields.io/npm/dt/@lobehub/commit-cli
+[release-download-shield]: https://img.shields.io/npm/dt/@lobehub/cli-ui
 
 <!-- ciTest -->
 
@@ -124,8 +125,8 @@ This project is [MIT](./LICENSE) licensed.
 
 <!-- ciRelease -->
 
-[ci-release-shield]: https://github.com/canisminor1990/lobe-commit/workflows/Build%20and%20Release/badge.svg
-[ci-release-url]: https://github.com/canisminor1990/lobe-commit/actions/workflows/release.yml
+[ci-release-shield]: https://github.com/lobehub/lobe-commit/actions/workflows/release.yml/badge.svg
+[ci-release-url]: https://github.com/lobehub/lobe-commit/actions/workflows/release.yml
 
 <!-- contributors -->
 
