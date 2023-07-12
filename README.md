@@ -102,7 +102,7 @@ With AI mode, you can generate a complete commit message using ChatGPT.
 
 #### Editor mode
 
-In Editor mode, you can choose the `<type>(<optional scope>): <subject> [<issues>]` format by following a simple flow.
+In Editor mode, you can choose the `<type>(<optional scope>): <subject> [<issues>]` format by following a simple flow. Press <kbd>TAB</kbd> to go back to the previous step.
 
 > 👉 Tip: If your project is a GitHub repository, the Editor mode feature will automatically fetch the issues associated with your repository. You can select multiple issues to link to your commit message by <kbd>space</kbd> .
 
@@ -228,8 +228,10 @@ $ npm start
 
 ## 🔗 Credits
 
+- langchainjs: <https://github.com/hwchase17/langchainjs>
+- gitmoji-commit-workflow: <https://github.com/arvinxx/gitmoji-commit-workflow>
 - gitmoji-cli: <https://github.com/carloscuesta/gitmoji-cli>
-- ai-commit: <https://github.com/insulineru/ai-commit>
+- ink: <https://github.com/vadimdemedes/ink>
 
 <div align="right">
 

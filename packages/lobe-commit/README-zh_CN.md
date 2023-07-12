@@ -100,7 +100,7 @@ $ lobe-commit
 
 #### 编辑器模式
 
-在编辑器模式下，可以通过简单的流程生成 `<type>(<optional scope>): <subject> [<issues>]` 格式的提交信息
+在编辑器模式下，可以通过简单的流程生成 `<type>(<optional scope>): <subject> [<issues>]` 格式的提交信息，使用 <kbd>TAB</kbd> 返回上一步
 
 > 👉 提示：如果项目是 GitHub Repo，则将自动获取该仓库的 issues，可以使用 <kbd>空格</kbd> 选择多个问题将其链接到提交信息中
 
@@ -202,8 +202,10 @@ $ npm start
 
 ## 🔗 链接
 
+- langchainjs: <https://github.com/hwchase17/langchainjs>
+- gitmoji-commit-workflow: <https://github.com/arvinxx/gitmoji-commit-workflow>
 - gitmoji-cli: <https://github.com/carloscuesta/gitmoji-cli>
-- ai-commit: <https://github.com/insulineru/ai-commit>
+- ink: <https://github.com/vadimdemedes/ink>
 
 <div align="right">
 

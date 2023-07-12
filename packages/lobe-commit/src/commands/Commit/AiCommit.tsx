@@ -1,7 +1,7 @@
 import { Spinner } from '@inkjs/ui';
-import { Panel, SelectInput } from '@lobehub/cli-ui';
+import { Panel, SelectInput, type SelectInputItem, SplitView, useTheme } from '@lobehub/cli-ui';
 import { Text, useInput } from 'ink';
-import { memo, useCallback, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useCommitStore } from '@/store/commitStore';
 import genAiCommit from '@/utils/genAiCommit';
@@ -12,49 +12,74 @@ const AiCommit = memo(() => {
     setMessage: st.setMessage,
     setStep: st.setStep,
   }));
-  useInput(useCallback((_, key) => key.tab && setStep('feat'), []));
+  useInput(useCallback((_, key) => key.tab && setStep('type'), []));
   const [loading, setLoading] = useState<boolean>(true);
+  const [summary, setSummary] = useState<string>('');
   const [loadingInfo, setLoadingInfo] = useState<string>(' Generating...');
-  const [count, setCount] = useState<number>(0);
-  useEffect(() => {
-    genAiCommit(setLoadingInfo).then((text: any) => {
-      setMessage(text);
-      setLoading(false);
-      setLoadingInfo(' Generating...');
-    });
-  }, [count]);
+  const theme = useTheme();
+
+  const handleGenerate = useCallback((summary?: string) => {
+    genAiCommit({ cacheSummary: summary, setLoading, setLoadingInfo, setMessage, setSummary });
+  }, []);
 
   const handleSelect = useCallback(
     (item: any) => {
-      if (item.value === 'reload') {
-        setMessage('');
-        setCount(count + 1);
-        setLoading(true);
-      } else if (item.value === 'confirm') {
-        setStep('commit');
+      switch (item.value) {
+        case 'reloadFromSummary': {
+          handleGenerate(summary);
+          break;
+        }
+        case 'reload': {
+          setSummary('');
+          handleGenerate();
+          break;
+        }
+        case 'edit': {
+          setStep('type');
+          break;
+        }
+        case 'confirm': {
+          setStep('commit');
+          break;
+        }
       }
     },
-    [count],
+    [summary],
+  );
+
+  useEffect(() => {
+    handleGenerate();
+  }, []);
+
+  const items = useMemo(
+    () =>
+      [
+        summary && {
+          label: '🔄️ Regenerate commit message from summary [FAST]',
+          value: 'reloadFromSummary',
+        },
+        { label: '🔄️ Regenerate full commit message [SLOW]', value: 'reload' },
+        { label: '✏️  Edit this message', value: 'edit' },
+        { label: '✅  Use this message', value: 'confirm' },
+      ].filter(Boolean) as SelectInputItem[],
+    [summary],
   );
 
   return (
     <Panel
-      footer={
-        !loading &&
-        message && (
-          <SelectInput
-            items={[
-              { label: '🔄️ Regenerate commit message', value: 'reload' },
-              { label: '✅ Use this message', value: 'confirm' },
-            ]}
-            onSelect={handleSelect}
-          />
-        )
-      }
+      footer={!loading && message && <SelectInput items={items} onSelect={handleSelect} />}
       reverse
       title={`🤯 AI Commit Generator`}
     >
       {!loading && message ? <Text>{message}</Text> : <Spinner label={loadingInfo} />}
+      {summary && (
+        <SplitView>
+          <Text color={theme.colorTextDescription}>
+            <Text bold>{`👉 DIFF SUMMARY: `}</Text>
+            {summary}
+          </Text>
+        </SplitView>
+      )}
     </Panel>
   );
 });

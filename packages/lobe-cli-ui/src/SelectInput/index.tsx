@@ -69,8 +69,8 @@ const SelectInput = memo<SelectInputProps>(
 
     useInput(
       useCallback(
-        (input, key) => {
-          if (input === 'k' || key.upArrow) {
+        (_, key) => {
+          if (key.upArrow) {
             const lastIndex = (hasLimit ? limit : items.length) - 1;
             const atFirstIndex = selectedIndex === 0;
             const nextIndex = hasLimit ? selectedIndex : lastIndex;
@@ -89,7 +89,7 @@ const SelectInput = memo<SelectInputProps>(
             }
           }
 
-          if (input === 'j' || key.downArrow) {
+          if (key.downArrow) {
             const atLastIndex = selectedIndex === (hasLimit ? limit : items.length) - 1;
             const nextIndex = hasLimit ? selectedIndex : 0;
             const nextRotateIndex = atLastIndex ? rotateIndex - 1 : rotateIndex;

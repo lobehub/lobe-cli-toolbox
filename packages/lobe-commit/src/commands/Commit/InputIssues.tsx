@@ -1,5 +1,5 @@
 import { MultiSelect, type MultiSelectProps, Spinner, TextInput } from '@inkjs/ui';
-import { Panel, View, useTheme } from '@lobehub/cli-ui';
+import { Panel, SplitView, useTheme } from '@lobehub/cli-ui';
 import isEqual from 'fast-deep-equal';
 import { Text, useInput } from 'ink';
 import { debounce } from 'lodash-es';
@@ -56,14 +56,14 @@ const InputIssues = memo(() => {
     })) as any;
   }, [keywords, issueList]);
 
-  const handleKeywords = (v: string) => {
+  const handleKeywords = useCallback((v: string) => {
     setKeywords(v.replaceAll(' ', ''));
-  };
+  }, []);
 
-  const handleSelect = (v: string[]) => {
+  const handleSelect = useCallback((v: string[]) => {
     setIssues(v.join(','));
     setKeywords('');
-  };
+  }, []);
 
   const InputKeywords = useCallback(
     () => (
@@ -76,6 +76,10 @@ const InputIssues = memo(() => {
     [issues],
   );
 
+  const handleSubmit = useCallback(() => {
+    setStep(issues ? 'issuesType' : 'commit');
+  }, [issues]);
+
   return (
     <Panel
       footer={<Text>{message}</Text>}
@@ -87,24 +91,24 @@ const InputIssues = memo(() => {
         ) : (
           <>
             <InputKeywords />
-            <View>
+            <SplitView>
               <MultiSelect
                 defaultValue={issues.split(',')}
                 onChange={handleSelect}
-                onSubmit={() => setStep('commit')}
+                onSubmit={handleSubmit}
                 options={options}
               />
               {options.length === 0 && (
                 <Text color={theme.colorWarning}>No issues found, press [Enter] to skip...</Text>
               )}
-            </View>
+            </SplitView>
           </>
         )
       ) : (
         <TextInput
           defaultValue={issues}
           onChange={debounce(setIssues, 100)}
-          onSubmit={() => setStep('commit')}
+          onSubmit={handleSubmit}
           placeholder="Input number to link issues, press [Enter] to confirm or skip..."
         />
       )}

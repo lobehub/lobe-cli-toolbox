@@ -202,8 +202,10 @@ $ npm start
 
 ## 🔗 Credits
 
+- langchainjs: <https://github.com/hwchase17/langchainjs>
+- gitmoji-commit-workflow: <https://github.com/arvinxx/gitmoji-commit-workflow>
 - gitmoji-cli: <https://github.com/carloscuesta/gitmoji-cli>
-- ai-commit: <https://github.com/insulineru/ai-commit>
+- ink: <https://github.com/vadimdemedes/ink>
 
 <div align="right">
 

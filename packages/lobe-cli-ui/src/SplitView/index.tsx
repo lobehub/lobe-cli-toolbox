@@ -3,22 +3,23 @@ import { type ReactNode, memo } from 'react';
 
 import { useTheme } from '@/hooks/useTheme';
 
-export interface BorderViewProps {
+export interface SplitViewProps {
   children: ReactNode;
 }
-const BorderView = memo<BorderViewProps>(({ children }) => {
+const SplitView = memo<SplitViewProps>(({ children }) => {
   const theme = useTheme();
   return (
     <Box
+      borderBottom={false}
       borderColor={theme.colorBorder}
-      borderStyle="round"
+      borderLeft={false}
+      borderRight={false}
+      borderStyle={'single'}
       flexDirection={'column'}
-      paddingLeft={1}
-      paddingRight={1}
     >
       {children}
     </Box>
   );
 });
 
-export default BorderView;
+export default SplitView;

@@ -25,6 +25,7 @@
     "prepare": "husky install",
     "prettier": "prettier -c --write \"**/**\"",
     "release": "multi-semantic-release",
+    "start": "npm run dev",
     "test": "lerna run test --parallel && npm run lint"
   },
   "lint-staged": {

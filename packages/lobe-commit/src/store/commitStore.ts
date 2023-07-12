@@ -1,23 +1,27 @@
 import { kebabCase } from 'lodash-es';
 import { create } from 'zustand';
 
-import genCommitMessage from '@/utils/genCommitMessage';
+import { type IssuesType, commitMessageToObj, commotObjToMessage } from '@/utils/genCommitMessage';
 import getIssuesList from '@/utils/getIssuesList';
 import getRepo from '@/utils/getRepo';
 
-export type Step = 'type' | 'scope' | 'subject' | 'issues' | 'ai' | 'commit';
+export type Step = 'type' | 'scope' | 'subject' | 'issues' | 'issuesType' | 'ai' | 'commit';
+
 export interface CommitStore {
+  body: string;
   emoji: string;
   fetchIssuesList: () => void;
   isGithubRepo: boolean;
   issueList: any[];
   issues: string;
   issuesLoading: boolean;
+  issuesType: IssuesType;
   message: string;
   refreshMessage: () => void;
   scope: string;
   setEmoji: (emoji: string) => void;
   setIssues: (issues: string) => void;
+  setIssuesType: (type: IssuesType) => void;
   setMessage: (message: string) => void;
   setScope: (scope: string) => void;
   setStep: (step: Step) => void;
@@ -28,6 +32,7 @@ export interface CommitStore {
   type: string;
 }
 export const useCommitStore = create<CommitStore>((set, get) => ({
+  body: '',
   emoji: '',
   fetchIssuesList: async () => {
     const data = await getRepo();
@@ -46,10 +51,11 @@ export const useCommitStore = create<CommitStore>((set, get) => ({
   issueList: [],
   issues: '',
   issuesLoading: false,
+  issuesType: '',
   message: '',
   refreshMessage: () => {
-    const { issues, scope, subject, type, emoji } = get();
-    const message = genCommitMessage({ emoji, issues, scope, subject, type });
+    const { issues, scope, subject, type, emoji, body, issuesType } = get();
+    const message = commotObjToMessage({ body, emoji, issues, issuesType, scope, subject, type });
     set({ message });
   },
   scope: '',
@@ -61,8 +67,14 @@ export const useCommitStore = create<CommitStore>((set, get) => ({
     set({ issues });
     get().refreshMessage();
   },
+  setIssuesType: (issuesType) => {
+    set({ issuesType });
+    get().refreshMessage();
+  },
   setMessage: (message) => {
-    set({ message });
+    const obj = commitMessageToObj(message);
+    set({ ...obj });
+    get().refreshMessage();
   },
   setScope: (scope) => {
     set({ scope: kebabCase(scope) });

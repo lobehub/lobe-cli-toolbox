@@ -9,6 +9,7 @@ import getAbsoluteHooksPath from '@/utils/getAbsoluteHooksPath';
 
 import AiCommit from './AiCommit';
 import InputIssues from './InputIssues';
+import InputIssuesType from './InputIssuesType';
 import InputScope from './InputScope';
 import InputSubject from './InputSubject';
 import InputType from './InputType';
@@ -34,12 +35,13 @@ const Commit = memo<CommitProps>(({ hook }) => {
     );
   }
 
-  if (step === 'commit') return <RunGitCommit hook={hook} />;
-  if (step === 'ai') return <AiCommit />;
   if (step === 'type') return <InputType />;
   if (step === 'scope') return <InputScope />;
   if (step === 'subject') return <InputSubject />;
   if (step === 'issues') return <InputIssues />;
+  if (step === 'issuesType') return <InputIssuesType />;
+  if (step === 'ai') return <AiCommit />;
+  if (step === 'commit') return <RunGitCommit hook={hook} />;
   return;
 });
 

@@ -13,11 +13,13 @@ import Header from './Header';
 
 const emojiFormatConfig = configStore.get(CONFIG_NAME.EMOJI_FORMAT) === 'emoji';
 
+const AI_VALUE = 'ai';
+
 const aiItem: SelectInputItem = {
   label: (
     <ListItem
       item={{
-        descEN: 'generate commit message by ChatGPT',
+        desc: 'generate commit message by ChatGPT',
         emoji: '🤯',
         name: 'ai',
         type: 'Use AI Commit',
@@ -53,7 +55,7 @@ const InputType = memo(() => {
   }, [typeKeywords, type]);
 
   const handleSelect: SelectInputProps['onSelect'] = useCallback((e: SelectInputItem) => {
-    if (e.value === 'ai') {
+    if (e.value === AI_VALUE) {
       setStep('ai');
     } else {
       const content = e.value.split(' ') as [string, string];

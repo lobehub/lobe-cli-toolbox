@@ -1,7 +1,7 @@
 import storeConfig, { CONFIG_NAME } from '@/constants/config';
 import gitmojis from '@/constants/gitmojis';
 
-const typesExample = gitmojis.map((item) => `- ${item.type}: ${item.descEN}`).join('\n');
+const typesExample = gitmojis.map((item) => `- ${item.type}: ${item.desc}`).join('\n');
 
 const custionPrompt: string | any = storeConfig.get(CONFIG_NAME.PROMPT);
 const locale: number | any = storeConfig.get(CONFIG_NAME.LOCALE);

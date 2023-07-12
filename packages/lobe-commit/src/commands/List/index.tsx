@@ -6,8 +6,8 @@ import gitmojis from '@/constants/gitmojis';
 
 export interface ListItemProps {
   item: {
-    descEN: string;
-    emoji: string;
+    desc: string;
+    emoji?: string;
     name: string;
     type: string;
   };
@@ -19,10 +19,10 @@ export const ListItem = memo<ListItemProps>(({ item }) => {
     <Box key={item.name}>
       <Box marginRight={1} width={20}>
         <Text backgroundColor={theme.colorBgLayout} color={theme.colorText}>
-          {` ${item.emoji} ${item.type} `}
+          {` ${[item.emoji, item.type].filter(Boolean).join(' ')} `}
         </Text>
       </Box>
-      <Text color={theme.colorTextDescription}>{`- ${item.descEN}`}</Text>
+      <Text color={theme.colorTextDescription}>{`- ${item.desc}`}</Text>
     </Box>
   );
 });

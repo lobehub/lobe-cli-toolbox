@@ -34,6 +34,7 @@ Lobe Cli UI is an open-source UI component library for building _AIGC_ cli apps
 
 - [📦 Installation](#-installation)
 - [⌨️ Local Development](#️-local-development)
+- [🔗 Credits](#-credits)
 
 ####
 
@@ -69,6 +70,16 @@ $ cd lobe-commit
 $ pnpm install
 $ pnpm start
 ```
+
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
+
+## 🔗 Credits
+
+- ink: <https://github.com/vadimdemedes/ink>
 
 <div align="right">
 
