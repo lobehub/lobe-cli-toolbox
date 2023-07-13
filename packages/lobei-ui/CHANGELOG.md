@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.6.0](https://github.com/lobehub/commit-cli/compare/@lobehub/cli-ui@1.5.0...@lobehub/cli-ui@1.6.0)
+
+<sup>Released on **2023-07-13**</sup>
+
+#### ✨ Features
+
+- **misc**: Introduce new features.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Introduce new features ([642a173](https://github.com/lobehub/commit-cli/commit/642a173))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.5.0](https://github.com/lobehub/commit-cli/compare/@lobehub/cli-ui@1.4.0...@lobehub/cli-ui@1.5.0)
 
 <sup>Released on **2023-07-13**</sup>

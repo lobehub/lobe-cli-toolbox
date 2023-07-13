@@ -1,6 +1,6 @@
 {
   "name": "@lobehub/i18n-cli",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "private": true,
   "description": "Lobe I18N is a CLI tool that automate translate your i18n localization with AI",
   "keywords": [
@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "@inkjs/ui": "^1",
-    "@lobehub/cli-ui": "latest",
+    "@lobehub/cli-ui": "1.6.0",
     "chalk": "^5",
     "commander": "^11",
     "conf": "^11",
