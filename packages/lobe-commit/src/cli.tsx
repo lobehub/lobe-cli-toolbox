@@ -1,16 +1,46 @@
 /* @shebangs */
-import { render } from 'ink';
-import meow from 'meow';
+import { render } from '@lobehub/cli-ui';
+import { Command, Option } from 'commander';
+import updateNotifier from 'update-notifier';
 
-import App from './commands';
-import FLAGS_CONST from './constants/flags';
-import createMeowSetting from './utils/createMeowSetting';
+import packageJson from '@/../package.json';
+import { Ai, Commit, Config, HookCreate, HookRemove, List } from '@/commands';
 
-const { help, flags } = createMeowSetting(FLAGS_CONST);
+const notifier = updateNotifier({
+  pkg: packageJson,
+  shouldNotifyInNpmScript: true,
+});
 
-const cli = meow(help, {
-  flags,
-  importMeta: import.meta,
-}) as any;
+notifier.notify({ isGlobal: true });
 
-render(<App {...cli.flags} />);
+const program = new Command();
+
+program
+  .name('lobe-commit')
+  .description(packageJson.description)
+  .version(packageJson.version)
+  .addOption(new Option('-h, --hook', 'Interactively commit using the prompts'))
+  .addOption(new Option('-a, --ai', 'Generate prompts by ChatGPT'))
+  .addOption(new Option('-o, --config', 'Setup lobe-commit preferences'))
+  .addOption(new Option('-i, --init', 'Initialize lobe-commit as a commit hook'))
+  .addOption(new Option('-r, --remove', 'Remove a previously initialized commit hook'))
+  .addOption(new Option('-l, --list', 'List all commit types supported'))
+  .parse();
+
+interface Flags {
+  ai?: boolean;
+  config?: boolean;
+  hook?: boolean;
+  init?: boolean;
+  list?: boolean;
+  remove?: boolean;
+}
+
+const options: Flags = program.opts();
+if (!options) render(<Commit />);
+if (options.hook) render(<Commit hook />);
+if (options.ai) render(<Ai />);
+if (options.config) render(<Config />);
+if (options.init) render(<HookCreate />);
+if (options.remove) render(<HookRemove />);
+if (options.list) render(<List />);

@@ -2,9 +2,8 @@ import { Alert, Spinner } from '@inkjs/ui';
 import fs from 'node:fs';
 import { memo, useEffect, useState } from 'react';
 
+import { HOOK } from '@/constants/hook';
 import getAbsoluteHooksPath from '@/utils/getAbsoluteHooksPath';
-
-import { HOOK } from './HookCreate';
 
 const HookRemove = memo(() => {
   const [loading, setLoading] = useState<boolean>(true);

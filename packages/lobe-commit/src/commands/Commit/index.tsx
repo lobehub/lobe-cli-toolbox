@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import { memo } from 'react';
 import { shallow } from 'zustand/shallow';
 
-import { HOOK } from '@/commands/Hook/HookCreate';
+import { HOOK } from '@/constants/hook';
 import { useCommitStore } from '@/store/commitStore';
 import getAbsoluteHooksPath from '@/utils/getAbsoluteHooksPath';
 

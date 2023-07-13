@@ -1,18 +1,16 @@
-import 'isomorphic-fetch';
 import { loadSummarizationChain } from 'langchain/chains';
 import { ChatOpenAI } from 'langchain/chat_models/openai';
 import { HumanMessage, SystemMessage } from 'langchain/schema';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { execSync } from 'node:child_process';
 
-import { CONFIG_NAME, default as storeConfig } from '@/constants/config';
 import template from '@/constants/template';
+import { getConfig } from '@/store/confStore';
 import { addEmojiToMessage } from '@/utils/genCommitMessage';
 
-const diffChunkSize: number | any = storeConfig.get(CONFIG_NAME.DIFF_CHUNK_SIZE) || 1000;
-// const timeout: number | any = storeConfig.get(CONFIG_NAME.TIMEOUT) || 10_000;
-const basePath: string | any = storeConfig.get(CONFIG_NAME.API_BASE_URL);
-const openAIApiKey: string | any = storeConfig.get(CONFIG_NAME.OPENAI_TOKEN);
+const diffChunkSize = getConfig('diffChunkSize');
+const basePath = getConfig('apiBaseUrl');
+const openAIApiKey = getConfig('openaiToken');
 
 const chat = new ChatOpenAI(
   {

@@ -1,13 +1,15 @@
-// @ts-ignore
 import gitconfig from 'gitconfig';
 
 const gitHubRepoRegEx =
   /^https?:\/\/github\.com\/(.+?)\/(.+?)\.git$|^git@github\.com:(.+?)\/(.+?)\.git$/;
+
 export default async () => {
   try {
     const config = await gitconfig.get({ location: 'local' });
 
-    const repoUrl = config.remote.origin.url;
+    const repoUrl = config?.remote?.origin?.url;
+
+    if (!repoUrl) return;
 
     const match: any = gitHubRepoRegEx.exec(repoUrl);
 

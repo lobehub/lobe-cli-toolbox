@@ -1,4 +1,12 @@
-export default [
+export interface GimojiItem {
+  code: string;
+  desc: string;
+  emoji: string;
+  name: string;
+  type: string;
+}
+
+const gimojis: GimojiItem[] = [
   {
     code: ':sparkles:',
     desc: 'Introduce new features',
@@ -70,3 +78,5 @@ export default [
     type: 'build',
   },
 ];
+
+export default gimojis;

@@ -5,13 +5,13 @@ import { memo, useCallback, useMemo, useState } from 'react';
 import { shallow } from 'zustand/shallow';
 
 import { ListItem } from '@/commands/List';
-import configStore, { CONFIG_NAME } from '@/constants/config';
 import gitmojis from '@/constants/gitmojis';
 import { useCommitStore } from '@/store/commitStore';
+import { getConfig } from '@/store/confStore';
 
 import Header from './Header';
 
-const emojiFormatConfig = configStore.get(CONFIG_NAME.EMOJI_FORMAT) === 'emoji';
+const emojiFormatConfig = getConfig('emoji') === 'emoji';
 
 const AI_VALUE = 'ai';
 

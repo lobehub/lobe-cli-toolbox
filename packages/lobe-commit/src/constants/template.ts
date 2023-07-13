@@ -1,11 +1,11 @@
-import storeConfig, { CONFIG_NAME } from '@/constants/config';
 import gitmojis from '@/constants/gitmojis';
+import { getConfig } from '@/store/confStore';
 
 const typesExample = gitmojis.map((item) => `- ${item.type}: ${item.desc}`).join('\n');
 
-const custionPrompt: string | any = storeConfig.get(CONFIG_NAME.PROMPT);
-const locale: number | any = storeConfig.get(CONFIG_NAME.LOCALE);
-const maxLength: number | any = storeConfig.get(CONFIG_NAME.MAX_LENGTH);
+const custionPrompt = getConfig('prompt');
+const locale = getConfig('locale');
+const maxLength = getConfig('maxLength');
 
 export const BASE_PROMPT =
   `You are to act as the author of a commit message in git. Your mission is to create clean and comprehensive commit messages in the conventional commit convention and explain WHAT were the changes and WHY the changes were done.` +

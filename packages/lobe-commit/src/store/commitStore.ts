@@ -39,7 +39,7 @@ export const useCommitStore = create<CommitStore>((set, get) => ({
     if (data) {
       set({ isGithubRepo: true, issuesLoading: true });
       const issuesData = await getIssuesList();
-      const issueList = issuesData?.filter((item: any) => item.state === 'open');
+      const issueList = issuesData?.filter((item: any) => item.state === 'open') || [];
       if (issueList?.length > 0) {
         set({ issueList, issuesLoading: false });
       } else {

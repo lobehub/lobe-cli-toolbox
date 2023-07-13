@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "paths": {
+      "@/*": ["src/*"],
+      "@lobehub/cli-ui": ["./packages/lobe-cli-ui/src"],
+      "@lobehub/cli-ui/*": ["./packages/lobe-cli-ui/src/*"]
+    }
+  },
+  "extends": "../../tsconfig.json",
+  "include": ["src", "**/*.ts", "**/*.d.ts", "**/*.tsx"]
+}

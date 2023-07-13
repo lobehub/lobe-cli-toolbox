@@ -1,5 +1,5 @@
 import { type BoxProps, Text, useApp } from 'ink';
-import { ReactNode, memo, useCallback, useMemo, useState } from 'react';
+import { ReactNode, memo, useMemo, useState } from 'react';
 
 import Panel from '@/Panel';
 import SelectInput, { type SelectInputItem, type SelectInputProps } from '@/SelectInput';
@@ -52,17 +52,14 @@ const ConfigPanel = memo<ConfigPanelProps>(
       [items],
     );
 
-    const handleSelect = useCallback(
-      () => (e: SelectInputItem) => {
-        if (e.value === 'exit') exit();
-        const activeOption = items.find((item) => item.key === e.value);
-        if (activeOption) {
-          setAciveItem(activeOption);
-          setActive?.(e.value);
-        }
-      },
-      [],
-    );
+    const handleSelect = (e: SelectInputItem) => {
+      if (e.value === 'exit') exit();
+      const activeOption = items.find((item) => item.key === e.value);
+      if (activeOption) {
+        setAciveItem(activeOption);
+        setActive?.(e.value);
+      }
+    };
 
     if (!show) return;
 
