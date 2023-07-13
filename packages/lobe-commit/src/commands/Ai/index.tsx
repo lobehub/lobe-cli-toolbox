@@ -30,6 +30,7 @@ const Ai = memo(() => {
           </Text>
         )
       }
+      reverse
       title={`🤯 AI Commit Generator`}
     >
       {!loading && message ? <Text>{message}</Text> : <Spinner label={loadingInfo} />}

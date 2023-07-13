@@ -21,6 +21,8 @@
     "dev:commit": "npm run dev --prefix=packages/lobe-commit",
     "dev:i18n": "npm run dev --prefix=packages/lobe-i18n",
     "dev:ui": "npm run dev --prefix=packages/lobe-cli-ui",
+    "link:commit": "npm run link --prefix=packages/lobe-commit",
+    "link:i18n": "npm run link --prefix=packages/lobe-i18n",
     "lint": "eslint \"{src,packages}/**/*.{js,jsx,ts,tsx}\" --fix",
     "lint:md": "remark . --quiet --output",
     "prepare": "husky install",
@@ -47,6 +49,7 @@
     ]
   },
   "devDependencies": {
+    "@commitlint/cli": "^17",
     "@lobehub/lint": "latest",
     "@sindresorhus/tsconfig": "^3",
     "@types/lodash-es": "^4",
@@ -57,6 +60,7 @@
     "@umijs/lint": "^4",
     "@vitest/coverage-v8": "latest",
     "clean-pkg-json": "^1",
+    "commitlint": "^17",
     "eslint": "^8",
     "husky": "^8",
     "ink-testing-library": "^3",

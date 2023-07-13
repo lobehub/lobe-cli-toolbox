@@ -68,18 +68,17 @@ const AiCommit = memo(() => {
   return (
     <Panel
       footer={!loading && message && <SelectInput items={items} onSelect={handleSelect} />}
-      reverse
       title={`🤯 AI Commit Generator`}
     >
-      {!loading && message ? <Text>{message}</Text> : <Spinner label={loadingInfo} />}
       {summary && (
-        <SplitView>
+        <SplitView direction={'bottom'}>
           <Text color={theme.colorTextDescription}>
             <Text bold>{`👉 DIFF SUMMARY: `}</Text>
             {summary}
           </Text>
         </SplitView>
       )}
+      {!loading && message ? <Text>{message}</Text> : <Spinner label={loadingInfo} />}
     </Panel>
   );
 });

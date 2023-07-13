@@ -27,8 +27,7 @@
   "sideEffects": false,
   "type": "module",
   "imports": {
-    "@": "./src",
-    "/* @shebangs */": "#!/usr/bin/env node"
+    "@": "./src"
   },
   "bin": {
     "lobe": "dist/cli.js",
@@ -38,10 +37,12 @@
     "dist"
   ],
   "scripts": {
-    "build": "npm run type-check && pkgroll --minify -p tsconfig.prod.json --env.NODE_ENV=production",
+    "build": "npm run type-check && pkgroll --minify -p tsconfig.prod.json --env.NODE_ENV=production && npm run shebang",
     "dev": "pkgroll -p tsconfig.prod.json --env.NODE_ENV=development --watch",
+    "link": "npm run build && npm link -f",
     "prepack": "npm run build && clean-pkg-json",
     "prepublishOnly": "npm run build",
+    "shebang": "node ../common/add-shebang.js ./dist/cli.js",
     "start": "node ./dist/cli.js",
     "test": "npm run type-check",
     "type-check": "tsc --noEmit"

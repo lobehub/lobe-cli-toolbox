@@ -1,4 +1,3 @@
-/* @shebangs */
 import { render } from '@lobehub/cli-ui';
 import { Command, Option } from 'commander';
 import updateNotifier from 'update-notifier';

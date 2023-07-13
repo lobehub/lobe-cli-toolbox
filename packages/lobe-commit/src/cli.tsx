@@ -1,4 +1,3 @@
-/* @shebangs */
 import { render } from '@lobehub/cli-ui';
 import { Command, Option } from 'commander';
 import updateNotifier from 'update-notifier';
@@ -19,7 +18,7 @@ program
   .name('lobe-commit')
   .description(packageJson.description)
   .version(packageJson.version)
-  .addOption(new Option('-h, --hook', 'Interactively commit using the prompts'))
+  .addOption(new Option('--hook', 'Interactively commit using the prompts'))
   .addOption(new Option('-a, --ai', 'Generate prompts by ChatGPT'))
   .addOption(new Option('-o, --config', 'Setup lobe-commit preferences'))
   .addOption(new Option('-i, --init', 'Initialize lobe-commit as a commit hook'))
