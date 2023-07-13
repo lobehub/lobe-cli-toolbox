@@ -1,4 +1,4 @@
-export interface Options {
+export interface I18nConfig {
   /**
    * @description The entry file or folder
    */
@@ -16,3 +16,5 @@ export interface Options {
    */
   outputLocales: string[];
 }
+
+export type OptionKeys = keyof I18nConfig;

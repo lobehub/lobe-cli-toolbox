@@ -1,16 +1,18 @@
 import { encode } from 'gpt-3-encoder';
 
+import { LocaleObj } from '@/types';
+
 const MAX_TOKENS = 2000;
 
 const getPrimitiveValueSize = (value: any): number => {
   return encode(value).length + 3;
 };
 
-export const isPlainObject = (obj: unknown): obj is Record<string, unknown> => {
+const isPlainObject = (obj: unknown): obj is LocaleObj => {
   return Object.prototype.toString.call(obj) === '[object Object]';
 };
 
-export const getJSONTokenSize = (object: Record<string, unknown>, depth = 0): number => {
+const getJSONTokenSize = (object: LocaleObj, depth = 0): number => {
   const keys = Object.keys(object);
   const totalLength = keys.length;
   let keysLength = totalLength;
@@ -32,13 +34,13 @@ export const getJSONTokenSize = (object: Record<string, unknown>, depth = 0): nu
   return tokenCount;
 };
 
-export const splitJSONtoSmallChunks = (object: Record<string, unknown>) => {
-  const chunks: Record<string, unknown>[] = [];
+export const splitJSONtoSmallChunks = (object: LocaleObj) => {
+  const chunks: LocaleObj[] = [];
   const keys = Object.keys(object);
   const totalLength = keys.length;
   let keysLength = totalLength;
 
-  let tempChunk: Record<string, unknown> = {};
+  let tempChunk: LocaleObj = {};
   let chunkSize = 2;
   while (keysLength > 0) {
     const key = keys[totalLength - keysLength] as string;

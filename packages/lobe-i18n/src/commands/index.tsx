@@ -1,2 +1,2 @@
 export { default as Config } from './Config';
-export { default as run } from './Run';
+export { default as Translate } from './Translate';

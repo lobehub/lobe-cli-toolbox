@@ -2,5 +2,5 @@
   "entry": "locales/en/*",
   "entryLocale": "en",
   "output": "locales",
-  "outputLocales": ["en", "zh_CN", "jp"]
+  "outputLocales": ["zh_CN", "jp"]
 }

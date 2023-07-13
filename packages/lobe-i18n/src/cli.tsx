@@ -3,7 +3,7 @@ import { Command, Option } from 'commander';
 import updateNotifier from 'update-notifier';
 
 import packageJson from '@/../package.json';
-import { Config, run } from '@/commands';
+import { Config, Translate } from '@/commands';
 
 const notifier = updateNotifier({
   pkg: packageJson,
@@ -29,5 +29,5 @@ const options: Flags = program.opts();
 if (options.config) {
   render(<Config />);
 } else {
-  run();
+  new Translate().start();
 }
