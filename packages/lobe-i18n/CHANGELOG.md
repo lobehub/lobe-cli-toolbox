@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.2.0](https://github.com/lobehub/commit-cli/compare/@lobehub/i18n-cli@1.1.0...@lobehub/i18n-cli@1.2.0)
+
+<sup>Released on **2023-07-13**</sup>
+
+#### ✨ Features
+
+- **misc**: Modify rendering logic based on options.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Modify rendering logic based on options ([fcd486f](https://github.com/lobehub/commit-cli/commit/fcd486f))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.1.0](https://github.com/lobehub/commit-cli/compare/@lobehub/i18n-cli@1.0.0...@lobehub/i18n-cli@1.1.0)
 
 <sup>Released on **2023-07-13**</sup>
