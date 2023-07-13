@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.5.0](https://github.com/lobehub/commit-cli/compare/@lobehub/cli-ui@1.4.0...@lobehub/cli-ui@1.5.0)
+
+<sup>Released on **2023-07-13**</sup>
+
+#### ✨ Features
+
+- **misc**: Add rule to allow 'unicorn/no-process-exit' in .eslintrc.js.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add rule to allow 'unicorn/no-process-exit' in .eslintrc.js ([c63db87](https://github.com/lobehub/commit-cli/commit/c63db87))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.4.0](https://github.com/lobehub/commit-cli/compare/@lobehub/cli-ui@1.3.0...@lobehub/cli-ui@1.4.0)
 
 <sup>Released on **2023-07-13**</sup>
