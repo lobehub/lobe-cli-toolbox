@@ -4,7 +4,7 @@ import { Command, Option } from 'commander';
 import updateNotifier from 'update-notifier';
 
 import packageJson from '@/../package.json';
-import { Config } from '@/commands';
+import { Config, run } from '@/commands';
 
 const notifier = updateNotifier({
   pkg: packageJson,
@@ -27,4 +27,8 @@ interface Flags {
 }
 
 const options: Flags = program.opts();
-if (options.config) render(<Config />);
+if (options.config) {
+  render(<Config />);
+} else {
+  run();
+}

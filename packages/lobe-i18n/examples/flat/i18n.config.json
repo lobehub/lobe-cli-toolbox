@@ -1,0 +1,6 @@
+{
+  "entry": "locales/en.json",
+  "entryLocale": "en",
+  "output": "locales",
+  "outputLocales": ["en", "zh_CN", "jp"]
+}

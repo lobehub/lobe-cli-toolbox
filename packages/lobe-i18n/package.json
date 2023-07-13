@@ -43,9 +43,11 @@
   },
   "dependencies": {
     "@inkjs/ui": "^1",
-    "@lobehub/cli-ui": "1.5.0",
+    "@lobehub/cli-ui": "latest",
+    "chalk": "^5",
     "commander": "^11",
     "conf": "^11",
+    "consola": "^3",
     "execa": "^7",
     "fast-deep-equal": "^3",
     "gpt-3-encoder": "^1",
