@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.4.0](https://github.com/lobehub/commit-cli/compare/@lobehub/cli-ui@1.3.0...@lobehub/cli-ui@1.4.0)
+
+<sup>Released on **2023-07-13**</sup>
+
+#### ✨ Features
+
+- **misc**: Build fresh packages \[force patch].
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Build fresh packages \[force patch] ([6708d22](https://github.com/lobehub/commit-cli/commit/6708d22))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.3.0](https://github.com/lobehub/commit-cli/compare/@lobehub/cli-ui@1.2.0...@lobehub/cli-ui@1.3.0)
 
 <sup>Released on **2023-07-12**</sup>
