@@ -1,1 +1,1 @@
-module.exports = require('@lobehub/lint').semanticReleaseMonoRepo;
+module.exports = require('@lobehub/lint').semanticRelease;
