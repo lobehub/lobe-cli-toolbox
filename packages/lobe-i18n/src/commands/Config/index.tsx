@@ -2,11 +2,16 @@ import { TextInput } from '@inkjs/ui';
 import { ConfigPanel, type ConfigPanelProps } from '@lobehub/cli-ui';
 import { memo, useMemo, useState } from 'react';
 
-import { useConfStore } from '@/store/confStore';
+import { type ConfigKeys, type Config as LocalConfig, useConfStore } from '@/store/confStore';
 
 const Config = memo(() => {
   const [active, setActive] = useState<string>();
   const { store, set, getDefault } = useConfStore();
+
+  const setConfig = <K extends ConfigKeys>(key: K, value: LocalConfig[K]) => {
+    set(key, value);
+    setActive('');
+  };
 
   const items: ConfigPanelProps['items'] = useMemo(
     () => [
@@ -14,7 +19,7 @@ const Config = memo(() => {
         children: (
           <TextInput
             defaultValue={store.openaiToken}
-            onSubmit={(v) => set('openaiToken', v)}
+            onSubmit={(v) => setConfig('openaiToken', v)}
             placeholder="Input OpenAI token..."
           />
         ),
@@ -28,7 +33,7 @@ const Config = memo(() => {
         children: (
           <TextInput
             defaultValue={store.apiBaseUrl}
-            onSubmit={(v) => set('apiBaseUrl', v)}
+            onSubmit={(v) => setConfig('apiBaseUrl', v)}
             placeholder="Set openAI API proxy, default value: https://api.openai.com/v1/..."
           />
         ),

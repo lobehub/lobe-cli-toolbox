@@ -16,7 +16,7 @@ notifier.notify({ isGlobal: true });
 const program = new Command();
 
 program
-  .name('lobe-commit')
+  .name('lobe-i18n')
   .description(packageJson.description)
   .version(packageJson.version)
   .addOption(new Option('-o, --config', 'Setup lobe-i18n preferences'))

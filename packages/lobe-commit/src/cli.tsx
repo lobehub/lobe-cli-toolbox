@@ -37,10 +37,19 @@ interface Flags {
 }
 
 const options: Flags = program.opts();
-if (!options) render(<Commit />);
-if (options.hook) render(<Commit hook />);
-if (options.ai) render(<Ai />);
-if (options.config) render(<Config />);
-if (options.init) render(<HookCreate />);
-if (options.remove) render(<HookRemove />);
-if (options.list) render(<List />);
+
+if (options.ai) {
+  render(<Ai />);
+} else if (options.config) {
+  render(<Config />);
+} else if (options.init) {
+  render(<HookCreate />);
+} else if (options.remove) {
+  render(<HookRemove />);
+} else if (options.list) {
+  render(<List />);
+} else if (options.hook) {
+  render(<Commit hook />);
+} else {
+  render(<Commit />);
+}
