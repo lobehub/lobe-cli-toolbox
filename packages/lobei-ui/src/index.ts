@@ -1,3 +1,4 @@
+export { default as alert } from './alert';
 export { default as ConfigPanel, type ConfigPanelItem, type ConfigPanelProps } from './ConfigPanel';
 export { useTheme } from './hooks/useTheme';
 export { default as Panel, type PanelProps } from './Panel';

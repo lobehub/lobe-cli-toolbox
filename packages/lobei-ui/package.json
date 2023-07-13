@@ -40,6 +40,7 @@
   "dependencies": {
     "@inkjs/ui": "^1",
     "arr-rotate": "^1",
+    "consola": "^3",
     "fast-deep-equal": "^3",
     "figures": "^5",
     "ink": "^4",
