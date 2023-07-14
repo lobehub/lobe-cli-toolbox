@@ -2,6 +2,35 @@
 
 # Changelog
 
+## [Version 1.4.0](https://github.com/lobehub/commit-cli/compare/@lobehub/i18n-cli@1.3.0...@lobehub/i18n-cli@1.4.0)
+
+<sup>Released on **2023-07-14**</sup>
+
+#### ✨ Features
+
+- **misc**: Introduce Lobe Commit CLI and Lobe i18n CLI tools.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Introduce Lobe Commit CLI and Lobe i18n CLI tools ([9f056c2](https://github.com/lobehub/commit-cli/commit/9f056c2))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### Dependencies
+
+- **@lobehub/cli-ui:** upgraded to 1.7.0
+
 ## [Version 1.3.0](https://github.com/lobehub/commit-cli/compare/@lobehub/i18n-cli@1.2.1...@lobehub/i18n-cli@1.3.0)
 
 <sup>Released on **2023-07-13**</sup>
