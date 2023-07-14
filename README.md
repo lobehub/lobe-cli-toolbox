@@ -2,17 +2,13 @@
 
 <div align="center">
 
-<img height="120" src="https://gw.alipayobjects.com/zos/kitchen/XxZaC9n93E/logo.webp">
+<img height="160" src="https://gw.alipayobjects.com/zos/kitchen/XxZaC9n93E/logo.webp">
 
-<h1 align="center">Lobe CLI - AI Toolbox</h1>
+<h1 align="center">Lobe CLI</h1>
 
-Lobe Commit is a CLI tool that uses ChatGPT to generate Gitmoji-based commit messages
+AI Toolbox
 
-| NAME                | REPO                                  | NPM                              | DOWNLOAD             |
-| ------------------- | ------------------------------------- | -------------------------------- | -------------------- |
-| @lobehub/commit-cli | [packages/lobe-commit][commit-github] | [![][commit-shield]][commit-url] | ![][commit-download] |
-| @lobehub/i18n-cli   | [packages/lobe-i18n][i18n-github]     | [![][i18n-shield]][i18n-url]     | ![][i18n-download]   |
-| @lobehub/cli-ui     | [packages/lobe-cli-ui][ui-github]     | [![][ui-shield]][ui-url]         | ![][ui-download]     |
+[Report Bug][issues-url] · [Request Feature][issues-url]
 
 <!-- SHIELD GROUP -->
 
@@ -24,11 +20,17 @@ Lobe Commit is a CLI tool that uses ChatGPT to generate Gitmoji-based commit mes
 [![stargazers][stargazers-shield]][stargazers-url]
 [![issues][issues-shield]][issues-url]
 
+| NAME                | REPO                                  | NPM                              | DOWNLOAD             |
+| ------------------- | ------------------------------------- | -------------------------------- | -------------------- |
+| @lobehub/commit-cli | [packages/lobe-commit][commit-github] | [![][commit-shield]][commit-url] | ![][commit-download] |
+| @lobehub/i18n-cli   | [packages/lobe-i18n][i18n-github]     | [![][i18n-shield]][i18n-url]     | ![][i18n-download]   |
+| @lobehub/cli-ui     | [packages/lobe-cli-ui][ui-github]     | [![][ui-shield]][ui-url]         | ![][ui-download]     |
+
 </div>
 
 <br/>
 
-![](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+![][split]
 
 <br/>
 
@@ -38,11 +40,11 @@ Lobe Commit is a CLI tool that uses ChatGPT to generate Gitmoji-based commit mes
 <img height="120" src="https://gw.alipayobjects.com/zos/kitchen/qJ3l3EPsdW/split.svg">
 <img height="120" src="https://npm.elemecdn.com/fluentui-emoji/icons/modern/love-letter.svg">
 
-<h1 align="center">Lobe Commit</h1>
+# [Lobe Commit][commit-github]
 
 Lobe Commit is a CLI tool that uses ChatGPT to generate Gitmoji-based commit messages
 
-English · [简体中文](./packages/lobe-commit/README-zh_CN.md) · [Changelog](./packages/lobe-commit/CHANGELOG.md) · [Report Bug][issues-url] · [Request Feature][issues-url]
+[English][commit-github] · [简体中文](./packages/lobe-commit/README-zh_CN.md) · [Changelog](./packages/lobe-commit/CHANGELOG.md) · [Report Bug][issues-url] · [Request Feature][issues-url]
 
 ![](https://gw.alipayobjects.com/zos/kitchen/3%26ByxtP39X/preview.webp)
 
@@ -50,7 +52,7 @@ English · [简体中文](./packages/lobe-commit/README-zh_CN.md) · [Changelog]
 
 <br/>
 
-![](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+![][split]
 
 <br/>
 
@@ -60,15 +62,17 @@ English · [简体中文](./packages/lobe-commit/README-zh_CN.md) · [Changelog]
 <img height="120" src="https://gw.alipayobjects.com/zos/kitchen/qJ3l3EPsdW/split.svg">
 <img height="120" src="https://npm.elemecdn.com/fluentui-emoji/icons/modern/globe-showing-asia-australia.svg">
 
-<h1 align="center">Lobe iI8n</h1>
+# [Lobe iI8n][i18n-github]
 
 Lobe i18n is a tool that automates the i18n (internationalization) translation process using ChatGPT. It supports features such as automatic splitting of large files, incremental updates, and customization options for the OpenAI model, API proxy, and temperature.
 
-English · [简体中文](./README-zh_CN.md) · [Changelog](./CHANGELOG.md) · [Report Bug][issues-url] · [Request Feature][issues-url]
+[English][i18n-github] · [简体中文](./packages/lobe-i18n/README-zh_CN.md) · [Changelog](./packages/lobe-i18n/CHANGELOG.md)
 
 </div>
 
 ![](https://gw.alipayobjects.com/zos/kitchen/AH7rvv06qn/preview-i18n.webp)
+
+![][split]
 
 ## 🤝 Contributing
 
@@ -128,6 +132,7 @@ Copyright © 2023 [CanisMinor][profile-url]. <br /> This project is [MIT](./LICE
 
 <!-- LINK GROUP -->
 
+[split]: https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png
 [profile-url]: https://github.com/canisminor1990
 [gitpod-url]: https://gitpod.io/#https://github.com/canisminor1990/lobe-commit
 
