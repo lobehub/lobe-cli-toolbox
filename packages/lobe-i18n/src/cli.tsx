@@ -5,6 +5,8 @@ import updateNotifier from 'update-notifier';
 import packageJson from '@/../package.json';
 import { Config, Translate } from '@/commands';
 
+export { defineConfig } from './defineConfig';
+
 const notifier = updateNotifier({
   pkg: packageJson,
   shouldNotifyInNpmScript: true,

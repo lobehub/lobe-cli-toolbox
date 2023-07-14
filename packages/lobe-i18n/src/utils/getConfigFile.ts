@@ -1,32 +1,22 @@
 import { alert } from '@lobehub/cli-ui';
 import chalk from 'chalk';
-import fs from 'node:fs';
-import { resolve } from 'node:path';
-import * as process from 'node:process';
+import { cosmiconfigSync } from 'cosmiconfig';
 
 import { I18nConfig, OptionKeys } from '@/types/config';
 
-const CONFIG_NAME = 'i18n.config.json';
+const explorer = cosmiconfigSync('i18n');
 
 const checkOptionKeys = (opt: I18nConfig, key: OptionKeys) => {
   if (!opt[key]) {
-    alert.error(`Can't find ${chalk.bold.yellow('outputLocales')} in ${CONFIG_NAME}`);
+    alert.error(`Can't find ${chalk.bold.yellow('outputLocales')} in config`);
   }
 };
 export const getConfigFile = (): I18nConfig | void => {
-  try {
-    const configPath = resolve('./', CONFIG_NAME);
-    const isExist = fs.existsSync(configPath);
-    if (!isExist) {
-      alert.error(`Can't find ${chalk.bold.yellow(CONFIG_NAME)} in dir`);
-    }
-    const config = JSON.parse(fs.readFileSync(configPath, 'utf8')) as I18nConfig;
-    checkOptionKeys(config, 'entry');
-    checkOptionKeys(config, 'entryLocale');
-    checkOptionKeys(config, 'output');
-    checkOptionKeys(config, 'outputLocales');
-    return config;
-  } catch {
-    process.exit(1);
-  }
+  const config: any = explorer.search()?.config;
+  if (!config) return alert.error(`Can't find ${chalk.bold.yellow('config')}`, true);
+  checkOptionKeys(config, 'entry');
+  checkOptionKeys(config, 'entryLocale');
+  checkOptionKeys(config, 'output');
+  checkOptionKeys(config, 'outputLocales');
+  return config;
 };

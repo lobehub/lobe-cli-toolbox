@@ -1,3 +1,7 @@
 {
-  "world": "world"
+  "welcome": "Welcome!",
+  "buttons": {
+    "ok": "Ok",
+    "cancel": "Cancel"
+  }
 }

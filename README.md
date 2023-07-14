@@ -2,6 +2,38 @@
 
 <div align="center">
 
+<img height="120" src="https://gw.alipayobjects.com/zos/kitchen/XxZaC9n93E/logo.webp">
+
+<h1 align="center">Lobe CLI - AI Toolbox</h1>
+
+Lobe Commit is a CLI tool that uses ChatGPT to generate Gitmoji-based commit messages
+
+| NAME                | REPO                                  | NPM                              | DOWNLOAD             |
+| ------------------- | ------------------------------------- | -------------------------------- | -------------------- |
+| @lobehub/commit-cli | [packages/lobe-commit][commit-github] | [![][commit-shield]][commit-url] | ![][commit-download] |
+| @lobehub/i18n-cli   | [packages/lobe-i18n][i18n-github]     | [![][i18n-shield]][i18n-url]     | ![][i18n-download]   |
+| @lobehub/cli-ui     | [packages/lobe-cli-ui][ui-github]     | [![][ui-shield]][ui-url]         | ![][ui-download]     |
+
+<!-- SHIELD GROUP -->
+
+[![releaseDate][release-date-shield]][release-date-url]
+[![ciTest][ci-test-shield]][ci-test-url]
+[![ciRelease][ci-release-shield]][ci-release-url]
+[![contributors][contributors-shield]][contributors-url]
+[![forks][forks-shield]][forks-url]
+[![stargazers][stargazers-shield]][stargazers-url]
+[![issues][issues-shield]][issues-url]
+
+</div>
+
+<br/>
+
+![](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+
+<br/>
+
+<div align="center">
+
 <img height="120" src="https://npm.elemecdn.com/@lobehub/assets-logo@1.0.0/assets/logo-3d.webp">
 <img height="120" src="https://gw.alipayobjects.com/zos/kitchen/qJ3l3EPsdW/split.svg">
 <img height="120" src="https://npm.elemecdn.com/fluentui-emoji/icons/modern/love-letter.svg">
@@ -12,229 +44,31 @@ Lobe Commit is a CLI tool that uses ChatGPT to generate Gitmoji-based commit mes
 
 English · [简体中文](./packages/lobe-commit/README-zh_CN.md) · [Changelog](./packages/lobe-commit/CHANGELOG.md) · [Report Bug][issues-url] · [Request Feature][issues-url]
 
-<!-- SHIELD GROUP -->
-
-[![release][release-shield]][release-url]
-![][release-download-shield]
-[![releaseDate][release-date-shield]][release-date-url]
-[![ciTest][ci-test-shield]][ci-test-url]
-[![ciRelease][ci-release-shield]][ci-release-url]<br/>
-[![contributors][contributors-shield]][contributors-url]
-[![forks][forks-shield]][forks-url]
-[![stargazers][stargazers-shield]][stargazers-url]
-[![issues][issues-shield]][issues-url]
+![](https://gw.alipayobjects.com/zos/kitchen/3%26ByxtP39X/preview.webp)
 
 </div>
-
-![](https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/preview.webp)
-
-<details>
-<summary><kbd>Table of contents</kbd></summary>
-
-#### TOC
-
-- [📦 Packages](#-packages)
-
-- [✨ Features](#-features)
-
-- [📦 Installation](#-installation)
-
-- [🤯 Usage](#-usage)
-
-  - [Git hook](#git-hook)
-  - [Configuration](#configuration)
-  - [Options](#options)
-
-- [⌨️ Local Development](#️-local-development)
-
-- [🤝 Contributing](#-contributing)
-
-- [🔗 Credits](#-credits)
-
-####
-
-</details>
-
-## 📦 Packages
-
-| NAME                | REPO                                  | NPM                              | DOWNLOAD             |
-| ------------------- | ------------------------------------- | -------------------------------- | -------------------- |
-| @lobehub/commit-cli | [packages/lobe-commit][commit-github] | [![][commit-shield]][commit-url] | ![][commit-download] |
-| @lobehub/cli-ui     | [packages/lobe-cli-ui][ui-github]     | [![][ui-shield]][ui-url]         | ![][ui-download]     |
-
-<!-- PACKAGE GROUP -->
-
-[commit-github]: https://github.com/lobehub/lobe-commit/tree/master/packages/lobe-commit
-[commit-shield]: https://img.shields.io/npm/v/@lobehub/commit-cli?label=%F0%9F%A4%AF%20NPM
-[commit-url]: https://www.npmjs.com/package/@lobehub/commit-cli
-[commit-download]: https://img.shields.io/npm/dt/@lobehub/commit-cli
-[ui-github]: https://github.com/lobehub/lobe-commit/tree/master/packages/lobe-cli-ui
-[ui-shield]: https://img.shields.io/npm/v/@lobehub/cli-ui?label=%F0%9F%A4%AF%20NPM
-[ui-url]: https://www.npmjs.com/package/@lobehub/cliui
-[ui-download]: https://img.shields.io/npm/dt/@lobehub/cli-ui
-
-<div align="right">
-
-[![][back-to-top]](#readme-top)
-
-</div>
-
-## ✨ Features
-
-- 🤯 Supports auto-generating commit messages based on diffs using ChatGPT
-- 🛠️ Supports streamlined commit message editing workflow
-- 😜 Supports adding Gitmojis
-- 📝 Supports Conventional Commits specification
-- ⚡️ Supports pulling a list of issues and convenient binding
-- 💄 Supports custom prompts
-- 🗺️ Supports multi-language commit messages
-
-<div align="right">
-
-[![][back-to-top]](#readme-top)
-
-</div>
-
-## 📦 Installation
-
-To install Lobe Commit, run the following command:
-
-```bash
-npm install -g @lobehub/commit-cli
-```
-
-> 👉 Tip: Make sure your node version >= 18
-
-<div align="right">
-
-[![][back-to-top]](#readme-top)
-
-</div>
-
-## 🤯 Usage
-
-You can use the `lobe-commit` command to generate a commit message for your staged changes:
-
-```shell
-$ git add <files...>
-$ lobe-commit
-```
-
-> 👉 Tip: Use the `lobe` alias if `lobe-commit` is too long for you.
 
 <br/>
 
-#### AI mode
-
-With AI mode, you can generate a complete commit message using ChatGPT.
-
-> 👉 Tip: To use AI auto-generation, you need to fill in your OpenAI token in the settings by `lobe-commit -o`. and if you have special network requirements, you can add OpenAI's forwarding address in the settings.
-
-![](https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/preview-ai.webp)
+![](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
 <br/>
 
-#### Editor mode
+<div align="center">
 
-In Editor mode, you can choose the `<type>(<optional scope>): <subject> [<issues>]` format by following a simple flow. Press <kbd>TAB</kbd> to go back to the previous step.
+<img height="120" src="https://npm.elemecdn.com/@lobehub/assets-logo@1.0.0/assets/logo-3d.webp">
+<img height="120" src="https://gw.alipayobjects.com/zos/kitchen/qJ3l3EPsdW/split.svg">
+<img height="120" src="https://npm.elemecdn.com/fluentui-emoji/icons/modern/globe-showing-asia-australia.svg">
 
-> 👉 Tip: If your project is a GitHub repository, the Editor mode feature will automatically fetch the issues associated with your repository. You can select multiple issues to link to your commit message by <kbd>space</kbd> .
+<h1 align="center">Lobe iI8n</h1>
 
-![](https://raw.githubusercontent.com/canisminor1990/lobe-commit/master/docs/preview-editor.webp)
+Lobe i18n is a tool that automates the i18n (internationalization) translation process using ChatGPT. It supports features such as automatic splitting of large files, incremental updates, and customization options for the OpenAI model, API proxy, and temperature.
 
-<div align="right">
-
-[![][back-to-top]](#readme-top)
-
-</div>
-
-### Git hook
-
-You can integrate Lobe Commit with Git via the `prepare-commit-msg` hook. This allows you to use Git as you normally would and edit the commit message before committing.
-
-<br/>
-
-#### Install
-
-To install the hook in the Git repository, run the following command:
-
-```shell
-$ lobe-commit --init # or use short flag -i
-```
-
-<br/>
-
-#### Uninstall
-
-To uninstall the hook from the Git repository, run the following command:
-
-```shell
-$ lobe-commit --remove # or use short flag -r
-```
-
-<div align="right">
-
-[![][back-to-top]](#readme-top)
+English · [简体中文](./README-zh_CN.md) · [Changelog](./CHANGELOG.md) · [Report Bug][issues-url] · [Request Feature][issues-url]
 
 </div>
 
-### Configuration
-
-To configure Lobe Commit, run the following command:
-
-```shell
-$ lobe-commit --config # or use short flag -o
-```
-
-- To use AI auto-generation, you need to fill in your [OpenAI token](<(https://platform.openai.com/account/api-keys)>) in the settings.
-- To automatically pull private issues, you need to fill in your [GitHub token](https://github.com/settings/tokens) with repo permissions in the settings.
-
-<div align="right">
-
-[![][back-to-top]](#readme-top)
-
-</div>
-
-### Options
-
-Lobe Commit supports the following options:
-
-```shell
---commit -c Interactively commit using the prompts
---config -o Setup lobe-commit preferences
---help -h Print basic options
---init -i Initialize lobe-commit as a commit hook
---remove -r Remove a previously initialized commit hook
---list -l List all the available commit type
---version -v Print lobe-commit installed version
-```
-
-<div align="right">
-
-[![][back-to-top]](#readme-top)
-
-</div>
-
-## ⌨️ Local Development
-
-You can use Gitpod for online development:
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)][gitpod-url]
-
-Alternatively, you can clone the repository and run the following commands for local development:
-
-```bash
-$ git clone https://github.com/canisminor1990/lobe-commit.git
-$ cd lobe-commit
-$ npm install
-$ npm start
-```
-
-<div align="right">
-
-[![][back-to-top]](#readme-top)
-
-</div>
+![](https://gw.alipayobjects.com/zos/kitchen/AH7rvv06qn/preview-i18n.webp)
 
 ## 🤝 Contributing
 
@@ -263,8 +97,6 @@ $ npm start
 ## 🔗 Credits
 
 - langchainjs: <https://github.com/hwchase17/langchainjs>
-- gitmoji-commit-workflow: <https://github.com/arvinxx/gitmoji-commit-workflow>
-- gitmoji-cli: <https://github.com/carloscuesta/gitmoji-cli>
 - ink: <https://github.com/vadimdemedes/ink>
 
 <div align="right">
@@ -278,6 +110,21 @@ $ npm start
 #### 📝 License
 
 Copyright © 2023 [CanisMinor][profile-url]. <br /> This project is [MIT](./LICENSE) licensed.
+
+<!-- PACKAGE GROUP -->
+
+[commit-github]: https://github.com/lobehub/lobe-commit/tree/master/packages/lobe-commit
+[commit-shield]: https://img.shields.io/npm/v/@lobehub/commit-cli?label=%F0%9F%A4%AF%20NPM
+[commit-url]: https://www.npmjs.com/package/@lobehub/commit-cli
+[commit-download]: https://img.shields.io/npm/dt/@lobehub/commit-cli
+[i18n-github]: https://github.com/lobehub/lobe-commit/tree/master/packages/lobe-i18n
+[i18n-shield]: https://img.shields.io/npm/v/@lobehub/i18n-cli?label=%F0%9F%A4%AF%20NPM
+[i18n-url]: https://www.npmjs.com/package/@lobehub/i18n-cli
+[i18n-download]: https://img.shields.io/npm/dt/@lobehub/i18n-cli
+[ui-github]: https://github.com/lobehub/lobe-commit/tree/master/packages/lobe-cli-ui
+[ui-shield]: https://img.shields.io/npm/v/@lobehub/cli-ui?label=%F0%9F%A4%AF%20NPM
+[ui-url]: https://www.npmjs.com/package/@lobehub/cliui
+[ui-download]: https://img.shields.io/npm/dt/@lobehub/cli-ui
 
 <!-- LINK GROUP -->
 

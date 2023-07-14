@@ -1,70 +1,71 @@
 import { encode } from 'gpt-3-encoder';
+import { isPlainObject, merge, reduce, sumBy } from 'lodash-es';
 
 import { LocaleObj } from '@/types';
+import { I18nConfig } from '@/types/config';
+import { getExtraObj } from '@/utils/getExtraObj';
 
-const MAX_TOKENS = 2000;
+const PRIMITIVE_EXTRA_TOKENS = 3;
+const KEY_EXTRA_TOKENS = 2; // For `"key":`
+const OBJECT_EXTRA_TOKENS = 2; // For `{}`
 
-const getPrimitiveValueSize = (value: any): number => {
-  return encode(value).length + 3;
+// Function to calculate the size of encoded key
+const getEncodedKeySize = (key: string): number => encode(String(key)).length;
+
+// Function to calculate token size of primitive value
+const getPrimitiveValueSize = (value: any): number =>
+  getEncodedKeySize(value) + PRIMITIVE_EXTRA_TOKENS;
+
+// Function to calculate token size of JSON object
+const getJSONTokenSize = (object: LocaleObj, depth = 0): number =>
+  sumBy(
+    Object.entries(object),
+    ([key, value]: [string, any]) =>
+      getEncodedKeySize(key) +
+      KEY_EXTRA_TOKENS +
+      (isPlainObject(value) ? getJSONTokenSize(value, depth + 1) : getPrimitiveValueSize(value)),
+  ) +
+  OBJECT_EXTRA_TOKENS +
+  depth;
+
+export const splitJSONtoSmallChunks = (object: LocaleObj, splitToken: number = 2000) =>
+  reduce(
+    Object.entries(object),
+    (chunks: any[], [key, value]: [string, any]) => {
+      let [chunk, chunkSize]: [LocaleObj, number] = chunks.pop() || [{}, OBJECT_EXTRA_TOKENS];
+      const nextValueSize = isPlainObject(value)
+        ? getJSONTokenSize(value, 1)
+        : getPrimitiveValueSize(value);
+      if (chunkSize + getEncodedKeySize(key) + KEY_EXTRA_TOKENS + nextValueSize <= splitToken) {
+        chunk[key] = value;
+        chunkSize += getEncodedKeySize(key) + KEY_EXTRA_TOKENS + nextValueSize;
+        chunks.push([chunk, chunkSize]);
+      } else {
+        chunks.push(
+          [chunk, chunkSize],
+          [{ [key]: value }, getEncodedKeySize(key) + KEY_EXTRA_TOKENS + nextValueSize],
+        );
+      }
+      return chunks;
+    },
+    [],
+  ).map(([chunk]) => chunk);
+
+export const splitExtraJSON = (
+  config: I18nConfig,
+  entry: LocaleObj,
+  target: LocaleObj,
+): LocaleObj[] => {
+  const extraJSON = getExtraObj(entry, target);
+  if (Object.keys(extraJSON).length === 0) return [];
+  const splitObj = splitJSONtoSmallChunks(extraJSON, config.splitToken);
+  return splitObj;
 };
 
-const isPlainObject = (obj: unknown): obj is LocaleObj => {
-  return Object.prototype.toString.call(obj) === '[object Object]';
-};
-
-const getJSONTokenSize = (object: LocaleObj, depth = 0): number => {
-  const keys = Object.keys(object);
-  const totalLength = keys.length;
-  let keysLength = totalLength;
-  let tokenCount = 1;
-
-  while (keysLength > 0) {
-    const key = keys[totalLength - keysLength] as string;
-    const value = object[key];
-    tokenCount += 1;
-    tokenCount += depth * 2;
-    tokenCount += encode(key).length + 2;
-    tokenCount += isPlainObject(value)
-      ? getJSONTokenSize(value, depth + 1)
-      : getPrimitiveValueSize(value);
-    keysLength--;
+export const mergeJSONChunks = (arr: LocaleObj[]): LocaleObj => {
+  let result = {};
+  for (const obj of arr) {
+    result = merge(result, obj);
   }
-  tokenCount += 2;
-  tokenCount += depth;
-  return tokenCount;
-};
-
-export const splitJSONtoSmallChunks = (object: LocaleObj) => {
-  const chunks: LocaleObj[] = [];
-  const keys = Object.keys(object);
-  const totalLength = keys.length;
-  let keysLength = totalLength;
-
-  let tempChunk: LocaleObj = {};
-  let chunkSize = 2;
-  while (keysLength > 0) {
-    const key = keys[totalLength - keysLength] as string;
-    const value = object[key];
-    chunkSize += 1;
-    chunkSize += encode(key).length + 2;
-    const nextValueSize = isPlainObject(value)
-      ? getJSONTokenSize(value, 1)
-      : getPrimitiveValueSize(value);
-    if (chunkSize + nextValueSize > MAX_TOKENS) {
-      // clear temp chunk
-      chunks.push({ ...tempChunk });
-      tempChunk = {};
-      chunkSize = 0;
-      continue;
-    } else {
-      tempChunk[key] = value;
-    }
-    chunkSize += nextValueSize;
-    keysLength--;
-  }
-  if (Object.keys(tempChunk).length > 0) {
-    chunks.push(tempChunk);
-  }
-
-  return chunks;
+  return result;
 };

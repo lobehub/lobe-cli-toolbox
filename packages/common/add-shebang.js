@@ -7,6 +7,8 @@ const addShebang = (filePath) => {
       return;
     }
 
+    if (data.includes('#!/usr/bin/env node')) return;
+
     const newContent = `#!/usr/bin/env node\n${data}`;
 
     fs.writeFile(filePath, newContent, 'utf8', (err) => {

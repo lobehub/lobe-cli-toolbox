@@ -7,7 +7,7 @@ import { I18nConfig } from '@/types/config';
 export const setLocaleObj = (config: I18nConfig, local: string, obj: LocaleObj): void => {
   const localPath = resolve(config.output, `${local}.json`);
 
-  fs.writeFileSync(localPath, JSON.stringify(obj));
+  fs.writeFileSync(localPath, JSON.stringify(obj, null, 2));
 };
 
 export const setLocaleFolderObj = (
@@ -17,5 +17,5 @@ export const setLocaleFolderObj = (
   obj: LocaleObj,
 ): void => {
   const localPath = resolve(config.output, local, filename);
-  fs.writeFileSync(localPath, JSON.stringify(obj));
+  fs.writeFileSync(localPath, JSON.stringify(obj, null, 2));
 };
