@@ -24,6 +24,7 @@
   "imports": {
     "@": "./src"
   },
+  "main": "dist/cli.js",
   "bin": {
     "lobe-i18n": "dist/cli.js"
   },
