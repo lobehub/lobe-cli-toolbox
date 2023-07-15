@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.6.0](https://github.com/lobehub/commit-cli/compare/@lobehub/i18n-cli@1.5.0...@lobehub/i18n-cli@1.6.0)
+
+<sup>Released on **2023-07-15**</sup>
+
+#### ✨ Features
+
+- **misc**: Update package.json and TypeScript files in "lobe-i18n" package.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Update package.json and TypeScript files in "lobe-i18n" package ([b00216e](https://github.com/lobehub/commit-cli/commit/b00216e))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.5.0](https://github.com/lobehub/commit-cli/compare/@lobehub/i18n-cli@1.4.0...@lobehub/i18n-cli@1.5.0)
 
 <sup>Released on **2023-07-15**</sup>
