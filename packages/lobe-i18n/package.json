@@ -24,7 +24,19 @@
   "imports": {
     "@": "./src"
   },
-  "main": "dist/cli.js",
+  "exports": {
+    "require": {
+      "types": "./dist/index.d.cts",
+      "default": "./dist/index.cjs"
+    },
+    "import": {
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.cts",
   "bin": {
     "lobe-i18n": "dist/cli.js"
   },
@@ -32,7 +44,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "npm run type-check && pkgroll --minify -p tsconfig.prod.json --env.NODE_ENV=production && npm run shebang",
+    "build": "pkgroll --minify -p tsconfig.prod.json --env.NODE_ENV=production && npm run shebang",
     "dev": "pkgroll -p tsconfig.prod.json --env.NODE_ENV=development --watch",
     "link": "npm run build && npm link -f",
     "prepack": "npm run build && clean-pkg-json",
