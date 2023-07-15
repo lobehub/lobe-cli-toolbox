@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.5.0](https://github.com/lobehub/commit-cli/compare/@lobehub/i18n-cli@1.4.0...@lobehub/i18n-cli@1.5.0)
+
+<sup>Released on **2023-07-15**</sup>
+
+#### ✨ Features
+
+- **misc**: Add "main" field to package.json and create types.d.ts file.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add "main" field to package.json and create types.d.ts file ([9b6aa7d](https://github.com/lobehub/commit-cli/commit/9b6aa7d))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.4.0](https://github.com/lobehub/commit-cli/compare/@lobehub/i18n-cli@1.3.0...@lobehub/i18n-cli@1.4.0)
 
 <sup>Released on **2023-07-14**</sup>
