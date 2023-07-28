@@ -5,7 +5,6 @@
       "hoist": true
     }
   },
-  "useWorkspaces": true,
   "version": "independent",
   "npmClient": "pnpm"
 }
