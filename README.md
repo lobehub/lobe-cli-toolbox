@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<img height="160" src="https://gw.alipayobjects.com/zos/kitchen/XxZaC9n93E/logo.webp">
+<img height="160" src="https://registry.npmmirror.com/@lobehub/assets-logo/1.0.0/files/assets/logo-3d.webp">
 
 <h1 align="center">Lobe CLI</h1>
 
@@ -36,9 +36,9 @@ AI Toolbox
 
 <div align="center">
 
-<img height="120" src="https://npm.elemecdn.com/@lobehub/assets-logo@1.0.0/assets/logo-3d.webp">
+<img height="120" src="https://registry.npmmirror.com/@lobehub/assets-logo/1.0.0/files/assets/logo-3d.webp">
 <img height="120" src="https://gw.alipayobjects.com/zos/kitchen/qJ3l3EPsdW/split.svg">
-<img height="120" src="https://npm.elemecdn.com/fluentui-emoji/icons/modern/love-letter.svg">
+<img height="120" src="https://registry.npmmirror.com/@lobehub/assets-emoji/1.3.0/files/assets/love-letter.webp">
 
 # [Lobe Commit][commit-github]
 
@@ -58,9 +58,9 @@ Lobe Commit is a CLI tool that uses ChatGPT to generate Gitmoji-based commit mes
 
 <div align="center">
 
-<img height="120" src="https://npm.elemecdn.com/@lobehub/assets-logo@1.0.0/assets/logo-3d.webp">
+<img height="120" src="https://registry.npmmirror.com/@lobehub/assets-logo/1.0.0/files/assets/logo-3d.webp">
 <img height="120" src="https://gw.alipayobjects.com/zos/kitchen/qJ3l3EPsdW/split.svg">
-<img height="120" src="https://npm.elemecdn.com/fluentui-emoji/icons/modern/globe-showing-asia-australia.svg">
+<img height="120" src="https://registry.npmmirror.com/@lobehub/assets-emoji/1.3.0/files/assets/globe-showing-asia-australia.webp">
 
 # [Lobe iI8n][i18n-github]
 

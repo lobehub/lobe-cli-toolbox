@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<img height="120" src="https://npm.elemecdn.com/@lobehub/assets-logo@1.0.0/assets/logo-3d.webp">
+<img height="120" src="https://registry.npmmirror.com/@lobehub/assets-logo/1.0.0/files/assets/logo-3d.webp">
 <img height="120" src="https://gw.alipayobjects.com/zos/kitchen/qJ3l3EPsdW/split.svg">
 <img height="120" src="https://github.com/vadimdemedes/ink/blob/master/media/logo.png?raw=true">
 
