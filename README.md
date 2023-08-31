@@ -2,11 +2,9 @@
 
 <div align="center">
 
-<img height="160" src="https://registry.npmmirror.com/@lobehub/assets-logo/1.0.0/files/assets/logo-3d.webp">
+<h1 align="center">Lobe CLI Toolbox</h1>
 
-<h1 align="center">Lobe CLI</h1>
-
-AI Toolbox
+The AI CLI Toolbox, enhancing git commit and i18n workflow efficiency
 
 [Report Bug][issues-url] · [Request Feature][issues-url]
 
@@ -20,21 +18,9 @@ AI Toolbox
 [![stargazers][stargazers-shield]][stargazers-url]
 [![issues][issues-shield]][issues-url]
 
-| NAME                | REPO                                  | NPM                              | DOWNLOAD             |
-| ------------------- | ------------------------------------- | -------------------------------- | -------------------- |
-| @lobehub/commit-cli | [packages/lobe-commit][commit-github] | [![][commit-shield]][commit-url] | ![][commit-download] |
-| @lobehub/i18n-cli   | [packages/lobe-i18n][i18n-github]     | [![][i18n-shield]][i18n-url]     | ![][i18n-download]   |
-| @lobehub/cli-ui     | [packages/lobe-cli-ui][ui-github]     | [![][ui-shield]][ui-url]         | ![][ui-download]     |
-
-</div>
-
-<br/>
-
 ![][split]
 
 <br/>
-
-<div align="center">
 
 <img height="120" src="https://registry.npmmirror.com/@lobehub/assets-logo/1.0.0/files/assets/logo-3d.webp">
 <img height="120" src="https://gw.alipayobjects.com/zos/kitchen/qJ3l3EPsdW/split.svg">
@@ -46,17 +32,16 @@ Lobe Commit is a CLI tool that uses ChatGPT to generate Gitmoji-based commit mes
 
 [English][commit-github] · [简体中文](./packages/lobe-commit/README-zh_CN.md) · [Changelog](./packages/lobe-commit/CHANGELOG.md)
 
-![](https://gw.alipayobjects.com/zos/kitchen/3%26ByxtP39X/preview.webp)
+[![][commit-shield]][commit-url]
+![][commit-download]
 
-</div>
+![](https://gw.alipayobjects.com/zos/kitchen/3%26ByxtP39X/preview.webp)
 
 <br/>
 
 ![][split]
 
 <br/>
-
-<div align="center">
 
 <img height="120" src="https://registry.npmmirror.com/@lobehub/assets-logo/1.0.0/files/assets/logo-3d.webp">
 <img height="120" src="https://gw.alipayobjects.com/zos/kitchen/qJ3l3EPsdW/split.svg">
@@ -68,11 +53,29 @@ Lobe i18n is a tool that automates the i18n (internationalization) translation p
 
 [English][i18n-github] · [简体中文](./packages/lobe-i18n/README-zh_CN.md) · [Changelog](./packages/lobe-i18n/CHANGELOG.md)
 
-</div>
+[![][i18n-shield]][i18n-url] 
+![][ui-download]
 
 ![](https://gw.alipayobjects.com/zos/kitchen/AH7rvv06qn/preview-i18n.webp)
 
 ![][split]
+
+</div>
+
+## 📦 Ecosystem
+
+
+| NAME                | REPO                                  | NPM                              | DOWNLOAD             |
+| ------------------- | ------------------------------------- | -------------------------------- | -------------------- |
+| @lobehub/commit-cli | [packages/lobe-commit][commit-github] | [![][commit-shield]][commit-url] | ![][commit-download] |
+| @lobehub/i18n-cli   | [packages/lobe-i18n][i18n-github]     | [![][i18n-shield]][i18n-url]     | ![][i18n-download]   |
+| @lobehub/cli-ui     | [packages/lobe-cli-ui][ui-github]     | [![][ui-shield]][ui-url]         | ![][ui-download]     |
+
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
 
 ## 🤝 Contributing
 
@@ -98,7 +101,12 @@ Lobe i18n is a tool that automates the i18n (internationalization) translation p
 
 </div>
 
-## 🔗 Credits
+## 🔗 More Products
+
+- **[🤖 Lobe Chat][lobe-chat] :** An open-source, extensible (Function Calling), high-performance chatbot framework. It supports one-click free deployment of your private ChatGPT/LLM web application.
+- **[🤯 Lobe Theme][lobe-theme] :** The modern theme for stable diffusion webui, exquisite interface design, highly customizable UI, and efficiency boosting features.
+
+#### Credits
 
 - langchainjs: <https://github.com/hwchase17/langchainjs>
 - ink: <https://github.com/vadimdemedes/ink>
@@ -183,3 +191,8 @@ Copyright © 2023 [CanisMinor][profile-url]. <br /> This project is [MIT](./LICE
 
 [issues-shield]: https://img.shields.io/github/issues/canisminor1990/lobe-commit.svg?style=flat
 [issues-url]: https://github.com/canisminor1990/lobe-commit/issues/new/choose
+
+<!-- products -->
+
+[lobe-chat]: https://github.com/lobehub/lobe-chat
+[lobe-theme]: https://github.com/lobehub/sd-webui-lobe-theme
