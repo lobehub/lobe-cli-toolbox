@@ -63,6 +63,16 @@ Lobe Label supports the following options:
 
 > 👉 _Note: Default source repo is [canisminor1990/canisminor-template](https://github.com/canisminor1990/canisminor-template)_
 
+### Copy issues labels
+
+```shell
+# Copy issues labels from canisminor1990/canisminor-template to lobehub/chat
+$ lobe-label -t lobehub/chat
+
+# Copy issues labels from lobehub/commit to lobehub/chat
+$ lobe-label -t lobehub/chat -s lobehub/commit
+```
+
 <div align="right">
 
 [![][back-to-top]](#readme-top)
