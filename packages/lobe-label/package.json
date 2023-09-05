@@ -1,6 +1,6 @@
 {
   "name": "@lobehub/label-cli",
-  "version": "1.6.0",
+  "version": "1.0.0",
   "description": "Automatically create and delete labels in batches",
   "keywords": [
     "create",
@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@inkjs/ui": "^1",
-    "@lobehub/cli-ui": "1.7.0",
+    "@lobehub/cli-ui": "1.8.0",
     "@octokit/rest": "^18",
     "commander": "^11",
     "conf": "^11",
