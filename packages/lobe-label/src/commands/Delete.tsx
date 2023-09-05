@@ -14,7 +14,7 @@ const Delete = async (target: string, source: string) => {
         await deleteLabel(targetOwner, targetRepo, name);
       }
 
-      consola.success(`Delete ${labels.length} labels success`);
+      consola.info(`Delete ${labels.length} labels success`);
     }
   } catch (error) {
     consola.error(error);
