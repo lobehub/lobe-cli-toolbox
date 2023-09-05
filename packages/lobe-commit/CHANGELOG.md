@@ -2,6 +2,35 @@
 
 # Changelog
 
+## [Version 2.9.0](https://github.com/lobehub/commit-cli/compare/@lobehub/commit-cli@2.8.0...@lobehub/commit-cli@2.9.0)
+
+<sup>Released on **2023-09-05**</sup>
+
+#### ✨ Features
+
+- **misc**: Add lobe-label.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add lobe-label ([a76c022](https://github.com/lobehub/commit-cli/commit/a76c022))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### Dependencies
+
+- **@lobehub/cli-ui:** upgraded to 1.8.0
+
 ## [Version 2.8.0](https://github.com/lobehub/commit-cli/compare/@lobehub/commit-cli@2.7.0...@lobehub/commit-cli@2.8.0)
 
 <sup>Released on **2023-07-14**</sup>
