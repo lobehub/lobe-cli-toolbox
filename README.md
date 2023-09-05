@@ -68,6 +68,7 @@ Lobe i18n is a tool that automates the i18n (internationalization) translation p
 | ------------------- | ------------------------------------- | -------------------------------- | -------------------- |
 | @lobehub/commit-cli | [packages/lobe-commit][commit-github] | [![][commit-shield]][commit-url] | ![][commit-download] |
 | @lobehub/i18n-cli   | [packages/lobe-i18n][i18n-github]     | [![][i18n-shield]][i18n-url]     | ![][i18n-download]   |
+| @lobehub/label-cli  | [packages/lobe-label][label-github]   | [![][label-shield]][label-url]   | ![][label-download]  |
 | @lobehub/cli-ui     | [packages/lobe-cli-ui][ui-github]     | [![][ui-shield]][ui-url]         | ![][ui-download]     |
 
 <div align="right">
@@ -143,6 +144,10 @@ Copyright © 2023 [CanisMinor][profile-url]. <br /> This project is [MIT](./LICE
 [i18n-url]: https://www.npmjs.com/package/@lobehub/i18n-cli
 [issues-shield]: https://img.shields.io/github/issues/canisminor1990/lobe-commit.svg?style=flat
 [issues-url]: https://github.com/canisminor1990/lobe-commit/issues/new/choose
+[label-download]: https://img.shields.io/npm/dt/@lobehub/label-cli
+[label-github]: https://github.com/lobehub/lobe-commit/tree/master/packages/lobe-label
+[label-shield]: https://img.shields.io/npm/v/@lobehub/label-cli?label=%F0%9F%A4%AF%20NPM
+[label-url]: https://www.npmjs.com/package/@lobehub/label-cli
 [lobe-chat]: https://github.com/lobehub/lobe-chat
 [lobe-theme]: https://github.com/lobehub/sd-webui-lobe-theme
 [profile-url]: https://github.com/canisminor1990
