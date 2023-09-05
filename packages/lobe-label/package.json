@@ -53,6 +53,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@inkjs/ui": "^1",
     "@lobehub/cli-ui": "1.7.0",
     "@octokit/rest": "^18",
     "commander": "^11",

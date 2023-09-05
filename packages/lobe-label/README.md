@@ -49,10 +49,19 @@ npm install -g @lobehub/label-cli
 To initialize the Lobe i8n configuration, run the following command:
 
 ```shell
-$ lobe-i18n --config # or use the short flag -o
+$ lobe-label --config # or use the short flag -o
 ```
 
-- To use AI auto-generation, fill in the [OpenAI token](https://platform.openai.com/account/api-keys) in the settings
+### Options
+
+Lobe Label supports the following options:
+
+```shell
+--target -t Target repo
+--source -s Source repo
+```
+
+> 👉 _Note: Default source repo is [canisminor1990/canisminor-template](https://github.com/canisminor1990/canisminor-template)_
 
 <div align="right">
 

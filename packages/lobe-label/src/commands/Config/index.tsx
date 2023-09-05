@@ -19,7 +19,7 @@ const Config = memo(() => {
         children: (
           <TextInput
             defaultValue={store.githubToken}
-            onSubmit={(v) => setConfig('githubToken', v)}
+            onSubmit={(v: string) => setConfig('githubToken', v)}
             placeholder="Input Github token..."
           />
         ),

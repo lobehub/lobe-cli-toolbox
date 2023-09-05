@@ -32,7 +32,7 @@ export const createLabel = async (
   repo: string,
   name: string,
   color: string,
-  description: string,
+  description?: string,
 ) => {
   const octokit = octokitClient();
   try {
