@@ -21,7 +21,7 @@ const Copy = async (target: string, source: string) => {
     } else {
       consola.warn(`${getOwner}/${getRepo} labels is empty`);
     }
-    consola.success(`Copy ${getLabels.length} labels success`);
+    consola.info(`Copy ${getLabels.length} labels success`);
   } catch (error) {
     consola.error(error);
   }
