@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.0.2](https://github.com/lobehub/commit-cli/compare/@lobehub/label-cli@1.0.1...@lobehub/label-cli@1.0.2)
+
+<sup>Released on **2023-09-05**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update lobe label log style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update lobe label log style ([cfbd0d7](https://github.com/lobehub/commit-cli/commit/cfbd0d7))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.0.1](https://github.com/lobehub/commit-cli/compare/@lobehub/label-cli@1.0.0...@lobehub/label-cli@1.0.1)
 
 <sup>Released on **2023-09-05**</sup>
