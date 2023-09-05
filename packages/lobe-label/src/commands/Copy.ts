@@ -15,13 +15,8 @@ const Copy = async (target: string, source: string) => {
 
     if (getLabels?.length > 0) {
       for (const lable of getLabels) {
-        await createLabel(
-          targetOwner,
-          targetRepo,
-          lable.name,
-          lable.color,
-          lable.description || null,
-        );
+        const { name, color, description }: any = lable;
+        await createLabel(targetOwner, targetRepo, name, color, description);
       }
     } else {
       consola.warn(`${getOwner}/${getRepo} labels is empty`);
