@@ -157,6 +157,6 @@ Copyright © 2023 [CanisMinor][profile-url]. <br /> This project is [MIT](./LICE
 [stargazers-shield]: https://img.shields.io/github/stars/canisminor1990/lobe-commit.svg?style=flat
 [stargazers-url]: https://github.com/canisminor1990/lobe-commit/stargazers
 [ui-download]: https://img.shields.io/npm/dt/@lobehub/cli-ui
-[ui-github]: https://github.com/lobehub/lobe-commit/tree/master/packages/lobe-ui
+[ui-github]: https://github.com/lobehub/lobe-commit/tree/master/packages/lobe-cli-ui
 [ui-shield]: https://img.shields.io/npm/v/@lobehub/cli-ui?label=%F0%9F%A4%AF%20NPM
 [ui-url]: https://www.npmjs.com/package/@lobehub/cli-ui
