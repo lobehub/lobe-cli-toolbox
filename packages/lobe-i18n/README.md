@@ -245,7 +245,7 @@ Alternatively, you can clone the repository and run the following commands for l
 
 ```bash
 $ git clone https://github.com/canisminor1990/lobe-commit.git
-$ cd lobe-i18n
+$ cd lobe-commit/packages/lobe-i18n
 $ npm install
 $ npm start
 ```
@@ -276,53 +276,23 @@ Copyright © 2023 [CanisMinor][profile-url]. <br /> This project is [MIT](./LICE
 
 <!-- LINK GROUP -->
 
-[profile-url]: https://github.com/canisminor1990
-[gitpod-url]: https://gitpod.io/#https://github.com/canisminor1990/lobe-commit
-
-<!-- SHIELD LINK GROUP -->
-
 [back-to-top]: https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square
-
-<!-- release -->
-
-[release-shield]: https://img.shields.io/npm/v/@lobehub/i18n-cli?label=%F0%9F%A4%AF%20NPM
-[release-url]: https://www.npmjs.com/package/@lobehub/i18n-cli
-
-<!-- releaseDate -->
-
-[release-date-shield]: https://img.shields.io/github/release-date/canisminor1990/lobe-commit?style=flat
-[release-date-url]: https://github.com/canisminor1990/lobe-commit/releases
-
-<!-- releaseDownload -->
-
-[release-download-shield]: https://img.shields.io/npm/dt/@lobehub/i18n-cli
-
-<!-- ciTest -->
-
-[ci-test-shield]: https://github.com/canisminor1990/lobe-commit/workflows/Test%20CI/badge.svg
-[ci-test-url]: https://github.com/canisminor1990/lobe-commit/actions/workflows/test.yml
-
-<!-- ciRelease -->
-
 [ci-release-shield]: https://github.com/lobehub/lobe-commit/actions/workflows/release.yml/badge.svg
 [ci-release-url]: https://github.com/lobehub/lobe-commit/actions/workflows/release.yml
-
-<!-- contributors -->
-
+[ci-test-shield]: https://github.com/canisminor1990/lobe-commit/workflows/Test%20CI/badge.svg
+[ci-test-url]: https://github.com/canisminor1990/lobe-commit/actions/workflows/test.yml
 [contributors-shield]: https://img.shields.io/github/contributors/canisminor1990/lobe-commit.svg?style=flat
 [contributors-url]: https://github.com/canisminor1990/lobe-commit/graphs/contributors
-
-<!-- forks -->
-
 [forks-shield]: https://img.shields.io/github/forks/canisminor1990/lobe-commit.svg?style=flat
 [forks-url]: https://github.com/canisminor1990/lobe-commit/network/members
-
-<!-- stargazers -->
-
-[stargazers-shield]: https://img.shields.io/github/stars/canisminor1990/lobe-commit.svg?style=flat
-[stargazers-url]: https://github.com/canisminor1990/lobe-commit/stargazers
-
-<!-- issues -->
-
+[gitpod-url]: https://gitpod.io/#https://github.com/canisminor1990/lobe-commit
 [issues-shield]: https://img.shields.io/github/issues/canisminor1990/lobe-commit.svg?style=flat
 [issues-url]: https://github.com/canisminor1990/lobe-commit/issues/new/choose
+[profile-url]: https://github.com/canisminor1990
+[release-date-shield]: https://img.shields.io/github/release-date/canisminor1990/lobe-commit?style=flat
+[release-date-url]: https://github.com/canisminor1990/lobe-commit/releases
+[release-download-shield]: https://img.shields.io/npm/dt/@lobehub/i18n-cli
+[release-shield]: https://img.shields.io/npm/v/@lobehub/i18n-cli?label=%F0%9F%A4%AF%20NPM
+[release-url]: https://www.npmjs.com/package/@lobehub/i18n-cli
+[stargazers-shield]: https://img.shields.io/github/stars/canisminor1990/lobe-commit.svg?style=flat
+[stargazers-url]: https://github.com/canisminor1990/lobe-commit/stargazers

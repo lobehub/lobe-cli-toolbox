@@ -1,0 +1,77 @@
+{
+  "name": "@lobehub/label-cli",
+  "version": "1.6.0",
+  "description": "Automatically create and delete labels in batches",
+  "keywords": [
+    "create",
+    "delete",
+    "labels"
+  ],
+  "homepage": "https://github.com/lobehub/lobe-commit/tree/master/packages/lobe-label",
+  "bugs": {
+    "url": "https://github.com/lobehub/commit-cli/issues/new"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lobehub/commit-cli.git"
+  },
+  "license": "MIT",
+  "author": "canisminor1990 <i@canisminor.cc>",
+  "sideEffects": false,
+  "type": "module",
+  "imports": {
+    "@": "./src"
+  },
+  "exports": {
+    "require": {
+      "types": "./dist/index.d.cts",
+      "default": "./dist/index.cjs"
+    },
+    "import": {
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.cts",
+  "bin": {
+    "lobe-label": "dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "pkgroll --minify -p tsconfig.prod.json --env.NODE_ENV=production && npm run shebang",
+    "dev": "pkgroll -p tsconfig.prod.json --env.NODE_ENV=development --watch",
+    "link": "npm run build && npm link -f",
+    "prepack": "npm run build && clean-pkg-json",
+    "prepublishOnly": "npm run build",
+    "shebang": "node ../common/add-shebang.js ./dist/cli.js",
+    "start": "node ./dist/cli.js",
+    "test": "npm run type-check",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@lobehub/cli-ui": "1.7.0",
+    "@octokit/rest": "^18",
+    "commander": "^11",
+    "conf": "^11",
+    "consola": "^3",
+    "ink": "^4",
+    "lodash-es": "^4",
+    "react": "^18",
+    "update-notifier": "^6"
+  },
+  "peerDependencies": {
+    "ink": ">=4",
+    "react": ">=18"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}

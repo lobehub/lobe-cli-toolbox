@@ -53,7 +53,7 @@ Lobe i18n is a tool that automates the i18n (internationalization) translation p
 
 [English][i18n-github] · [简体中文](./packages/lobe-i18n/README-zh_CN.md) · [Changelog](./packages/lobe-i18n/CHANGELOG.md)
 
-[![][i18n-shield]][i18n-url] 
+[![][i18n-shield]][i18n-url]
 ![][ui-download]
 
 ![](https://gw.alipayobjects.com/zos/kitchen/AH7rvv06qn/preview-i18n.webp)
@@ -63,7 +63,6 @@ Lobe i18n is a tool that automates the i18n (internationalization) translation p
 </div>
 
 ## 📦 Ecosystem
-
 
 | NAME                | REPO                                  | NPM                              | DOWNLOAD             |
 | ------------------- | ------------------------------------- | -------------------------------- | -------------------- |
@@ -123,76 +122,36 @@ Lobe i18n is a tool that automates the i18n (internationalization) translation p
 
 Copyright © 2023 [CanisMinor][profile-url]. <br /> This project is [MIT](./LICENSE) licensed.
 
-<!-- PACKAGE GROUP -->
+<!-- LINK GROUP -->
 
+[back-to-top]: https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square
+[ci-release-shield]: https://github.com/lobehub/lobe-commit/actions/workflows/release.yml/badge.svg
+[ci-release-url]: https://github.com/lobehub/lobe-commit/actions/workflows/release.yml
+[ci-test-shield]: https://github.com/canisminor1990/lobe-commit/workflows/Test%20CI/badge.svg
+[ci-test-url]: https://github.com/canisminor1990/lobe-commit/actions/workflows/test.yml
+[commit-download]: https://img.shields.io/npm/dt/@lobehub/commit-cli
 [commit-github]: https://github.com/lobehub/lobe-commit/tree/master/packages/lobe-commit
 [commit-shield]: https://img.shields.io/npm/v/@lobehub/commit-cli?label=%F0%9F%A4%AF%20NPM
 [commit-url]: https://www.npmjs.com/package/@lobehub/commit-cli
-[commit-download]: https://img.shields.io/npm/dt/@lobehub/commit-cli
+[contributors-shield]: https://img.shields.io/github/contributors/canisminor1990/lobe-commit.svg?style=flat
+[contributors-url]: https://github.com/canisminor1990/lobe-commit/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/canisminor1990/lobe-commit.svg?style=flat
+[forks-url]: https://github.com/canisminor1990/lobe-commit/network/members
+[i18n-download]: https://img.shields.io/npm/dt/@lobehub/i18n-cli
 [i18n-github]: https://github.com/lobehub/lobe-commit/tree/master/packages/lobe-i18n
 [i18n-shield]: https://img.shields.io/npm/v/@lobehub/i18n-cli?label=%F0%9F%A4%AF%20NPM
 [i18n-url]: https://www.npmjs.com/package/@lobehub/i18n-cli
-[i18n-download]: https://img.shields.io/npm/dt/@lobehub/i18n-cli
+[issues-shield]: https://img.shields.io/github/issues/canisminor1990/lobe-commit.svg?style=flat
+[issues-url]: https://github.com/canisminor1990/lobe-commit/issues/new/choose
+[lobe-chat]: https://github.com/lobehub/lobe-chat
+[lobe-theme]: https://github.com/lobehub/sd-webui-lobe-theme
+[profile-url]: https://github.com/canisminor1990
+[release-date-shield]: https://img.shields.io/github/release-date/canisminor1990/lobe-commit?style=flat
+[release-date-url]: https://github.com/canisminor1990/lobe-commit/releases
+[split]: https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png
+[stargazers-shield]: https://img.shields.io/github/stars/canisminor1990/lobe-commit.svg?style=flat
+[stargazers-url]: https://github.com/canisminor1990/lobe-commit/stargazers
+[ui-download]: https://img.shields.io/npm/dt/@lobehub/cli-ui
 [ui-github]: https://github.com/lobehub/lobe-commit/tree/master/packages/lobe-cli-ui
 [ui-shield]: https://img.shields.io/npm/v/@lobehub/cli-ui?label=%F0%9F%A4%AF%20NPM
 [ui-url]: https://www.npmjs.com/package/@lobehub/cliui
-[ui-download]: https://img.shields.io/npm/dt/@lobehub/cli-ui
-
-<!-- LINK GROUP -->
-
-[split]: https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png
-[profile-url]: https://github.com/canisminor1990
-[gitpod-url]: https://gitpod.io/#https://github.com/canisminor1990/lobe-commit
-
-<!-- SHIELD LINK GROUP -->
-
-[back-to-top]: https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square
-
-<!-- release -->
-
-[release-shield]: https://img.shields.io/npm/v/@lobehub/commit-cli?label=%F0%9F%A4%AF%20NPM
-[release-url]: https://www.npmjs.com/package/@lobehub/commit-cli
-
-<!-- releaseDate -->
-
-[release-date-shield]: https://img.shields.io/github/release-date/canisminor1990/lobe-commit?style=flat
-[release-date-url]: https://github.com/canisminor1990/lobe-commit/releases
-
-<!-- releaseDownload -->
-
-[release-download-shield]: https://img.shields.io/npm/dt/@lobehub/commit-cli
-
-<!-- ciTest -->
-
-[ci-test-shield]: https://github.com/canisminor1990/lobe-commit/workflows/Test%20CI/badge.svg
-[ci-test-url]: https://github.com/canisminor1990/lobe-commit/actions/workflows/test.yml
-
-<!-- ciRelease -->
-
-[ci-release-shield]: https://github.com/lobehub/lobe-commit/actions/workflows/release.yml/badge.svg
-[ci-release-url]: https://github.com/lobehub/lobe-commit/actions/workflows/release.yml
-
-<!-- contributors -->
-
-[contributors-shield]: https://img.shields.io/github/contributors/canisminor1990/lobe-commit.svg?style=flat
-[contributors-url]: https://github.com/canisminor1990/lobe-commit/graphs/contributors
-
-<!-- forks -->
-
-[forks-shield]: https://img.shields.io/github/forks/canisminor1990/lobe-commit.svg?style=flat
-[forks-url]: https://github.com/canisminor1990/lobe-commit/network/members
-
-<!-- stargazers -->
-
-[stargazers-shield]: https://img.shields.io/github/stars/canisminor1990/lobe-commit.svg?style=flat
-[stargazers-url]: https://github.com/canisminor1990/lobe-commit/stargazers
-
-<!-- issues -->
-
-[issues-shield]: https://img.shields.io/github/issues/canisminor1990/lobe-commit.svg?style=flat
-[issues-url]: https://github.com/canisminor1990/lobe-commit/issues/new/choose
-
-<!-- products -->
-
-[lobe-chat]: https://github.com/lobehub/lobe-chat
-[lobe-theme]: https://github.com/lobehub/sd-webui-lobe-theme

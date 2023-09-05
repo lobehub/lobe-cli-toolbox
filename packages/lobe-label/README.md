@@ -4,13 +4,13 @@
 
 <img height="120" src="https://registry.npmmirror.com/@lobehub/assets-logo/1.0.0/files/assets/logo-3d.webp">
 <img height="120" src="https://gw.alipayobjects.com/zos/kitchen/qJ3l3EPsdW/split.svg">
-<img height="120" src="https://github.com/vadimdemedes/ink/blob/master/media/logo.png?raw=true">
+<img height="120" src="https://registry.npmmirror.com/@lobehub/assets-emoji/1.3.0/files/assets/label.webp">
 
-<h1>Lobe Cli UI</h1>
+<h1 align="center">Lobe Label</h1>
 
-Lobe Cli UI is an open-source UI component library for building _AIGC_ cli apps
+Automatically create and delete labels in batches
 
-[Changelog](./CHANGELOG.md) · [Report Bug][issues-url] · [Request Feature][issues-url]
+[Report Bug][issues-url] · [Request Feature][issues-url]
 
 <!-- SHIELD GROUP -->
 
@@ -18,38 +18,41 @@ Lobe Cli UI is an open-source UI component library for building _AIGC_ cli apps
 ![][release-download-shield]
 [![releaseDate][release-date-shield]][release-date-url]
 [![ciTest][ci-test-shield]][ci-test-url]
-[![ciRelease][ci-release-shield]][ci-release-url] <br/>
+[![ciRelease][ci-release-shield]][ci-release-url]<br/>
 [![contributors][contributors-shield]][contributors-url]
 [![forks][forks-shield]][forks-url]
 [![stargazers][stargazers-shield]][stargazers-url]
 [![issues][issues-shield]][issues-url]
 
-![](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
-
 </div>
 
-<details>
-<summary><kbd>Table of contents</kbd></summary>
-
-#### TOC
-
-- [📦 Installation](#-installation)
-- [⌨️ Local Development](#️-local-development)
-- [🔗 Credits](#-credits)
-
-####
-
-</details>
+![](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
 ## 📦 Installation
 
-This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c).
-
-To install Lobe UI, run the following command:
+To install Lobe Label, run the following command:
 
 ```bash
-pnpm add @lobehub/lobe-cli-ui
+npm install -g @lobehub/label-cli
 ```
+
+> 👉 _Note: Make sure you have Node.js version >= 18_
+
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
+
+## 🤯 Usage
+
+To initialize the Lobe i8n configuration, run the following command:
+
+```shell
+$ lobe-i18n --config # or use the short flag -o
+```
+
+- To use AI auto-generation, fill in the [OpenAI token](https://platform.openai.com/account/api-keys) in the settings
 
 <div align="right">
 
@@ -63,24 +66,14 @@ You can use Gitpod for online development:
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)][gitpod-url]
 
-Or clone it for local development:
+Alternatively, you can clone the repository and run the following commands for local development:
 
 ```bash
-$ git clone https://github.com/lobehub/lobe-commit.git
-$ cd lobe-commit/packages/lobe-ui
-$ pnpm install
-$ pnpm start
+$ git clone https://github.com/canisminor1990/lobe-commit.git
+$ cd lobe-commit/packages/lobe-label
+$ npm install
+$ npm start
 ```
-
-<div align="right">
-
-[![][back-to-top]](#readme-top)
-
-</div>
-
-## 🔗 Credits
-
-- ink: <https://github.com/vadimdemedes/ink>
 
 <div align="right">
 
@@ -92,8 +85,7 @@ $ pnpm start
 
 #### 📝 License
 
-Copyright © 2023 [LobeHub][profile-url]. <br />
-This project is [MIT](./LICENSE) licensed.
+Copyright © 2023 [CanisMinor][profile-url]. <br /> This project is [MIT](./LICENSE) licensed.
 
 <!-- LINK GROUP -->
 
@@ -112,8 +104,8 @@ This project is [MIT](./LICENSE) licensed.
 [profile-url]: https://github.com/canisminor1990
 [release-date-shield]: https://img.shields.io/github/release-date/canisminor1990/lobe-commit?style=flat
 [release-date-url]: https://github.com/canisminor1990/lobe-commit/releases
-[release-download-shield]: https://img.shields.io/npm/dt/@lobehub/cli-ui
-[release-shield]: https://img.shields.io/npm/v/@lobehub/cli-ui?label=%F0%9F%A4%AF%20NPM
-[release-url]: https://www.npmjs.com/package/@lobehub/cli-ui
+[release-download-shield]: https://img.shields.io/npm/dt/@lobehub/i18n-cli
+[release-shield]: https://img.shields.io/npm/v/@lobehub/label-cli?label=%F0%9F%A4%AF%20NPM
+[release-url]: https://www.npmjs.com/package/@lobehub/label-cli
 [stargazers-shield]: https://img.shields.io/github/stars/canisminor1990/lobe-commit.svg?style=flat
 [stargazers-url]: https://github.com/canisminor1990/lobe-commit/stargazers
