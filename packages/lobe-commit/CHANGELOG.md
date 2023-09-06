@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.9.1](https://github.com/lobehub/commit-cli/compare/@lobehub/commit-cli@2.9.0...@lobehub/commit-cli@2.9.1)
+
+<sup>Released on **2023-09-06**</sup>
+
+#### 🐛 Bug Fixes
+
+- **lobe-commit**: Update genCommitMessage.ts.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **lobe-commit**: Update genCommitMessage.ts ([fed0646](https://github.com/lobehub/commit-cli/commit/fed0646))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 2.9.0](https://github.com/lobehub/commit-cli/compare/@lobehub/commit-cli@2.8.0...@lobehub/commit-cli@2.9.0)
 
 <sup>Released on **2023-09-05**</sup>
