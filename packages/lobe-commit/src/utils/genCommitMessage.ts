@@ -54,7 +54,7 @@ export const commotObjToMessage = ({
       .map((num) => `${issuesType ? `${issuesType} ` : ''}#${num}`);
 
   return `${emoji} ${formateType}${formateScope ? `(${formateScope})` : ''}: ${formateSubject}${
-    formateIssues && formateIssues?.length > 0 ? ` [${formateIssues.join(',')}]` : ''
+    formateIssues && formateIssues?.length > 0 ? ` (${formateIssues.join(',')})` : ''
   }${body ? `\n\n${body}` : ''}`;
 };
 
