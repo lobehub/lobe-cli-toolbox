@@ -123,7 +123,7 @@ Copyright © 2023 [CanisMinor][profile-url]. <br /> This project is [MIT](./LICE
 [profile-url]: https://github.com/canisminor1990
 [release-date-shield]: https://img.shields.io/github/release-date/canisminor1990/lobe-commit?style=flat
 [release-date-url]: https://github.com/canisminor1990/lobe-commit/releases
-[release-download-shield]: https://img.shields.io/npm/dt/@lobehub/i18n-cli
+[release-download-shield]: https://img.shields.io/npm/dt/@lobehub/label-cli
 [release-shield]: https://img.shields.io/npm/v/@lobehub/label-cli?label=%F0%9F%A4%AF%20NPM
 [release-url]: https://www.npmjs.com/package/@lobehub/label-cli
 [stargazers-shield]: https://img.shields.io/github/stars/canisminor1990/lobe-commit.svg?style=flat
