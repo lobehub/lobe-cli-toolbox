@@ -43,7 +43,7 @@
     "consola": "^3",
     "fast-deep-equal": "^3",
     "figures": "^5",
-    "ink": "^4",
+    "ink": "^4.2",
     "react": "^18"
   },
   "peerDependencies": {
