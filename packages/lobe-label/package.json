@@ -35,7 +35,7 @@
     "commander": "^11",
     "conf": "^11",
     "consola": "^3",
-    "ink": "^4.2",
+    "ink": "^4.4",
     "lodash-es": "^4",
     "react": "^18",
     "update-notifier": "^6"
