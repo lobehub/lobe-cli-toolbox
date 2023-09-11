@@ -31,7 +31,7 @@
   "dependencies": {
     "@inkjs/ui": "^1",
     "@lobehub/cli-ui": "1.8.1",
-    "@octokit/rest": "^18",
+    "@octokit/rest": "^20",
     "commander": "^11",
     "conf": "^11",
     "consola": "^3",
