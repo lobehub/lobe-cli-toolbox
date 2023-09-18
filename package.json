@@ -70,7 +70,7 @@
     "pkgroll": "^1",
     "prettier": "^3",
     "remark": "^14",
-    "remark-cli": "^11",
+    "remark-cli": "^12",
     "semantic-release": "^21",
     "stylelint": "latest",
     "ts-node": "^10",
