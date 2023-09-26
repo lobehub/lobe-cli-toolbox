@@ -212,8 +212,6 @@ $ bun dev
 
 ## 🤝 参与贡献
 
-## 🤝 参与贡献
-
 我们非常欢迎各种形式的贡献。如果你对贡献代码感兴趣，可以查看我们的 GitHub [Issues][github-issues-link]，大展身手，向我们展示你的奇思妙想。
 
 [![][pr-welcome-shield]][pr-welcome-link]
