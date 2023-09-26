@@ -26,16 +26,46 @@ AI CLI Toolbox, enhancing git commit and i18n workflow efficiency
 
 <br/>
 
+🪀 CLI Tools
+
 | [**💌 Lobe Commit**][lobe-commit-github]<br/>Automation tool for the i18n (internationalization) translation process, powered by ChatGPT. It supports features such as automatic splitting of large files, incremental updates, and customization options for the OpenAI model, API proxy, and temperature.<br/><br/>[![][lobe-commit-version] ![][lobe-commit-download]][lobe-commit-url] | [![][lobe-commit-cover]][lobe-commit-github] |
 | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------- |
 | [**🌏 Lobe i18n**][lobe-i18n-github]<br/>CLI tool that leverages Langchain/ChatGPT to generate Gitmoji-based commit messages.<br/><br/>[![][lobe-i18n-version] ![][lobe-i18n-download]][lobe-i18n-url]                                                                                                                                                                                     | [![][lobe-i18n-cover]][lobe-i18n-github]     |
 | [**🔖 Lobe label**][lobe-label-github]<br/>Automatically copy issues labels from template repo.<br/><br/>[![][lobe-label-version] ![][lobe-label-download]][lobe-label-url]                                                                                                                                                                                                                | [![][lobe-label-cover]][lobe-label-github]   |
+
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
 
 ## 📦 Ecosystem
 
 | NAME                      | REPO                              | NPM                      | DOWNLOAD         |
 | ------------------------- | --------------------------------- | ------------------------ | ---------------- |
 | [@lobehub/cli-ui][ui-url] | [packages/lobe-cli-ui][ui-github] | [![][ui-shield]][ui-url] | ![][ui-download] |
+
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
+
+## ⌨️ Local Development
+
+You can use Github Codespaces for online development:
+
+[![][github-codespace-shield]][github-codespace-link]
+
+Or clone it for local development:
+
+[![][bun-shield]][bun-link]
+
+```bash
+$ git clone https://github.com/lobehub/lobe-cli-toolbox.git
+$ cd lobe-cli-toolbox
+$ bun install
+```
 
 <div align="right">
 
@@ -85,10 +115,14 @@ This project is [MIT](./LICENSE) licensed.
 <!-- LINK GROUP -->
 
 [back-to-top]: https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square
+[bun-link]: https://bun.sh
+[bun-shield]: https://img.shields.io/badge/-speedup%20with%20bun-black?logo=bun&style=for-the-badge
 [github-action-release-link]: https://github.com/lobehub/lobe-cli-toolbox/actions/workflows/release.yml
 [github-action-release-shield]: https://img.shields.io/github/actions/workflow/status/lobehub/lobe-cli-toolbox/release.yml?label=release&labelColor=black&logo=githubactions&logoColor=white&style=flat-square
 [github-action-test-link]: https://github.com/lobehub/lobe-cli-toolbox/actions/workflows/test.yml
 [github-action-test-shield]: https://img.shields.io/github/actions/workflow/status/lobehub/lobe-cli-toolbox/test.yml?label=test&labelColor=black&logo=githubactions&logoColor=white&style=flat-square
+[github-codespace-link]: https://codespaces.new/lobehub/lobe-cli-toolbox
+[github-codespace-shield]: https://github.com/codespaces/badge.svg
 [github-contrib-link]: https://github.com/lobehub/lobe-cli-toolbox/graphs/contributors
 [github-contrib-shield]: https://contrib.rocks/image?repo=lobehub%2Flobe-cli-toolbox
 [github-contributors-link]: https://github.com/lobehub/lobe-cli-toolbox/graphs/contributors
