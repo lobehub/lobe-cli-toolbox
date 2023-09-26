@@ -26,12 +26,12 @@ AI CLI Toolbox, enhancing git commit and i18n workflow efficiency
 
 <br/>
 
-🪀 CLI Tools
+## 🪀 CLI Tools
 
-| [**💌 Lobe Commit**][lobe-commit-github]<br/>Automation tool for the i18n (internationalization) translation process, powered by ChatGPT. It supports features such as automatic splitting of large files, incremental updates, and customization options for the OpenAI model, API proxy, and temperature.<br/><br/>[![][lobe-commit-version] ![][lobe-commit-download]][lobe-commit-url] | [![][lobe-commit-cover]][lobe-commit-github] |
-| :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------- |
-| [**🌏 Lobe i18n**][lobe-i18n-github]<br/>CLI tool that leverages Langchain/ChatGPT to generate Gitmoji-based commit messages.<br/><br/>[![][lobe-i18n-version] ![][lobe-i18n-download]][lobe-i18n-url]                                                                                                                                                                                     | [![][lobe-i18n-cover]][lobe-i18n-github]     |
-| [**🔖 Lobe label**][lobe-label-github]<br/>Automatically copy issues labels from template repo.<br/><br/>[![][lobe-label-version] ![][lobe-label-download]][lobe-label-url]                                                                                                                                                                                                                | [![][lobe-label-cover]][lobe-label-github]   |
+| [**💌 Lobe Commit**][lobe-commit-github] [(中文)][lobe-commit-github-cn]<br/>Automation tool for the i18n (internationalization) translation process, powered by ChatGPT. It supports features such as automatic splitting of large files, incremental updates, and customization options for the OpenAI model, API proxy, and temperature.<br/><br/>[![][lobe-commit-version] ![][lobe-commit-download]][lobe-commit-url] | [![][lobe-commit-cover]][lobe-commit-github] |
+| :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------- |
+| [**🌏 Lobe i18n**][lobe-i18n-github] [(中文)][lobe-i18n-github-cn]<br/>CLI tool that leverages Langchain/ChatGPT to generate Gitmoji-based commit messages.<br/><br/>[![][lobe-i18n-version] ![][lobe-i18n-download]][lobe-i18n-url]                                                                                                                                                                                       | [![][lobe-i18n-cover]][lobe-i18n-github]     |
+| [**🔖 Lobe label**][lobe-label-github]<br/>Automatically copy issues labels from template repo.<br/><br/>[![][lobe-label-version] ![][lobe-label-download]][lobe-label-url]                                                                                                                                                                                                                                                | [![][lobe-label-cover]][lobe-label-github]   |
 
 <div align="right">
 
@@ -143,11 +143,13 @@ This project is [MIT](./LICENSE) licensed.
 [lobe-commit-cover]: https://gw.alipayobjects.com/zos/kitchen/3%26ByxtP39X/preview.webp
 [lobe-commit-download]: https://img.shields.io/npm/dt/@lobehub/commit-cli?labelColor=black&&style=flat-square
 [lobe-commit-github]: https://github.com/lobehub/lobe-cli-toolbox/tree/master/packages/lobe-commit
+[lobe-commit-github-cn]: https://github.com/lobehub/lobe-cli-toolbox/blob/master/packages/lobe-commit/README-zh_CN.md
 [lobe-commit-url]: https://www.npmjs.com/package/@lobehub/commit-cli
 [lobe-commit-version]: https://img.shields.io/npm/v/@lobehub/commit-cli?color=369eff&labelColor=black&logo=npm&logoColor=white&style=flat-square
 [lobe-i18n-cover]: https://gw.alipayobjects.com/zos/kitchen/AH7rvv06qn/preview-i18n.webp
 [lobe-i18n-download]: https://img.shields.io/npm/dt/@lobehub/i18n-cli?labelColor=black&&style=flat-square
 [lobe-i18n-github]: https://github.com/lobehub/lobe-cli-toolbox/tree/master/packages/lobe-i18n
+[lobe-i18n-github-cn]: https://github.com/lobehub/lobe-cli-toolbox/blob/master/packages/lobe-i18n/README-zh_CN.md
 [lobe-i18n-url]: https://www.npmjs.com/package/@lobehub/i18n-cli
 [lobe-i18n-version]: https://img.shields.io/npm/v/@lobehub/i18n-cli?color=369eff&labelColor=black&logo=npm&logoColor=white&style=flat-square
 [lobe-label-cover]: https://gw.alipayobjects.com/zos/kitchen/qeTFEqgF8O/437shots_so.png
