@@ -14,13 +14,13 @@
     "aicommit",
     "ai-commit"
   ],
-  "homepage": "https://github.com/lobehub/lobe-commit/tree/master/packages/lobe-commit",
+  "homepage": "https://github.comlobehub/lobe-cli-toolbox/tree/master/packages/lobe-commit",
   "bugs": {
-    "url": "https://github.com/lobehub/commit-cli/issues/new"
+    "url": "https://github.com/lobehub/lobe-cli-toolbox/issues/new"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lobehub/commit-cli.git"
+    "url": "https://github.com/lobehub/lobe-cli-toolbox.git"
   },
   "license": "MIT",
   "author": "canisminor1990 <i@canisminor.cc>",

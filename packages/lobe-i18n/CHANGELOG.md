@@ -2,7 +2,7 @@
 
 # Changelog
 
-### [Version 1.7.2](https://github.com/lobehub/commit-cli/compare/@lobehub/i18n-cli@1.7.1...@lobehub/i18n-cli@1.7.2)
+### [Version 1.7.2](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.7.1...@lobehub/i18n-cli@1.7.2)
 
 <sup>Released on **2023-09-08**</sup>
 
@@ -17,7 +17,7 @@
 
 #### What's fixed
 
-- **misc**: Fix ink deps ([06cd5ed](https://github.com/lobehub/commit-cli/commit/06cd5ed))
+- **misc**: Fix ink deps ([06cd5ed](https://github.com/lobehub/lobe-cli-toolbox/commit/06cd5ed))
 
 </details>
 
@@ -31,7 +31,7 @@
 
 - **@lobehub/cli-ui:** upgraded to 1.8.1
 
-### [Version 1.7.1](https://github.com/lobehub/commit-cli/compare/@lobehub/i18n-cli@1.7.0...@lobehub/i18n-cli@1.7.1)
+### [Version 1.7.1](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.7.0...@lobehub/i18n-cli@1.7.1)
 
 <sup>Released on **2023-09-06**</sup>
 
@@ -46,7 +46,7 @@
 
 #### What's fixed
 
-- **misc**: Update package.json ([abc738e](https://github.com/lobehub/commit-cli/commit/abc738e))
+- **misc**: Update package.json ([abc738e](https://github.com/lobehub/lobe-cli-toolbox/commit/abc738e))
 
 </details>
 
@@ -56,7 +56,7 @@
 
 </div>
 
-## [Version 1.7.0](https://github.com/lobehub/commit-cli/compare/@lobehub/i18n-cli@1.6.0...@lobehub/i18n-cli@1.7.0)
+## [Version 1.7.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.6.0...@lobehub/i18n-cli@1.7.0)
 
 <sup>Released on **2023-09-05**</sup>
 
@@ -71,7 +71,7 @@
 
 #### What's improved
 
-- **misc**: Add lobe-label ([a76c022](https://github.com/lobehub/commit-cli/commit/a76c022))
+- **misc**: Add lobe-label ([a76c022](https://github.com/lobehub/lobe-cli-toolbox/commit/a76c022))
 
 </details>
 
@@ -85,7 +85,7 @@
 
 - **@lobehub/cli-ui:** upgraded to 1.8.0
 
-## [Version 1.6.0](https://github.com/lobehub/commit-cli/compare/@lobehub/i18n-cli@1.5.0...@lobehub/i18n-cli@1.6.0)
+## [Version 1.6.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.5.0...@lobehub/i18n-cli@1.6.0)
 
 <sup>Released on **2023-07-15**</sup>
 
@@ -100,7 +100,7 @@
 
 #### What's improved
 
-- **misc**: Update package.json and TypeScript files in "lobe-i18n" package ([b00216e](https://github.com/lobehub/commit-cli/commit/b00216e))
+- **misc**: Update package.json and TypeScript files in "lobe-i18n" package ([b00216e](https://github.com/lobehub/lobe-cli-toolbox/commit/b00216e))
 
 </details>
 
@@ -110,7 +110,7 @@
 
 </div>
 
-## [Version 1.5.0](https://github.com/lobehub/commit-cli/compare/@lobehub/i18n-cli@1.4.0...@lobehub/i18n-cli@1.5.0)
+## [Version 1.5.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.4.0...@lobehub/i18n-cli@1.5.0)
 
 <sup>Released on **2023-07-15**</sup>
 
@@ -125,7 +125,7 @@
 
 #### What's improved
 
-- **misc**: Add "main" field to package.json and create types.d.ts file ([9b6aa7d](https://github.com/lobehub/commit-cli/commit/9b6aa7d))
+- **misc**: Add "main" field to package.json and create types.d.ts file ([9b6aa7d](https://github.com/lobehub/lobe-cli-toolbox/commit/9b6aa7d))
 
 </details>
 
@@ -135,7 +135,7 @@
 
 </div>
 
-## [Version 1.4.0](https://github.com/lobehub/commit-cli/compare/@lobehub/i18n-cli@1.3.0...@lobehub/i18n-cli@1.4.0)
+## [Version 1.4.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.3.0...@lobehub/i18n-cli@1.4.0)
 
 <sup>Released on **2023-07-14**</sup>
 
@@ -150,7 +150,7 @@
 
 #### What's improved
 
-- **misc**: Introduce Lobe Commit CLI and Lobe i18n CLI tools ([9f056c2](https://github.com/lobehub/commit-cli/commit/9f056c2))
+- **misc**: Introduce Lobe Commit CLI and Lobe i18n CLI tools ([9f056c2](https://github.com/lobehub/lobe-cli-toolbox/commit/9f056c2))
 
 </details>
 
@@ -164,7 +164,7 @@
 
 - **@lobehub/cli-ui:** upgraded to 1.7.0
 
-## [Version 1.3.0](https://github.com/lobehub/commit-cli/compare/@lobehub/i18n-cli@1.2.1...@lobehub/i18n-cli@1.3.0)
+## [Version 1.3.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.2.1...@lobehub/i18n-cli@1.3.0)
 
 <sup>Released on **2023-07-13**</sup>
 
@@ -179,7 +179,7 @@
 
 #### What's improved
 
-- **misc**: Introduce new features ([642a173](https://github.com/lobehub/commit-cli/commit/642a173))
+- **misc**: Introduce new features ([642a173](https://github.com/lobehub/lobe-cli-toolbox/commit/642a173))
 
 </details>
 
@@ -193,7 +193,7 @@
 
 - **@lobehub/cli-ui:** upgraded to 1.6.0
 
-### [Version 1.2.1](https://github.com/lobehub/commit-cli/compare/@lobehub/i18n-cli@1.2.0...@lobehub/i18n-cli@1.2.1)
+### [Version 1.2.1](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.2.0...@lobehub/i18n-cli@1.2.1)
 
 <sup>Released on **2023-07-13**</sup>
 
@@ -214,7 +214,7 @@
 
 - **@lobehub/cli-ui:** upgraded to 1.5.0
 
-## [Version 1.2.0](https://github.com/lobehub/commit-cli/compare/@lobehub/i18n-cli@1.1.0...@lobehub/i18n-cli@1.2.0)
+## [Version 1.2.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.1.0...@lobehub/i18n-cli@1.2.0)
 
 <sup>Released on **2023-07-13**</sup>
 
@@ -229,7 +229,7 @@
 
 #### What's improved
 
-- **misc**: Modify rendering logic based on options ([fcd486f](https://github.com/lobehub/commit-cli/commit/fcd486f))
+- **misc**: Modify rendering logic based on options ([fcd486f](https://github.com/lobehub/lobe-cli-toolbox/commit/fcd486f))
 
 </details>
 
@@ -239,7 +239,7 @@
 
 </div>
 
-## [Version 1.1.0](https://github.com/lobehub/commit-cli/compare/@lobehub/i18n-cli@1.0.0...@lobehub/i18n-cli@1.1.0)
+## [Version 1.1.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.0.0...@lobehub/i18n-cli@1.1.0)
 
 <sup>Released on **2023-07-13**</sup>
 
@@ -254,7 +254,7 @@
 
 #### What's improved
 
-- **misc**: Build fresh packages \[force patch] ([d50d40f](https://github.com/lobehub/commit-cli/commit/d50d40f))
+- **misc**: Build fresh packages \[force patch] ([d50d40f](https://github.com/lobehub/lobe-cli-toolbox/commit/d50d40f))
 
 </details>
 
@@ -268,7 +268,7 @@
 
 - **@lobehub/cli-ui:** upgraded to 1.4.0
 
-## Version 1.0.0
+## Version 1.0.0
 
 <sup>Released on **2023-07-13**</sup>
 

@@ -2,7 +2,7 @@
 
 # Changelog
 
-### [Version 2.9.3](https://github.com/lobehub/commit-cli/compare/@lobehub/commit-cli@2.9.2...@lobehub/commit-cli@2.9.3)
+### [Version 2.9.3](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.9.2...@lobehub/commit-cli@2.9.3)
 
 <sup>Released on **2023-09-08**</sup>
 
@@ -17,7 +17,7 @@
 
 #### What's fixed
 
-- **misc**: Fix ink deps ([06cd5ed](https://github.com/lobehub/commit-cli/commit/06cd5ed))
+- **misc**: Fix ink deps ([06cd5ed](https://github.com/lobehub/lobe-cli-toolbox/commit/06cd5ed))
 
 </details>
 
@@ -31,7 +31,7 @@
 
 - **@lobehub/cli-ui:** upgraded to 1.8.1
 
-### [Version 2.9.2](https://github.com/lobehub/commit-cli/compare/@lobehub/commit-cli@2.9.1...@lobehub/commit-cli@2.9.2)
+### [Version 2.9.2](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.9.1...@lobehub/commit-cli@2.9.2)
 
 <sup>Released on **2023-09-06**</sup>
 
@@ -46,7 +46,7 @@
 
 #### What's fixed
 
-- **misc**: Update package.json ([f3d394a](https://github.com/lobehub/commit-cli/commit/f3d394a))
+- **misc**: Update package.json ([f3d394a](https://github.com/lobehub/lobe-cli-toolbox/commit/f3d394a))
 
 </details>
 
@@ -56,7 +56,7 @@
 
 </div>
 
-### [Version 2.9.1](https://github.com/lobehub/commit-cli/compare/@lobehub/commit-cli@2.9.0...@lobehub/commit-cli@2.9.1)
+### [Version 2.9.1](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.9.0...@lobehub/commit-cli@2.9.1)
 
 <sup>Released on **2023-09-06**</sup>
 
@@ -71,7 +71,7 @@
 
 #### What's fixed
 
-- **lobe-commit**: Update genCommitMessage.ts ([fed0646](https://github.com/lobehub/commit-cli/commit/fed0646))
+- **lobe-commit**: Update genCommitMessage.ts ([fed0646](https://github.com/lobehub/lobe-cli-toolbox/commit/fed0646))
 
 </details>
 
@@ -81,7 +81,7 @@
 
 </div>
 
-## [Version 2.9.0](https://github.com/lobehub/commit-cli/compare/@lobehub/commit-cli@2.8.0...@lobehub/commit-cli@2.9.0)
+## [Version 2.9.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.8.0...@lobehub/commit-cli@2.9.0)
 
 <sup>Released on **2023-09-05**</sup>
 
@@ -96,7 +96,7 @@
 
 #### What's improved
 
-- **misc**: Add lobe-label ([a76c022](https://github.com/lobehub/commit-cli/commit/a76c022))
+- **misc**: Add lobe-label ([a76c022](https://github.com/lobehub/lobe-cli-toolbox/commit/a76c022))
 
 </details>
 
@@ -110,7 +110,7 @@
 
 - **@lobehub/cli-ui:** upgraded to 1.8.0
 
-## [Version 2.8.0](https://github.com/lobehub/commit-cli/compare/@lobehub/commit-cli@2.7.0...@lobehub/commit-cli@2.8.0)
+## [Version 2.8.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.7.0...@lobehub/commit-cli@2.8.0)
 
 <sup>Released on **2023-07-14**</sup>
 
@@ -125,7 +125,7 @@
 
 #### What's improved
 
-- **misc**: Introduce Lobe Commit CLI and Lobe i18n CLI tools ([9f056c2](https://github.com/lobehub/commit-cli/commit/9f056c2))
+- **misc**: Introduce Lobe Commit CLI and Lobe i18n CLI tools ([9f056c2](https://github.com/lobehub/lobe-cli-toolbox/commit/9f056c2))
 
 </details>
 
@@ -139,7 +139,7 @@
 
 - **@lobehub/cli-ui:** upgraded to 1.7.0
 
-## [Version 2.7.0](https://github.com/lobehub/commit-cli/compare/@lobehub/commit-cli@2.6.0...@lobehub/commit-cli@2.7.0)
+## [Version 2.7.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.6.0...@lobehub/commit-cli@2.7.0)
 
 <sup>Released on **2023-07-13**</sup>
 
@@ -154,7 +154,7 @@
 
 #### What's improved
 
-- **misc**: Introduce new features ([642a173](https://github.com/lobehub/commit-cli/commit/642a173))
+- **misc**: Introduce new features ([642a173](https://github.com/lobehub/lobe-cli-toolbox/commit/642a173))
 
 </details>
 
@@ -168,7 +168,7 @@
 
 - **@lobehub/cli-ui:** upgraded to 1.6.0
 
-## [Version 2.6.0](https://github.com/lobehub/commit-cli/compare/@lobehub/commit-cli@2.5.0...@lobehub/commit-cli@2.6.0)
+## [Version 2.6.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.5.0...@lobehub/commit-cli@2.6.0)
 
 <sup>Released on **2023-07-13**</sup>
 
@@ -183,7 +183,7 @@
 
 #### What's improved
 
-- **misc**: Add rule to allow 'unicorn/no-process-exit' in .eslintrc.js ([c63db87](https://github.com/lobehub/commit-cli/commit/c63db87))
+- **misc**: Add rule to allow 'unicorn/no-process-exit' in .eslintrc.js ([c63db87](https://github.com/lobehub/lobe-cli-toolbox/commit/c63db87))
 
 </details>
 
@@ -197,7 +197,7 @@
 
 - **@lobehub/cli-ui:** upgraded to 1.5.0
 
-## [Version 2.5.0](https://github.com/lobehub/commit-cli/compare/@lobehub/commit-cli@2.4.0...@lobehub/commit-cli@2.5.0)
+## [Version 2.5.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.4.0...@lobehub/commit-cli@2.5.0)
 
 <sup>Released on **2023-07-13**</sup>
 
@@ -212,7 +212,7 @@
 
 #### What's improved
 
-- **misc**: Modify rendering logic based on options ([fcd486f](https://github.com/lobehub/commit-cli/commit/fcd486f))
+- **misc**: Modify rendering logic based on options ([fcd486f](https://github.com/lobehub/lobe-cli-toolbox/commit/fcd486f))
 
 </details>
 
@@ -222,7 +222,7 @@
 
 </div>
 
-## [Version 2.4.0](https://github.com/lobehub/commit-cli/compare/@lobehub/commit-cli@2.3.0...@lobehub/commit-cli@2.4.0)
+## [Version 2.4.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.3.0...@lobehub/commit-cli@2.4.0)
 
 <sup>Released on **2023-07-13**</sup>
 
@@ -237,7 +237,7 @@
 
 #### What's improved
 
-- **misc**: Build fresh package \[force patch] ([821d6bf](https://github.com/lobehub/commit-cli/commit/821d6bf))
+- **misc**: Build fresh package \[force patch] ([821d6bf](https://github.com/lobehub/lobe-cli-toolbox/commit/821d6bf))
 
 </details>
 
@@ -251,7 +251,7 @@
 
 - **@lobehub/cli-ui:** upgraded to 1.4.0
 
-## [Version 2.3.0](https://github.com/lobehub/commit-cli/compare/@lobehub/commit-cli@2.2.0...@lobehub/commit-cli@2.3.0)
+## [Version 2.3.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.2.0...@lobehub/commit-cli@2.3.0)
 
 <sup>Released on **2023-07-12**</sup>
 
@@ -266,8 +266,8 @@
 
 #### What's improved
 
-- **misc**: Improve functionality and user experience ([8aca960](https://github.com/lobehub/commit-cli/commit/8aca960))
-- **misc**: Remove "show" prop from InputIssues, InputScope, InputSubject, and InputType components ([4643463](https://github.com/lobehub/commit-cli/commit/4643463))
+- **misc**: Improve functionality and user experience ([8aca960](https://github.com/lobehub/lobe-cli-toolbox/commit/8aca960))
+- **misc**: Remove "show" prop from InputIssues, InputScope, InputSubject, and InputType components ([4643463](https://github.com/lobehub/lobe-cli-toolbox/commit/4643463))
 
 </details>
 
@@ -281,7 +281,7 @@
 
 - **@lobehub/cli-ui:** upgraded to 1.3.0
 
-## [Version 2.2.0](https://github.com/lobehub/commit-cli/compare/@lobehub/commit-cli@2.1.1...@lobehub/commit-cli@2.2.0)
+## [Version 2.2.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.1.1...@lobehub/commit-cli@2.2.0)
 
 <sup>Released on **2023-07-11**</sup>
 
@@ -296,7 +296,7 @@
 
 #### What's improved
 
-- **misc**: Improve functionality and user interface ([c7fc11e](https://github.com/lobehub/commit-cli/commit/c7fc11e))
+- **misc**: Improve functionality and user interface ([c7fc11e](https://github.com/lobehub/lobe-cli-toolbox/commit/c7fc11e))
 
 </details>
 
@@ -310,7 +310,7 @@
 
 - **@lobehub/cli-ui:** upgraded to 1.2.0
 
-### [Version 2.1.1](https://github.com/lobehub/commit-cli/compare/@lobehub/commit-cli@2.1.0...@lobehub/commit-cli@2.1.1)
+### [Version 2.1.1](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.1.0...@lobehub/commit-cli@2.1.1)
 
 <sup>Released on **2023-07-11**</sup>
 
@@ -331,7 +331,7 @@
 
 - **@lobehub/cli-ui:** upgraded to 1.1.0
 
-## [Version 2.1.0](https://github.com/lobehub/commit-cli/compare/@lobehub/commit-cli@2.0.0...@lobehub/commit-cli@2.1.0)
+## [Version 2.1.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.0.0...@lobehub/commit-cli@2.1.0)
 
 <sup>Released on **2023-07-11**</sup>
 
@@ -346,8 +346,8 @@
 
 #### What's improved
 
-- **misc**: Add dependencies, scripts, and tests to package.json ([2c7a965](https://github.com/lobehub/commit-cli/commit/2c7a965))
-- **misc**: Update test files and tsconfig.json in lobe-cli-ui and lobe-commit ([f03c3b7](https://github.com/lobehub/commit-cli/commit/f03c3b7))
+- **misc**: Add dependencies, scripts, and tests to package.json ([2c7a965](https://github.com/lobehub/lobe-cli-toolbox/commit/2c7a965))
+- **misc**: Update test files and tsconfig.json in lobe-cli-ui and lobe-commit ([f03c3b7](https://github.com/lobehub/lobe-cli-toolbox/commit/f03c3b7))
 
 </details>
 
@@ -361,7 +361,7 @@
 
 - **@lobehub/cli-ui:** upgraded to 1.0.0
 
-## [Version 2.0.0](https://github.com/lobehub/commit-cli/compare/@lobehub/commit-cli@1.0.0...@lobehub/commit-cli@2.0.0)
+## [Version 2.0.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@1.0.0...@lobehub/commit-cli@2.0.0)
 
 <sup>Released on **2023-07-11**</sup>
 
@@ -378,7 +378,7 @@
 
 </div>
 
-### [Version 1.10.1](https://github.com/lobehub/lobe-commit/compare/v1.10.0...v1.10.1)
+### [Version 1.10.1](https://github.comlobehub/lobe-cli-toolbox/compare/v1.10.0...v1.10.1)
 
 <sup>Released on **2023-07-10**</sup>
 
@@ -393,7 +393,7 @@
 
 #### Code refactoring
 
-- **misc**: Remove "timeout" configuration option from Config component and constants ([377b344](https://github.com/lobehub/lobe-commit/commit/377b344))
+- **misc**: Remove "timeout" configuration option from Config component and constants ([377b344](https://github.comlobehub/lobe-cli-toolbox/commit/377b344))
 
 </details>
 
@@ -403,7 +403,7 @@
 
 </div>
 
-## [Version 1.10.0](https://github.com/lobehub/lobe-commit/compare/v1.9.0...v1.10.0)
+## [Version 1.10.0](https://github.comlobehub/lobe-cli-toolbox/compare/v1.9.0...v1.10.0)
 
 <sup>Released on **2023-07-10**</sup>
 
@@ -418,7 +418,7 @@
 
 #### What's improved
 
-- **misc**: Update prettier dependency version and modify genAiCommit.ts ([a948428](https://github.com/lobehub/lobe-commit/commit/a948428))
+- **misc**: Update prettier dependency version and modify genAiCommit.ts ([a948428](https://github.comlobehub/lobe-cli-toolbox/commit/a948428))
 
 </details>
 
@@ -428,7 +428,7 @@
 
 </div>
 
-## [Version 1.9.0](https://github.com/lobehub/lobe-commit/compare/v1.8.0...v1.9.0)
+## [Version 1.9.0](https://github.comlobehub/lobe-cli-toolbox/compare/v1.8.0...v1.9.0)
 
 <sup>Released on **2023-07-08**</sup>
 
@@ -443,7 +443,7 @@
 
 #### What's improved
 
-- **misc**: Add check for OpenAI Token and increase buffer size for "git diff --staged" ([36f361b](https://github.com/lobehub/lobe-commit/commit/36f361b))
+- **misc**: Add check for OpenAI Token and increase buffer size for "git diff --staged" ([36f361b](https://github.comlobehub/lobe-cli-toolbox/commit/36f361b))
 
 </details>
 
@@ -453,7 +453,7 @@
 
 </div>
 
-## [Version 1.8.0](https://github.com/lobehub/lobe-commit/compare/v1.7.3...v1.8.0)
+## [Version 1.8.0](https://github.comlobehub/lobe-cli-toolbox/compare/v1.7.3...v1.8.0)
 
 <sup>Released on **2023-07-07**</sup>
 
@@ -468,7 +468,7 @@
 
 #### What's improved
 
-- **misc**: Improve functionality, update styles, and enhance user experience ([ed05545](https://github.com/lobehub/lobe-commit/commit/ed05545))
+- **misc**: Improve functionality, update styles, and enhance user experience ([ed05545](https://github.comlobehub/lobe-cli-toolbox/commit/ed05545))
 
 </details>
 
@@ -478,7 +478,7 @@
 
 </div>
 
-### [Version 1.7.3](https://github.com/lobehub/lobe-commit/compare/v1.7.2...v1.7.3)
+### [Version 1.7.3](https://github.comlobehub/lobe-cli-toolbox/compare/v1.7.2...v1.7.3)
 
 <sup>Released on **2023-06-16**</sup>
 
@@ -493,7 +493,7 @@
 
 #### Code refactoring
 
-- **misc**: Better format ([9d87f73](https://github.com/lobehub/lobe-commit/commit/9d87f73))
+- **misc**: Better format ([9d87f73](https://github.comlobehub/lobe-cli-toolbox/commit/9d87f73))
 
 </details>
 
@@ -505,7 +505,7 @@
 
 # Changelog
 
-### Version 1.7.2
+### Version 1.7.2
 
 <sup>Released on **2023-06-11**</sup>
 
@@ -522,7 +522,7 @@
 
 </div>
 
-### Version 1.7.1
+### Version 1.7.1
 
 <sup>Released on **2023-06-08**</sup>
 
@@ -539,7 +539,7 @@
 
 </div>
 
-## Version 1.7.0
+## Version 1.7.0
 
 <sup>Released on **2023-05-30**</sup>
 
@@ -558,11 +558,11 @@
 
 #### Code refactoring
 
-- **utils**: Lowercase scope values in genAiCommit.ts and genCommitMessage.ts ([b4b85e4](https://github.com/lobehub/lobe-commit/commit/b4b85e4))
+- **utils**: Lowercase scope values in genAiCommit.ts and genCommitMessage.ts ([b4b85e4](https://github.comlobehub/lobe-cli-toolbox/commit/b4b85e4))
 
 #### What's improved
 
-- **misc**: Add eslint config rules ([19f8e70](https://github.com/lobehub/lobe-commit/commit/19f8e70))
+- **misc**: Add eslint config rules ([19f8e70](https://github.comlobehub/lobe-cli-toolbox/commit/19f8e70))
 
 </details>
 
@@ -572,7 +572,7 @@
 
 </div>
 
-## Version 1.6.0
+## Version 1.6.0
 
 <sup>Released on **2023-05-21**</sup>
 
@@ -587,7 +587,7 @@
 
 #### What's improved
 
-- **Config**: Add option to configure maximum length of diff log ([ca33a51](https://github.com/lobehub/lobe-commit/commit/ca33a51))
+- **Config**: Add option to configure maximum length of diff log ([ca33a51](https://github.comlobehub/lobe-cli-toolbox/commit/ca33a51))
 
 </details>
 
@@ -597,7 +597,7 @@
 
 </div>
 
-## Version 1.5.0
+## Version 1.5.0
 
 <sup>Released on **2023-05-19**</sup>
 
@@ -616,11 +616,11 @@
 
 #### Code refactoring
 
-- **Config**: Update config settings UI and logic ([4388275](https://github.com/lobehub/lobe-commit/commit/4388275))
+- **Config**: Update config settings UI and logic ([4388275](https://github.comlobehub/lobe-cli-toolbox/commit/4388275))
 
 #### What's improved
 
-- **misc**: Supports multi-language commit messages ([f4a09e8](https://github.com/lobehub/lobe-commit/commit/f4a09e8))
+- **misc**: Supports multi-language commit messages ([f4a09e8](https://github.comlobehub/lobe-cli-toolbox/commit/f4a09e8))
 
 </details>
 
@@ -630,7 +630,7 @@
 
 </div>
 
-## Version 1.4.0
+## Version 1.4.0
 
 <sup>Released on **2023-05-19**</sup>
 
@@ -645,7 +645,7 @@
 
 #### What's improved
 
-- **Commit**: Introduce AI commit message generator and add dependencies ([b0abbd5](https://github.com/lobehub/lobe-commit/commit/b0abbd5))
+- **Commit**: Introduce AI commit message generator and add dependencies ([b0abbd5](https://github.comlobehub/lobe-cli-toolbox/commit/b0abbd5))
 
 </details>
 
@@ -655,7 +655,7 @@
 
 </div>
 
-### Version 1.3.1
+### Version 1.3.1
 
 <sup>Released on **2023-05-19**</sup>
 
@@ -672,7 +672,7 @@
 
 </div>
 
-## Version 1.3.0
+## Version 1.3.0
 
 <sup>Released on **2023-05-19**</sup>
 
@@ -687,8 +687,8 @@
 
 #### What's improved
 
-- **misc**: Add hook mode check ([a4795ce](https://github.com/lobehub/lobe-commit/commit/a4795ce))
-- **misc**: Supports custom prompts ([531b97a](https://github.com/lobehub/lobe-commit/commit/531b97a))
+- **misc**: Add hook mode check ([a4795ce](https://github.comlobehub/lobe-cli-toolbox/commit/a4795ce))
+- **misc**: Supports custom prompts ([531b97a](https://github.comlobehub/lobe-cli-toolbox/commit/531b97a))
 
 </details>
 
@@ -698,7 +698,7 @@
 
 </div>
 
-### Version 1.1.2
+### Version 1.1.2
 
 <sup>Released on **2023-05-19**</sup>
 
@@ -713,7 +713,7 @@
 
 #### What's fixed
 
-- **deps**: Fetch polyfill ([e41ce38](https://github.com/lobehub/lobe-commit/commit/e41ce38))
+- **deps**: Fetch polyfill ([e41ce38](https://github.comlobehub/lobe-cli-toolbox/commit/e41ce38))
 
 </details>
 
@@ -723,7 +723,7 @@
 
 </div>
 
-### Version 1.1.1
+### Version 1.1.1
 
 <sup>Released on **2023-05-17**</sup>
 
@@ -742,11 +742,11 @@
 
 #### What's improved
 
-- **misc**: Add issues fliter ([0338452](https://github.com/lobehub/lobe-commit/commit/0338452))
+- **misc**: Add issues fliter ([0338452](https://github.comlobehub/lobe-cli-toolbox/commit/0338452))
 
 #### What's fixed
 
-- **misc**: Issues fliter space ([d27aea6](https://github.com/lobehub/lobe-commit/commit/d27aea6))
+- **misc**: Issues fliter space ([d27aea6](https://github.comlobehub/lobe-cli-toolbox/commit/d27aea6))
 
 </details>
 
@@ -756,7 +756,7 @@
 
 </div>
 
-### Version 1.0.1
+### Version 1.0.1
 
 <sup>Released on **2023-05-17**</sup>
 
@@ -771,7 +771,7 @@
 
 #### What's improved
 
-- **config**: Add ability to set OpenAI API proxy URL ([2da618e](https://github.com/lobehub/lobe-commit/commit/2da618e))
+- **config**: Add ability to set OpenAI API proxy URL ([2da618e](https://github.comlobehub/lobe-cli-toolbox/commit/2da618e))
 
 </details>
 
@@ -781,7 +781,7 @@
 
 </div>
 
-## Version 1.2.0
+## Version 1.2.0
 
 <sup>Released on **2023-05-16**</sup>
 
@@ -796,7 +796,7 @@
 
 #### What's improved
 
-- **ai**: Add ChatGPT-generated commit message ([7383ca4](https://github.com/lobehub/lobe-commit/commit/7383ca4))
+- **ai**: Add ChatGPT-generated commit message ([7383ca4](https://github.comlobehub/lobe-cli-toolbox/commit/7383ca4))
 
 </details>
 
@@ -806,7 +806,7 @@
 
 </div>
 
-## Version 1.1.0
+## Version 1.1.0
 
 <sup>Released on **2023-05-16**</sup>
 
@@ -821,8 +821,8 @@
 
 #### What's improved
 
-- **misc**: Add config ([0f266a1](https://github.com/lobehub/lobe-commit/commit/0f266a1))
-- **misc**: Add issues list ([2357f49](https://github.com/lobehub/lobe-commit/commit/2357f49))
+- **misc**: Add config ([0f266a1](https://github.comlobehub/lobe-cli-toolbox/commit/0f266a1))
+- **misc**: Add issues list ([2357f49](https://github.comlobehub/lobe-cli-toolbox/commit/2357f49))
 
 </details>
 
@@ -832,7 +832,7 @@
 
 </div>
 
-## Version 1.0.0
+## Version 1.0.0
 
 <sup>Released on **2023-05-16**</sup>
 
@@ -847,7 +847,7 @@
 
 #### What's improved
 
-- **misc**: Add hook ([ed15d31](https://github.com/lobehub/lobe-commit/commit/ed15d31))
+- **misc**: Add hook ([ed15d31](https://github.comlobehub/lobe-cli-toolbox/commit/ed15d31))
 
 </details>
 

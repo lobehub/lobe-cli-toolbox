@@ -2,7 +2,7 @@
 
 # Changelog
 
-### [Version 1.0.3](https://github.com/lobehub/commit-cli/compare/@lobehub/label-cli@1.0.2...@lobehub/label-cli@1.0.3)
+### [Version 1.0.3](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/label-cli@1.0.2...@lobehub/label-cli@1.0.3)
 
 <sup>Released on **2023-09-08**</sup>
 
@@ -17,7 +17,7 @@
 
 #### What's fixed
 
-- **misc**: Fix ink deps ([06cd5ed](https://github.com/lobehub/commit-cli/commit/06cd5ed))
+- **misc**: Fix ink deps ([06cd5ed](https://github.com/lobehub/lobe-cli-toolbox/commit/06cd5ed))
 
 </details>
 
@@ -31,7 +31,7 @@
 
 - **@lobehub/cli-ui:** upgraded to 1.8.1
 
-### [Version 1.0.2](https://github.com/lobehub/commit-cli/compare/@lobehub/label-cli@1.0.1...@lobehub/label-cli@1.0.2)
+### [Version 1.0.2](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/label-cli@1.0.1...@lobehub/label-cli@1.0.2)
 
 <sup>Released on **2023-09-05**</sup>
 
@@ -46,7 +46,7 @@
 
 #### Styles
 
-- **misc**: Update lobe label log style ([cfbd0d7](https://github.com/lobehub/commit-cli/commit/cfbd0d7))
+- **misc**: Update lobe label log style ([cfbd0d7](https://github.com/lobehub/lobe-cli-toolbox/commit/cfbd0d7))
 
 </details>
 
@@ -56,7 +56,7 @@
 
 </div>
 
-### [Version 1.0.1](https://github.com/lobehub/commit-cli/compare/@lobehub/label-cli@1.0.0...@lobehub/label-cli@1.0.1)
+### [Version 1.0.1](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/label-cli@1.0.0...@lobehub/label-cli@1.0.1)
 
 <sup>Released on **2023-09-05**</sup>
 
@@ -73,7 +73,7 @@
 
 </div>
 
-## Version 1.0.0
+## Version 1.0.0
 
 <sup>Released on **2023-09-05**</sup>
 
@@ -92,13 +92,13 @@
 
 #### What's improved
 
-- **misc**: Add lobe-label ([a76c022](https://github.com/lobehub/commit-cli/commit/a76c022))
+- **misc**: Add lobe-label ([a76c022](https://github.com/lobehub/lobe-cli-toolbox/commit/a76c022))
 
 #### What's fixed
 
-- **misc**: Fix lobe label build ([04d9821](https://github.com/lobehub/commit-cli/commit/04d9821))
-- **misc**: Fix lobe label config ([41de04e](https://github.com/lobehub/commit-cli/commit/41de04e))
-- **misc**: Fix lobe label types ([a4a6c91](https://github.com/lobehub/commit-cli/commit/a4a6c91))
+- **misc**: Fix lobe label build ([04d9821](https://github.com/lobehub/lobe-cli-toolbox/commit/04d9821))
+- **misc**: Fix lobe label config ([41de04e](https://github.com/lobehub/lobe-cli-toolbox/commit/41de04e))
+- **misc**: Fix lobe label types ([a4a6c91](https://github.com/lobehub/lobe-cli-toolbox/commit/a4a6c91))
 
 </details>
 

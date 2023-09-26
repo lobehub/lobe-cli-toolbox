@@ -2,13 +2,13 @@
   "name": "@lobehub/cli-ui",
   "version": "1.8.1",
   "description": "Lobe CLI uikits",
-  "homepage": "https://github.com/lobehub/lobe-commit/tree/master/packages/lobe-cli-ui",
+  "homepage": "https://github.comlobehub/lobe-cli-toolbox/tree/master/packages/lobe-cli-ui",
   "bugs": {
-    "url": "https://github.com/lobehub/commit-cli/issues/new"
+    "url": "https://github.com/lobehub/lobe-cli-toolbox/issues/new"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lobehub/commit-cli.git"
+    "url": "https://github.com/lobehub/lobe-cli-toolbox.git"
   },
   "license": "MIT",
   "author": "canisminor1990 <i@canisminor.cc>",

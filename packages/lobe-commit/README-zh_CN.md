@@ -1,32 +1,28 @@
-<a name="readme-top"></a>
+<div align="center"><a name="readme-top"></a>
 
-<div align="center">
-
-<img height="120" src="https://registry.npmmirror.com/@lobehub/assets-logo/1.0.0/files/assets/logo-3d.webp">
+<img height="120" src="https://gw.alipayobjects.com/zos/kitchen/T6E4BDoMNb/lobe-cli.webp">
 <img height="120" src="https://gw.alipayobjects.com/zos/kitchen/qJ3l3EPsdW/split.svg">
 <img height="120" src="https://registry.npmmirror.com/@lobehub/assets-emoji/1.3.0/files/assets/love-letter.webp">
 
-<h1 align="center">Lobe Commit</h1>
+<h1>Lobe Commit</h1>
 
 Lobe Commit 是一款使用 ChatGPT 生成基于 Gitmoji 的 CLI 提交工具
 
-[English](./README.md) · 简体中文 · [Changelog](./CHANGELOG.md) · [Report Bug][issues-url] · [Request Feature][issues-url]
+[English](./README.md)・简体中文・[Changelog](./CHANGELOG.md) · [Report Bug][issues-url] · [Request Feature][issues-url]
 
-<!-- SHIELD GROUP -->
-
-[![release][release-shield]][release-url]
-![][release-download-shield]
-[![releaseDate][release-date-shield]][release-date-url]
-[![ciTest][ci-test-shield]][ci-test-url]
-[![ciRelease][ci-release-shield]][ci-release-url]<br/>
-[![contributors][contributors-shield]][contributors-url]
-[![forks][forks-shield]][forks-url]
-[![stargazers][stargazers-shield]][stargazers-url]
-[![issues][issues-shield]][issues-url]
-
-</div>
+[![][npm-release-shield]][npm-release-link]
+[![][github-releasedate-shield]][github-releasedate-link]
+[![][github-action-test-shield]][github-action-test-link]
+[![][github-action-release-shield]][github-action-release-link]<br/>
+[![][github-contributors-shield]][github-contributors-link]
+[![][github-forks-shield]][github-forks-link]
+[![][github-stars-shield]][github-stars-link]
+[![][github-issues-shield]][github-issues-link]
+[![][github-license-shield]][github-license-link]
 
 ![](https://gw.alipayobjects.com/zos/kitchen/3%26ByxtP39X/preview.webp)
+
+</div>
 
 <details>
 <summary><kbd>文档目录</kbd></summary>
@@ -34,18 +30,17 @@ Lobe Commit 是一款使用 ChatGPT 生成基于 Gitmoji 的 CLI 提交工具
 #### TOC
 
 - [✨ 特性](#-特性)
-
 - [📦 安装](#-安装)
-
 - [🤯 使用](#-使用)
-
   - [Git hook](#git-hook)
   - [配置](#配置)
   - [选项](#选项)
-
 - [⌨️ 本地开发](#️-本地开发)
-
+- [🤝 参与贡献](#-参与贡献)
+- [🤝 参与贡献](#-参与贡献-1)
 - [🔗 链接](#-链接)
+  - [More Products](#more-products)
+  - [Credits](#credits)
 
 ####
 
@@ -53,13 +48,13 @@ Lobe Commit 是一款使用 ChatGPT 生成基于 Gitmoji 的 CLI 提交工具
 
 ## ✨ 特性
 
-- 🤯 支持使用 ChatGPT 根据 git diffs 自动生成提交信息
-- 🛠️ 流畅的提交信息编辑流程
-- 😜 支持添加 Gitmoji
-- 📝 支持 Conventional Commits 规范
-- ⚡️ 支持拉取 issues 列表并便捷绑定
-- 💄 支持自定义 Prompt
-- 🗺️ 支持多语言提交信息
+- [x] 🤯 支持使用 ChatGPT 根据 git diffs 自动生成提交信息
+- [x] 🛠️ 流畅的提交信息编辑流程
+- [x] 😜 支持添加 Gitmoji
+- [x] 📝 支持 Conventional Commits 规范
+- [x] ⚡️ 支持拉取 issues 列表并便捷绑定
+- [x] 💄 支持自定义 Prompt
+- [x] 🗺️ 支持多语言提交信息
 
 <div align="right">
 
@@ -75,7 +70,8 @@ Lobe Commit 是一款使用 ChatGPT 生成基于 Gitmoji 的 CLI 提交工具
 npm install -g @lobehub/commit-cli
 ```
 
-> 👉 提示：请确保 Node.js 版本 >= 18
+> **Note**\
+> 请确保 Node.js 版本 >= 18
 
 <div align="right">
 
@@ -92,7 +88,8 @@ $ git add <files...>
 $ lobe-commit
 ```
 
-> 👉 提示：如果认为 `lobe-commit` 太长了，可以使用`lobe`别名
+> **Note**\
+> 如果认为 `lobe-commit` 太长了，可以使用`lobe`别名
 
 <br/>
 
@@ -100,9 +97,10 @@ $ lobe-commit
 
 在 AI 模式下，可以使用 ChatGPT 生成完整的提交信息
 
-> 👉 提示：需要在设置中 `lobe-commit -o` 配置 OpenAI 令牌，同时如果有特殊的网络要求，也可以在设置中配置 OpenAI 的转发地址
->
-> ![](https://gw.alipayobjects.com/zos/kitchen/qmXcNvnjKf/preview-ai.webp)
+> **Important**\
+> 需要在设置中 `lobe-commit -o` 配置 OpenAI 令牌，同时如果有特殊的网络要求，也可以在设置中配置 OpenAI 的转发地址
+
+![](https://gw.alipayobjects.com/zos/kitchen/qmXcNvnjKf/preview-ai.webp)
 
 <br/>
 
@@ -110,7 +108,8 @@ $ lobe-commit
 
 在编辑器模式下，可以通过简单的流程生成 `<type>(<optional scope>): <subject> [<issues>]` 格式的提交信息，使用 <kbd>TAB</kbd> 返回上一步
 
-> 👉 提示：如果项目是 GitHub Repo，则将自动获取该仓库的 issues，可以使用 <kbd>空格</kbd> 选择多个问题将其链接到提交信息中
+> **Note**\
+> 如果项目是 GitHub Repo，则将自动获取该仓库的 issues，可以使用 <kbd>空格</kbd> 选择多个问题将其链接到提交信息中
 
 ![](https://gw.alipayobjects.com/zos/kitchen/QkJ5V8nbY6/preview-editor.webp)
 
@@ -122,7 +121,7 @@ $ lobe-commit
 
 ### Git hook
 
-可以通过 `prepare-commit-msg`钩子将 Lobe Commit 与 Git 集成, 允许像往常一样使用 Git 并在提交之前编辑提交信息
+可以通过 `prepare-commit-msg`钩子将 Lobe Commit 与 Git 集成，允许像往常一样使用 Git 并在提交之前编辑提交信息
 
 <br/>
 
@@ -189,18 +188,37 @@ Lobe Commit 支持以下选项：
 
 ## ⌨️ 本地开发
 
-可以使用 Gitpod 进行在线开发：
+可以使用 Github Codespaces 进行在线开发：
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)][gitpod-url]
+[![][github-codespace-shield]][github-codespace-link]
 
 或者，可以克隆存储库并运行以下命令进行本地开发：
 
+[![][bun-shield]][bun-link]
+
 ```bash
-$ git clone https://github.com/canisminor1990/lobe-commit.git
-$ cd lobe-commit/packages/lobe-commit
-$ npm install
-$ npm start
+$ git clone https://github.com/lobehub/lobe-cli-toolbox.git
+$ cd lobe-cli-toolbox
+$ bun install
+$ cd packages/lobe-commit
+$ bun dev
 ```
+
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
+
+## 🤝 参与贡献
+
+## 🤝 参与贡献
+
+我们非常欢迎各种形式的贡献。如果你对贡献代码感兴趣，可以查看我们的 GitHub [Issues][github-issues-link]，大展身手，向我们展示你的奇思妙想。
+
+[![][pr-welcome-shield]][pr-welcome-link]
+
+[![][github-contrib-shield]][github-contrib-link]
 
 <div align="right">
 
@@ -210,10 +228,17 @@ $ npm start
 
 ## 🔗 链接
 
-- langchainjs: <https://github.com/hwchase17/langchainjs>
-- gitmoji-commit-workflow: <https://github.com/arvinxx/gitmoji-commit-workflow>
-- gitmoji-cli: <https://github.com/carloscuesta/gitmoji-cli>
-- ink: <https://github.com/vadimdemedes/ink>
+### More Products
+
+- **[🤖 Lobe Chat][lobe-chat]** - An open-source, extensible (Function Calling), high-performance chatbot framework. It supports one-click free deployment of your private ChatGPT/LLM web application.
+- **[🤯 Lobe Theme][lobe-theme]** - The modern theme for stable diffusion webui, exquisite interface design, highly customizable UI, and efficiency boosting features.
+
+### Credits
+
+- **langchainjs** - <https://github.com/hwchase17/langchainjs>
+- **ink** - <https://github.com/vadimdemedes/ink>
+- **gitmoji-commit-workflow** - <https://github.com/arvinxx/gitmoji-commit-workflow>
+- **gitmoji-cli** - <https://github.com/carloscuesta/gitmoji-cli>
 
 <div align="right">
 
@@ -225,27 +250,39 @@ $ npm start
 
 #### 📝 License
 
-Copyright © 2023 [CanisMinor][profile-url]. <br /> This project is [MIT](./LICENSE) licensed.
+Copyright © 2023 [LobeHub][profile-link]. <br />
+This project is [MIT](./LICENSE) licensed.
 
 <!-- LINK GROUP -->
 
 [back-to-top]: https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square
-[ci-release-shield]: https://github.com/lobehub/lobe-commit/actions/workflows/release.yml/badge.svg
-[ci-release-url]: https://github.com/lobehub/lobe-commit/actions/workflows/release.yml
-[ci-test-shield]: https://github.com/canisminor1990/lobe-commit/workflows/Test%20CI/badge.svg
-[ci-test-url]: https://github.com/canisminor1990/lobe-commit/actions/workflows/test.yml
-[contributors-shield]: https://img.shields.io/github/contributors/canisminor1990/lobe-commit.svg?style=flat
-[contributors-url]: https://github.com/canisminor1990/lobe-commit/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/canisminor1990/lobe-commit.svg?style=flat
-[forks-url]: https://github.com/canisminor1990/lobe-commit/network/members
-[gitpod-url]: https://gitpod.io/#https://github.com/canisminor1990/lobe-commit
-[issues-shield]: https://img.shields.io/github/issues/canisminor1990/lobe-commit.svg?style=flat
+[bun-link]: https://bun.sh
+[bun-shield]: https://img.shields.io/badge/-speedup%20with%20bun-black?logo=bun&style=for-the-badge
+[github-action-release-link]: https://github.com/lobehub/lobe-cli-toolbox/actions/workflows/release.yml
+[github-action-release-shield]: https://img.shields.io/github/actions/workflow/status/lobehub/lobe-cli-toolbox/release.yml?label=release&labelColor=black&logo=githubactions&logoColor=white&style=flat-square
+[github-action-test-link]: https://github.com/lobehub/lobe-cli-toolbox/actions/workflows/test.yml
+[github-action-test-shield]: https://img.shields.io/github/actions/workflow/status/lobehub/lobe-cli-toolbox/test.yml?label=test&labelColor=black&logo=githubactions&logoColor=white&style=flat-square
+[github-codespace-link]: https://codespaces.new/lobehub/lobe-cli-toolbox
+[github-codespace-shield]: https://github.com/codespaces/badge.svg
+[github-contrib-link]: https://github.com/lobehub/lobe-cli-toolbox/graphs/contributors
+[github-contrib-shield]: https://contrib.rocks/image?repo=lobehub%2Flobe-cli-toolbox
+[github-contributors-link]: https://github.com/lobehub/lobe-cli-toolbox/graphs/contributors
+[github-contributors-shield]: https://img.shields.io/github/contributors/lobehub/lobe-cli-toolbox?color=c4f042&labelColor=black&style=flat-square
+[github-forks-link]: https://github.com/lobehub/lobe-cli-toolbox/network/members
+[github-forks-shield]: https://img.shields.io/github/forks/lobehub/lobe-cli-toolbox?color=8ae8ff&labelColor=black&style=flat-square
+[github-issues-link]: https://github.com/lobehub/lobe-cli-toolbox/issues
+[github-issues-shield]: https://img.shields.io/github/issues/lobehub/lobe-cli-toolbox?color=ff80eb&labelColor=black&style=flat-square
+[github-license-link]: https://github.com/lobehub/lobe-cli-toolbox/blob/master/LICENSE
+[github-license-shield]: https://img.shields.io/github/license/lobehub/lobe-cli-toolbox?color=white&labelColor=black&style=flat-square
+[github-releasedate-link]: https://github.com/lobehub/lobe-cli-toolbox/releases
+[github-releasedate-shield]: https://img.shields.io/github/release-date/lobehub/lobe-cli-toolbox?labelColor=black&style=flat-square
+[github-stars-link]: https://github.com/lobehub/lobe-cli-toolbox/network/stargazers
+[github-stars-shield]: https://img.shields.io/github/stars/lobehub/lobe-cli-toolbox?color=ffcb47&labelColor=black&style=flat-square
 [issues-url]: https://github.com/canisminor1990/lobe-commit/issues/new/choose
-[profile-url]: https://github.com/canisminor1990
-[release-date-shield]: https://img.shields.io/github/release-date/canisminor1990/lobe-commit?style=flat
-[release-date-url]: https://github.com/canisminor1990/lobe-commit/releases
-[release-download-shield]: https://img.shields.io/npm/dt/@lobehub/commit-cli
-[release-shield]: https://img.shields.io/npm/v/@lobehub/commit-cli?label=%F0%9F%A4%AF%20NPM
-[release-url]: https://www.npmjs.com/package/@lobehub/commit-cli
-[stargazers-shield]: https://img.shields.io/github/stars/canisminor1990/lobe-commit.svg?style=flat
-[stargazers-url]: https://github.com/canisminor1990/lobe-commit/stargazers
+[lobe-chat]: https://github.com/lobehub/lobe-chat
+[lobe-theme]: https://github.com/lobehub/sd-webui-lobe-theme
+[npm-release-link]: https://www.npmjs.com/package/@lobehub/commit-cli
+[npm-release-shield]: https://img.shields.io/npm/v/@lobehub/commit-cli?color=369eff&labelColor=black&logo=npm&logoColor=white&style=flat-square
+[pr-welcome-link]: https://github.com/lobehub/lobe-cli-toolbox/pulls
+[pr-welcome-shield]: https://img.shields.io/badge/%F0%9F%A4%AF%20PR%20WELCOME-%E2%86%92-ffcb47?labelColor=black&style=for-the-badge
+[profile-link]: https://github.com/lobehub

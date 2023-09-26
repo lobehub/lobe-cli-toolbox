@@ -1,75 +1,41 @@
-<a name="readme-top"></a>
+<div align="center"><a name="readme-top"></a>
 
-<div align="center">
+<img height="160" src="https://gw.alipayobjects.com/zos/kitchen/T6E4BDoMNb/lobe-cli.webp">
 
 <h1 align="center">Lobe CLI Toolbox</h1>
 
-The AI CLI Toolbox, enhancing git commit and i18n workflow efficiency
+AI CLI Toolbox, enhancing git commit and i18n workflow efficiency
 
-[Report Bug][issues-url] · [Request Feature][issues-url]
+[Report Bug][github-issues-link] · [Request Feature][github-issues-link]
 
 <!-- SHIELD GROUP -->
 
-[![releaseDate][release-date-shield]][release-date-url]
-[![ciTest][ci-test-shield]][ci-test-url]
-[![ciRelease][ci-release-shield]][ci-release-url]
-[![contributors][contributors-shield]][contributors-url]
-[![forks][forks-shield]][forks-url]
-[![stargazers][stargazers-shield]][stargazers-url]
-[![issues][issues-shield]][issues-url]
-
-![][split]
-
-<br/>
-
-<img height="120" src="https://registry.npmmirror.com/@lobehub/assets-logo/1.0.0/files/assets/logo-3d.webp">
-<img height="120" src="https://gw.alipayobjects.com/zos/kitchen/qJ3l3EPsdW/split.svg">
-<img height="120" src="https://registry.npmmirror.com/@lobehub/assets-emoji/1.3.0/files/assets/love-letter.webp">
-
-# [Lobe Commit][commit-github]
-
-Lobe Commit is a CLI tool that uses ChatGPT to generate Gitmoji-based commit messages
-
-[English][commit-github] · [简体中文](./packages/lobe-commit/README-zh_CN.md) · [Changelog](./packages/lobe-commit/CHANGELOG.md)
-
-[![][commit-shield]][commit-url]
-![][commit-download]
-
-![](https://gw.alipayobjects.com/zos/kitchen/3%26ByxtP39X/preview.webp)
-
-<br/>
-
-![][split]
-
-<br/>
-
-<img height="120" src="https://registry.npmmirror.com/@lobehub/assets-logo/1.0.0/files/assets/logo-3d.webp">
-<img height="120" src="https://gw.alipayobjects.com/zos/kitchen/qJ3l3EPsdW/split.svg">
-<img height="120" src="https://registry.npmmirror.com/@lobehub/assets-emoji/1.3.0/files/assets/globe-showing-asia-australia.webp">
-
-# [Lobe iI8n][i18n-github]
-
-Lobe i18n is a tool that automates the i18n (internationalization) translation process using ChatGPT. It supports features such as automatic splitting of large files, incremental updates, and customization options for the OpenAI model, API proxy, and temperature.
-
-[English][i18n-github] · [简体中文](./packages/lobe-i18n/README-zh_CN.md) · [Changelog](./packages/lobe-i18n/CHANGELOG.md)
-
-[![][i18n-shield]][i18n-url]
-![][ui-download]
-
-![](https://gw.alipayobjects.com/zos/kitchen/AH7rvv06qn/preview-i18n.webp)
+[![][github-release-shield]][github-release-link]
+[![][github-releasedate-shield]][github-releasedate-link]
+[![][github-action-test-shield]][github-action-test-link]
+[![][github-action-release-shield]][github-action-release-link]<br/>
+[![][github-contributors-shield]][github-contributors-link]
+[![][github-forks-shield]][github-forks-link]
+[![][github-stars-shield]][github-stars-link]
+[![][github-issues-shield]][github-issues-link]
+[![][github-license-shield]][github-license-link]
 
 ![][split]
 
 </div>
 
+<br/>
+
+| [**💌 Lobe Commit**][lobe-commit-github]<br/>Automation tool for the i18n (internationalization) translation process, powered by ChatGPT. It supports features such as automatic splitting of large files, incremental updates, and customization options for the OpenAI model, API proxy, and temperature.<br/><br/>[![][lobe-commit-version] ![][lobe-commit-download]][lobe-commit-url] | [![][lobe-commit-cover]][lobe-commit-github] |
+| :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------- |
+| [**🌏 Lobe i18n**][lobe-i18n-github]<br/>CLI tool that leverages Langchain/ChatGPT to generate Gitmoji-based commit messages.<br/><br/>[![][lobe-i18n-version] ![][lobe-i18n-download]][lobe-i18n-url]                                                                                                                                                                                     | [![][lobe-i18n-cover]][lobe-i18n-github]     |
+| [**🔖 Lobe label**][lobe-label-github]<br/>Automatically copy issues labels from template repo.<br/><br/>[![][lobe-label-version] ![][lobe-label-download]][lobe-label-url]                                                                                                                                                                                                                | [![][lobe-label-cover]][lobe-label-github]   |
+
 ## 📦 Ecosystem
 
-| NAME                | REPO                                  | NPM                              | DOWNLOAD             |
-| ------------------- | ------------------------------------- | -------------------------------- | -------------------- |
-| @lobehub/commit-cli | [packages/lobe-commit][commit-github] | [![][commit-shield]][commit-url] | ![][commit-download] |
-| @lobehub/i18n-cli   | [packages/lobe-i18n][i18n-github]     | [![][i18n-shield]][i18n-url]     | ![][i18n-download]   |
-| @lobehub/label-cli  | [packages/lobe-label][label-github]   | [![][label-shield]][label-url]   | ![][label-download]  |
-| @lobehub/cli-ui     | [packages/lobe-cli-ui][ui-github]     | [![][ui-shield]][ui-url]         | ![][ui-download]     |
+| NAME                      | REPO                              | NPM                      | DOWNLOAD         |
+| ------------------------- | --------------------------------- | ------------------------ | ---------------- |
+| [@lobehub/cli-ui][ui-url] | [packages/lobe-cli-ui][ui-github] | [![][ui-shield]][ui-url] | ![][ui-download] |
 
 <div align="right">
 
@@ -79,21 +45,11 @@ Lobe i18n is a tool that automates the i18n (internationalization) translation p
 
 ## 🤝 Contributing
 
-<!-- CONTRIBUTION GROUP -->
+Contributions of all types are more than welcome, if you are interested in contributing code, feel free to check out our GitHub [Issues][github-issues-link] to get stuck in to show us what you’re made of.
 
-> 📊 Total: <kbd>**3**</kbd>
+[![][pr-welcome-shield]][pr-welcome-link]
 
-<a href="https://github.com/canisminor1990" title="canisminor1990">
-  <img src="https://avatars.githubusercontent.com/u/17870709?v=4" width="50" />
-</a>
-<a href="https://github.com/apps/dependabot" title="dependabot[bot]">
-  <img src="https://avatars.githubusercontent.com/in/29110?v=4" width="50" />
-</a>
-<a href="https://github.com/actions-user" title="actions-user">
-  <img src="https://avatars.githubusercontent.com/u/65916846?v=4" width="50" />
-</a>
-
-<!-- CONTRIBUTION END -->
+[![][github-contrib-shield]][github-contrib-link]
 
 <div align="right">
 
@@ -101,15 +57,17 @@ Lobe i18n is a tool that automates the i18n (internationalization) translation p
 
 </div>
 
-## 🔗 More Products
+## 🔗 Links
 
-- **[🤖 Lobe Chat][lobe-chat] :** An open-source, extensible (Function Calling), high-performance chatbot framework. It supports one-click free deployment of your private ChatGPT/LLM web application.
-- **[🤯 Lobe Theme][lobe-theme] :** The modern theme for stable diffusion webui, exquisite interface design, highly customizable UI, and efficiency boosting features.
+### More Products
 
-#### Credits
+- **[🤖 Lobe Chat][lobe-chat]** - An open-source, extensible (Function Calling), high-performance chatbot framework. It supports one-click free deployment of your private ChatGPT/LLM web application.
+- **[🤯 Lobe Theme][lobe-theme]** - The modern theme for stable diffusion webui, exquisite interface design, highly customizable UI, and efficiency boosting features.
 
-- langchainjs: <https://github.com/hwchase17/langchainjs>
-- ink: <https://github.com/vadimdemedes/ink>
+### Credits
+
+- **langchainjs** - <https://github.com/hwchase17/langchainjs>
+- **ink** - <https://github.com/vadimdemedes/ink>
 
 <div align="right">
 
@@ -121,42 +79,54 @@ Lobe i18n is a tool that automates the i18n (internationalization) translation p
 
 #### 📝 License
 
-Copyright © 2023 [CanisMinor][profile-url]. <br /> This project is [MIT](./LICENSE) licensed.
+Copyright © 2023 [LobeHub][profile-link]. <br />
+This project is [MIT](./LICENSE) licensed.
 
 <!-- LINK GROUP -->
 
 [back-to-top]: https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square
-[ci-release-shield]: https://github.com/lobehub/lobe-commit/actions/workflows/release.yml/badge.svg
-[ci-release-url]: https://github.com/lobehub/lobe-commit/actions/workflows/release.yml
-[ci-test-shield]: https://github.com/canisminor1990/lobe-commit/workflows/Test%20CI/badge.svg
-[ci-test-url]: https://github.com/canisminor1990/lobe-commit/actions/workflows/test.yml
-[commit-download]: https://img.shields.io/npm/dt/@lobehub/commit-cli
-[commit-github]: https://github.com/lobehub/lobe-commit/tree/master/packages/lobe-commit
-[commit-shield]: https://img.shields.io/npm/v/@lobehub/commit-cli?label=%F0%9F%A4%AF%20NPM
-[commit-url]: https://www.npmjs.com/package/@lobehub/commit-cli
-[contributors-shield]: https://img.shields.io/github/contributors/canisminor1990/lobe-commit.svg?style=flat
-[contributors-url]: https://github.com/canisminor1990/lobe-commit/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/canisminor1990/lobe-commit.svg?style=flat
-[forks-url]: https://github.com/canisminor1990/lobe-commit/network/members
-[i18n-download]: https://img.shields.io/npm/dt/@lobehub/i18n-cli
-[i18n-github]: https://github.com/lobehub/lobe-commit/tree/master/packages/lobe-i18n
-[i18n-shield]: https://img.shields.io/npm/v/@lobehub/i18n-cli?label=%F0%9F%A4%AF%20NPM
-[i18n-url]: https://www.npmjs.com/package/@lobehub/i18n-cli
-[issues-shield]: https://img.shields.io/github/issues/canisminor1990/lobe-commit.svg?style=flat
-[issues-url]: https://github.com/canisminor1990/lobe-commit/issues/new/choose
-[label-download]: https://img.shields.io/npm/dt/@lobehub/label-cli
-[label-github]: https://github.com/lobehub/lobe-commit/tree/master/packages/lobe-label
-[label-shield]: https://img.shields.io/npm/v/@lobehub/label-cli?label=%F0%9F%A4%AF%20NPM
-[label-url]: https://www.npmjs.com/package/@lobehub/label-cli
+[github-action-release-link]: https://github.com/lobehub/lobe-cli-toolbox/actions/workflows/release.yml
+[github-action-release-shield]: https://img.shields.io/github/actions/workflow/status/lobehub/lobe-cli-toolbox/release.yml?label=release&labelColor=black&logo=githubactions&logoColor=white&style=flat-square
+[github-action-test-link]: https://github.com/lobehub/lobe-cli-toolbox/actions/workflows/test.yml
+[github-action-test-shield]: https://img.shields.io/github/actions/workflow/status/lobehub/lobe-cli-toolbox/test.yml?label=test&labelColor=black&logo=githubactions&logoColor=white&style=flat-square
+[github-contrib-link]: https://github.com/lobehub/lobe-cli-toolbox/graphs/contributors
+[github-contrib-shield]: https://contrib.rocks/image?repo=lobehub%2Flobe-cli-toolbox
+[github-contributors-link]: https://github.com/lobehub/lobe-cli-toolbox/graphs/contributors
+[github-contributors-shield]: https://img.shields.io/github/contributors/lobehub/lobe-cli-toolbox?color=c4f042&labelColor=black&style=flat-square
+[github-forks-link]: https://github.com/lobehub/lobe-cli-toolbox/network/members
+[github-forks-shield]: https://img.shields.io/github/forks/lobehub/lobe-cli-toolbox?color=8ae8ff&labelColor=black&style=flat-square
+[github-issues-link]: https://github.com/lobehub/lobe-cli-toolbox/issues
+[github-issues-shield]: https://img.shields.io/github/issues/lobehub/lobe-cli-toolbox?color=ff80eb&labelColor=black&style=flat-square
+[github-license-link]: https://github.com/lobehub/lobe-cli-toolbox/blob/main/LICENSE
+[github-license-shield]: https://img.shields.io/github/license/lobehub/lobe-cli-toolbox?color=white&labelColor=black&style=flat-square
+[github-release-link]: https://github.com/lobehub/lobe-cli-toolbox/releases
+[github-release-shield]: https://img.shields.io/github/v/release/lobehub/lobe-cli-toolbox?color=369eff&labelColor=black&logo=github&style=flat-square
+[github-releasedate-link]: https://github.com/lobehub/lobe-cli-toolbox/releases
+[github-releasedate-shield]: https://img.shields.io/github/release-date/lobehub/lobe-cli-toolbox?labelColor=black&style=flat-square
+[github-stars-link]: https://github.com/lobehub/lobe-cli-toolbox/network/stargazers
+[github-stars-shield]: https://img.shields.io/github/stars/lobehub/lobe-cli-toolbox?color=ffcb47&labelColor=black&style=flat-square
 [lobe-chat]: https://github.com/lobehub/lobe-chat
+[lobe-commit-cover]: https://gw.alipayobjects.com/zos/kitchen/3%26ByxtP39X/preview.webp
+[lobe-commit-download]: https://img.shields.io/npm/dt/@lobehub/commit-cli?labelColor=black&&style=flat-square
+[lobe-commit-github]: https://github.com/lobehub/lobe-cli-toolbox/tree/master/packages/lobe-commit
+[lobe-commit-url]: https://www.npmjs.com/package/@lobehub/commit-cli
+[lobe-commit-version]: https://img.shields.io/npm/v/@lobehub/commit-cli?color=369eff&labelColor=black&logo=npm&logoColor=white&style=flat-square
+[lobe-i18n-cover]: https://gw.alipayobjects.com/zos/kitchen/AH7rvv06qn/preview-i18n.webp
+[lobe-i18n-download]: https://img.shields.io/npm/dt/@lobehub/i18n-cli?labelColor=black&&style=flat-square
+[lobe-i18n-github]: https://github.com/lobehub/lobe-cli-toolbox/tree/master/packages/lobe-i18n
+[lobe-i18n-url]: https://www.npmjs.com/package/@lobehub/i18n-cli
+[lobe-i18n-version]: https://img.shields.io/npm/v/@lobehub/i18n-cli?color=369eff&labelColor=black&logo=npm&logoColor=white&style=flat-square
+[lobe-label-cover]: https://gw.alipayobjects.com/zos/kitchen/qeTFEqgF8O/437shots_so.png
+[lobe-label-download]: https://img.shields.io/npm/dt/@lobehub/label-cli?labelColor=black&&style=flat-square
+[lobe-label-github]: https://github.com/lobehub/lobe-cli-toolbox/tree/master/packages/lobe-label
+[lobe-label-url]: https://www.npmjs.com/package/@lobehub/label-cli
+[lobe-label-version]: https://img.shields.io/npm/v/@lobehub/label-cli?color=369eff&labelColor=black&logo=npm&logoColor=white&style=flat-square
 [lobe-theme]: https://github.com/lobehub/sd-webui-lobe-theme
-[profile-url]: https://github.com/canisminor1990
-[release-date-shield]: https://img.shields.io/github/release-date/canisminor1990/lobe-commit?style=flat
-[release-date-url]: https://github.com/canisminor1990/lobe-commit/releases
+[pr-welcome-link]: https://github.com/lobehub/lobe-cli-toolbox/pulls
+[pr-welcome-shield]: https://img.shields.io/badge/%F0%9F%A4%AF%20PR%20WELCOME-%E2%86%92-ffcb47?labelColor=black&style=for-the-badge
+[profile-link]: https://github.com/lobehub
 [split]: https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png
-[stargazers-shield]: https://img.shields.io/github/stars/canisminor1990/lobe-commit.svg?style=flat
-[stargazers-url]: https://github.com/canisminor1990/lobe-commit/stargazers
-[ui-download]: https://img.shields.io/npm/dt/@lobehub/cli-ui
-[ui-github]: https://github.com/lobehub/lobe-commit/tree/master/packages/lobe-cli-ui
-[ui-shield]: https://img.shields.io/npm/v/@lobehub/cli-ui?label=%F0%9F%A4%AF%20NPM
+[ui-download]: https://img.shields.io/npm/dt/@lobehub/cli-ui?labelColor=black&style=flat-square
+[ui-github]: https://github.com/lobehub/lobe-cli-toolbox/tree/master/packages/lobe-cli-ui
+[ui-shield]: https://img.shields.io/npm/v/@lobehub/cli-ui?color=369eff&labelColor=black&logo=npm&logoColor=white&style=flat-square
 [ui-url]: https://www.npmjs.com/package/@lobehub/cli-ui

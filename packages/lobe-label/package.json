@@ -1,19 +1,19 @@
 {
   "name": "@lobehub/label-cli",
   "version": "1.0.3",
-  "description": "Automatically create and delete labels in batches",
+  "description": "Automatically copy issues labels from template repo",
   "keywords": [
     "create",
     "delete",
     "labels"
   ],
-  "homepage": "https://github.com/lobehub/lobe-commit/tree/master/packages/lobe-label",
+  "homepage": "https://github.comlobehub/lobe-cli-toolbox/tree/master/packages/lobe-label",
   "bugs": {
-    "url": "https://github.com/lobehub/commit-cli/issues/new"
+    "url": "https://github.com/lobehub/lobe-cli-toolbox/issues/new"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lobehub/commit-cli.git"
+    "url": "https://github.com/lobehub/lobe-cli-toolbox.git"
   },
   "license": "MIT",
   "author": "canisminor1990 <i@canisminor.cc>",
