@@ -71,7 +71,7 @@
     "prettier": "^3",
     "remark": "^14",
     "remark-cli": "^11",
-    "semantic-release": "^21",
+    "semantic-release": "^22.0.0",
     "stylelint": "latest",
     "ts-node": "^10",
     "typescript": "^5",
