@@ -53,7 +53,7 @@
     "chalk": "^5",
     "commander": "^11",
     "conf": "^11",
-    "execa": "^7",
+    "execa": "^8.0.0",
     "fast-deep-equal": "^3",
     "gitconfig": "^2",
     "ink": "^4.2",
