@@ -65,7 +65,7 @@
     "husky": "^8",
     "ink-testing-library": "^3",
     "lerna": "^7",
-    "lint-staged": "^14",
+    "lint-staged": "^15",
     "multi-semantic-release": "^3",
     "pkgroll": "^1",
     "prettier": "^3",
