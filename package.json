@@ -49,7 +49,7 @@
     ]
   },
   "devDependencies": {
-    "@commitlint/cli": "^17",
+    "@commitlint/cli": "^18.0.0",
     "@lobehub/cli-shebang": "^1",
     "@lobehub/lint": "latest",
     "@sindresorhus/tsconfig": "^4",
