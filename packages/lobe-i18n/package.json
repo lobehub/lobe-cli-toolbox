@@ -43,17 +43,6 @@
   "files": [
     "dist"
   ],
-  "scripts": {
-    "build": "pkgroll --minify -p tsconfig.prod.json --env.NODE_ENV=production && npm run shebang",
-    "dev": "pkgroll -p tsconfig.prod.json --env.NODE_ENV=development --watch",
-    "link": "npm run build && npm link -f",
-    "prepack": "npm run build && clean-pkg-json",
-    "prepublishOnly": "npm run build",
-    "shebang": "lobe-shebang -t ./dist/cli.js",
-    "start": "node ./dist/cli.js",
-    "test": "npm run type-check",
-    "type-check": "tsc --noEmit"
-  },
   "dependencies": {
     "@inkjs/ui": "^1",
     "@lobehub/cli-ui": "1.9.0",

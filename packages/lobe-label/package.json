@@ -1,6 +1,6 @@
 {
   "name": "@lobehub/label-cli",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Automatically copy issues labels from template repo",
   "keywords": [
     "create",
@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@inkjs/ui": "^1",
-    "@lobehub/cli-ui": "1.8.1",
+    "@lobehub/cli-ui": "1.9.0",
     "@octokit/rest": "^20",
     "commander": "^11",
     "conf": "^11",
