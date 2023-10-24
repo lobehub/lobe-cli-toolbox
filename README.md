@@ -29,9 +29,9 @@ AI CLI Toolbox, enhancing git commit and i18n workflow efficiency
 ## 🪀 CLI Tools
 
 | [**💌 Lobe Commit**][lobe-commit-github] [(中文)][lobe-commit-github-cn]<br/>CLI tool that leverages Langchain/ChatGPT to generate Gitmoji-based commit messages.<br/><br/>[![][lobe-commit-version] ![][lobe-commit-download]][lobe-commit-url]                                                                                                                                                               | [![][lobe-commit-cover]][lobe-commit-github] |
-| :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------- |
+| :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------- |
 | [**🌏 Lobe i18n**][lobe-i18n-github] [(中文)][lobe-i18n-github-cn]<br/>Automation tool for the i18n (internationalization) translation process, powered by ChatGPT. It supports features such as automatic splitting of large files, incremental updates, and customization options for the OpenAI model, API proxy, and temperature.<br/><br/>[![][lobe-i18n-version] ![][lobe-i18n-download]][lobe-i18n-url] | [![][lobe-i18n-cover]][lobe-i18n-github]     |
-| [**🔖 Lobe label**][lobe-label-github]<br/>Automatically copy issues labels from template repo.<br/><br/>[![][lobe-label-version] ![][lobe-label-download]][lobe-label-url]                                                                                                                                                                                                                                    | [![][lobe-label-cover]][lobe-label-github]   |
+| [**🔖 Lobe label**][lobe-label-github]<br/>Automatically copy issues labels from template repo.<br/><br/>[![][lobe-label-version] ![][lobe-label-download]][lobe-label-url]                                                                                                                                                                                                                                  | [![][lobe-label-cover]][lobe-label-github]   |
 
 <div align="right">
 
@@ -41,9 +41,10 @@ AI CLI Toolbox, enhancing git commit and i18n workflow efficiency
 
 ## 📦 Ecosystem
 
-| NAME                      | REPO                              | NPM                      | DOWNLOAD         |
-| ------------------------- | --------------------------------- | ------------------------ | ---------------- |
-| [@lobehub/cli-ui][ui-url] | [packages/lobe-cli-ui][ui-github] | [![][ui-shield]][ui-url] | ![][ui-download] |
+| NAME                                | REPO                                        | NPM                                | DOWNLOAD              |
+| ----------------------------------- | ------------------------------------------- | ---------------------------------- | --------------------- |
+| [@lobehub/cli-ui][ui-url]           | [packages/lobe-cli-ui][ui-github]           | [![][ui-shield]][ui-url]           | ![][ui-download]      |
+| [@lobehub/cli-shebang][shebang-url] | [packages/lobe-cli-shebang][shebang-github] | [![][shebang-shield]][shebang-url] | ![][shebang-download] |
 
 <div align="right">
 
@@ -161,6 +162,10 @@ This project is [MIT](./LICENSE) licensed.
 [pr-welcome-link]: https://github.com/lobehub/lobe-cli-toolbox/pulls
 [pr-welcome-shield]: https://img.shields.io/badge/%F0%9F%A4%AF%20PR%20WELCOME-%E2%86%92-ffcb47?labelColor=black&style=for-the-badge
 [profile-link]: https://github.com/lobehub
+[shebang-download]: https://img.shields.io/npm/dt/@lobehub/cli-shebang?labelColor=black&style=flat-square
+[shebang-github]: https://github.com/lobehub/lobe-cli-toolbox/tree/master/packages/lobe-cli-shebang
+[shebang-shield]: https://img.shields.io/npm/v/@lobehub/cli-shebang?color=369eff&labelColor=black&logo=npm&logoColor=white&style=flat-square
+[shebang-url]: https://www.npmjs.com/package/@lobehub/cli-shebang
 [split]: https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png
 [ui-download]: https://img.shields.io/npm/dt/@lobehub/cli-ui?labelColor=black&style=flat-square
 [ui-github]: https://github.com/lobehub/lobe-cli-toolbox/tree/master/packages/lobe-cli-ui
