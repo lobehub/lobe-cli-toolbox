@@ -50,6 +50,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^17",
+    "@lobehub/cli-shebang": "^1",
     "@lobehub/lint": "latest",
     "@sindresorhus/tsconfig": "^4",
     "@types/lodash-es": "^4",

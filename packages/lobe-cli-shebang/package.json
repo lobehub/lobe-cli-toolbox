@@ -1,13 +1,8 @@
 {
-  "name": "@lobehub/label-cli",
-  "version": "1.0.3",
-  "description": "Automatically copy issues labels from template repo",
-  "keywords": [
-    "create",
-    "delete",
-    "labels"
-  ],
-  "homepage": "https://github.comlobehub/lobe-cli-toolbox/tree/master/packages/lobe-label",
+  "name": "@lobehub/cli-shebang",
+  "version": "1.0.0",
+  "description": "Add shebang to target file",
+  "homepage": "https://github.comlobehub/lobe-cli-toolbox/tree/master/packages/cli-shebang",
   "bugs": {
     "url": "https://github.com/lobehub/lobe-cli-toolbox/issues/new"
   },
@@ -23,37 +18,28 @@
     "@": "./src"
   },
   "bin": {
-    "lobe-label": "dist/cli.js"
+    "lobe-shebang": "dist/cli.js",
+    "shebang": "dist/cli.js"
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "pkgroll --minify -p tsconfig.prod.json --env.NODE_ENV=production && npm run shebang",
+    "build": "npm run type-check && pkgroll --minify -p tsconfig.prod.json --env.NODE_ENV=production && npm run shebang",
     "dev": "pkgroll -p tsconfig.prod.json --env.NODE_ENV=development --watch",
     "link": "npm run build && npm link -f",
     "prepack": "npm run build && clean-pkg-json",
+    "prepare": "npm run build",
     "prepublishOnly": "npm run build",
-    "shebang": "lobe-shebang -t ./dist/cli.js",
+    "shebang": "node ./dist/cli.js -t ./dist/cli.js",
     "start": "node ./dist/cli.js",
     "test": "npm run type-check",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@inkjs/ui": "^1",
-    "@lobehub/cli-ui": "1.8.1",
-    "@octokit/rest": "^20",
     "commander": "^11",
-    "conf": "^11",
     "consola": "^3",
-    "ink": "^4.2",
-    "lodash-es": "^4",
-    "react": "^18",
     "update-notifier": "^6"
-  },
-  "peerDependencies": {
-    "ink": ">=4",
-    "react": ">=18"
   },
   "engines": {
     "node": ">=18"
