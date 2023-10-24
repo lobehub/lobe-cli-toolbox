@@ -24,19 +24,6 @@
   "files": [
     "dist"
   ],
-  "scripts": {
-    "build": "npm run type-check && pkgroll --minify -p tsconfig.prod.json --env.NODE_ENV=production",
-    "dev": "pkgroll -p tsconfig.prod.json --env.NODE_ENV=development --watch",
-    "example": "NODE_NO_WARNINGS=1 node --loader=ts-node/esm",
-    "prepack": "npm run build && clean-pkg-json",
-    "prepare": "npm run build",
-    "prepublishOnly": "npm run build",
-    "start": "node ./dist/cli.js",
-    "test": "vitest --passWithNoTests",
-    "test:coverage": "vitest run --coverage  --passWithNoTests",
-    "test:update": "vitest -u",
-    "type-check": "tsc --noEmit"
-  },
   "dependencies": {
     "@inkjs/ui": "^1",
     "arr-rotate": "^1",
