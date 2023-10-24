@@ -34,7 +34,7 @@
     "link": "npm run build && npm link -f",
     "prepare": "npm run build",
     "prepublishOnly": "npm run build",
-    "shebang": "node ./dist/cli.js -t ./dist/cli.js",
+    "shebang": "lobe-shebang -t ./dist/cli.js",
     "start": "node ./dist/cli.js",
     "test": "npm run type-check",
     "type-check": "tsc --noEmit"
