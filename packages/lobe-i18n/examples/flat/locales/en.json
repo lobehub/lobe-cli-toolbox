@@ -1,7 +1,7 @@
 {
-  "welcome": "Welcome!",
   "buttons": {
     "ok": "Ok",
     "cancel": "Cancel"
-  }
+  },
+  "welcome": "Welcome!"
 }

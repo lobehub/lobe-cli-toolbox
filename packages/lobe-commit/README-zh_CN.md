@@ -37,7 +37,6 @@ Lobe Commit 是一款使用 ChatGPT 生成基于 Gitmoji 的 CLI 提交工具
   - [选项](#选项)
 - [⌨️ 本地开发](#️-本地开发)
 - [🤝 参与贡献](#-参与贡献)
-- [🤝 参与贡献](#-参与贡献-1)
 - [🔗 链接](#-链接)
   - [More Products](#more-products)
   - [Credits](#credits)

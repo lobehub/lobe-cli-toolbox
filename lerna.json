@@ -1,10 +1,10 @@
 {
-  "packages": ["packages/*"],
   "command": {
     "bootstrap": {
       "hoist": true
     }
   },
-  "version": "independent",
-  "npmClient": "pnpm"
+  "npmClient": "pnpm",
+  "packages": ["packages/*"],
+  "version": "independent"
 }
