@@ -51,7 +51,7 @@
     "@lobehub/cli-ui": "1.9.0",
     "chalk": "^5",
     "commander": "^11",
-    "conf": "^11",
+    "conf": "^12",
     "execa": "^7",
     "fast-deep-equal": "^3",
     "gitconfig": "^2",
