@@ -41,7 +41,7 @@
     "arr-rotate": "^1",
     "consola": "^3",
     "fast-deep-equal": "^3",
-    "figures": "^5",
+    "figures": "^6",
     "ink": "^4.2",
     "react": "^18"
   },
