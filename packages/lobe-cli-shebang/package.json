@@ -38,7 +38,7 @@
   "dependencies": {
     "commander": "^11",
     "consola": "^3",
-    "update-notifier": "^6"
+    "update-notifier": "^7"
   },
   "engines": {
     "node": ">=18"
