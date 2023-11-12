@@ -62,7 +62,7 @@
     "pangu": "^4",
     "path-exists": "^5",
     "react": "^18",
-    "update-notifier": "^6",
+    "update-notifier": "^7.0.0",
     "zustand": "^4"
   },
   "peerDependencies": {
