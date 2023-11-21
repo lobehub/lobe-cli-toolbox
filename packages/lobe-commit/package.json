@@ -23,7 +23,7 @@
     "url": "https://github.com/lobehub/lobe-cli-toolbox.git"
   },
   "license": "MIT",
-  "author": "canisminor1990 <i@canisminor.cc>",
+  "author": "LobeHub <i@lobehub.com>",
   "sideEffects": false,
   "type": "module",
   "imports": {
