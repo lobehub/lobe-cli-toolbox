@@ -31,8 +31,9 @@
     "prepare": "npm run build",
     "prepublishOnly": "npm run build",
     "start": "node ./dist/cli.js",
-    "test": "vitest --passWithNoTests",
+    "test": "npm run type-check",
     "test:coverage": "vitest run --coverage  --passWithNoTests",
+    "test:ui": "vitest --passWithNoTests",
     "test:update": "vitest -u",
     "type-check": "tsc --noEmit"
   },
