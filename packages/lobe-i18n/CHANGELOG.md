@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.9.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.8.0...@lobehub/i18n-cli@1.9.0)
+
+<sup>Released on **2023-11-21**</sup>
+
+#### ✨ Features
+
+- **misc**: Lobe I18N support subfolder.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Lobe I18N support subfolder, closes [#26](https://github.com/lobehub/lobe-cli-toolbox/issues/26) ([80952a3](https://github.com/lobehub/lobe-cli-toolbox/commit/80952a3))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.8.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.7.2...@lobehub/i18n-cli@1.8.0)
 
 <sup>Released on **2023-10-24**</sup>
