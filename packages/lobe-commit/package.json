@@ -40,7 +40,7 @@
     "build": "npm run type-check && pkgroll --minify -p tsconfig.prod.json --env.NODE_ENV=production && npm run shebang",
     "dev": "pkgroll -p tsconfig.prod.json --env.NODE_ENV=development --watch",
     "link": "npm run build && npm link -f",
-    "prepublishOnly": "npm run build",
+    "prepack": "clean-pkg-json",
     "shebang": "lobe-shebang -t ./dist/cli.js",
     "start": "node ./dist/cli.js",
     "test": "vitest --passWithNoTests",
@@ -68,6 +68,9 @@
     "swr": "^2",
     "update-notifier": "^7.0.0",
     "zustand": "^4"
+  },
+  "devDependencies": {
+    "clean-pkg-json": "^1"
   },
   "peerDependencies": {
     "ink": ">=4",

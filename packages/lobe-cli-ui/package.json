@@ -28,8 +28,8 @@
     "build": "npm run type-check && pkgroll --minify -p tsconfig.prod.json --env.NODE_ENV=production",
     "dev": "pkgroll -p tsconfig.prod.json --env.NODE_ENV=development --watch",
     "example": "NODE_NO_WARNINGS=1 node --loader=ts-node/esm",
+    "prepack": "clean-pkg-json",
     "prepare": "npm run build",
-    "prepublishOnly": "npm run build",
     "start": "node ./dist/cli.js",
     "test": "npm run type-check",
     "test:coverage": "vitest run --coverage  --passWithNoTests",
@@ -45,6 +45,9 @@
     "figures": "^6.0.0",
     "ink": "^4.2",
     "react": "^18"
+  },
+  "devDependencies": {
+    "clean-pkg-json": "^1"
   },
   "peerDependencies": {
     "@inkjs/ui": ">=1",

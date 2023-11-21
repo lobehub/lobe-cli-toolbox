@@ -29,11 +29,6 @@ jobs:
       - name: Build
         run: bun run build
 
-      - name: Switch Node ENV
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-
       # npm 8 和 9 会在 `npm version` 时执行依赖树命令，进而报错退出
       # Refs: https://github.com/semantic-release/npm/issues/540
       - name: Setup npm 7
