@@ -1,21 +1,9 @@
 import Conf from 'conf';
+import dotenv from 'dotenv';
 
-export interface Config {
-  apiBaseUrl: string;
-  openaiToken: string;
-}
+import { Config, ConfigKeys, ConfigSchema } from '@/types/config';
 
-export type ConfigKeys = keyof Config;
-
-export interface ConfigSchemaItem {
-  default: string | number | boolean;
-  type: 'string' | 'number' | 'boolean';
-}
-
-export type ConfigSchema = {
-  [key in ConfigKeys]: ConfigSchemaItem;
-};
-
+dotenv.config();
 export const schema: ConfigSchema = {
   apiBaseUrl: {
     default: '',
@@ -26,7 +14,6 @@ export const schema: ConfigSchema = {
     type: 'string',
   },
 };
-
 export const config = new Conf({
   projectName: 'lobe-i18n',
   schema,
@@ -34,6 +21,8 @@ export const config = new Conf({
 export const getConfig = <K extends ConfigKeys>(key: K): Config[K] => config.get(key) as Config[K];
 export const getDefulatConfig = <K extends ConfigKeys>(key: K) => schema[key].default as Config[K];
 export const setConfig = <K extends ConfigKeys>(key: K, value: Config[K]) => config.set(key, value);
+export const getOpenAIApiKey = () => process.env.OPENAI_API_KEYL || getConfig('openaiToken');
+export const getOpenAIProxyUrl = () => process.env.OPENAI_PROXY_URL || getConfig('apiBaseUrl');
 
 export const useConfStore = () => {
   const store = config.store as Config;
@@ -44,3 +33,6 @@ export const useConfStore = () => {
     store,
   };
 };
+
+export { getConfigFile as getTranslateConfig } from './getConfigFile';
+export { Config, ConfigKeys, ConfigSchema } from '@/types/config';

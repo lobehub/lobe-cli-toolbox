@@ -1,26 +1,46 @@
-import { Panel, useTheme } from '@lobehub/cli-ui';
-import { Text } from 'ink';
+import { ProgressBar, Spinner, StatusMessage } from '@inkjs/ui';
+import { SplitView, useTheme } from '@lobehub/cli-ui';
+import { Box, Text } from 'ink';
 import { memo } from 'react';
 
-import { I18nConfig } from '@/types/config';
+import { onProgressProps } from '@/core/I18n';
 
-import QueryItem, { type QueryItemProps } from './QueryItem';
-
-interface Props {
-  config: I18nConfig;
-  query: QueryItemProps[];
+interface QueryItemProps extends onProgressProps {
+  filename: string;
+  from: string;
+  to: string;
 }
 
-const App = memo<Props>(({ query, config }) => {
+const QueryItem = memo<QueryItemProps>(({ filename, to, from, progress, maxStep, step }) => {
   const theme = useTheme();
+
   return (
-    <Panel title={`🤯 lobe i18n`}>
-      <Text color={theme.colorTextDescription}>Start running translate query:</Text>
-      {query.map((item, index) => (
-        <QueryItem config={config} item={item} key={index} />
-      ))}
-    </Panel>
+    <SplitView flexDirection={'column'}>
+      <Text backgroundColor={theme.colorBgLayout} color={theme.colorText}>
+        {` 📝 ${filename} `}
+      </Text>
+      {step === maxStep ? (
+        <StatusMessage variant={'success'}>Success</StatusMessage>
+      ) : (
+        <Box>
+          <Spinner label={`${progress}%`} />
+          <Box marginLeft={1} marginRight={1} width={20}>
+            <Text color={theme.colorTextDescription}>
+              {`- from `}
+              <Text bold color={theme.colorInfo}>
+                {from}
+              </Text>
+              {` to `}
+              <Text bold color={theme.colorInfo}>
+                {to}
+              </Text>
+            </Text>
+          </Box>
+          <ProgressBar value={Math.floor((step / maxStep) * 100)} />
+        </Box>
+      )}
+    </SplitView>
   );
 });
 
-export default App;
+export default QueryItem;

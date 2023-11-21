@@ -1,25 +1,35 @@
 import { render } from '@lobehub/cli-ui';
+import chalk from 'chalk';
 import { consola } from 'consola';
+import { relative, resolve } from 'node:path';
 
+import { I18n, I18nWriteOptions } from '@/core/I18n';
+import { getOpenAIApiKey, getOpenAIProxyUrl, getTranslateConfig } from '@/store';
 import type { LocaleFolderObj, LocaleObj } from '@/types';
 import type { I18nConfig } from '@/types/config';
 import { checkLocaleFolders, checkLocales } from '@/utils/checkLocales';
-import { getConfigFile } from '@/utils/getConfigFile';
+import { writeJSON } from '@/utils/fs';
 import { getEntryFile, getEntryFolderFiles } from '@/utils/getEntryFile';
-import { getLocaleFolderObj, getLocaleObj } from '@/utils/getLocaleObj';
-import { splitExtraJSON } from '@/utils/splitJson';
+import { getLocaleObj } from '@/utils/getLocaleObj';
+import { isEqualJsonKeys } from '@/utils/isEqualJsonKeys';
 
 import App from './App';
-import { type QueryItemProps } from './QueryItem';
 
 class Translate {
   config: I18nConfig;
-  query: QueryItemProps[] = [];
+  query: I18nWriteOptions[] = [];
+  i18n: I18n;
   constructor() {
-    this.config = getConfigFile() as I18nConfig;
+    this.config = getTranslateConfig() as I18nConfig;
+    this.i18n = new I18n({
+      config: this.config,
+      openAIApiKey: getOpenAIApiKey(),
+      openAIProxyUrl: getOpenAIProxyUrl(),
+    });
   }
 
-  start() {
+  async start() {
+    consola.start('Lobe I18N is analyzing your project... 🤯🌏🔍');
     const isFolder = !this.config.entry.includes('.json') || this.config.entry.includes('*');
     if (isFolder) {
       this.genFolderQuery();
@@ -27,9 +37,34 @@ class Translate {
       this.genFlatQuery();
     }
     if (this.query.length > 0) {
-      render(<App config={this.config} query={this.query} />);
+      await this.runQuery();
     } else {
-      consola.info('No query to translate, everthing is fine');
+      consola.success('No content requiring translation was found.');
+    }
+    consola.success('All i18n tasks have been completed！');
+  }
+
+  async runQuery() {
+    for (const item of this.query) {
+      const props = {
+        filename: item.filename,
+        from: item.from || this.config.entryLocale,
+        to: item.to,
+      };
+      const { rerender, clear } = render(
+        <App isLoading={true} maxStep={1} progress={0} step={0} {...props} />,
+      );
+      const data = await this.i18n.translate({
+        ...item,
+        onProgress: (rest) => {
+          rerender(<App {...rest} {...props} />);
+        },
+      });
+      clear();
+      if (data) {
+        writeJSON(item.filename, data);
+        consola.success(chalk.yellow(relative(this.config.output, item.filename)));
+      }
     }
   }
 
@@ -37,21 +72,24 @@ class Translate {
     const config = this.config;
     const entry = getEntryFolderFiles(config) as LocaleFolderObj;
     const files = Object.keys(entry);
-    consola.info(`Run in folder mode, found ${files.length} files`);
+    consola.info(
+      `Running in ${chalk.bold.cyan('📂 Folder Mode')} and has found ${chalk.bold.cyan(
+        files.length,
+      )} files.`,
+    );
     checkLocaleFolders(config, files);
     for (const locale of config.outputLocales) {
       for (const filename of files) {
-        consola.info(`${locale} - ${filename}`);
+        consola.info(`${chalk.cyan(locale)}${chalk.gray(' - ')}${chalk.yellow(filename)}`);
+        const targetFilename = resolve(config.output, locale, filename);
         const entryObj = entry[filename] as LocaleObj;
-        const targetObj = getLocaleFolderObj(config, locale, filename);
-        const splitJSON = splitExtraJSON(config, entryObj, targetObj);
-        if (!splitJSON || splitJSON.length === 0) continue;
+        const targetObj = getLocaleObj(targetFilename);
+        if (isEqualJsonKeys(entryObj, targetObj)) continue;
         this.query.push({
-          filename,
+          entry: entryObj,
+          filename: targetFilename,
           from: config.entryLocale,
-          isFolder: true,
-          orignalJSON: targetObj,
-          splitJSON,
+          target: targetObj,
           to: locale,
         });
       }
@@ -61,19 +99,18 @@ class Translate {
   genFlatQuery() {
     const config = this.config;
     const entry = getEntryFile(config) as LocaleObj;
-    consola.info(`Run in flat mode, found ${Object.keys(entry).length} keys`);
+    consola.start(`Running in ${chalk.bold.cyan('📄 Flat Mode')}.`);
     checkLocales(config);
     for (const locale of config.outputLocales) {
+      const targetFilename = resolve(config.output, locale) + '.json';
       const entryObj = entry;
-      const targetObj = getLocaleObj(config, locale);
-      const splitJSON = splitExtraJSON(config, entryObj, targetObj);
-      if (!splitJSON || splitJSON.length === 0) continue;
+      const targetObj = getLocaleObj(targetFilename);
+      if (isEqualJsonKeys(entryObj, targetObj)) continue;
       this.query.push({
-        filename: '',
+        entry: entryObj,
+        filename: targetFilename,
         from: config.entryLocale,
-        isFolder: false,
-        orignalJSON: targetObj,
-        splitJSON,
+        target: targetObj,
         to: locale,
       });
     }

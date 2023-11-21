@@ -11,8 +11,9 @@ const checkOptionKeys = (opt: I18nConfig, key: OptionKeys) => {
     alert.error(`Can't find ${chalk.bold.yellow('outputLocales')} in config`);
   }
 };
-export const getConfigFile = (): I18nConfig | void => {
+export const getConfigFile = (): I18nConfig => {
   const config: any = explorer.search()?.config;
+  // @ts-ignore
   if (!config) return alert.error(`Can't find ${chalk.bold.yellow('config')}`, true);
   checkOptionKeys(config, 'entry');
   checkOptionKeys(config, 'entryLocale');

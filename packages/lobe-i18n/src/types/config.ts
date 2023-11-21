@@ -1,4 +1,4 @@
-export interface I18nConfig {
+export interface I18nConfigLocale {
   /**
    * @description The entry file or folder
    */
@@ -30,7 +30,27 @@ export interface I18nConfig {
   /**
    * @description Sampling temperature to use
    */
-  temperature?: 0;
+  temperature?: number;
+}
+
+export interface I18nConfig extends I18nConfigLocale {
+  readme?: I18nConfigLocale;
 }
 
 export type OptionKeys = keyof I18nConfig;
+
+export interface Config {
+  apiBaseUrl: string;
+  openaiToken: string;
+}
+
+export type ConfigKeys = keyof Config;
+
+export interface ConfigSchemaItem {
+  default: string | number | boolean;
+  type: 'string' | 'number' | 'boolean';
+}
+
+export type ConfigSchema = {
+  [key in ConfigKeys]: ConfigSchemaItem;
+};

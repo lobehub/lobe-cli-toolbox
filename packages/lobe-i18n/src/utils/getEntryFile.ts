@@ -1,20 +1,21 @@
-import { alert } from '@lobehub/cli-ui';
 import chalk from 'chalk';
-import fs from 'node:fs';
-import { resolve } from 'node:path';
+import { consola } from 'consola';
+import { existsSync, readdirSync, statSync } from 'node:fs';
+import { join, relative, resolve } from 'node:path';
 import * as process from 'node:process';
 
 import { LocaleFolderObj, LocaleObj } from '@/types';
 import { I18nConfig } from '@/types/config';
+import { readJSON } from '@/utils/fs';
 
 export const getEntryFile = (config: I18nConfig): LocaleObj | void => {
   try {
     const entryPath = resolve('./', config.entry);
-    const isExist = fs.existsSync(entryPath);
+    const isExist = existsSync(entryPath);
     if (!isExist) {
-      alert.error(`Can't find ${chalk.bold.yellow(config.entry)} in dir`);
+      consola.error(`Can't find ${chalk.bold.yellow(config.entry)} in dir`);
     }
-    const entry = JSON.parse(fs.readFileSync(entryPath, 'utf8')) as LocaleObj;
+    const entry = readJSON(entryPath) as LocaleObj;
 
     return entry;
   } catch {
@@ -24,22 +25,32 @@ export const getEntryFile = (config: I18nConfig): LocaleObj | void => {
 
 export const getEntryFolderFiles = (config: I18nConfig): LocaleFolderObj | void => {
   const entryPath = config.entry.replace('*', '');
-  try {
-    const files = fs.readdirSync(entryPath).filter((name) => name.includes('.json'));
-    const obj: LocaleFolderObj = {};
 
-    if (files.length === 0) {
-      alert.error(`Can't find ${chalk.bold.yellow(entryPath)} in dir`);
-    }
+  const readLocaleFiles = (dir: string, obj: LocaleFolderObj) => {
+    try {
+      const items = readdirSync(dir);
 
-    for (const file of files) {
-      const filePath = resolve(entryPath, file);
-      const content = fs.readFileSync(filePath, 'utf8');
-      obj[file] = JSON.parse(content);
+      for (const item of items) {
+        const fullPath = join(dir, item);
+        if (statSync(fullPath).isDirectory()) {
+          readLocaleFiles(fullPath, obj); // 递归调用处理子目录
+        } else if (item.endsWith('.json')) {
+          obj[relative(entryPath, fullPath)] = readJSON(fullPath); // 读取文件内容
+        }
+      }
+    } catch (error) {
+      consola.error(error);
+      process.exit(1);
     }
-    return obj;
-  } catch (error) {
-    console.log(error);
-    process.exit(1);
+  };
+
+  const obj: LocaleFolderObj = {};
+  readLocaleFiles(entryPath, obj);
+
+  if (Object.keys(obj).length === 0) {
+    consola.error(`Can't find .json files in ${chalk.bold.yellow(entryPath)}`);
+    return;
   }
+
+  return obj;
 };

@@ -2,7 +2,7 @@ import { TextInput } from '@inkjs/ui';
 import { ConfigPanel, type ConfigPanelProps } from '@lobehub/cli-ui';
 import { memo, useMemo, useState } from 'react';
 
-import { type ConfigKeys, type Config as LocalConfig, useConfStore } from '@/store/confStore';
+import { type ConfigKeys, type Config as LocalConfig, useConfStore } from '@/store';
 
 const Config = memo(() => {
   const [active, setActive] = useState<string>();

@@ -1,9 +1,10 @@
-import { encode } from 'gpt-3-encoder';
-import { isPlainObject, merge, reduce, sumBy } from 'lodash-es';
+import { encode } from 'gpt-tokenizer';
+import { isPlainObject, reduce, sumBy } from 'lodash-es';
 
 import { LocaleObj } from '@/types';
 import { I18nConfig } from '@/types/config';
-import { getExtraObj } from '@/utils/getExtraObj';
+
+import { diffJson } from './diffJson';
 
 const PRIMITIVE_EXTRA_TOKENS = 3;
 const KEY_EXTRA_TOKENS = 2; // For `"key":`
@@ -28,7 +29,7 @@ const getJSONTokenSize = (object: LocaleObj, depth = 0): number =>
   OBJECT_EXTRA_TOKENS +
   depth;
 
-export const splitJSONtoSmallChunks = (object: LocaleObj, splitToken: number = 2000) =>
+const splitJSONtoSmallChunks = (object: LocaleObj, splitToken: number = 2000) =>
   reduce(
     Object.entries(object),
     (chunks: any[], [key, value]: [string, any]) => {
@@ -51,21 +52,13 @@ export const splitJSONtoSmallChunks = (object: LocaleObj, splitToken: number = 2
     [],
   ).map(([chunk]) => chunk);
 
-export const splitExtraJSON = (
+export const splitJsonToChunks = (
   config: I18nConfig,
   entry: LocaleObj,
   target: LocaleObj,
 ): LocaleObj[] => {
-  const extraJSON = getExtraObj(entry, target);
+  const extraJSON = diffJson(entry, target);
   if (Object.keys(extraJSON).length === 0) return [];
   const splitObj = splitJSONtoSmallChunks(extraJSON, config.splitToken);
   return splitObj;
-};
-
-export const mergeJSONChunks = (arr: LocaleObj[]): LocaleObj => {
-  let result = {};
-  for (const obj of arr) {
-    result = merge(result, obj);
-  }
-  return result;
 };

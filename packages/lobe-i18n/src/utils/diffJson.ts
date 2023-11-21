@@ -19,7 +19,20 @@ const compareObjects = (objA: any, objB: any): LocaleObj => {
   return obj;
 };
 
-export const getExtraObj = (entry: LocaleObj, target: LocaleObj): LocaleObj => {
+export const diffJson = (entry: LocaleObj, target: LocaleObj): LocaleObj => {
   const extraObj = compareObjects(entry, target);
   return extraObj;
+};
+
+export const diffKeys = (obj1: any, obj2: any, prefix: string = ''): string[] => {
+  let result: string[] = [];
+  for (const key in obj1) {
+    if (!obj2[key]) continue;
+    if (isObject(obj1[key]) && isObject(obj2[key])) {
+      result = [...result, ...diffKeys(obj1[key], obj2[key], `${prefix}${key}.`)];
+    } else if (obj1[key] !== obj2[key]) {
+      result.push(`${prefix}${key}`);
+    }
+  }
+  return result;
 };
