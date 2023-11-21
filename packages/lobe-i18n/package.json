@@ -56,7 +56,7 @@
   },
   "dependencies": {
     "@inkjs/ui": "^1",
-    "@lobehub/cli-ui": "1.9.0",
+    "@lobehub/cli-ui": "latest",
     "chalk": "^5",
     "commander": "^11",
     "conf": "^12",

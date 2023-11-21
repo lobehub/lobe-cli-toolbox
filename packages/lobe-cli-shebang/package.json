@@ -39,7 +39,7 @@
   "dependencies": {
     "commander": "^11",
     "consola": "^3",
-    "update-notifier": "^7.0.0"
+    "update-notifier": "^7"
   },
   "devDependencies": {
     "clean-pkg-json": "^1"

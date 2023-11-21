@@ -41,15 +41,15 @@
   },
   "dependencies": {
     "@inkjs/ui": "^1",
-    "@lobehub/cli-ui": "1.9.0",
+    "@lobehub/cli-ui": "latest",
     "@octokit/rest": "^20",
     "commander": "^11",
-    "conf": "^12.0.0",
+    "conf": "^12",
     "consola": "^3",
     "ink": "^4.2",
     "lodash-es": "^4",
     "react": "^18",
-    "update-notifier": "^7.0.0"
+    "update-notifier": "^7"
   },
   "devDependencies": {
     "clean-pkg-json": "^1"
