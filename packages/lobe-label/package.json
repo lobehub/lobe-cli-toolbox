@@ -32,7 +32,6 @@
     "build": "npm run type-check && pkgroll --minify -p tsconfig.prod.json --env.NODE_ENV=production && npm run shebang",
     "dev": "pkgroll -p tsconfig.prod.json --env.NODE_ENV=development --watch",
     "link": "npm run build && npm link -f",
-    "prepack": "clean-pkg-json",
     "shebang": "lobe-shebang -t ./dist/cli.js",
     "start": "node ./dist/cli.js",
     "test": "vitest --passWithNoTests",
@@ -41,7 +40,7 @@
   },
   "dependencies": {
     "@inkjs/ui": "^1",
-    "@lobehub/cli-ui": "1.9.1",
+    "@lobehub/cli-ui": "latest",
     "@octokit/rest": "^20",
     "commander": "^11",
     "conf": "^12",
@@ -50,9 +49,6 @@
     "lodash-es": "^4",
     "react": "^18",
     "update-notifier": "^7"
-  },
-  "devDependencies": {
-    "clean-pkg-json": "^1"
   },
   "peerDependencies": {
     "ink": ">=4",

@@ -1,6 +1,6 @@
 {
   "name": "@lobehub/cli-ui",
-  "version": "1.9.1",
+  "version": "1.9.2",
   "description": "Lobe CLI uikits",
   "homepage": "https://github.comlobehub/lobe-cli-toolbox/tree/master/packages/lobe-cli-ui",
   "bugs": {
@@ -24,6 +24,18 @@
   "files": [
     "dist"
   ],
+  "scripts": {
+    "build": "npm run type-check && pkgroll --minify -p tsconfig.prod.json --env.NODE_ENV=production",
+    "dev": "pkgroll -p tsconfig.prod.json --env.NODE_ENV=development --watch",
+    "example": "NODE_NO_WARNINGS=1 node --loader=ts-node/esm",
+    "prepare": "npm run build",
+    "start": "node ./dist/cli.js",
+    "test": "npm run type-check",
+    "test:coverage": "vitest run --coverage  --passWithNoTests",
+    "test:ui": "vitest --passWithNoTests",
+    "test:update": "vitest -u",
+    "type-check": "tsc --noEmit"
+  },
   "dependencies": {
     "@inkjs/ui": "^1",
     "arr-rotate": "^1",
