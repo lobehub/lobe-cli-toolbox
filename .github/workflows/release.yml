@@ -20,6 +20,9 @@ jobs:
       - name: Install deps
         run: bun i
 
+      - name: CI
+        run: bun run ci
+
       - name: Test
         run: bun run test
 

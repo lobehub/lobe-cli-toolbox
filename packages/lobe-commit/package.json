@@ -43,7 +43,8 @@
     "prepublishOnly": "npm run build",
     "shebang": "lobe-shebang -t ./dist/cli.js",
     "start": "node ./dist/cli.js",
-    "test": "npm run type-check",
+    "test": "vitest --passWithNoTests",
+    "test:coverage": "vitest run --coverage --passWithNoTests",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
@@ -52,9 +53,11 @@
     "chalk": "^5",
     "commander": "^11",
     "conf": "^12.0.0",
+    "dotenv": "^16",
     "execa": "^8.0.0",
     "fast-deep-equal": "^3",
     "gitconfig": "^2",
+    "gpt-tokenizer": "^2",
     "ink": "^4.2",
     "langchain": "latest",
     "lodash-es": "^4",
@@ -62,6 +65,7 @@
     "pangu": "^4",
     "path-exists": "^5",
     "react": "^18",
+    "swr": "^2",
     "update-notifier": "^7.0.0",
     "zustand": "^4"
   },

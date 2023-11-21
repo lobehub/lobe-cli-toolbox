@@ -6,7 +6,7 @@ declare global {
   namespace NodeJS {
     interface ProcessEnv {
       [key: string]: string | undefined;
-      OPENAI_API_KEYL: string;
+      OPENAI_API_KEY: string;
       OPENAI_PROXY_URL: string;
       // add more environment variables and their types here
     }

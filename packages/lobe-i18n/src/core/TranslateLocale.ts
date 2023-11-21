@@ -2,50 +2,27 @@ import { consola } from 'consola';
 import { ChatOpenAI } from 'langchain/chat_models/openai';
 import { ChatPromptTemplate } from 'langchain/prompts';
 
+import { promptTranslate } from '@/prompts/translate';
 import { LocaleObj } from '@/types';
 import { I18nConfig } from '@/types/config';
 
 export class TranslateLocale {
-  model: ChatOpenAI;
-  config: I18nConfig;
+  private model: ChatOpenAI;
+  private config: I18nConfig;
   prompt: ChatPromptTemplate<{ from: string; json: string; to: string }>;
 
   constructor(config: I18nConfig, openAIApiKey: string, openAIProxyUrl?: string) {
     this.config = config;
-    this.model = new ChatOpenAI(
-      {
-        maxRetries: 10,
-        modelName: config.modelName,
-        openAIApiKey,
-        temperature: config.temperature,
+    this.model = new ChatOpenAI({
+      configuration: {
+        baseURL: openAIProxyUrl,
       },
-      {
-        basePath: openAIProxyUrl,
-      },
-    );
-    this.prompt = this.genChatPrompt();
-  }
-
-  genChatPrompt() {
-    const systemTemplate = [
-      `Translate the i18n JSON file from {from} to {to} according to the BCP 47 standard`,
-      this.config.reference &&
-        `Here are some reference to help with better translation.  ---${this.config.reference}---`,
-      `Keep the keys the same as the original file and make sure the output remains a valid i18n JSON file.`,
-    ]
-      .filter(Boolean)
-      .join('\n');
-
-    const humanTemplate = '{json}';
-
-    return ChatPromptTemplate.fromPromptMessages<{
-      from: string;
-      json: string;
-      to: string;
-    }>([
-      ['system', systemTemplate],
-      ['human', humanTemplate],
-    ]);
+      maxRetries: 10,
+      modelName: config.modelName,
+      openAIApiKey,
+      temperature: config.temperature,
+    });
+    this.prompt = promptTranslate(config.reference);
   }
 
   async run({

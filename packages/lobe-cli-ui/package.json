@@ -47,6 +47,8 @@
     "react": "^18"
   },
   "peerDependencies": {
+    "@inkjs/ui": ">=1",
+    "consola": ">=3",
     "ink": ">=4",
     "react": ">=18"
   },

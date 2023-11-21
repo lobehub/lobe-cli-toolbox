@@ -32,7 +32,8 @@
     "prepublishOnly": "npm run build",
     "shebang": "node ./dist/cli.js -t ./dist/cli.js",
     "start": "node ./dist/cli.js",
-    "test": "npm run type-check",
+    "test": "vitest --passWithNoTests",
+    "test:coverage": "vitest run --coverage --passWithNoTests",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {

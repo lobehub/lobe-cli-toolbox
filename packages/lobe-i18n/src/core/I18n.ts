@@ -48,7 +48,8 @@ export class I18n {
     onProgress,
     from,
   }: I18nTranslateOptions): Promise<LocaleObj | undefined> {
-    const splitJson = splitJsonToChunks(this.config, entry, target);
+    const prompt = await this.translateLocale.prompt.formatMessages({ from, json: {}, to });
+    const splitJson = splitJsonToChunks(this.config, entry, target, JSON.stringify(prompt));
 
     if (splitJson.length === 0) return;
 

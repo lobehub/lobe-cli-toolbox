@@ -3,7 +3,9 @@ import { ConfigPanel, type ConfigPanelProps, SelectInput } from '@lobehub/cli-ui
 import { memo, useMemo, useState } from 'react';
 
 import { BASE_PROMPT } from '@/constants/template';
-import { type ConfigKeys, type Config as LocalConfig, useConfStore } from '@/store/confStore';
+import { useConfStore } from '@/store';
+import type { ConfigKeys, Config as LocalConfig } from '@/types/config';
+import { LanguageModel } from '@/types/models';
 
 const Config = memo(() => {
   const [active, setActive] = useState<string>();
@@ -65,6 +67,44 @@ const Config = memo(() => {
         label: 'Custom prompt',
         showValue: false,
         value: store.prompt || BASE_PROMPT,
+      },
+      {
+        children: (
+          <SelectInput
+            items={[
+              {
+                label: LanguageModel.GPT3_5,
+                value: LanguageModel.GPT3_5,
+              },
+              {
+                label: LanguageModel.GPT3_5_1106,
+                value: LanguageModel.GPT3_5_1106,
+              },
+              {
+                label: LanguageModel.GPT3_5_16K,
+                value: LanguageModel.GPT3_5_16K,
+              },
+              {
+                label: LanguageModel.GPT4,
+                value: LanguageModel.GPT4,
+              },
+              {
+                label: LanguageModel.GPT4_PREVIEW,
+                value: LanguageModel.GPT4_PREVIEW,
+              },
+              {
+                label: LanguageModel.GPT4_32K,
+                value: LanguageModel.GPT4_32K,
+              },
+            ]}
+            onSelect={(item) => setConfig('modelName', item.value as LanguageModel)}
+          />
+        ),
+        defaultValue: getDefault('modelName'),
+        desc: `Default model as ${getDefault('modelName')}`,
+        key: 'modelName',
+        label: 'Model Name',
+        value: store.modelName,
       },
       {
         children: (

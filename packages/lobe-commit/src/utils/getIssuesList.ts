@@ -1,17 +1,15 @@
 import { Octokit } from 'octokit';
 
-import { getConfig } from '@/store/confStore';
+import { selectors } from '@/store';
 
 import getRepo from './getRepo';
-
-const githubTokenConfig = getConfig('githubToken');
 
 export default async () => {
   try {
     const repoInfo = await getRepo();
     if (!repoInfo) return;
     const octokit = new Octokit({
-      auth: githubTokenConfig ? githubTokenConfig : undefined,
+      auth: selectors.getGithubToken(),
     });
     const { data } = await octokit.rest.issues.listForRepo({
       owner: repoInfo.owner,

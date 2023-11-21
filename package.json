@@ -17,6 +17,7 @@
   ],
   "scripts": {
     "build": "lerna run build --parallel",
+    "ci": "npm run type-check && npm run lint",
     "dev": "lerna run dev --parallel",
     "dev:commit": "npm run dev --prefix=packages/lobe-commit",
     "dev:i18n": "npm run dev --prefix=packages/lobe-i18n",
@@ -29,7 +30,8 @@
     "prettier": "prettier -c --write \"**/**\"",
     "release": "multi-semantic-release",
     "start": "npm run dev",
-    "test": "lerna run test --parallel && npm run lint"
+    "test": "lerna run test --parallel && npm run lint",
+    "type-check": "lerna run type-check --parallel"
   },
   "lint-staged": {
     "*.md": [

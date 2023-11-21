@@ -1,10 +1,10 @@
 import { Spinner } from '@inkjs/ui';
 import { Panel, SelectInput, type SelectInputItem, SplitView, useTheme } from '@lobehub/cli-ui';
 import { Text, useInput } from 'ink';
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo } from 'react';
 
+import { useCommits } from '@/hooks/useCommits';
 import { useCommitStore } from '@/store/commitStore';
-import genAiCommit from '@/utils/genAiCommit';
 
 const AiCommit = memo(() => {
   const { message, setMessage, setStep } = useCommitStore((st) => ({
@@ -13,25 +13,19 @@ const AiCommit = memo(() => {
     setStep: st.setStep,
   }));
   useInput(useCallback((_, key) => key.tab && setStep('type'), []));
-  const [loading, setLoading] = useState<boolean>(true);
-  const [summary, setSummary] = useState<string>('');
-  const [loadingInfo, setLoadingInfo] = useState<string>(' Generating...');
   const theme = useTheme();
 
-  const handleGenerate = useCallback((summary?: string) => {
-    genAiCommit({ cacheSummary: summary, setLoading, setLoadingInfo, setMessage, setSummary });
-  }, []);
+  const { summary, start, loadingInfo, loading, restart } = useCommits({ setMessage });
 
   const handleSelect = useCallback(
     (item: any) => {
       switch (item.value) {
         case 'reloadFromSummary': {
-          handleGenerate(summary);
+          start();
           break;
         }
         case 'reload': {
-          setSummary('');
-          handleGenerate();
+          restart();
           break;
         }
         case 'edit': {
@@ -44,12 +38,12 @@ const AiCommit = memo(() => {
         }
       }
     },
-    [summary],
+    [start, restart],
   );
 
   useEffect(() => {
-    handleGenerate();
-  }, []);
+    start();
+  }, [start]);
 
   const items = useMemo(
     () =>

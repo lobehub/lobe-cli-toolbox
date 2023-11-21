@@ -1,3 +1,5 @@
+import { LanguageModel } from '@/types/models';
+
 export interface I18nConfigLocale {
   /**
    * @description The entry file or folder
@@ -10,7 +12,7 @@ export interface I18nConfigLocale {
   /**
    * @description ChatGPT model name to use
    */
-  modelName?: 'gpt-3.5-turbo' | 'gpt-3.5-turbo-16k' | 'gpt-4' | 'gpt-4-32k';
+  modelName?: LanguageModel;
   /**
    * @description Where you store your locale files
    */

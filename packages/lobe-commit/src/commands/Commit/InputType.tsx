@@ -6,12 +6,12 @@ import { shallow } from 'zustand/shallow';
 
 import { ListItem } from '@/commands/List';
 import gitmojis from '@/constants/gitmojis';
+import { selectors } from '@/store';
 import { useCommitStore } from '@/store/commitStore';
-import { getConfig } from '@/store/confStore';
 
 import Header from './Header';
 
-const emojiFormatConfig = getConfig('emoji') === 'emoji';
+const emojiFormatConfig = selectors.getConfig('emoji') === 'emoji';
 
 const AI_VALUE = 'ai';
 

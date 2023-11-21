@@ -50,7 +50,8 @@
     "prepublishOnly": "npm run build",
     "shebang": "lobe-shebang -t ./dist/cli.js",
     "start": "node ./dist/cli.js",
-    "test": "npm run type-check",
+    "test": "vitest --passWithNoTests",
+    "test:coverage": "vitest run --coverage --passWithNoTests",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
@@ -61,6 +62,7 @@
     "conf": "^12",
     "consola": "^3",
     "cosmiconfig": "^8",
+    "dotenv": "^16",
     "fast-deep-equal": "^3",
     "gpt-tokenizer": "^2",
     "ink": "^4.2",

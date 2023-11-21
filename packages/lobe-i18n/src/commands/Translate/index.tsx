@@ -4,7 +4,7 @@ import { consola } from 'consola';
 import { relative, resolve } from 'node:path';
 
 import { I18n, I18nWriteOptions } from '@/core/I18n';
-import { getOpenAIApiKey, getOpenAIProxyUrl, getTranslateConfig } from '@/store';
+import { selectors } from '@/store';
 import type { LocaleFolderObj, LocaleObj } from '@/types';
 import type { I18nConfig } from '@/types/config';
 import { checkLocaleFolders, checkLocales } from '@/utils/checkLocales';
@@ -20,11 +20,11 @@ class Translate {
   query: I18nWriteOptions[] = [];
   i18n: I18n;
   constructor() {
-    this.config = getTranslateConfig() as I18nConfig;
+    this.config = selectors.getConfigFile();
     this.i18n = new I18n({
       config: this.config,
-      openAIApiKey: getOpenAIApiKey(),
-      openAIProxyUrl: getOpenAIProxyUrl(),
+      openAIApiKey: selectors.getOpenAIApiKey(),
+      openAIProxyUrl: selectors.getOpenAIProxyUrl(),
     });
   }
 
