@@ -2,6 +2,37 @@
 
 # Changelog
 
+### [Version 1.1.1](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/label-cli@1.1.0...@lobehub/label-cli@1.1.1)
+
+<sup>Released on **2023-11-21**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix package, Fix workflow, Fix workflow.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix package ([699d657](https://github.com/lobehub/lobe-cli-toolbox/commit/699d657))
+- **misc**: Fix workflow ([b35cb27](https://github.com/lobehub/lobe-cli-toolbox/commit/b35cb27))
+- **misc**: Fix workflow ([f8e5ffe](https://github.com/lobehub/lobe-cli-toolbox/commit/f8e5ffe))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### Dependencies
+
+- **@lobehub/cli-ui:** upgraded to 1.9.1
+
 ## [Version 1.1.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/label-cli@1.0.3...@lobehub/label-cli@1.1.0)
 
 <sup>Released on **2023-10-24**</sup>
