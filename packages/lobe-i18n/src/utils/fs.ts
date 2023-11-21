@@ -9,3 +9,11 @@ export const writeJSON = (filePath: string, data: any) => {
   const jsonStr = JSON.stringify(data, null, 2);
   writeFileSync(filePath, jsonStr, 'utf8');
 };
+
+export const readMarkdown = (filePath: string): string => {
+  return readFileSync(filePath, 'utf8');
+};
+
+export const writeMarkdown = (filePath: string, data: string) => {
+  writeFileSync(filePath, data, 'utf8');
+};

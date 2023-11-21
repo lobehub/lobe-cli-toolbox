@@ -2,52 +2,52 @@ import remarkGfm from 'remark-gfm';
 import remarkParse from 'remark-parse';
 import remarkStringify from 'remark-stringify';
 import { unified } from 'unified';
+import { visit } from 'unist-util-visit';
 
-import { isNumeric } from '@/utils/isNumeric';
+import { LocaleObj } from '@/types';
+import { checkMdString } from '@/utils/checkMdString';
 
+// @ts-ignore
 export const convertMarkdownToMdast = async (md: string) => {
-  return await unified().use(remarkParse).use(remarkGfm).parse(md);
+  // @ts-ignore
+  return unified().use(remarkParse).use(remarkGfm).parse(md);
 };
 
-export const convertMdastToMarkdown = async (json: any) => {
-  return await unified().use(remarkStringify).use(remarkGfm).stringify(json);
+export const convertMdastToMdastObj = (mdast: any) => {
+  const obj: LocaleObj = {};
+  let index = 0;
+
+  visit(mdast, 'text', (node) => {
+    obj[index] = node.value;
+    index++;
+  });
+
+  return obj;
 };
 
-export const convertMdastToPureObject = (obj: any) => {
-  if (!obj || typeof obj !== 'object') {
-    return obj;
+export const pickMdastObj = (entry: LocaleObj) => {
+  const obj: LocaleObj = {};
+  for (const [key, value] of Object.entries(entry)) {
+    if (checkMdString(value as string)) continue;
+    obj[Number(key)] = value;
   }
-
-  let newObj: any = Array.isArray(obj) ? {} : {};
-  for (let key in obj) {
-    if (key === 'children' && Array.isArray(obj[key])) {
-      newObj[key] = obj[key].length > 0 ? {} : [];
-      for (let i = 0; i < obj[key].length; i++) {
-        newObj[key][i] = convertMdastToPureObject(obj[key][i]);
-      }
-    } else if (typeof obj[key] === 'object' && obj[key] !== null) {
-      newObj[key] = convertMdastToPureObject(obj[key]);
-    } else {
-      newObj[key] = obj[key];
-    }
-  }
-  return newObj;
+  return obj;
 };
 
-export const convertPureObjectToMdast = (obj: any) => {
-  if (typeof obj !== 'object' || obj === null) {
-    return obj;
-  }
+export const mergeMdastObj = (mdast: any, entry: LocaleObj, target: LocaleObj) => {
+  const merged = { ...entry, ...target };
 
-  let newObj: any = Array.isArray(obj) ? [] : {};
-  for (let key in obj) {
-    // eslint-disable-next-line no-prototype-builtins
-    if (obj.hasOwnProperty(key)) {
-      if (isNumeric(key) && !Array.isArray(newObj)) {
-        newObj = Object.values(newObj);
-      }
-      newObj[key] = convertPureObjectToMdast(obj[key]);
-    }
-  }
-  return newObj;
+  let index = 0;
+
+  visit(mdast, 'text', (node) => {
+    node.value = merged[index];
+    index++;
+  });
+
+  return mdast;
+};
+
+export const convertMdastToMarkdown = async (json: any): Promise<string> => {
+  // @ts-ignore
+  return unified().use(remarkStringify).use(remarkGfm).stringify(json);
 };

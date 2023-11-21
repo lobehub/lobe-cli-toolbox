@@ -2,11 +2,13 @@
 
 <img height="120" src="https://gw.alipayobjects.com/zos/kitchen/T6E4BDoMNb/lobe-cli.webp">
 <img height="120" src="https://gw.alipayobjects.com/zos/kitchen/qJ3l3EPsdW/split.svg">
-<img height="120" src="https://registry.npmmirror.com/@lobehub/assets-emoji/1.3.0/files/assets/label.webp">
+<img height="120" src="https://registry.npmmirror.com/@lobehub/assets-emoji/1.3.0/files/assets/love-letter.webp">
 
-<h1>Lobe Label</h1>
+<h1>Lobe Commit</h1>
 
-Automatically copy issues labels from template repo
+Lobe Commit 是一款使用 ChatGPT 生成基于 Gitmoji 的 CLI 提交工具
+
+[English](./README.md)・简体中文・[Changelog](./CHANGELOG.md) · [Report Bug][issues-url] · [Request Feature][issues-url]
 
 [![][npm-release-shield]][npm-release-link]
 [![][github-releasedate-shield]][github-releasedate-link]
@@ -18,22 +20,57 @@ Automatically copy issues labels from template repo
 [![][github-issues-shield]][github-issues-link]
 [![][github-license-shield]][github-license-link]
 
-[Changelog](./CHANGELOG.md) · [Report Bug][github-issues-link] · [Request Feature][github-issues-link]
-
-![](https://gw.alipayobjects.com/zos/kitchen/qeTFEqgF8O/437shots_so.png)
+![](https://gw.alipayobjects.com/zos/kitchen/3%26ByxtP39X/preview.webp)
 
 </div>
 
-## 📦 Installation
+<details>
+<summary><kbd>文档目录</kbd></summary>
 
-To install Lobe Label, run the following command:
+#### TOC
+
+- [✨ 特性](#-特性)
+- [📦 安装](#-安装)
+- [🤯 使用](#-使用)
+  - [Git hook](#git-hook)
+  - [配置](#配置)
+  - [选项](#选项)
+- [⌨️ 本地开发](#️-本地开发)
+- [🤝 参与贡献](#-参与贡献)
+- [🔗 链接](#-链接)
+  - [More Products](#more-products)
+  - [Credits](#credits)
+
+####
+
+</details>
+
+## ✨ 特性
+
+- [x] 🤯 支持使用 ChatGPT 根据 git diffs 自动生成提交信息
+- [x] 🛠️ 流畅的提交信息编辑流程
+- [x] 😜 支持添加 Gitmoji
+- [x] 📝 支持 Conventional Commits 规范
+- [x] ⚡️ 支持拉取 issues 列表并便捷绑定
+- [x] 💄 支持自定义 Prompt
+- [x] 🗺️ 支持多语言提交信息
+
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
+
+## 📦 安装
+
+要安装 Lobe Commit，请运行以下命令：
 
 ```bash
-npm install -g @lobehub/label-cli
+npm install -g @lobehub/commit-cli
 ```
 
 > \[!NOTE]\
-> Make sure you have Node.js version >= 18\*
+> 请确保 Node.js 版本 >= 18
 
 <div align="right">
 
@@ -41,34 +78,68 @@ npm install -g @lobehub/label-cli
 
 </div>
 
-## 🤯 Usage
+## 🤯 使用
 
-To initialize the Lobe i8n configuration, run the following command:
-
-```shell
-$ lobe-label --config # or use the short flag -o
-```
-
-### Options
-
-Lobe Label supports the following options:
+使用 `lobe-commit` 命令为暂生成提交信息信息：
 
 ```shell
---target -t Target repo
---source -s Source repo
+$ git add <files...>
+$ lobe-commit
 ```
 
 > \[!NOTE]\
-> Default source repo is [canisminor1990/canisminor-template](https://github.com/canisminor1990/canisminor-template)\*
+> 如果认为 `lobe-commit` 太长了，可以使用`lobe`别名
 
-### Copy issues labels
+<br/>
+
+#### AI 模式
+
+在 AI 模式下，可以使用 ChatGPT 生成完整的提交信息
+
+> \[!IMPORTANT]\
+> 需要在设置中 `lobe-commit -o` 配置 OpenAI 令牌，同时如果有特殊的网络要求，也可以在设置中配置 OpenAI 的转发地址
+
+![](https://gw.alipayobjects.com/zos/kitchen/qmXcNvnjKf/preview-ai.webp)
+
+<br/>
+
+#### 编辑器模式
+
+在编辑器模式下，可以通过简单的流程生成 `<type>(<optional scope>): <subject> [<issues>]` 格式的提交信息，使用 <kbd>TAB</kbd> 返回上一步
+
+> \[!NOTE]\
+> 如果项目是 GitHub Repo，则将自动获取该仓库的 issues，可以使用 <kbd>空格</kbd> 选择多个问题将其链接到提交信息中
+
+![](https://gw.alipayobjects.com/zos/kitchen/QkJ5V8nbY6/preview-editor.webp)
+
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
+
+### Git hook
+
+可以通过 `prepare-commit-msg`钩子将 Lobe Commit 与 Git 集成，允许像往常一样使用 Git 并在提交之前编辑提交信息
+
+<br/>
+
+#### 安装
+
+要在项目中安装 hook，请运行以下命令：
 
 ```shell
-# Copy issues labels from canisminor1990/canisminor-template to lobehub/chat
-$ lobe-label -t lobehub/chat
+$ lobe-commit --init # 或使用短标志 -i
+```
 
-# Copy issues labels from lobehub/commit to lobehub/chat
-$ lobe-label -t lobehub/chat -s lobehub/commit
+<br/>
+
+#### 卸载
+
+要从项目中卸载 hook，请运行以下命令：
+
+```shell
+$ lobe-commit --remove # 或使用短标志 -r
 ```
 
 <div align="right">
@@ -77,13 +148,50 @@ $ lobe-label -t lobehub/chat -s lobehub/commit
 
 </div>
 
-## ⌨️ Local Development
+### 配置
 
-You can use Github Codespaces for online development:
+要配置 Lobe Commit，请运行以下命令：
+
+```shell
+$ lobe-commit --config # 或使用短标志 -o
+```
+
+- 要使用 AI 自动生成，需要在设置中填写 [OpenAI 令牌](https://platform.openai.com/account/api-keys)
+- 要自动拉取私人仓库 issues，需要在设置中填写具有 repo 权限的 [GitHub 令牌](https://github.com/settings/tokens)
+
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
+
+### 选项
+
+Lobe Commit 支持以下选项：
+
+```shell
+--commit -c 使用提示交互式提交
+--config -o 设置lobe-commit首选项
+--help -h 打印基本选项
+--init -i 将lobe-commit初始化为提交钩子
+--remove -r 删除先前初始化的提交钩子
+--list -l 列出所有可用的提交类型
+--version -v 打印lobe-commit安装版本
+```
+
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
+
+## ⌨️ 本地开发
+
+可以使用 Github Codespaces 进行在线开发：
 
 [![][github-codespace-shield]][github-codespace-link]
 
-Or clone it for local development:
+或者，可以克隆存储库并运行以下命令进行本地开发：
 
 [![][bun-shield]][bun-link]
 
@@ -91,7 +199,7 @@ Or clone it for local development:
 $ git clone https://github.com/lobehub/lobe-cli-toolbox.git
 $ cd lobe-cli-toolbox
 $ bun install
-$ cd packages/lobe-label
+$ cd packages/lobe-commit
 $ bun dev
 ```
 
@@ -101,9 +209,9 @@ $ bun dev
 
 </div>
 
-## 🤝 Contributing
+## 🤝 参与贡献
 
-Contributions of all types are more than welcome, if you are interested in contributing code, feel free to check out our GitHub [Issues][github-issues-link] to get stuck in to show us what you’re made of.
+我们非常欢迎各种形式的贡献。如果你对贡献代码感兴趣，可以查看我们的 GitHub [Issues][github-issues-link]，大展身手，向我们展示你的奇思妙想。
 
 [![][pr-welcome-shield]][pr-welcome-link]
 
@@ -115,7 +223,7 @@ Contributions of all types are more than welcome, if you are interested in contr
 
 </div>
 
-## 🔗 Links
+## 🔗 链接
 
 ### More Products
 
@@ -124,7 +232,16 @@ Contributions of all types are more than welcome, if you are interested in contr
 
 ### Credits
 
+- **langchainjs** - <https://github.com/hwchase17/langchainjs>
 - **ink** - <https://github.com/vadimdemedes/ink>
+- **gitmoji-commit-workflow** - <https://github.com/arvinxx/gitmoji-commit-workflow>
+- **gitmoji-cli** - <https://github.com/carloscuesta/gitmoji-cli>
+
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
 
 ---
 
@@ -158,10 +275,11 @@ This project is [MIT](./LICENSE) licensed.
 [github-releasedate-shield]: https://img.shields.io/github/release-date/lobehub/lobe-cli-toolbox?labelColor=black&style=flat-square
 [github-stars-link]: https://github.com/lobehub/lobe-cli-toolbox/network/stargazers
 [github-stars-shield]: https://img.shields.io/github/stars/lobehub/lobe-cli-toolbox?color=ffcb47&labelColor=black&style=flat-square
+[issues-url]: https://github.com/canisminor1990/lobe-commit/issues/new/choose
 [lobe-chat]: https://github.com/lobehub/lobe-chat
 [lobe-theme]: https://github.com/lobehub/sd-webui-lobe-theme
-[npm-release-link]: https://www.npmjs.com/package/@lobehub/label-cli
-[npm-release-shield]: https://img.shields.io/npm/v/@lobehub/label-cli?color=369eff&labelColor=black&logo=npm&logoColor=white&style=flat-square
+[npm-release-link]: https://www.npmjs.com/package/@lobehub/commit-cli
+[npm-release-shield]: https://img.shields.io/npm/v/@lobehub/commit-cli?color=369eff&labelColor=black&logo=npm&logoColor=white&style=flat-square
 [pr-welcome-link]: https://github.com/lobehub/lobe-cli-toolbox/pulls
 [pr-welcome-shield]: https://img.shields.io/badge/%F0%9F%A4%AF%20PR%20WELCOME-%E2%86%92-ffcb47?labelColor=black&style=for-the-badge
 [profile-link]: https://github.com/lobehub

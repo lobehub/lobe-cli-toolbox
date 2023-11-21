@@ -8,7 +8,7 @@
 
 Lobe Commit is a CLI tool that uses ChatGPT to generate Gitmoji-based commit messages
 
-English · [简体中文](./README-zh_CN.md) · [Changelog](./CHANGELOG.md) · [Report Bug][issues-url] · [Request Feature][issues-url]
+English · [简体中文](./README.zh-CN.md) · [Changelog](./CHANGELOG.md) · [Report Bug][issues-url] · [Request Feature][issues-url]
 
 [![][npm-release-shield]][npm-release-link]
 [![][github-releasedate-shield]][github-releasedate-link]
@@ -69,7 +69,7 @@ To install Lobe Commit, run the following command:
 npm install -g @lobehub/commit-cli
 ```
 
-> **Note**\
+> \[!NOTE]\
 > Make sure your node version >= 18
 
 <div align="right">
@@ -87,7 +87,7 @@ $ git add <files...>
 $ lobe-commit
 ```
 
-> **Note**\
+> \[!NOTE]\
 > Use the `lobe` alias if `lobe-commit` is too long for you.
 
 <br/>
@@ -96,7 +96,7 @@ $ lobe-commit
 
 With AI mode, you can generate a complete commit message using ChatGPT.
 
-> **Important**\
+> \[!IMPORTANT]\
 > To use AI auto-generation, you need to fill in your OpenAI token in the settings by `lobe-commit -o`. and if you have special network requirements, you can add OpenAI's forwarding address in the settings.
 
 ![](https://gw.alipayobjects.com/zos/kitchen/qmXcNvnjKf/preview-ai.webp)
@@ -107,7 +107,7 @@ With AI mode, you can generate a complete commit message using ChatGPT.
 
 In Editor mode, you can choose the `<type>(<optional scope>): <subject> [<issues>]` format by following a simple flow.
 
-> **Note**\
+> \[!NOTE]\
 > If your project is a GitHub repository, the Editor mode feature will automatically fetch the issues associated with your repository. You can select multiple issues to link to your commit message by <kbd>space</kbd> .
 
 ![](https://gw.alipayobjects.com/zos/kitchen/QkJ5V8nbY6/preview-editor.webp)

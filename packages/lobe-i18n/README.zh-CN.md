@@ -2,13 +2,15 @@
 
 <img height="120" src="https://gw.alipayobjects.com/zos/kitchen/T6E4BDoMNb/lobe-cli.webp">
 <img height="120" src="https://gw.alipayobjects.com/zos/kitchen/qJ3l3EPsdW/split.svg">
-<img height="120" src="https://registry.npmmirror.com/@lobehub/assets-emoji/1.3.0/files/assets/love-letter.webp">
+<img height="120" src="https://registry.npmmirror.com/@lobehub/assets-emoji/1.3.0/files/assets/globe-showing-asia-australia.webp">
 
-<h1>Lobe Commit</h1>
+<h1>Lobe i18n</h1>
 
-Lobe Commit 是一款使用 ChatGPT 生成基于 Gitmoji 的 CLI 提交工具
+Lobe i18n 是一款使用 ChatGPT 自动化 i18n 的 CLI 流程工具
 
 [English](./README.md)・简体中文・[Changelog](./CHANGELOG.md) · [Report Bug][issues-url] · [Request Feature][issues-url]
+
+<!-- SHIELD GROUP -->
 
 [![][npm-release-shield]][npm-release-link]
 [![][github-releasedate-shield]][github-releasedate-link]
@@ -20,7 +22,7 @@ Lobe Commit 是一款使用 ChatGPT 生成基于 Gitmoji 的 CLI 提交工具
 [![][github-issues-shield]][github-issues-link]
 [![][github-license-shield]][github-license-link]
 
-![](https://gw.alipayobjects.com/zos/kitchen/3%26ByxtP39X/preview.webp)
+![](https://gw.alipayobjects.com/zos/kitchen/AH7rvv06qn/preview-i18n.webp)
 
 </div>
 
@@ -32,9 +34,10 @@ Lobe Commit 是一款使用 ChatGPT 生成基于 Gitmoji 的 CLI 提交工具
 - [✨ 特性](#-特性)
 - [📦 安装](#-安装)
 - [🤯 使用](#-使用)
-  - [Git hook](#git-hook)
   - [配置](#配置)
-  - [选项](#选项)
+  - [结构选择](#结构选择)
+  - [运行](#运行)
+  - [](#-1)
 - [⌨️ 本地开发](#️-本地开发)
 - [🤝 参与贡献](#-参与贡献)
 - [🔗 链接](#-链接)
@@ -47,13 +50,12 @@ Lobe Commit 是一款使用 ChatGPT 生成基于 Gitmoji 的 CLI 提交工具
 
 ## ✨ 特性
 
-- [x] 🤯 支持使用 ChatGPT 根据 git diffs 自动生成提交信息
-- [x] 🛠️ 流畅的提交信息编辑流程
-- [x] 😜 支持添加 Gitmoji
-- [x] 📝 支持 Conventional Commits 规范
-- [x] ⚡️ 支持拉取 issues 列表并便捷绑定
-- [x] 💄 支持自定义 Prompt
-- [x] 🗺️ 支持多语言提交信息
+- [x] 🤖 利用 ChatGPT 实现 i18n 翻译自动化
+- [x] ✂️ 支持大型文件自动分割，不必担心 ChatGPT token 限制
+- [x] ♻️ 支持 i18n 增量更新，按照 `entry` 文件自动提取新增内容
+- [x] 🗂️ 支持单文件模式 `en.json` 和文件夹 `en/common.json` 模式，完美配合 `i18next` 使用
+- [x] 🌲 支持 `扁平` 和 `树状` locale 文件
+- [x] 🛠️ 支持自定义 OpenAI 模型、API 代理、temperature
 
 <div align="right">
 
@@ -63,14 +65,14 @@ Lobe Commit 是一款使用 ChatGPT 生成基于 Gitmoji 的 CLI 提交工具
 
 ## 📦 安装
 
-要安装 Lobe Commit，请运行以下命令：
+要安装 Lobe i8n，请运行以下命令：
 
 ```bash
-npm install -g @lobehub/commit-cli
+npm install -g @lobehub/i18n-cli
 ```
 
-> **Note**\
-> 请确保 Node.js 版本 >= 18
+> \[!NOTE]\
+> 请确保 \* _Node.js_ _版本_ _>= 18_
 
 <div align="right">
 
@@ -80,67 +82,14 @@ npm install -g @lobehub/commit-cli
 
 ## 🤯 使用
 
-使用 `lobe-commit` 命令为暂生成提交信息信息：
+要初始化配置 Lobe i8n，请运行以下命令：
 
 ```shell
-$ git add <files...>
-$ lobe-commit
+$ lobe-i18n --config # 或使用短标志 -o
 ```
 
-> **Note**\
-> 如果认为 `lobe-commit` 太长了，可以使用`lobe`别名
-
-<br/>
-
-#### AI 模式
-
-在 AI 模式下，可以使用 ChatGPT 生成完整的提交信息
-
-> **Important**\
-> 需要在设置中 `lobe-commit -o` 配置 OpenAI 令牌，同时如果有特殊的网络要求，也可以在设置中配置 OpenAI 的转发地址
-
-![](https://gw.alipayobjects.com/zos/kitchen/qmXcNvnjKf/preview-ai.webp)
-
-<br/>
-
-#### 编辑器模式
-
-在编辑器模式下，可以通过简单的流程生成 `<type>(<optional scope>): <subject> [<issues>]` 格式的提交信息，使用 <kbd>TAB</kbd> 返回上一步
-
-> **Note**\
-> 如果项目是 GitHub Repo，则将自动获取该仓库的 issues，可以使用 <kbd>空格</kbd> 选择多个问题将其链接到提交信息中
-
-![](https://gw.alipayobjects.com/zos/kitchen/QkJ5V8nbY6/preview-editor.webp)
-
-<div align="right">
-
-[![][back-to-top]](#readme-top)
-
-</div>
-
-### Git hook
-
-可以通过 `prepare-commit-msg`钩子将 Lobe Commit 与 Git 集成，允许像往常一样使用 Git 并在提交之前编辑提交信息
-
-<br/>
-
-#### 安装
-
-要在项目中安装 hook，请运行以下命令：
-
-```shell
-$ lobe-commit --init # 或使用短标志 -i
-```
-
-<br/>
-
-#### 卸载
-
-要从项目中卸载 hook，请运行以下命令：
-
-```shell
-$ lobe-commit --remove # 或使用短标志 -r
-```
+> \[!IMPORTANT]\
+> 要使用 AI 自动生成，需要在设置中填写 [OpenAI 令牌](https://platform.openai.com/account/api-keys)
 
 <div align="right">
 
@@ -150,14 +99,62 @@ $ lobe-commit --remove # 或使用短标志 -r
 
 ### 配置
 
-要配置 Lobe Commit，请运行以下命令：
+可以按照 [cosmiconfig](https://github.com/cosmiconfig/cosmiconfig) 格式任选配置方式
 
-```shell
-$ lobe-commit --config # 或使用短标志 -o
+- `package.json` 中的 `i18n` 属性
+- 以 JSON 或 YAML 格式的 `.i18nrc` 文件
+- `.i18nrc.json`、`.i18nrc.yaml`、`.i18nrc.yml`、`.i18nrc.js`、`.i18nrc.mjs` 或 `.i18nrc.cjs` 文件
+- `.config` 子目录中的 `i18nrc`、`i18nrc.json`、`i18nrc.yaml`、`i18nrc.yml`、`i18nrc.js` 或 `i18nrc.cjs` 文件
+- `i18n.config.js`、`i18n.config.mjs` 或 `i18n.config.cjs` 文件
+
+| 属性名称      | 类型      | 默认值            | 描述                             |
+| ------------- | --------- | ----------------- | -------------------------------- |
+| entry         | string    | -                 | 入口文件或文件夹                 |
+| entryLocale   | string    | -                 | 作为翻译参考的语言               |
+| modelName     | string    | `'gpt-3.5-turbo'` | 使用的模型                       |
+| output        | string    | -                 | 存储本地化文件的位置             |
+| outputLocales | string\[] | -                 | 需要进行翻译的所有语言           |
+| reference     | string    | -                 | 提供一些上下文以获得更准确的翻译 |
+| splitToken    | number    | `2000`            | 按令牌分割本地化 JSON 文件       |
+| temperature   | number    | `0`               | 使用的采样温度                   |
+
+**示例一 `.i18nrc.js`**
+
+```js
+const { defineConfig } = require('@lobehub/i18n-cli');
+
+module.exports = defineConfig({
+  entry: 'locales/en.json',
+  entryLocale: 'en',
+  output: 'locales',
+  outputLocales: ['zh_CN', 'jp'],
+});
 ```
 
-- 要使用 AI 自动生成，需要在设置中填写 [OpenAI 令牌](https://platform.openai.com/account/api-keys)
-- 要自动拉取私人仓库 issues，需要在设置中填写具有 repo 权限的 [GitHub 令牌](https://github.com/settings/tokens)
+**示例二 `.i18nrc.json`**
+
+```json
+{
+  "entry": "locales/en.json",
+  "entryLocale": "en",
+  "output": "locales",
+  "outputLocales": ["zh_CN", "jp"]
+}
+```
+
+**示例三 `package.json`**
+
+```json
+{
+  "...": "...",
+  "i18n": {
+    "entry": "locales/en.json",
+    "entryLocale": "en",
+    "output": "locales",
+    "outputLocales": ["zh_CN", "jp"]
+  }
+}
+```
 
 <div align="right">
 
@@ -165,19 +162,73 @@ $ lobe-commit --config # 或使用短标志 -o
 
 </div>
 
-### 选项
+### 结构选择
 
-Lobe Commit 支持以下选项：
+**单文件结构**
+
+```
+- locales
+	- en.json
+	- jp.json
+	- zh_CN.json
+	- ...
+```
+
+需要在配置文件中将 `entry` 配置为对应的 JSON 文件 [示例](./examples/flat/.i18nrc.cjs)
+
+```json
+{
+  "entry": "locales/en.json",
+  "entryLocale": "en",
+  "output": "locales",
+  "outputLocales": ["zh_CN", "jp"]
+}
+```
+
+**文件夹结构**
+
+```
+- locales
+	- en
+		- common.json
+		- header.json
+		- ...
+	- jp
+		- common.json
+		- header.json
+		- ...
+	- zh_CN
+		- common.json
+		- header.json
+		- ...
+```
+
+需要在配置文件中将 `entry` 配置为对应的文件夹 [示例](./examples/tree/.i18nrc.cjs)
+
+```json
+{
+  "entry": "locales/en",
+  "entryLocale": "en",
+  "output": "locales",
+  "outputLocales": ["zh_CN", "jp"]
+}
+```
+
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
+
+### 运行
+
+使用 `lobe-i18n` 命令自动化生成 i18n 文件：
 
 ```shell
---commit -c 使用提示交互式提交
---config -o 设置lobe-commit首选项
---help -h 打印基本选项
---init -i 将lobe-commit初始化为提交钩子
---remove -r 删除先前初始化的提交钩子
---list -l 列出所有可用的提交类型
---version -v 打印lobe-commit安装版本
+$ lobe-i18n
 ```
+
+###
 
 <div align="right">
 
@@ -199,7 +250,7 @@ Lobe Commit 支持以下选项：
 $ git clone https://github.com/lobehub/lobe-cli-toolbox.git
 $ cd lobe-cli-toolbox
 $ bun install
-$ cd packages/lobe-commit
+$ cd packages/lobe-i18n
 $ bun dev
 ```
 
@@ -234,8 +285,7 @@ $ bun dev
 
 - **langchainjs** - <https://github.com/hwchase17/langchainjs>
 - **ink** - <https://github.com/vadimdemedes/ink>
-- **gitmoji-commit-workflow** - <https://github.com/arvinxx/gitmoji-commit-workflow>
-- **gitmoji-cli** - <https://github.com/carloscuesta/gitmoji-cli>
+- **transmart** - <https://github.com/Quilljou/transmart>
 
 <div align="right">
 
@@ -278,8 +328,8 @@ This project is [MIT](./LICENSE) licensed.
 [issues-url]: https://github.com/canisminor1990/lobe-commit/issues/new/choose
 [lobe-chat]: https://github.com/lobehub/lobe-chat
 [lobe-theme]: https://github.com/lobehub/sd-webui-lobe-theme
-[npm-release-link]: https://www.npmjs.com/package/@lobehub/commit-cli
-[npm-release-shield]: https://img.shields.io/npm/v/@lobehub/commit-cli?color=369eff&labelColor=black&logo=npm&logoColor=white&style=flat-square
+[npm-release-link]: https://www.npmjs.com/package/@lobehub/i18n-cli
+[npm-release-shield]: https://img.shields.io/npm/v/@lobehub/i18n-cli?color=369eff&labelColor=black&logo=npm&logoColor=white&style=flat-square
 [pr-welcome-link]: https://github.com/lobehub/lobe-cli-toolbox/pulls
 [pr-welcome-shield]: https://img.shields.io/badge/%F0%9F%A4%AF%20PR%20WELCOME-%E2%86%92-ffcb47?labelColor=black&style=for-the-badge
 [profile-link]: https://github.com/lobehub

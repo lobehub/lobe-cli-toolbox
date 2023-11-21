@@ -42,7 +42,7 @@ Lobe CLI UI is an open-source UI component library for building _AIGC_ cli apps
 
 ## 📦 Installation
 
-> **Important**\
+> \[!IMPORTANT]\
 > This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c).
 
 To install Lobe UI, run the following command:

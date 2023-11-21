@@ -54,3 +54,30 @@ export const getEntryFolderFiles = (config: I18nConfig): LocaleFolderObj | void 
 
   return obj;
 };
+
+export const getMarkdownFolderFiles = (path: string): string[] => {
+  const entryPath = resolve('.', path);
+
+  const readLocaleFiles = (dir: string, files: string[]) => {
+    try {
+      const items = readdirSync(dir);
+
+      for (const item of items) {
+        const fullPath = join(dir, item);
+        if (statSync(fullPath).isDirectory()) {
+          readLocaleFiles(fullPath, files); // 递归调用处理子目录
+        } else if (item.endsWith('.md')) {
+          files.push(relative('.', fullPath));
+        }
+      }
+    } catch (error) {
+      consola.error(error);
+      process.exit(1);
+    }
+  };
+
+  const files: string[] = [];
+  readLocaleFiles(entryPath, files);
+
+  return files;
+};

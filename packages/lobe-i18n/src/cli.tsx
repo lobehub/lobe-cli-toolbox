@@ -3,7 +3,7 @@ import { Command, Option } from 'commander';
 import updateNotifier from 'update-notifier';
 
 import packageJson from '@/../package.json';
-import { Config, Translate } from '@/commands';
+import { Config, TranslateLocale, TranslateMarkdown } from '@/commands';
 
 const notifier = updateNotifier({
   pkg: packageJson,
@@ -18,8 +18,22 @@ program
   .name('lobe-i18n')
   .description(packageJson.description)
   .version(packageJson.version)
-  .addOption(new Option('-o, --config', 'Setup lobe-i18n preferences'))
-  .parse();
+  .addOption(new Option('-o, --config', 'Setup lobe-i18n preferences'));
+
+program.command('locale', { isDefault: true }).action(() => {
+  const options: Flags = program.opts();
+  if (options.config) {
+    render(<Config />);
+  } else {
+    new TranslateLocale().start();
+  }
+});
+
+program.command('md').action(() => {
+  new TranslateMarkdown().start();
+});
+
+program.parse();
 
 interface Flags {
   config?: boolean;
@@ -28,6 +42,4 @@ interface Flags {
 const options: Flags = program.opts();
 if (options.config) {
   render(<Config />);
-} else {
-  new Translate().start();
 }

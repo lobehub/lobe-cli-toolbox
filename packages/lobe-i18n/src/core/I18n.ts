@@ -1,5 +1,6 @@
 import { merge } from 'lodash-es';
 
+import { TranslateMarkdown } from '@/core/TranslateMarkdown';
 import { LocaleObj } from '@/types';
 import { I18nConfig } from '@/types/config';
 import { mergeJsonFromChunks } from '@/utils/mergeJsonFromChunks';
@@ -27,7 +28,16 @@ export interface I18nTranslateOptions {
   to: string;
 }
 
+export interface I18nMarkdownTranslateOptions
+  extends Pick<I18nTranslateOptions, 'from' | 'to' | 'onProgress'> {
+  md: string;
+}
+
 export interface I18nWriteOptions extends I18nTranslateOptions {
+  filename: string;
+}
+
+export interface I18nMarkdownWriteOptions extends I18nMarkdownTranslateOptions {
   filename: string;
 }
 
@@ -39,6 +49,22 @@ export class I18n {
   constructor({ openAIApiKey, openAIProxyUrl, config }: I18nOptions) {
     this.config = config;
     this.translateLocale = new TranslateLocale(config, openAIApiKey, openAIProxyUrl);
+  }
+
+  async translateMarkdown({
+    md,
+    ...rest
+  }: I18nMarkdownTranslateOptions): Promise<string | undefined> {
+    const translateMarkdown = new TranslateMarkdown();
+    const target = await translateMarkdown.genTarget(md);
+
+    const translatedTarget = await this.translate({
+      ...rest,
+      entry: target,
+      target: {},
+    });
+
+    return translateMarkdown.genMarkdown(translatedTarget);
   }
 
   async translate({

@@ -1,4 +1,4 @@
-import { LanguageModel } from '@/types/models';
+import { LanguageModel } from './models';
 
 export interface I18nConfigLocale {
   /**
@@ -35,8 +35,16 @@ export interface I18nConfigLocale {
   temperature?: number;
 }
 
+export interface MarkdownConfig {
+  entry: string[];
+  entryExtension?: string;
+  entryLocale?: string;
+  outputExtensionsOverrides?: Record<string, string>;
+  outputLocales?: string[];
+}
+
 export interface I18nConfig extends I18nConfigLocale {
-  readme?: I18nConfigLocale;
+  markdown?: MarkdownConfig;
 }
 
 export type OptionKeys = keyof I18nConfig;

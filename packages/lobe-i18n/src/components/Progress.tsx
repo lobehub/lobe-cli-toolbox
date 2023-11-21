@@ -5,13 +5,13 @@ import { memo } from 'react';
 
 import { onProgressProps } from '@/core/I18n';
 
-interface QueryItemProps extends onProgressProps {
+interface ProgressProps extends onProgressProps {
   filename: string;
   from: string;
   to: string;
 }
 
-const QueryItem = memo<QueryItemProps>(({ filename, to, from, progress, maxStep, step }) => {
+const Progress = memo<ProgressProps>(({ filename, to, from, progress, maxStep, step }) => {
   const theme = useTheme();
 
   return (
@@ -43,4 +43,4 @@ const QueryItem = memo<QueryItemProps>(({ filename, to, from, progress, maxStep,
   );
 });
 
-export default QueryItem;
+export default Progress;

@@ -3,6 +3,7 @@ import chalk from 'chalk';
 import { consola } from 'consola';
 import { relative, resolve } from 'node:path';
 
+import Progress from '@/components/Progress';
 import { I18n, I18nWriteOptions } from '@/core/I18n';
 import { selectors } from '@/store';
 import type { LocaleFolderObj, LocaleObj } from '@/types';
@@ -13,14 +14,12 @@ import { getEntryFile, getEntryFolderFiles } from '@/utils/getEntryFile';
 import { getLocaleObj } from '@/utils/getLocaleObj';
 import { isEqualJsonKeys } from '@/utils/isEqualJsonKeys';
 
-import App from './App';
-
-class Translate {
+class TranslateLocale {
   config: I18nConfig;
   query: I18nWriteOptions[] = [];
   i18n: I18n;
   constructor() {
-    this.config = selectors.getConfigFile();
+    this.config = selectors.getLocaleConfig();
     this.i18n = new I18n({
       config: this.config,
       openAIApiKey: selectors.getOpenAIApiKey(),
@@ -52,12 +51,12 @@ class Translate {
         to: item.to,
       };
       const { rerender, clear } = render(
-        <App isLoading={true} maxStep={1} progress={0} step={0} {...props} />,
+        <Progress isLoading={true} maxStep={1} progress={0} step={0} {...props} />,
       );
       const data = await this.i18n.translate({
         ...item,
         onProgress: (rest) => {
-          rerender(<App {...rest} {...props} />);
+          rerender(<Progress {...rest} {...props} />);
         },
       });
       clear();
@@ -99,7 +98,11 @@ class Translate {
   genFlatQuery() {
     const config = this.config;
     const entry = getEntryFile(config) as LocaleObj;
-    consola.start(`Running in ${chalk.bold.cyan('📄 Flat Mode')}.`);
+    consola.start(
+      `Running in ${chalk.bold.cyan('📄 Flat Mode')}, and translating ${chalk.bold.cyan(
+        config.outputLocales.join('/'),
+      )} locales..`,
+    );
     checkLocales(config);
     for (const locale of config.outputLocales) {
       const targetFilename = resolve(config.output, locale) + '.json';
@@ -117,4 +120,4 @@ class Translate {
   }
 }
 
-export default Translate;
+export default TranslateLocale;

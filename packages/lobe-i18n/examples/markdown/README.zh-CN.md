@@ -71,7 +71,7 @@ Lobe i18n 是一款使用 ChatGPT 自动化 i18n 的 CLI 流程工具
 npm install -g @lobehub/i18n-cli
 ```
 
-> **Note**\
+> \[!NOTE]\
 > 请确保 \* _Node.js_ _版本_ _>= 18_
 
 <div align="right">
@@ -88,7 +88,7 @@ npm install -g @lobehub/i18n-cli
 $ lobe-i18n --config # 或使用短标志 -o
 ```
 
-> **Important**\
+> \[!IMPORTANT]\
 > 要使用 AI 自动生成，需要在设置中填写 [OpenAI 令牌](https://platform.openai.com/account/api-keys)
 
 <div align="right">
