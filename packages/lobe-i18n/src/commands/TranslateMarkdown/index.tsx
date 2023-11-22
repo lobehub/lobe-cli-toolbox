@@ -129,6 +129,7 @@ class TranslateMarkdown {
 
   private getMode(filePath: string, fileContent: string) {
     const modeConfig = this.markdownConfig.mode;
+    if (!modeConfig) return MarkdownModeType.STRING;
     return isString(modeConfig)
       ? modeConfig
       : modeConfig({ fileContent, filePath }) || MarkdownModeType.STRING;
