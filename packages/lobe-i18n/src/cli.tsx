@@ -4,6 +4,7 @@ import updateNotifier from 'update-notifier';
 
 import packageJson from '@/../package.json';
 import { Config, TranslateLocale, TranslateMarkdown } from '@/commands';
+import { explorer } from '@/store/config';
 
 const notifier = updateNotifier({
   pkg: packageJson,
@@ -14,32 +15,37 @@ notifier.notify({ isGlobal: true });
 
 const program = new Command();
 
+interface Flags {
+  config?: string;
+  option?: boolean;
+  withMd?: boolean;
+}
+
 program
   .name('lobe-i18n')
   .description(packageJson.description)
   .version(packageJson.version)
-  .addOption(new Option('-o, --config', 'Setup lobe-i18n preferences'));
+  .addOption(new Option('-o, --option', 'Setup lobe-i18n preferences'))
+  .addOption(new Option('-c, --config <string>', 'Specify the configuration file'))
+  .addOption(
+    new Option('-m, --with-md', 'Run i18n translation and markdown translation simultaneously'),
+  );
 
-program.command('locale', { isDefault: true }).action(() => {
+program.command('locale', { isDefault: true }).action(async () => {
   const options: Flags = program.opts();
-  if (options.config) {
+  if (options.option) {
     render(<Config />);
   } else {
-    new TranslateLocale().start();
+    if (options.config) explorer.loadCustomConfig(options.config);
+    await new TranslateLocale().start();
+    if (options.withMd) await new TranslateMarkdown().start();
   }
 });
 
-program.command('md').action(() => {
-  new TranslateMarkdown().start();
+program.command('md').action(async () => {
+  const options: Flags = program.opts();
+  if (options.config) explorer.loadCustomConfig(options.config);
+  await new TranslateMarkdown().start();
 });
 
 program.parse();
-
-interface Flags {
-  config?: boolean;
-}
-
-const options: Flags = program.opts();
-if (options.config) {
-  render(<Config />);
-}

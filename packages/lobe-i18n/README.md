@@ -76,8 +76,8 @@ To install Lobe i18n, run the following command:
 npm install -g @lobehub/i18n-cli
 ```
 
-> \[!NOTE]\
-> Please make sure you have _Node.js_ version _>= 18_.
+> \[!IMPORTANT]\
+> Please make sure you have `Node.js` version **>= 18**.
 
 <div align="right">
 
@@ -90,7 +90,7 @@ npm install -g @lobehub/i18n-cli
 To initialize the Lobe i18n configuration, run the following command:
 
 ```shell
-$ lobe-i18n --config # or use the short flag -o
+$ lobe-i18n -o # or use the full flag --option
 ```
 
 > \[!IMPORTANT]\
@@ -98,12 +98,16 @@ $ lobe-i18n --config # or use the short flag -o
 
 ```shell
 # Translate Locale files
-$ lobe-i18n
-## or
-$ lobe-i18n locale
+$ lobe-i18n # or $ lobe-i18n locale
 
 # Translate Markdown files
 $ lobe-i18n md
+
+# Run i18n translation and markdown translation simultaneously
+$ lobe-i18n --with-md
+
+# Specify the configuration file
+$ lobe-i18n -c './custom-config.js' # or use the full flag --config
 ```
 
 <br/>
@@ -142,23 +146,23 @@ This project provides some additional configuration items set with environment v
 
 | Property Name | Required | Type           | Default Value   | Description                                                                  |
 | ------------- | -------- | -------------- | --------------- | ---------------------------------------------------------------------------- |
-| entry         | Yes      | `string`       | -               | Entry file or folder                                                         |
-| entryLocale   | Yes      | `string`       | -               | Language to use as translation reference                                     |
-| modelName     | No       | `string`       | `gpt-3.5-turbo` | Model to use                                                                 |
-| output        | Yes      | `string`       | -               | Location to store localized files                                            |
-| outputLocales | Yes      | `string[]  `   | -               | All the languages to be translated                                           |
-| reference     | No       | `string`       | -               | Provide some context for more accurate translations                          |
-| splitToken    | No       | `number`       | -               | Split the localized JSON file by tokens, automatically calculated by default |
-| temperature   | No       | `number`       | `0`             | Sampling temperature to use                                                  |
-| concurrency   | No       | `number`       | `5`             | Number of concurrently pending promises returned                             |
-| experimental  | No       | `experimental` |                 | Experimental features, see below                                             |
-| markdown      | No       | `markdown`     |                 | See `markdown` configuration below                                           |
+| entry         | `*`      | `string`       | -               | Entry file or folder                                                         |
+| entryLocale   | `*`      | `string`       | -               | Language to use as translation reference                                     |
+| modelName     |          | `string`       | `gpt-3.5-turbo` | Model to use                                                                 |
+| output        | `*`      | `string`       | -               | Location to store localized files                                            |
+| outputLocales | `*`      | `string[]  `   | `[]`            | All the languages to be translated                                           |
+| reference     |          | `string`       | -               | Provide some context for more accurate translations                          |
+| splitToken    |          | `number`       | -               | Split the localized JSON file by tokens, automatically calculated by default |
+| temperature   |          | `number`       | `0`             | Sampling temperature to use                                                  |
+| concurrency   |          | `number`       | `5`             | Number of concurrently pending promises returned                             |
+| experimental  |          | `experimental` | `{}`            | Experimental features, see below                                             |
+| markdown      |          | `markdown`     | `{}`            | See `markdown` configuration below                                           |
 
 #### `experimental`
 
-| Property Name | Required | Type    | Default Value | Description                                                                                   |
-| ------------- | -------- | ------- | ------------- | --------------------------------------------------------------------------------------------- |
-| jsonMode      | No       | boolean | false         | Enable gpt force JSON output for stability (only supported by new models after November 2023) |
+| Property Name | Required | Type      | Default Value | Description                                                                                   |
+| ------------- | -------- | --------- | ------------- | --------------------------------------------------------------------------------------------- |
+| jsonMode      |          | `boolean` | `false`       | Enable gpt force JSON output for stability (only supported by new models after November 2023) |
 
 <br/>
 
@@ -287,16 +291,16 @@ $ lobe-i18n
 
 ## 📝 Markdown Configuration
 
-| Property Name    | Required | Type                      | Default                      | Description                                                             |
-| ---------------- | -------- | ------------------------- | ---------------------------- | ----------------------------------------------------------------------- |
-| entry            | Yes      | `string[]`                | -                            | Entry file or folder, supports `glob`                                   |
-| entryLocale      | No       | `string`                  | Parent locale                | Reference language for translation                                      |
-| entryExtension   | No       | `string`                  | `.md`                        | Entry file extension                                                    |
-| exclude          | No       | `string[]`                | -                            | Files to be filtered, supports `glob`                                   |
-| outputLocales    | No       | `string[]`                | Parent locale                | All languages to be translated                                          |
-| outputExtensions | No       | `function`                | `(locale) => '.{locale}.md'` | Output file extension generation                                        |
-| mode             | No       | `string``mdast``function` | `string`                     | Translation mode selection, explained below                             |
-| translateCode    | No       | `boolean`                 | `false`                      | Whether to translate code blocks under `mdast`, other modes are invalid |
+| Property Name    | Required | Type                        | Default                      | Description                                                             |
+| ---------------- | -------- | --------------------------- | ---------------------------- | ----------------------------------------------------------------------- |
+| entry            | `*`      | `string[]`                  | `[]`                         | Entry file or folder, supports `glob`                                   |
+| entryLocale      |          | `string`                    | _Inherit parent locale_      | Reference language for translation                                      |
+| entryExtension   |          | `string`                    | `.md`                        | Entry file extension                                                    |
+| exclude          |          | `string[]`                  | `[]`                         | Files to be filtered, supports `glob`                                   |
+| outputLocales    |          | `string[]`                  | _Inherit parent locale_      | All languages to be translated                                          |
+| outputExtensions |          | `function`                  | `(locale) => '.{locale}.md'` | Output file extension generation                                        |
+| mode             |          | `string`,`mdast`,`function` | `string`                     | Translation mode selection, explained below                             |
+| translateCode    |          | `boolean`                   | `false`                      | Whether to translate code blocks under `mdast`, other modes are invalid |
 
 #### `outputExtensions`
 

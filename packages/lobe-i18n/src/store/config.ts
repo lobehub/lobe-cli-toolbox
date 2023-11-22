@@ -1,5 +1,5 @@
 import Conf from 'conf';
-import { cosmiconfigSync } from 'cosmiconfig';
+import { PublicExplorerSync, cosmiconfigSync } from 'cosmiconfig';
 
 import { ConfigSchema } from '@/types/config';
 
@@ -17,4 +17,22 @@ export const config = new Conf({
   projectName: 'lobe-i18n',
   schema,
 });
-export const explorer = cosmiconfigSync('i18n');
+
+class ExplorerConfig {
+  explorer: PublicExplorerSync;
+  customConfig?: string;
+  constructor() {
+    this.explorer = cosmiconfigSync('i18n');
+  }
+
+  loadCustomConfig(pathToConfig: string) {
+    this.customConfig = pathToConfig;
+  }
+
+  getConfigFile() {
+    if (this.customConfig) return this.explorer.load(this.customConfig)?.config;
+    return this.explorer.search()?.config;
+  }
+}
+
+export const explorer = new ExplorerConfig();

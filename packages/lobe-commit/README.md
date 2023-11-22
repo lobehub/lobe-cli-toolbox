@@ -69,8 +69,8 @@ To install Lobe Commit, run the following command:
 npm install -g @lobehub/commit-cli
 ```
 
-> \[!NOTE]\
-> Make sure your node version >= 18
+> \[!IMPORTANT]\
+> Please make sure you have `Node.js` version **>= 18**
 
 <div align="right">
 
@@ -153,7 +153,7 @@ $ lobe-commit --remove # or use short flag -r
 To configure Lobe Commit, run the following command:
 
 ```shell
-$ lobe-commit --config # or use short flag -o
+$ lobe-commit --option # or use short flag -o
 ```
 
 - To use AI auto-generation, you need to fill in your [OpenAI token](<(https://platform.openai.com/account/api-keys)>) in the settings.
@@ -171,7 +171,7 @@ Lobe Commit supports the following options:
 
 ```shell
 --commit -c Interactively commit using the prompts
---config -o Setup lobe-commit preferences
+--option -o Setup lobe-commit preferences
 --help -h Print basic options
 --init -i Initialize lobe-commit as a commit hook
 --remove -r Remove a previously initialized commit hook

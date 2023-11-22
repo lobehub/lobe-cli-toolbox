@@ -26,7 +26,7 @@ export const getEntryFile = (config: I18nConfig): LocaleObj | void => {
 
 export const getEntryFolderFiles = (config: I18nConfig): LocaleFolderObj | void => {
   const entryPath = config.entry.replaceAll('*', '').replaceAll('*.json', '');
-  const files = globSync(join(entryPath, '**/*.json'));
+  const files = globSync(join(entryPath, '**/*.json'), { nodir: true });
 
   const obj: LocaleFolderObj = {};
 

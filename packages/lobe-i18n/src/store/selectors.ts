@@ -18,7 +18,7 @@ const getOpenAIApiKey = () => process.env.OPENAI_API_KEY || getConfig('openaiTok
 const getOpenAIProxyUrl = () => process.env.OPENAI_PROXY_URL || getConfig('apiBaseUrl');
 
 const getConfigFile = (): I18nConfig => {
-  const config: any = explorer.search()?.config;
+  const config: any = explorer.getConfigFile();
   // @ts-ignore
   if (!config) return alert.error(`Can't find ${chalk.bold.yellow('config')}`, true);
   return merge(DEFAULT_CONFIG, config);

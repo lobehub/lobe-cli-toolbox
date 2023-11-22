@@ -13,6 +13,7 @@ import type { I18nConfig } from '@/types/config';
 import { MarkdownConfig, MarkdownModeType } from '@/types/config';
 import { readMarkdown, writeMarkdown } from '@/utils/fs';
 import { getDefaultExtension } from '@/utils/getDefaultExtension';
+import { matchInputPattern } from '@/utils/matchInputPattern';
 
 class TranslateMarkdown {
   config: I18nConfig;
@@ -41,9 +42,10 @@ class TranslateMarkdown {
 
     if (!entry || entry.length === 0) alert.error('No markdown entry was found.', true);
 
-    const files = globSync(entry, { ignore: this.markdownConfig.exclude }).filter((file) =>
-      file.includes(this.markdownConfig.entryExtension || '.md'),
-    );
+    let files = globSync(matchInputPattern(entry, '.md'), {
+      ignore: matchInputPattern(this.markdownConfig.exclude || [], '.md'),
+      nodir: true,
+    }).filter((file) => file.includes(this.markdownConfig.entryExtension || '.md'));
 
     if (!files || files.length === 0) alert.error('No markdown entry was found.', true);
 
@@ -98,6 +100,7 @@ class TranslateMarkdown {
           const targetFilename = this.getTargetFilename(file, targetExtension);
           if (existsSync(targetFilename)) continue;
           const mode = this.getMode(file, md);
+          consola.info(`📄 To ${locale}: ${chalk.yellow(file)}`);
           this.query.push({
             filename: targetFilename,
             from: config.entryLocale,

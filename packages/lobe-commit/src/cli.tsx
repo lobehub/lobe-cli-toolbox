@@ -20,7 +20,7 @@ program
   .version(packageJson.version)
   .addOption(new Option('--hook', 'Interactively commit using the prompts'))
   .addOption(new Option('-a, --ai', 'Generate prompts by ChatGPT'))
-  .addOption(new Option('-o, --config', 'Setup lobe-commit preferences'))
+  .addOption(new Option('-o, --option', 'Setup lobe-commit preferences'))
   .addOption(new Option('-i, --init', 'Initialize lobe-commit as a commit hook'))
   .addOption(new Option('-r, --remove', 'Remove a previously initialized commit hook'))
   .addOption(new Option('-l, --list', 'List all commit types supported'))
@@ -28,10 +28,10 @@ program
 
 interface Flags {
   ai?: boolean;
-  config?: boolean;
   hook?: boolean;
   init?: boolean;
   list?: boolean;
+  option?: boolean;
   remove?: boolean;
 }
 
@@ -39,7 +39,7 @@ const options: Flags = program.opts();
 
 if (options.ai) {
   render(<Ai />);
-} else if (options.config) {
+} else if (options.option) {
   render(<Config />);
 } else if (options.init) {
   render(<HookCreate />);

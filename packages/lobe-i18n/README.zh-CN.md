@@ -76,8 +76,8 @@ Lobe i18n 是一款使用 ChatGPT 自动化 i18n 的 CLI 流程工具
 npm install -g @lobehub/i18n-cli
 ```
 
-> \[!NOTE]\
-> 请确保 \* _Node.js_ _版本_ _>= 18_
+> \[!IMPORTANT]\
+> 请确保环境中 `Node.js` 版本 **>= 18**
 
 <div align="right">
 
@@ -90,7 +90,7 @@ npm install -g @lobehub/i18n-cli
 要初始化配置 Lobe i8n，请运行以下命令：
 
 ```shell
-$ lobe-i18n --config # 或使用短标志 -o
+$ lobe-i18n -o # 或使用完整标志 --option
 ```
 
 > \[!IMPORTANT]\
@@ -104,6 +104,12 @@ $ lobe-i18n locale
 
 # 翻译 Markdown 文件
 $ lobe-i18n md
+
+# 同时运行 i18n 翻译和 markdown 翻译
+$ lobe-i18n --with-md
+
+# 指定配置文件
+$ lobe-i18n -c './custom-config.js' # or use the full flag --config
 ```
 
 <br/>
@@ -141,23 +147,23 @@ $ lobe-i18n md
 
 | 属性名称      | 必填 | 类型           | 默认值          | 描述                                     |
 | ------------- | ---- | -------------- | --------------- | ---------------------------------------- |
-| entry         | 是   | `string`       | -               | 入口文件或文件夹                         |
-| entryLocale   | 是   | `string`       | -               | 作为翻译参考的语言                       |
-| modelName     | 否   | `string`       | `gpt-3.5-turbo` | 使用的模型                               |
-| output        | 是   | `string`       | -               | 存储本地化文件的位置                     |
-| outputLocales | 是   | `string[] `    | -               | 需要进行翻译的所有语言                   |
-| reference     | 否   | `string`       | -               | 提供一些上下文以获得更准确的翻译         |
-| splitToken    | 否   | `number`       | -               | 按令牌分割本地化 JSON 文件，默认自动计算 |
-| temperature   | 否   | `number`       | `0`             | 使用的采样温度                           |
-| concurrency   | 否   | `number`       | `5`             | 同时并发的队列请求数量                   |
-| experimental  | 否   | `experimental` |                 | 实验性功能，见下文                       |
-| markdown      | 否   | `markdown`     |                 | 见 `markdown` 配置说明                   |
+| entry         | `*`  | `string`       | -               | 入口文件或文件夹                         |
+| entryLocale   | `*`  | `string`       | -               | 作为翻译参考的语言                       |
+| modelName     |      | `string`       | `gpt-3.5-turbo` | 使用的模型                               |
+| output        | `*`  | `string`       | -               | 存储本地化文件的位置                     |
+| outputLocales | `*`  | `string[] `    | `[]`            | 需要进行翻译的所有语言                   |
+| reference     |      | `string`       | -               | 提供一些上下文以获得更准确的翻译         |
+| splitToken    |      | `number`       | -               | 按令牌分割本地化 JSON 文件，默认自动计算 |
+| temperature   |      | `number`       | `0`             | 使用的采样温度                           |
+| concurrency   |      | `number`       | `5`             | 同时并发的队列请求数量                   |
+| experimental  |      | `experimental` | `{}`            | 实验性功能，见下文                       |
+| markdown      |      | `markdown`     | `{}`            | 见 `markdown` 配置说明                   |
 
 #### `experimental`
 
-| 属性名称 | 必填 | 类型    | 默认值 | 描述                                                           |
-| -------- | ---- | ------- | ------ | -------------------------------------------------------------- |
-| jsonMode | 否   | boolean | false  | 开启 gpt 强制 json 输出提升稳定性 (只支持 23 年 11 月后新模型) |
+| 属性名称 | 必填 | 类型      | 默认值  | 描述                                                           |
+| -------- | ---- | --------- | ------- | -------------------------------------------------------------- |
+| jsonMode |      | `boolean` | `false` | 开启 gpt 强制 json 输出提升稳定性 (只支持 23 年 11 月后新模型) |
 
 <br/>
 
@@ -288,14 +294,14 @@ $ lobe-i18n
 
 | 属性名称         | 必填 | 类型                        | 默认值                       | 描述                                      |
 | ---------------- | ---- | --------------------------- | ---------------------------- | ----------------------------------------- |
-| entry            | 是   | `string[]`                  | -                            | 入口文件或文件夹，支持 `glob`             |
-| entryLocale      | 否   | `string`                    | 同父级                       | 作为翻译参考的语言                        |
-| entryExtension   | 否   | `string`                    | `.md`                        | 入口文件扩展名                            |
-| exclude          | 否   | `string[]`                  | -                            | 需要过滤的文件，支持 `glob`               |
-| outputLocales    | 否   | `string[]`                  | 同父级                       | 需要进行翻译的所有语言                    |
-| outputExtensions | 否   | `function`                  | `(locale) => '.{locale}.md'` | 输出文件的扩展名生成                      |
-| mode             | 否   | `string`,`mdast`,`function` | `string`                     | 翻译的模式选择，解释见下文                |
-| translateCode    | 否   | `boolean`                   | `false`                      | 在 `mdast` 下是否翻译代码块，其他模式无效 |
+| entry            | `*`  | `string[]`                  | `[]`                         | 入口文件或文件夹，支持 `glob`             |
+| entryLocale      |      | `string`                    | _继承同父级_                 | 作为翻译参考的语言                        |
+| entryExtension   |      | `string`                    | `.md`                        | 入口文件扩展名                            |
+| exclude          |      | `string[]`                  | `[]`                         | 需要过滤的文件，支持 `glob`               |
+| outputLocales    |      | `string[]`                  | _继承同父级_                 | 需要进行翻译的所有语言                    |
+| outputExtensions |      | `function`                  | `(locale) => '.{locale}.md'` | 输出文件的扩展名生成                      |
+| mode             |      | `string`,`mdast`,`function` | `string`                     | 翻译的模式选择，解释见下文                |
+| translateCode    |      | `boolean`                   | `false`                      | 在 `mdast` 下是否翻译代码块，其他模式无效 |
 
 #### `outputExtensions`
 

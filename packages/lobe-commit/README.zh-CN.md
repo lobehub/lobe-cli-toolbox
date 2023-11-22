@@ -69,8 +69,8 @@ Lobe Commit 是一款使用 ChatGPT 生成基于 Gitmoji 的 CLI 提交工具
 npm install -g @lobehub/commit-cli
 ```
 
-> \[!NOTE]\
-> 请确保 Node.js 版本 >= 18
+> \[!IMPORTANT]\
+> 请确保环境中 `Node.js` 版本 **>= 18**
 
 <div align="right">
 
@@ -153,7 +153,7 @@ $ lobe-commit --remove # 或使用短标志 -r
 要配置 Lobe Commit，请运行以下命令：
 
 ```shell
-$ lobe-commit --config # 或使用短标志 -o
+$ lobe-commit --option # 或使用短标志 -o
 ```
 
 - 要使用 AI 自动生成，需要在设置中填写 [OpenAI 令牌](https://platform.openai.com/account/api-keys)
@@ -171,7 +171,7 @@ Lobe Commit 支持以下选项：
 
 ```shell
 --commit -c 使用提示交互式提交
---config -o 设置lobe-commit首选项
+--option -o 设置lobe-commit首选项
 --help -h 打印基本选项
 --init -i 将lobe-commit初始化为提交钩子
 --remove -r 删除先前初始化的提交钩子
