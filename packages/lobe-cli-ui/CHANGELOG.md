@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.10.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/cli-ui@1.9.1...@lobehub/cli-ui@1.10.0)
+
+<sup>Released on **2023-11-22**</sup>
+
+#### ✨ Features
+
+- **misc**: Lobe I18N support markdown.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Lobe I18N support markdown ([931590f](https://github.com/lobehub/lobe-cli-toolbox/commit/931590f))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.9.1](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/cli-ui@1.9.0...@lobehub/cli-ui@1.9.1)
 
 <sup>Released on **2023-11-21**</sup>
