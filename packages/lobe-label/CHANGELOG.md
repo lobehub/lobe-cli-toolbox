@@ -2,6 +2,35 @@
 
 # Changelog
 
+## [Version 1.2.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/label-cli@1.1.1...@lobehub/label-cli@1.2.0)
+
+<sup>Released on **2023-11-22**</sup>
+
+#### ✨ Features
+
+- **misc**: Lobe I18N support markdown.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Lobe I18N support markdown ([931590f](https://github.com/lobehub/lobe-cli-toolbox/commit/931590f))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### Dependencies
+
+- **@lobehub/cli-ui:** upgraded to 1.10.0
+
 ### [Version 1.1.1](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/label-cli@1.1.0...@lobehub/label-cli@1.1.1)
 
 <sup>Released on **2023-11-21**</sup>
