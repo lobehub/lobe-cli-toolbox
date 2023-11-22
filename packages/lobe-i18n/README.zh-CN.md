@@ -8,7 +8,7 @@
 
 Lobe i18n 是一款使用 ChatGPT 自动化 i18n 的 CLI 流程工具
 
-[English](./README.md)・简体中文・[Changelog](./CHANGELOG.md) · [Report Bug][issues-url] · [Request Feature][issues-url]
+[English](./README.md) ・ 简体中文 ・ [Changelog](./CHANGELOG.md) · [Report Bug][issues-url] · [Request Feature][issues-url]
 
 <!-- SHIELD GROUP -->
 

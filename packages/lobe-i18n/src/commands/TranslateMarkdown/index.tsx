@@ -41,7 +41,9 @@ class TranslateMarkdown {
 
     if (!entry || entry.length === 0) alert.error('No markdown entry was found.', true);
 
-    const files = globSync(entry, { ignore: this.markdownConfig.exclude });
+    const files = globSync(entry, { ignore: this.markdownConfig.exclude }).filter((file) =>
+      file.includes(this.markdownConfig.entryExtension || '.md'),
+    );
 
     if (!files || files.length === 0) alert.error('No markdown entry was found.', true);
 

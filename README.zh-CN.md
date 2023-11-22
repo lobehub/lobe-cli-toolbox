@@ -2,11 +2,11 @@
 
 <img height="160" src="https://gw.alipayobjects.com/zos/kitchen/T6E4BDoMNb/lobe-cli.webp">
 
-<h1 align="center">Lobe CLI Toolbox</h1>
+<h1 align="center">Lobe CLI 工具箱</h1>
 
-AI CLI Toolbox, enhancing git commit and i18n workflow efficiency
+AI CLI 工具箱，提高 git 提交和国际化工作流的效率
 
-English ・ [简体中文](./README.zh-CN.md) ・ [Report Bug][github-issues-link] · [Request Feature][github-issues-link]
+[English](./README.md) ・ 简体中文 ・ [报告 Bug][github-issues-link] · [需求功能][github-issues-link]
 
 <!-- SHIELD GROUP -->
 
@@ -26,12 +26,12 @@ English ・ [简体中文](./README.zh-CN.md) ・ [Report Bug][github-issues-lin
 
 <br/>
 
-## 🪀 CLI Tools
+## 🪀 CLI 工具
 
-| [**💌 Lobe Commit**][lobe-commit-github] [(中文)][lobe-commit-github-cn]<br/>CLI tool that leverages Langchain/ChatGPT to generate Gitmoji-based commit messages.<br/><br/>[![][lobe-commit-version] ![][lobe-commit-download]][lobe-commit-url]                                                                                                                                                               | [![][lobe-commit-cover]][lobe-commit-github] |
-| :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------- |
-| [**🌏 Lobe i18n**][lobe-i18n-github] [(中文)][lobe-i18n-github-cn]<br/>Automation tool for the i18n (internationalization) translation process, powered by ChatGPT. It supports features such as automatic splitting of large files, incremental updates, and customization options for the OpenAI model, API proxy, and temperature.<br/><br/>[![][lobe-i18n-version] ![][lobe-i18n-download]][lobe-i18n-url] | [![][lobe-i18n-cover]][lobe-i18n-github]     |
-| [**🔖 Lobe label**][lobe-label-github]<br/>Automatically copy issues labels from template repo.<br/><br/>[![][lobe-label-version] ![][lobe-label-download]][lobe-label-url]                                                                                                                                                                                                                                    | [![][lobe-label-cover]][lobe-label-github]   |
+| [**💌 Lobe Commit**][lobe-commit-github] [(中文)][lobe-commit-github-cn]<br/>利用 Langchain/ChatGPT 生成基于 Gitmoji 的提交消息的 CLI 工具。<br/><br/>[![][lobe-commit-version] ![][lobe-commit-download]][lobe-commit-url]                                                               | [![][lobe-commit-cover]][lobe-commit-github] |
+| :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------- |
+| [**🌏 Lobe i18n**][lobe-i18n-github] [(中文)][lobe-i18n-github-cn]<br/>国际化翻译过程的自动化工具，由 ChatGPT 提供支持。支持大文件的自动分割、增量更新和自定义选项，可以选择 OpenAI 模型、API 代理和温度等功能。<br/><br/>[![][lobe-i18n-version] ![][lobe-i18n-download]][lobe-i18n-url] | [![][lobe-i18n-cover]][lobe-i18n-github]     |
+| [**🔖 Lobe label**][lobe-label-github]<br/>自动从模板仓库复制问题标签。<br/><br/>[![][lobe-label-version] ![][lobe-label-download]][lobe-label-url]                                                                                                                                       | [![][lobe-label-cover]][lobe-label-github]   |
 
 <div align="right">
 
@@ -39,9 +39,9 @@ English ・ [简体中文](./README.zh-CN.md) ・ [Report Bug][github-issues-lin
 
 </div>
 
-## 📦 Ecosystem
+## 📦 生态系统
 
-| NAME                                | REPO                                        | NPM                                | DOWNLOAD              |
+| 名称                                | 仓库                                        | NPM                                | 下载                  |
 | ----------------------------------- | ------------------------------------------- | ---------------------------------- | --------------------- |
 | [@lobehub/cli-ui][ui-url]           | [packages/lobe-cli-ui][ui-github]           | [![][ui-shield]][ui-url]           | ![][ui-download]      |
 | [@lobehub/cli-shebang][shebang-url] | [packages/lobe-cli-shebang][shebang-github] | [![][shebang-shield]][shebang-url] | ![][shebang-download] |
@@ -52,13 +52,13 @@ English ・ [简体中文](./README.zh-CN.md) ・ [Report Bug][github-issues-lin
 
 </div>
 
-## ⌨️ Local Development
+## ⌨️ 本地开发
 
-You can use Github Codespaces for online development:
+你可以使用 Github Codespaces 进行在线开发：
 
 [![][github-codespace-shield]][github-codespace-link]
 
-Or clone it for local development:
+或者克隆到本地进行开发：
 
 [![][bun-shield]][bun-link]
 
@@ -74,9 +74,9 @@ $ bun install
 
 </div>
 
-## 🤝 Contributing
+## 🤝 贡献
 
-Contributions of all types are more than welcome, if you are interested in contributing code, feel free to check out our GitHub [Issues][github-issues-link] to get stuck in to show us what you’re made of.
+欢迎各种类型的贡献，如果您有兴趣贡献代码，请随时查看我们的 GitHub [Issues][github-issues-link] 来展示你的才能。
 
 [![][pr-welcome-shield]][pr-welcome-link]
 
@@ -88,14 +88,14 @@ Contributions of all types are more than welcome, if you are interested in contr
 
 </div>
 
-## 🔗 Links
+## 🔗 链接
 
-### More Products
+### 更多产品
 
-- **[🤖 Lobe Chat][lobe-chat]** - An open-source, extensible (Function Calling), high-performance chatbot framework. It supports one-click free deployment of your private ChatGPT/LLM web application.
-- **[🤯 Lobe Theme][lobe-theme]** - The modern theme for stable diffusion webui, exquisite interface design, highly customizable UI, and efficiency boosting features.
+- **[🤖 Lobe Chat][lobe-chat]** - 一个开源、可扩展的（软件功能调用）高性能聊天机器人框架。支持一键免费部署私人 ChatGPT/LLM Web 应用程序。
+- **[🤯 Lobe Theme][lobe-theme]** - 稳定扩散 WebUI 的现代主题，精致的界面设计，高度可定制的用户界面和提高效率的功能。
 
-### Credits
+### 鸣谢
 
 - **langchainjs** - <https://github.com/hwchase17/langchainjs>
 - **ink** - <https://github.com/vadimdemedes/ink>

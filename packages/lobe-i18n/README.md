@@ -8,7 +8,7 @@
 
 Lobe i18n is a CLI workflow tool that uses ChatGPT for automated i18n.
 
-English ・ [简体中文](./README.zh-CN.md) ・[Changelog](./CHANGELOG.md) · [Report Bug][issues-url] · [Request Feature][issues-url]
+English ・ [简体中文](./README.zh-CN.md) ・ [Changelog](./CHANGELOG.md) · [Report Bug][issues-url] · [Request Feature][issues-url]
 
 <!-- SHIELD GROUP -->
 
