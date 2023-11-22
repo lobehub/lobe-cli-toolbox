@@ -150,6 +150,7 @@ This project provides some additional configuration items set with environment v
 | reference     | No       | `string`       | -               | Provide some context for more accurate translations                          |
 | splitToken    | No       | `number`       | -               | Split the localized JSON file by tokens, automatically calculated by default |
 | temperature   | No       | `number`       | `0`             | Sampling temperature to use                                                  |
+| concurrency   | No       | `number`       | `5`             | Number of concurrently pending promises returned                             |
 | experimental  | No       | `experimental` |                 | Experimental features, see below                                             |
 | markdown      | No       | `markdown`     |                 | See `markdown` configuration below                                           |
 

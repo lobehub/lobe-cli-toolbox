@@ -2,6 +2,10 @@ import { LanguageModel } from './models';
 
 export interface I18nConfigLocale {
   /**
+   * @description Number of concurrently pending promises returned
+   */
+  concurrency?: number;
+  /**
    * @description The entry file or folder
    */
   entry: string;

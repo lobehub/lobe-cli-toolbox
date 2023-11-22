@@ -69,6 +69,7 @@
     "langchain": "latest",
     "lodash-es": "^4",
     "multimatch": "^7",
+    "p-map": "^6",
     "pangu": "^4",
     "react": "^18",
     "remark-frontmatter": "^4",

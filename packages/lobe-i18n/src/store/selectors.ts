@@ -4,9 +4,8 @@ import dotenv from 'dotenv';
 import { merge } from 'lodash-es';
 
 import { DEFAULT_CONFIG } from '@/store/initialState';
-import { Config, ConfigKeys, I18nConfig, MarkdownConfig, MarkdownModeType } from '@/types/config';
+import { Config, ConfigKeys, I18nConfig, MarkdownConfig } from '@/types/config';
 import { checkOptionKeys } from '@/utils/checkOptionKeys';
-import { getDefaultExtension } from '@/utils/getDefaultExtension';
 
 import { config, explorer, schema } from './config';
 
@@ -42,10 +41,7 @@ const getMarkdownConfigFile = (): MarkdownConfig => {
   }
 
   const markdownConfig = merge(config?.markdown || {}, {
-    entryExtension: config?.markdown?.entryExtension || '.md',
     entryLocale: config?.markdown?.entryLocale || config.entryLocale,
-    mode: config?.markdown?.mode || MarkdownModeType.STRING,
-    outputExtensions: config?.markdown?.outputExtensions || getDefaultExtension,
     outputLocales: config?.markdown?.outputLocales || config.outputLocales,
   });
 

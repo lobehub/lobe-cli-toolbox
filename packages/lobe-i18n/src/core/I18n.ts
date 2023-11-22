@@ -1,4 +1,5 @@
 import { merge } from 'lodash-es';
+import pMap from 'p-map';
 
 import { TranslateMarkdown } from '@/core/TranslateMarkdown';
 import { LocaleObj } from '@/types';
@@ -81,8 +82,6 @@ export class I18n {
     this.maxStep = splitString.length;
     this.step = 0;
 
-    const translatedSplitString: string[] = [];
-
     onProgress?.({
       isLoading: true,
       maxStep: this.maxStep,
@@ -90,21 +89,25 @@ export class I18n {
       step: 0,
     });
 
-    for (const text of splitString) {
-      onProgress?.({
-        isLoading: this.step < this.maxStep,
-        maxStep: this.maxStep,
-        progress: this.step < this.maxStep ? Math.floor((this.step / this.maxStep) * 100) : 100,
-        step: this.step,
-      });
-      const result = await this.translateLocaleService.runByString({
-        from,
-        text,
-        to,
-      });
-      if (result) translatedSplitString.push(result);
-      if (this.step < this.maxStep) this.step++;
-    }
+    const translatedSplitString: string[] = await pMap(
+      splitString,
+      async (text) => {
+        onProgress?.({
+          isLoading: this.step < this.maxStep,
+          maxStep: this.maxStep,
+          progress: this.step < this.maxStep ? Math.floor((this.step / this.maxStep) * 100) : 100,
+          step: this.step,
+        });
+        const result = await this.translateLocaleService.runByString({
+          from,
+          text,
+          to,
+        });
+        if (this.step < this.maxStep) this.step++;
+        return result;
+      },
+      { concurrency: this.config?.concurrency },
+    );
 
     onProgress?.({
       isLoading: false,
@@ -150,8 +153,6 @@ export class I18n {
     this.maxStep = splitJson.length;
     this.step = 0;
 
-    const translatedSplitJson: LocaleObj[] = [];
-
     onProgress?.({
       isLoading: true,
       maxStep: this.maxStep,
@@ -159,21 +160,25 @@ export class I18n {
       step: 0,
     });
 
-    for (const json of splitJson) {
-      onProgress?.({
-        isLoading: this.step < this.maxStep,
-        maxStep: this.maxStep,
-        progress: this.step < this.maxStep ? Math.floor((this.step / this.maxStep) * 100) : 100,
-        step: this.step,
-      });
-      const result = await this.translateLocaleService.runByJson({
-        from,
-        json,
-        to,
-      });
-      if (result) translatedSplitJson.push(result);
-      if (this.step < this.maxStep) this.step++;
-    }
+    const translatedSplitJson: LocaleObj[] = await pMap(
+      splitJson,
+      async (json) => {
+        onProgress?.({
+          isLoading: this.step < this.maxStep,
+          maxStep: this.maxStep,
+          progress: this.step < this.maxStep ? Math.floor((this.step / this.maxStep) * 100) : 100,
+          step: this.step,
+        });
+        const result = await this.translateLocaleService.runByJson({
+          from,
+          json,
+          to,
+        });
+        if (this.step < this.maxStep) this.step++;
+        return result;
+      },
+      { concurrency: this.config?.concurrency },
+    );
 
     onProgress?.({
       isLoading: false,
