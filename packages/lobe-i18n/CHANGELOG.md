@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.11.1](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.11.0...@lobehub/i18n-cli@1.11.1)
+
+<sup>Released on **2023-11-22**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix i18n markdown match.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix i18n markdown match ([307507e](https://github.com/lobehub/lobe-cli-toolbox/commit/307507e))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.11.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.10.0...@lobehub/i18n-cli@1.11.0)
 
 <sup>Released on **2023-11-22**</sup>
