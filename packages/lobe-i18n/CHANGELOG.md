@@ -2,6 +2,39 @@
 
 # Changelog
 
+## [Version 1.11.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.10.0...@lobehub/i18n-cli@1.11.0)
+
+<sup>Released on **2023-11-22**</sup>
+
+#### ✨ Features
+
+- **misc**: Provide more options in markdown mode.
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix type.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Provide more options in markdown mode ([e599f60](https://github.com/lobehub/lobe-cli-toolbox/commit/e599f60))
+
+#### What's fixed
+
+- **misc**: Fix type ([fcb2ddb](https://github.com/lobehub/lobe-cli-toolbox/commit/fcb2ddb))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.10.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.9.1...@lobehub/i18n-cli@1.10.0)
 
 <sup>Released on **2023-11-22**</sup>
