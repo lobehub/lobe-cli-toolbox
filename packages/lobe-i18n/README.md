@@ -6,9 +6,9 @@
 
 <h1>Lobe i18n</h1>
 
-Lobe i18n is a tool that automates the i18n (internationalization) translation process using ChatGPT. It supports features such as automatic splitting of large files, incremental updates, and customization options for the OpenAI model, API proxy, and temperature.
+Lobe i18n is a CLI workflow tool that uses ChatGPT for automated i18n.
 
-English · [简体中文](./README.zh-CN.md) · [Changelog](./CHANGELOG.md) · [Report Bug][issues-url] · [Request Feature][issues-url]
+English ・ [简体中文](./README.zh-CN.md) ・[Changelog](./CHANGELOG.md) · [Report Bug][issues-url] · [Request Feature][issues-url]
 
 <!-- SHIELD GROUP -->
 
@@ -27,7 +27,7 @@ English · [简体中文](./README.zh-CN.md) · [Changelog](./CHANGELOG.md) · [
 </div>
 
 <details>
-<summary><kbd>Table of contents</kbd></summary>
+<summary><kbd>Table of Contents</kbd></summary>
 
 #### TOC
 
@@ -35,8 +35,13 @@ English · [简体中文](./README.zh-CN.md) · [Changelog](./CHANGELOG.md) · [
 - [📦 Installation](#-installation)
 - [🤯 Usage](#-usage)
   - [Configuration](#configuration)
-  - [Structure Selection](#structure-selection)
+  - [Environment Variable](#environment-variable)
+- [🌏 Locale Configuration](#-locale-configuration)
+  - [File Structure Selection](#file-structure-selection)
   - [Running](#running)
+- [📝 Markdown Configuration](#-markdown-configuration)
+  - [File Structure](#file-structure)
+  - [Running](#running-1)
 - [⌨️ Local Development](#️-local-development)
 - [🤝 Contributing](#-contributing)
 - [🔗 Links](#-links)
@@ -49,12 +54,13 @@ English · [简体中文](./README.zh-CN.md) · [Changelog](./CHANGELOG.md) · [
 
 ## ✨ Features
 
-- [x] 🤖 Automated i18n translation using ChatGPT
-- [x] ✂️ Support for automatic splitting of large files to avoid ChatGPT token limitations
-- [x] ♻️ Incremental updates for i18n, extracting new content based on entry files
-- [x] 🗂️ Support for single file mode (`en.json`) and folder mode (`en/common.json`), compatible with `i18next`
-- [x] 🌲 Support for both `flat` and `tree` locale files
-- [x] 🛠️ Customization options for OpenAI model, API proxy, and temperature
+- [x] 🤖 Utilize ChatGPT for automated i18n translation
+- [x] ✂️ Support automatic splitting of large files without worrying about ChatGPT token limits.
+- [x] ♻️ Support incremental i18n updates, automatically extract new content based on `entry` files.
+- [x] 🗂️ Support single file mode `en_US.json` and folder mode `en_US/common.json` to work perfectly with `i18next`.
+- [x] 🌲 Support `flat` and `tree` structure for locale files.
+- [x] 🛠️ Support customizing OpenAI models, API proxies, and temperature.
+- [x] 📝 Support automated i18n translation of `Markdown` files.
 
 <div align="right">
 
@@ -64,14 +70,14 @@ English · [简体中文](./README.zh-CN.md) · [Changelog](./CHANGELOG.md) · [
 
 ## 📦 Installation
 
-To install Lobe i8n, run the following command:
+To install Lobe i18n, run the following command:
 
 ```bash
 npm install -g @lobehub/i18n-cli
 ```
 
 > \[!NOTE]\
-> Make sure you have Node.js version >= 18\*
+> Please make sure you have _Node.js_ version _>= 18_.
 
 <div align="right">
 
@@ -81,14 +87,50 @@ npm install -g @lobehub/i18n-cli
 
 ## 🤯 Usage
 
-To initialize the Lobe i8n configuration, run the following command:
+To initialize the Lobe i18n configuration, run the following command:
 
 ```shell
 $ lobe-i18n --config # or use the short flag -o
 ```
 
 > \[!IMPORTANT]\
-> To use AI auto-generation, fill in the [OpenAI token](https://platform.openai.com/account/api-keys) in the settings
+> To use AI auto-generation, you need to fill in the [OpenAI Token](https://platform.openai.com/account/api-keys) in the settings.
+
+```shell
+# Translate Locale files
+$ lobe-i18n
+## or
+$ lobe-i18n locale
+
+# Translate Markdown files
+$ lobe-i18n md
+```
+
+<br/>
+
+### Configuration
+
+You can choose any configuration method in [cosmiconfig](https://github.com/cosmiconfig/cosmiconfig) format
+
+- `i18n` property in `package.json`
+- `.i18nrc` file in JSON or YAML format
+- `.i18nrc.json`, `.i18nrc.yaml`, `.i18nrc.yml`, `.i18nrc.js`, `.i18nrc.cjs`
+- `defineConfig` provides a secure definition method that can be imported from `@lobehub/i18n-cli`
+
+> \[!TIP]
+>
+> This project provides a secure definition method `defineConfig` that can be imported from `@lobehub/i18n-cli`
+
+<br/>
+
+### Environment Variable
+
+This project provides some additional configuration items set with environment variables:
+
+| Environment Variable | Required | Description                                                                                                                                   | Example                                                                                   |
+| -------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `OPENAI_API_KEY`     | Yes      | This is the API key you apply on the OpenAI account page                                                                                      | `sk-xxxxxx...xxxxxx`                                                                      |
+| `OPENAI_PROXY_URL`   | No       | If you manually configure the OpenAI interface proxy, you can use this configuration item to override the default OpenAI API request base URL | `https://api.chatanywhere.cn/v1`<br/>The default value is<br/>`https://api.openai.com/v1` |
 
 <div align="right">
 
@@ -96,61 +138,63 @@ $ lobe-i18n --config # or use the short flag -o
 
 </div>
 
-### Configuration
+## 🌏 Locale Configuration
 
-The configuration can be specified in any of the following formats, using [cosmiconfig](https://github.com/cosmiconfig/cosmiconfig):
+| Property Name | Required | Type           | Default Value   | Description                                                                  |
+| ------------- | -------- | -------------- | --------------- | ---------------------------------------------------------------------------- |
+| entry         | Yes      | `string`       | -               | Entry file or folder                                                         |
+| entryLocale   | Yes      | `string`       | -               | Language to use as translation reference                                     |
+| modelName     | No       | `string`       | `gpt-3.5-turbo` | Model to use                                                                 |
+| output        | Yes      | `string`       | -               | Location to store localized files                                            |
+| outputLocales | Yes      | `string[]  `   | -               | All the languages to be translated                                           |
+| reference     | No       | `string`       | -               | Provide some context for more accurate translations                          |
+| splitToken    | No       | `number`       | -               | Split the localized JSON file by tokens, automatically calculated by default |
+| temperature   | No       | `number`       | `0`             | Sampling temperature to use                                                  |
+| experimental  | No       | `experimental` |                 | Experimental features, see below                                             |
+| markdown      | No       | `markdown`     |                 | See `markdown` configuration below                                           |
 
-- `i18n` property in `package.json`
-- `.i18nrc` file in JSON or YAML format
-- `.i18nrc.json`, `.i18nrc.yaml`, `.i18nrc.yml`, `.i18nrc.js`, `.i18nrc.mjs`, or `.i18nrc.cjs` file
-- `i18nrc`, `i18nrc.json`, `i18nrc.yaml`, `i18nrc.yml`, `i18nrc.js`, or `i18nrc.cjs` file in the `.config` subdirectory
-- `i18n.config.js`, `i18n.config.mjs`, or `i18n.config.cjs` file
+#### `experimental`
 
-| Property Name | Type      | Default Value     | Description                                   |
-| ------------- | --------- | ----------------- | --------------------------------------------- |
-| entry         | string    | -                 | Entry file or folder                          |
-| entryLocale   | string    | -                 | Language to use as translation reference      |
-| modelName     | string    | `'gpt-3.5-turbo'` | Model to use                                  |
-| output        | string    | -                 | Location to store localized files             |
-| outputLocales | string\[] | -                 | All the languages to be translated            |
-| reference     | string    | -                 | Provide context for more accurate translation |
-| splitToken    | number    | `2000`            | Split the localized JSON file by tokens       |
-| temperature   | number    | `0`               | Sampling temperature to use                   |
+| Property Name | Required | Type    | Default Value | Description                                                                                   |
+| ------------- | -------- | ------- | ------------- | --------------------------------------------------------------------------------------------- |
+| jsonMode      | No       | boolean | false         | Enable gpt force JSON output for stability (only supported by new models after November 2023) |
 
-**Example 1: `.i18nrc.js`**
+<br/>
+
+#### Example 1 `.i18nrc.js`
 
 ```js
 const { defineConfig } = require('@lobehub/i18n-cli');
 
 module.exports = defineConfig({
-  entry: 'locales/en.json',
-  entryLocale: 'en',
+  entry: 'locales/en_US.json',
+  entryLocale: 'en_US',
   output: 'locales',
-  outputLocales: ['zh_CN', 'jp'],
+  outputLocales: ['zh_CN', 'ja_JP'],
 });
 ```
 
-**Example 2: `.i18nrc.json`**
+#### Example 2 `.i18nrc.json`
 
 ```json
 {
-  "entry": "locales/en.json",
-  "entryLocale": "en",
+  "entry": "locales/en_US.json",
+  "entryLocale": "en_US",
   "output": "locales",
-  "outputLocales": ["zh_CN", "jp"]
+  "outputLocales": ["zh_CN", "ja_JP"]
 }
 ```
 
-**Example 3: `package.json`**
+#### Example 3 `package.json`
 
 ```json
 {
   "...": "...",
   "i18n": {
-    "entry": "locales/en.json",
-    "entryLocale": "en",
+    "entry": "locales/en_US.json",
+    "entryLocale": "en_US",
     "output": "locales",
-    "outputLocales": ["zh_CN", "jp"]
+    "outputLocales": ["zh_CN", "ja_JP"]
   }
 }
 ```
@@ -161,56 +205,77 @@ module.exports = defineConfig({
 
 </div>
 
-### Structure Selection
+### File Structure Selection
 
-**Single file structure**
+There are two types of file structures supported: `flat` and `tree`.
+
+#### Flat Structure
+
+A flat structure means that all translations for different languages are stored in a single file, as shown below:
 
 ```
 - locales
-	- en.json
-	- jp.json
-	- zh_CN.json
-	- ...
+  - en_US.json
+  - ja_JP.json
+  - zh_CN.json
+  - ...
 ```
 
-Specify the corresponding JSON file as the `entry` in the configuration file [example](./examples/flat/.i18nrc.cjs)
+> \[!TIP]
+>
+> The `flat structure` requires configuring the `entry` property in the configuration file to the corresponding JSON file [Example](./examples/locale/flat/.i18nrc.cjs)
 
 ```json
 {
   "entry": "locales/en.json",
-  "entryLocale": "en",
+  "entryLocale": "en_US",
   "output": "locales",
-  "outputLocales": ["zh_CN", "jp"]
+  "outputLocales": ["zh_CN", "ja_JP"]
 }
 ```
 
-**Folder structure**
+#### Tree Structure
+
+A tree structure means that the translations for each language are stored in separate language folders, as shown below:
 
 ```
 - locales
-	- en
-		- common.json
-		- header.json
-		- ...
-	- jp
-		- common.json
-		- header.json
-		- ...
-	- zh_CN
-		- common.json
-		- header.json
-		- ...
+  - en_US
+    - common.json
+    - header.json
+    - subfolder
+      - ...
+  - ja_JP
+    - common.json
+    - header.json
+    - subfolder
+      - ...
+  - zh_CN
+    - common.json
+    - header.json
+    - subfolder
+      - ...
 ```
 
-Specify the corresponding folder as the `entry` in the configuration file [example](./examples/tree/.i18nrc.cjs)
+> \[!TIP]
+>
+> The `tree structure` requires configuring the `entry` property in the configuration file to the corresponding folder [Example](./examples/locale/tree/.i18nrc.cjs)
 
 ```json
 {
-  "entry": "locales/en",
-  "entryLocale": "en",
+  "entry": "locales/en_US",
+  "entryLocale": "en_US",
   "output": "locales",
-  "outputLocales": ["zh_CN", "jp"]
+  "outputLocales": ["zh_CN", "ja_JP"]
 }
+```
+
+### Running
+
+Use the `lobe-i18n` command to generate i18n files automatically:
+
+```shell
+$ lobe-i18n
 ```
 
 <div align="right">
@@ -219,12 +284,109 @@ Specify the corresponding folder as the `entry` in the configuration file [examp
 
 </div>
 
+## 📝 Markdown Configuration
+
+| Property Name    | Required | Type                      | Default                      | Description                                                             |
+| ---------------- | -------- | ------------------------- | ---------------------------- | ----------------------------------------------------------------------- |
+| entry            | Yes      | `string[]`                | -                            | Entry file or folder, supports `glob`                                   |
+| entryLocale      | No       | `string`                  | Parent locale                | Reference language for translation                                      |
+| entryExtension   | No       | `string`                  | `.md`                        | Entry file extension                                                    |
+| exclude          | No       | `string[]`                | -                            | Files to be filtered, supports `glob`                                   |
+| outputLocales    | No       | `string[]`                | Parent locale                | All languages to be translated                                          |
+| outputExtensions | No       | `function`                | `(locale) => '.{locale}.md'` | Output file extension generation                                        |
+| mode             | No       | `string``mdast``function` | `string`                     | Translation mode selection, explained below                             |
+| translateCode    | No       | `boolean`                 | `false`                      | Whether to translate code blocks under `mdast`, other modes are invalid |
+
+#### `outputExtensions`
+
+By default, the translated file names are generated as `.{locale}.md`. You can customize the output file extensions with `outputExtensions`.
+
+> \[!NOTE]
+>
+> In the example below, the entry file extension is `.zh-CN.md`, but we want the output file extension for the `en-US` translation to be `.md`, while other languages keep the default extensions.
+
+```js
+module.exports = {
+  markdown: {
+    entry: ['./README.zh-CN.md', './docs/**/*.zh-CN.md'],
+    entryLocale: 'zh-CN',
+    entryExtension: '.zh-CN.md',
+    outputLocales: ['en-US', 'ja-JP'],
+    outputExtensions: (locale, { getDefaultExtension }) => {
+      if (locale === 'en-US') return '.md';
+      return getDefaultExtension(locale);
+    },
+  },
+};
+```
+
+> `outputExtensions` supports the following `props`:
+
+```ts
+interface OutputExtensionsProps {
+  /**
+   * @description The locale of the translated file to output
+   */
+  locale: string;
+  config: {
+    /**
+     * @description The content of the translated file to input
+     */
+    fileContent: string;
+    /**
+     * @description The path of the translated file to input
+     */
+    filePath: string;
+    /**
+     * @description The default method for generating extensions
+     */
+    getDefaultExtension: (locale: string) => string;
+  };
+}
+```
+
+#### `mode`
+
+`mode` is used to specify the translation mode, which supports two modes and custom generation modes.
+
+- `string` - Translates the complete `markdown` content.
+- `mdast` - Parses the text with `mdast` structure and translates the `text value` content. To translate code blocks, you need to enable `translateCode`.
+
+> \[!WARNING]
+>
+> In `mdast` mode, the content to be translated will be reduced to a minimum, removing most markdown syntax structures and links.
+> This mode can greatly reduce token consumption, but it may result in inaccurate translation results.
+
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
+
+### File Structure
+
+The translated files will be generated in the same directory as the entry file, with the corresponding language suffix added to the extension:
+
+```
+- README.md
+- README.zh-CN.md
+	- docs
+		- usage.md
+		- usage.zh-CN.md
+		- subfolder
+            - ...
+```
+
+> \[!TIP]
+>
+> [Example](./examples/markdown/.i18nrc.cjs)
+
 ### Running
 
-Use the `lobe-i18n` command to automate the generation of i18n files:
+Use the `lobe-i18n md` command to automate the generation of i18n files:
 
 ```shell
-$ lobe-i18n
+$ lobe-i18n md
 ```
 
 <div align="right">
@@ -239,7 +401,7 @@ You can use Github Codespaces for online development:
 
 [![][github-codespace-shield]][github-codespace-link]
 
-Or clone it for local development:
+Alternatively, you can clone the repository and run the following command for local development:
 
 [![][bun-shield]][bun-link]
 
@@ -259,7 +421,7 @@ $ bun dev
 
 ## 🤝 Contributing
 
-Contributions of all types are more than welcome, if you are interested in contributing code, feel free to check out our GitHub [Issues][github-issues-link] to get stuck in to show us what you’re made of.
+We welcome contributions in all forms. If you're interested in contributing code, you can check our GitHub [Issues][github-issues-link], show off your skills, and demonstrate your ideas.
 
 [![][pr-welcome-shield]][pr-welcome-link]
 
@@ -295,7 +457,7 @@ Contributions of all types are more than welcome, if you are interested in contr
 #### 📝 License
 
 Copyright © 2023 [LobeHub][profile-link]. <br />
-This project is [MIT](./LICENSE) licensed.
+This project is licensed under the [MIT](./LICENSE) license.
 
 <!-- LINK GROUP -->
 

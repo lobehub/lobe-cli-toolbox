@@ -1,6 +1,7 @@
+import { alert } from '@lobehub/cli-ui';
 import chalk from 'chalk';
-import { consola } from 'consola';
-import { existsSync, readdirSync, statSync } from 'node:fs';
+import { globSync } from 'glob';
+import { existsSync } from 'node:fs';
 import { join, relative, resolve } from 'node:path';
 import * as process from 'node:process';
 
@@ -13,7 +14,7 @@ export const getEntryFile = (config: I18nConfig): LocaleObj | void => {
     const entryPath = resolve('./', config.entry);
     const isExist = existsSync(entryPath);
     if (!isExist) {
-      consola.error(`Can't find ${chalk.bold.yellow(config.entry)} in dir`);
+      alert.error(`Can't find ${chalk.bold.yellow(config.entry)} in dir`, true);
     }
     const entry = readJSON(entryPath) as LocaleObj;
 
@@ -24,60 +25,19 @@ export const getEntryFile = (config: I18nConfig): LocaleObj | void => {
 };
 
 export const getEntryFolderFiles = (config: I18nConfig): LocaleFolderObj | void => {
-  const entryPath = config.entry.replace('*', '');
-
-  const readLocaleFiles = (dir: string, obj: LocaleFolderObj) => {
-    try {
-      const items = readdirSync(dir);
-
-      for (const item of items) {
-        const fullPath = join(dir, item);
-        if (statSync(fullPath).isDirectory()) {
-          readLocaleFiles(fullPath, obj); // 递归调用处理子目录
-        } else if (item.endsWith('.json')) {
-          obj[relative(entryPath, fullPath)] = readJSON(fullPath); // 读取文件内容
-        }
-      }
-    } catch (error) {
-      consola.error(error);
-      process.exit(1);
-    }
-  };
+  const entryPath = config.entry.replaceAll('*', '').replaceAll('*.json', '');
+  const files = globSync(join(entryPath, '**/*.json'));
 
   const obj: LocaleFolderObj = {};
-  readLocaleFiles(entryPath, obj);
+
+  for (const file of files) {
+    obj[relative(entryPath, file)] = readJSON(file);
+  }
 
   if (Object.keys(obj).length === 0) {
-    consola.error(`Can't find .json files in ${chalk.bold.yellow(entryPath)}`);
+    alert.error(`Can't find .json files in ${chalk.bold.yellow(entryPath)}`, true);
     return;
   }
 
   return obj;
-};
-
-export const getMarkdownFolderFiles = (path: string): string[] => {
-  const entryPath = resolve('.', path);
-
-  const readLocaleFiles = (dir: string, files: string[]) => {
-    try {
-      const items = readdirSync(dir);
-
-      for (const item of items) {
-        const fullPath = join(dir, item);
-        if (statSync(fullPath).isDirectory()) {
-          readLocaleFiles(fullPath, files); // 递归调用处理子目录
-        } else if (item.endsWith('.md')) {
-          files.push(relative('.', fullPath));
-        }
-      }
-    } catch (error) {
-      consola.error(error);
-      process.exit(1);
-    }
-  };
-
-  const files: string[] = [];
-  readLocaleFiles(entryPath, files);
-
-  return files;
 };

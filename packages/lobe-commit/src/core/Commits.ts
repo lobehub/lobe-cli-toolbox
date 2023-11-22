@@ -43,7 +43,9 @@ export class Commits {
       temperature: 0.5,
     });
     this.textSplitter = new RecursiveCharacterTextSplitter({
+      chunkOverlap: 0,
       chunkSize: this.config.diffChunkSize,
+      lengthFunction: (text) => calcToken(text),
     });
     this.prompt = promptCommits();
   }

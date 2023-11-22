@@ -7,9 +7,11 @@
     "paths": {
       "@/*": ["src/*"],
       "@lobehub/cli-ui": ["./packages/lobe-cli-ui/src"],
-      "@lobehub/cli-ui/*": ["./packages/lobe-cli-ui/src/*"]
+      "@lobehub/cli-ui/*": ["./packages/lobe-cli-ui/src/*"],
+      "@lobehub/lobe-i18n": ["./packages/lobe-i18n/src"],
+      "@lobehub/lobe-i18n/*": ["./packages/lobe-i18n/src/*"]
     }
   },
   "extends": "../../tsconfig.json",
-  "include": ["src", "**/*.ts", "**/*.d.ts", "**/*.tsx"]
+  "include": ["src", "**/*.ts", "**/*.d.ts", "**/*.tsx", ".i18nrc.ts"]
 }

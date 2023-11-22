@@ -35,9 +35,13 @@ Lobe i18n 是一款使用 ChatGPT 自动化 i18n 的 CLI 流程工具
 - [📦 安装](#-安装)
 - [🤯 使用](#-使用)
   - [配置](#配置)
-  - [结构选择](#结构选择)
+  - [环境变量](#环境变量)
+- [🌏 Locale 配置](#-locale-配置)
+  - [文件结构选择](#文件结构选择)
   - [运行](#运行)
-  - [](#-1)
+- [📝 Markdown 配置](#-markdown-配置)
+  - [文件结构](#文件结构)
+  - [运行](#运行-1)
 - [⌨️ 本地开发](#️-本地开发)
 - [🤝 参与贡献](#-参与贡献)
 - [🔗 链接](#-链接)
@@ -53,9 +57,10 @@ Lobe i18n 是一款使用 ChatGPT 自动化 i18n 的 CLI 流程工具
 - [x] 🤖 利用 ChatGPT 实现 i18n 翻译自动化
 - [x] ✂️ 支持大型文件自动分割，不必担心 ChatGPT token 限制
 - [x] ♻️ 支持 i18n 增量更新，按照 `entry` 文件自动提取新增内容
-- [x] 🗂️ 支持单文件模式 `en.json` 和文件夹 `en/common.json` 模式，完美配合 `i18next` 使用
+- [x] 🗂️ 支持单文件模式 `en_US.json` 和文件夹 `en_US/common.json` 模式，完美配合 `i18next` 使用
 - [x] 🌲 支持 `扁平` 和 `树状` locale 文件
 - [x] 🛠️ 支持自定义 OpenAI 模型、API 代理、temperature
+- [x] 📝 支持 `Markdown` i18n 翻译自动化
 
 <div align="right">
 
@@ -91,11 +96,17 @@ $ lobe-i18n --config # 或使用短标志 -o
 > \[!IMPORTANT]\
 > 要使用 AI 自动生成，需要在设置中填写 [OpenAI 令牌](https://platform.openai.com/account/api-keys)
 
-<div align="right">
+```shell
+# 翻译 Locale 文件
+$ lobe-i18n
+## or
+$ lobe-i18n locale
 
-[![][back-to-top]](#readme-top)
+# 翻译 Markdown 文件
+$ lobe-i18n md
+```
 
-</div>
+<br/>
 
 ### 配置
 
@@ -103,55 +114,86 @@ $ lobe-i18n --config # 或使用短标志 -o
 
 - `package.json` 中的 `i18n` 属性
 - 以 JSON 或 YAML 格式的 `.i18nrc` 文件
-- `.i18nrc.json`、`.i18nrc.yaml`、`.i18nrc.yml`、`.i18nrc.js`、`.i18nrc.mjs` 或 `.i18nrc.cjs` 文件
-- `.config` 子目录中的 `i18nrc`、`i18nrc.json`、`i18nrc.yaml`、`i18nrc.yml`、`i18nrc.js` 或 `i18nrc.cjs` 文件
-- `i18n.config.js`、`i18n.config.mjs` 或 `i18n.config.cjs` 文件
+- `.i18nrc.json`、`.i18nrc.yaml`、`.i18nrc.yml`、`.i18nrc.js`、`.i18nrc.cjs` 文件
 
-| 属性名称      | 类型      | 默认值            | 描述                             |
-| ------------- | --------- | ----------------- | -------------------------------- |
-| entry         | string    | -                 | 入口文件或文件夹                 |
-| entryLocale   | string    | -                 | 作为翻译参考的语言               |
-| modelName     | string    | `'gpt-3.5-turbo'` | 使用的模型                       |
-| output        | string    | -                 | 存储本地化文件的位置             |
-| outputLocales | string\[] | -                 | 需要进行翻译的所有语言           |
-| reference     | string    | -                 | 提供一些上下文以获得更准确的翻译 |
-| splitToken    | number    | `2000`            | 按令牌分割本地化 JSON 文件       |
-| temperature   | number    | `0`               | 使用的采样温度                   |
+> \[!TIP]
+>
+> 本项目提供了 `defineConfig` 安全定义方法可以从 `@lobehub/i18n-cli` 中导入
 
-**示例一 `.i18nrc.js`**
+<br/>
+
+### 环境变量
+
+本项目提供了一些额外的配置项，使用环境变量进行设置：
+
+| 环境变量           | 类型 | 描述                                                                                   | 示例                                                                         |
+| ------------------ | ---- | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `OPENAI_API_KEY`   | 必选 | 这是你在 OpenAI 账户页面申请的 API 密钥                                                | `sk-xxxxxx...xxxxxx`                                                         |
+| `OPENAI_PROXY_URL` | 可选 | 如果你手动配置了 OpenAI 接口代理，可以使用此配置项来覆盖默认的 OpenAI API 请求基础 URL | `https://api.chatanywhere.cn/v1`<br/>默认值:<br/>`https://api.openai.com/v1` |
+
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
+
+## 🌏 Locale 配置
+
+| 属性名称      | 必填 | 类型           | 默认值          | 描述                                     |
+| ------------- | ---- | -------------- | --------------- | ---------------------------------------- |
+| entry         | 是   | `string`       | -               | 入口文件或文件夹                         |
+| entryLocale   | 是   | `string`       | -               | 作为翻译参考的语言                       |
+| modelName     | 否   | `string`       | `gpt-3.5-turbo` | 使用的模型                               |
+| output        | 是   | `string`       | -               | 存储本地化文件的位置                     |
+| outputLocales | 是   | `string[] `    | -               | 需要进行翻译的所有语言                   |
+| reference     | 否   | `string`       | -               | 提供一些上下文以获得更准确的翻译         |
+| splitToken    | 否   | `number`       | -               | 按令牌分割本地化 JSON 文件，默认自动计算 |
+| temperature   | 否   | `number`       | `0`             | 使用的采样温度                           |
+| experimental  | 否   | `experimental` |                 | 实验性功能，见下文                       |
+| markdown      | 否   | `markdown`     |                 | 见 `markdown` 配置说明                   |
+
+#### `experimental`
+
+| 属性名称 | 必填 | 类型    | 默认值 | 描述                                                           |
+| -------- | ---- | ------- | ------ | -------------------------------------------------------------- |
+| jsonMode | 否   | boolean | false  | 开启 gpt 强制 json 输出提升稳定性 (只支持 23 年 11 月后新模型) |
+
+<br/>
+
+#### 示例一 `.i18nrc.js`
 
 ```js
 const { defineConfig } = require('@lobehub/i18n-cli');
 
 module.exports = defineConfig({
-  entry: 'locales/en.json',
-  entryLocale: 'en',
+  entry: 'locales/en_US.json',
+  entryLocale: 'en_US',
   output: 'locales',
-  outputLocales: ['zh_CN', 'jp'],
+  outputLocales: ['zh_CN', 'ja_JP'],
 });
 ```
 
-**示例二 `.i18nrc.json`**
+#### 示例二 `.i18nrc.json`
 
 ```json
 {
-  "entry": "locales/en.json",
-  "entryLocale": "en",
+  "entry": "locales/en_US.json",
+  "entryLocale": "en_US",
   "output": "locales",
-  "outputLocales": ["zh_CN", "jp"]
+  "outputLocales": ["zh_CN", "ja_JP"]
 }
 ```
 
-**示例三 `package.json`**
+#### 示例三 `package.json`
 
 ```json
 {
   "...": "...",
   "i18n": {
-    "entry": "locales/en.json",
-    "entryLocale": "en",
+    "entry": "locales/en_US.json",
+    "entryLocale": "en_US",
     "output": "locales",
-    "outputLocales": ["zh_CN", "jp"]
+    "outputLocales": ["zh_CN", "ja_JP"]
   }
 }
 ```
@@ -162,63 +204,70 @@ module.exports = defineConfig({
 
 </div>
 
-### 结构选择
+### 文件结构选择
 
-**单文件结构**
+支持两种文件结构，分别为 `单文件` 和 `文件夹` 结构
+
+#### 单文件结构
+
+单文件结构指的是所有语言的翻译都存储在一个文件中，如下所示：
 
 ```
 - locales
-	- en.json
-	- jp.json
+	- en_US.json
+	- ja_JP.json
 	- zh_CN.json
 	- ...
 ```
 
-需要在配置文件中将 `entry` 配置为对应的 JSON 文件 [示例](./examples/flat/.i18nrc.cjs)
+> \[!TIP]
+>
+> `单文件结构` 需要在配置文件中将 `entry` 配置为对应的 JSON 文件 [示例](./examples/locale/flat/.i18nrc.cjs)
 
 ```json
 {
   "entry": "locales/en.json",
-  "entryLocale": "en",
+  "entryLocale": "en_US",
   "output": "locales",
-  "outputLocales": ["zh_CN", "jp"]
+  "outputLocales": ["zh_CN", "ja_JP"]
 }
 ```
 
 **文件夹结构**
 
+文件夹结构指的是每个语言的翻译都存储在对应的语种文件夹中，如下所示：
+
 ```
 - locales
-	- en
+	- en_US
 		- common.json
 		- header.json
-		- ...
-	- jp
+		- subfolder
+            - ...
+	- ja_JP
 		- common.json
 		- header.json
-		- ...
+		- subfolder
+            - ...
 	- zh_CN
 		- common.json
 		- header.json
-		- ...
+		- subfolder
+            - ...
 ```
 
-需要在配置文件中将 `entry` 配置为对应的文件夹 [示例](./examples/tree/.i18nrc.cjs)
+> \[!TIP]
+>
+> `单文件夹结构` 需要在配置文件中将 `entry` 配置为对应的文件夹 [示例](./examples/locale/tree/.i18nrc.cjs)
 
 ```json
 {
-  "entry": "locales/en",
-  "entryLocale": "en",
+  "entry": "locales/en_US",
+  "entryLocale": "en_US",
   "output": "locales",
-  "outputLocales": ["zh_CN", "jp"]
+  "outputLocales": ["zh_CN", "ja_JP"]
 }
 ```
-
-<div align="right">
-
-[![][back-to-top]](#readme-top)
-
-</div>
 
 ### 运行
 
@@ -228,7 +277,116 @@ module.exports = defineConfig({
 $ lobe-i18n
 ```
 
-###
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
+
+## 📝 Markdown 配置
+
+| 属性名称         | 必填 | 类型                      | 默认值                       | 描述                                      |
+| ---------------- | ---- | ------------------------- | ---------------------------- | ----------------------------------------- |
+| entry            | 是   | `string[]`                | -                            | 入口文件或文件夹，支持 `glob`             |
+| entryLocale      | 否   | `string`                  | 同父级                       | 作为翻译参考的语言                        |
+| entryExtension   | 否   | `string`                  | `.md`                        | 入口文件扩展名                            |
+| exclude          | 否   | `string[]`                | -                            | 需要过滤的文件，支持 `glob`               |
+| outputLocales    | 否   | `string[]`                | 同父级                       | 需要进行翻译的所有语言                    |
+| outputExtensions | 否   | `function`                | `(locale) => '.{locale}.md'` | 输出文件的扩展名生成                      |
+| mode             | 否   | `string``mdast``function` | `string`                     | 翻译的模式选择，解释见下文                |
+| translateCode    | 否   | `boolean`                 | `false`                      | 在 `mdast` 下是否翻译代码块，其他模式无效 |
+
+#### `outputExtensions`
+
+默认生成的翻译后文件名为 `.{locale}.md`，可以通过 `outputExtensions` 自定义输出文件扩展名
+
+> \[!NOTE]
+>
+> 在下方的示意中，入口文件扩展名为 `.zh-CN.md`，但我们希望输出的 `en-US` 翻译文件扩展名为 `.md`, 其他语言保持默认
+
+```js
+module.exports = {
+  markdown: {
+    entry: ['./README.zh-CN.md', './docs/**/*.zh-CN.md'],
+    entryLocale: 'zh-CN',
+    entryExtension: '.zh-CN.md',
+    outputLocales: ['en-US', 'ja-JP'],
+    outputExtensions: (locale, { getDefaultExtension }) => {
+      if (locale === 'en-US') return '.md';
+      return getDefaultExtension(locale);
+    },
+  },
+};
+```
+
+> `outputExtensions` 完整支持的 `props` 如下：
+
+```ts
+interface OutputExtensionsProps {
+  /**
+   * @description 输出的翻译文件的语种
+   */
+  locale: string;
+  config: {
+    /**
+     * @description 输入的翻译文件的内容
+     */
+    fileContent: string;
+    /**
+     * @description 输入的翻译文件的路径
+     */
+    filePath: string;
+    /**
+     * @description 默认的扩展名生成方法
+     */
+    getDefaultExtension: (locale: string) => string;
+  };
+}
+```
+
+#### `mode`
+
+`mode` 用于指定翻译的模式，支持二种模式和自定义生成模式
+
+- `string` - 使用完整的 `markdown` 内容进行翻译
+- `mdast` - 使用 `mdast` 结构化解析文本，指翻译 `text value` 文本内容，如需翻译代码块，需要开启 `translateCode`
+
+> \[!WARNING]
+>
+> `mdast` 模式下，将会把需要翻译的内容缩减到最低限度，移除大部分 markdown 语法结构和链接，
+> 此模式可大大减少 token 消耗，但是可能会导致翻译结果不准确。
+
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
+
+### 文件结构
+
+翻译后的文件将生成在和入口文件同级的目录下，在扩展名上会添加对应的语种后缀：
+
+```
+- README.md
+- README.zh-CN.md
+	- docs
+		- usage.md
+		- usage.zh-CN.md
+		- subfolder
+            - ...
+```
+
+> \[!TIP]
+>
+> [示例](./examples/markdown/.i18nrc.cjs)
+
+### 运行
+
+使用 `lobe-i18n md` 命令自动化生成 i18n 文件：
+
+```shell
+$ lobe-i18n md
+```
 
 <div align="right">
 

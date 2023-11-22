@@ -11,36 +11,36 @@ interface ProgressProps extends onProgressProps {
   to: string;
 }
 
-const Progress = memo<ProgressProps>(({ filename, to, from, progress, maxStep, step }) => {
-  const theme = useTheme();
+const Progress = memo<ProgressProps>(
+  ({ filename, to, from, progress, maxStep, step, isLoading }) => {
+    const theme = useTheme();
 
-  return (
-    <SplitView flexDirection={'column'}>
-      <Text backgroundColor={theme.colorBgLayout} color={theme.colorText}>
-        {` 📝 ${filename} `}
-      </Text>
-      {step === maxStep ? (
-        <StatusMessage variant={'success'}>Success</StatusMessage>
-      ) : (
-        <Box>
-          <Spinner label={`${progress}%`} />
-          <Box marginLeft={1} marginRight={1} width={20}>
-            <Text color={theme.colorTextDescription}>
-              {`- from `}
-              <Text bold color={theme.colorInfo}>
-                {from}
-              </Text>
-              {` to `}
-              <Text bold color={theme.colorInfo}>
-                {to}
-              </Text>
-            </Text>
+    return (
+      <SplitView flexDirection={'column'}>
+        <Text backgroundColor={theme.colorBgLayout} color={theme.colorText}>
+          {` 📝 ${filename} `}
+        </Text>
+        <Text color={theme.colorTextDescription}>
+          {`- from `}
+          <Text bold color={theme.colorInfo}>
+            {from}
+          </Text>
+          {` to `}
+          <Text bold color={theme.colorInfo}>
+            {to}
+          </Text>
+        </Text>
+        {isLoading ? (
+          <Box>
+            <Spinner label={` ${progress}% [${step}/${maxStep} chunks] `} />
+            <ProgressBar value={progress} />
           </Box>
-          <ProgressBar value={Math.floor((step / maxStep) * 100)} />
-        </Box>
-      )}
-    </SplitView>
-  );
-});
+        ) : (
+          <StatusMessage variant={'success'}>Success</StatusMessage>
+        )}
+      </SplitView>
+    );
+  },
+);
 
 export default Progress;

@@ -1,6 +1,8 @@
-import { render } from '@lobehub/cli-ui';
+import { alert, render } from '@lobehub/cli-ui';
 import chalk from 'chalk';
 import { consola } from 'consola';
+import { globSync } from 'glob';
+import { isString } from 'lodash-es';
 import { existsSync } from 'node:fs';
 import { relative, resolve } from 'node:path';
 
@@ -8,9 +10,9 @@ import Progress from '@/components/Progress';
 import { I18n, I18nMarkdownWriteOptions } from '@/core/I18n';
 import { selectors } from '@/store';
 import type { I18nConfig } from '@/types/config';
-import { MarkdownConfig } from '@/types/config';
+import { MarkdownConfig, MarkdownModeType } from '@/types/config';
 import { readMarkdown, writeMarkdown } from '@/utils/fs';
-import { getMarkdownFolderFiles } from '@/utils/getEntryFile';
+import { getDefaultExtension } from '@/utils/getDefaultExtension';
 
 class TranslateMarkdown {
   config: I18nConfig;
@@ -35,12 +37,15 @@ class TranslateMarkdown {
 
   async start() {
     consola.start('Lobe I18N is analyzing your markdown... 🤯🌏🔍');
+    const entry = this.markdownConfig.entry;
 
-    const files = this.markdownConfig.entry.filter((item) => item.includes('.md'));
-    const dirs = this.markdownConfig.entry.filter((item) => !item.includes('.md'));
+    if (!entry || entry.length === 0) alert.error('No markdown entry was found.', true);
 
-    if (files.length > 0) this.genFilesQuery(files);
-    if (dirs.length > 0) this.genDirsQuery(dirs);
+    const files = globSync(entry, { ignore: this.markdownConfig.exclude });
+
+    if (!files || files.length === 0) alert.error('No markdown entry was found.', true);
+
+    this.genFilesQuery(files);
 
     if (this.query.length > 0) {
       await this.runQuery();
@@ -75,28 +80,6 @@ class TranslateMarkdown {
     }
   }
 
-  genDirsQuery(dirs: string[]) {
-    const config = this.markdownConfig;
-    for (const dir of dirs) {
-      const files = getMarkdownFolderFiles(dir).filter((item) => {
-        if (!item.includes(config.entryExtension || '.md')) return false;
-        for (const locale of config.outputLocales || []) {
-          const targetExtension = config.outputExtensionsOverrides?.[locale] || `.${locale}.md`;
-          if (!item.includes(targetExtension)) return false;
-        }
-        return true;
-      });
-      if (files.length === 0) continue;
-      consola.start(
-        `Running in ${chalk.bold.cyan(`📂 ${dir}`)}, and has found ${chalk.bold.cyan(
-          files.length,
-        )} markdowns..`,
-      );
-
-      this.genFilesQuery(files, true);
-    }
-  }
-
   genFilesQuery(files: string[], skipLog?: boolean) {
     const config = this.markdownConfig;
     if (!skipLog)
@@ -109,24 +92,46 @@ class TranslateMarkdown {
       try {
         const md = readMarkdown(file);
         for (const locale of config.outputLocales || []) {
-          const targetExtension = config.outputExtensionsOverrides?.[locale] || `.${locale}.md`;
-          const targetFilename = resolve(
-            '.',
-            file.replace(config.entryExtension || '.md', targetExtension),
-          );
-          const isExist = existsSync(targetFilename);
-          if (isExist) continue;
+          const targetExtension = this.getTargetExtension(locale, file, md);
+          const targetFilename = this.getTargetFilename(file, targetExtension);
+          if (existsSync(targetFilename)) continue;
+          const mode = this.getMode(file, md);
           this.query.push({
             filename: targetFilename,
             from: config.entryLocale,
-            md: md,
+            md,
+            mode,
             to: locale,
           });
         }
       } catch {
-        consola.error(`${file} not found`);
+        alert.error(`${file} not found`, true);
       }
     }
+  }
+
+  private getTargetExtension(locale: string, filePath: string, fileContent: string) {
+    return (
+      this.markdownConfig.outputExtensions?.(locale, {
+        fileContent,
+        filePath,
+        getDefaultExtension,
+      }) || getDefaultExtension(locale)
+    );
+  }
+
+  private getTargetFilename(filePath: string, targetExtension: string) {
+    return resolve(
+      '.',
+      filePath.replace(this.markdownConfig.entryExtension || '.md', targetExtension),
+    );
+  }
+
+  private getMode(filePath: string, fileContent: string) {
+    const modeConfig = this.markdownConfig.mode;
+    return isString(modeConfig)
+      ? modeConfig
+      : modeConfig({ fileContent, filePath }) || MarkdownModeType.STRING;
   }
 }
 

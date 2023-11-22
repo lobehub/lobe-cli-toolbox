@@ -17,5 +17,4 @@ export const config = new Conf({
   projectName: 'lobe-i18n',
   schema,
 });
-
 export const explorer = cosmiconfigSync('i18n');

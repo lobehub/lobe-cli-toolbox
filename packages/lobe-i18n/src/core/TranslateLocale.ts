@@ -1,31 +1,62 @@
-import { consola } from 'consola';
+import { alert } from '@lobehub/cli-ui';
 import { ChatOpenAI } from 'langchain/chat_models/openai';
 import { ChatPromptTemplate } from 'langchain/prompts';
 
-import { promptTranslate } from '@/prompts/translate';
+import { promptJsonTranslate, promptStringTranslate } from '@/prompts/translate';
 import { LocaleObj } from '@/types';
 import { I18nConfig } from '@/types/config';
+import { LanguageModel, ModelTokens } from '@/types/models';
 
 export class TranslateLocale {
   private model: ChatOpenAI;
   private config: I18nConfig;
-  prompt: ChatPromptTemplate<{ from: string; json: string; to: string }>;
-
+  private isJsonMode: boolean;
+  promptJson: ChatPromptTemplate<{ from: string; json: string; to: string }>;
+  promptString: ChatPromptTemplate<{ from: string; text: string; to: string }>;
   constructor(config: I18nConfig, openAIApiKey: string, openAIProxyUrl?: string) {
     this.config = config;
     this.model = new ChatOpenAI({
       configuration: {
         baseURL: openAIProxyUrl,
       },
-      maxRetries: 10,
+      maxRetries: 4,
+      maxTokens: config.splitToken,
       modelName: config.modelName,
       openAIApiKey,
       temperature: config.temperature,
     });
-    this.prompt = promptTranslate(config.reference);
+    this.promptJson = promptJsonTranslate(config.reference);
+    this.promptString = promptStringTranslate(config.reference);
+    this.isJsonMode = Boolean(this.config?.experimental?.jsonMode);
   }
 
-  async run({
+  async runByString({
+    from,
+    to,
+    text,
+  }: {
+    from?: string;
+    text: string;
+    to: string;
+  }): Promise<string | any> {
+    try {
+      const formattedChatPrompt = await this.promptString.formatMessages({
+        from: from || this.config.entryLocale,
+        text: text,
+        to,
+      });
+
+      const res = await this.model.call(formattedChatPrompt);
+
+      const result = res['text'];
+
+      if (!result) this.handleError();
+      return result;
+    } catch (error) {
+      this.handleError(error);
+    }
+  }
+  async runByJson({
     from,
     to,
     json,
@@ -33,27 +64,40 @@ export class TranslateLocale {
     from?: string;
     json: LocaleObj;
     to: string;
-  }): Promise<LocaleObj | undefined> {
+  }): Promise<LocaleObj | any> {
     try {
-      const formattedChatPrompt = await this.prompt.formatMessages({
+      const formattedChatPrompt = await this.promptJson.formatMessages({
         from: from || this.config.entryLocale,
         json: JSON.stringify(json),
         to,
       });
 
-      const res = await this.model.call(formattedChatPrompt);
+      this.model.maxTokens =
+        ModelTokens[this.config.modelName || LanguageModel.GPT3_5] -
+        JSON.stringify(formattedChatPrompt).length;
 
-      if (!res['text']) {
-        consola.error('translate failed, please check your network or try again...');
-        return;
-      }
+      const res = await this.model.call(
+        formattedChatPrompt,
+        this.isJsonMode
+          ? {
+              response_format: { type: 'json_object' },
+            }
+          : undefined,
+      );
 
-      const message = JSON.parse(res['text']);
+      const result = this.isJsonMode ? res['content'] : res['text'];
+
+      if (!result) this.handleError();
+
+      const message = JSON.parse(result as string);
 
       return message;
     } catch (error) {
-      consola.error('translate failed, please check your network or try again...', error);
-      return;
+      this.handleError(error);
     }
+  }
+
+  private handleError(error?: any) {
+    alert.error(`Translate failed, ${error || 'please check your network or try again...'}`, true);
   }
 }
