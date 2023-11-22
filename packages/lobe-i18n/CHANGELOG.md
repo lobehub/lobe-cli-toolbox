@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.13.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.12.0...@lobehub/i18n-cli@1.13.0)
+
+<sup>Released on **2023-11-22**</sup>
+
+#### ✨ Features
+
+- **misc**: I18n support specify the configuration file.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: I18n support specify the configuration file ([f1d87c2](https://github.com/lobehub/lobe-cli-toolbox/commit/f1d87c2))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.12.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.11.1...@lobehub/i18n-cli@1.12.0)
 
 <sup>Released on **2023-11-22**</sup>
