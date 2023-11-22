@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 2.12.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.11.0...@lobehub/commit-cli@2.12.0)
+
+<sup>Released on **2023-11-22**</sup>
+
+#### ✨ Features
+
+- **misc**: Provide more options in markdown mode.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Provide more options in markdown mode ([e599f60](https://github.com/lobehub/lobe-cli-toolbox/commit/e599f60))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 2.11.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.10.1...@lobehub/commit-cli@2.11.0)
 
 <sup>Released on **2023-11-22**</sup>
