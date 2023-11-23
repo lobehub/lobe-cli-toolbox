@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.14.4](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.14.3...@lobehub/i18n-cli@1.14.4)
+
+<sup>Released on **2023-11-23**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix locale progress.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix locale progress ([69931ca](https://github.com/lobehub/lobe-cli-toolbox/commit/69931ca))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.14.3](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.14.2...@lobehub/i18n-cli@1.14.3)
 
 <sup>Released on **2023-11-23**</sup>
