@@ -13,7 +13,7 @@ interface ProgressProps extends onProgressProps {
 }
 
 const Progress = memo<ProgressProps>(
-  ({ hide, filename, to, from, progress, maxStep, step, isLoading }) => {
+  ({ hide, filename, to, from, progress, maxStep, step, isLoading, needToken }) => {
     const theme = useTheme();
 
     if (hide) return null;
@@ -32,6 +32,7 @@ const Progress = memo<ProgressProps>(
           <Text bold color={theme.colorInfo}>
             {to}
           </Text>
+          <Text color={theme.colorTextDescription}>{` [Tokens: ${needToken}]`}</Text>
         </Text>
         {isLoading ? (
           <Box>

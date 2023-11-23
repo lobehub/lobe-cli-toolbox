@@ -4,6 +4,7 @@ import pMap from 'p-map';
 import { TranslateMarkdown } from '@/core/TranslateMarkdown';
 import { LocaleObj } from '@/types';
 import { I18nConfig, MarkdownModeType } from '@/types/config';
+import { calcToken } from '@/utils/calcToken';
 import { mergeJsonFromChunks } from '@/utils/mergeJsonFromChunks';
 import { splitJsonToChunks } from '@/utils/splitJsonToChunks';
 
@@ -18,6 +19,7 @@ export interface I18nOptions {
 export interface onProgressProps {
   isLoading: boolean;
   maxStep: number;
+  needToken?: number;
   progress: number;
   step: number;
 }
@@ -55,7 +57,13 @@ export class I18n {
     this.translateMarkdownService = new TranslateMarkdown(config);
   }
 
-  async translateMarkdown(options: I18nMarkdownTranslateOptions): Promise<string | undefined> {
+  async translateMarkdown(options: I18nMarkdownTranslateOptions): Promise<
+    | {
+        result: string;
+        tokenUsage: number;
+      }
+    | undefined
+  > {
     return options.mode === MarkdownModeType.STRING
       ? this.translateMarkdownByString(options)
       : this.translateMarkdownByMdast(options);
@@ -66,7 +74,7 @@ export class I18n {
     to,
     onProgress,
     from,
-  }: I18nMarkdownTranslateOptions): Promise<string | undefined> {
+  }: I18nMarkdownTranslateOptions): Promise<{ result: string; tokenUsage: number } | undefined> {
     const prompt = await this.translateLocaleService.promptString.formatMessages({
       from,
       text: '',
@@ -82,9 +90,14 @@ export class I18n {
 
     if (splitString.length === 0) return;
 
+    const needToken =
+      splitString.length * calcToken(JSON.stringify(prompt)) +
+      calcToken(JSON.stringify(splitString));
+
     onProgress?.({
       isLoading: true,
       maxStep: this.maxStep,
+      needToken,
       progress: 0,
       step: 0,
     });
@@ -95,6 +108,7 @@ export class I18n {
         onProgress?.({
           isLoading: this.step < this.maxStep,
           maxStep: this.maxStep,
+          needToken,
           progress: this.step < this.maxStep ? Math.floor((this.step / this.maxStep) * 100) : 100,
           step: this.step,
         });
@@ -112,17 +126,26 @@ export class I18n {
     onProgress?.({
       isLoading: false,
       maxStep: this.maxStep,
+      needToken,
       progress: 100,
       step: this.maxStep,
     });
 
-    return this.translateMarkdownService.genMarkdownByString(translatedSplitString);
+    const result = await this.translateMarkdownService.genMarkdownByString(translatedSplitString);
+
+    return {
+      result,
+      tokenUsage: needToken + calcToken(JSON.stringify(translatedSplitString)),
+    };
   }
 
-  async translateMarkdownByMdast({
-    md,
-    ...rest
-  }: I18nMarkdownTranslateOptions): Promise<string | undefined> {
+  async translateMarkdownByMdast({ md, ...rest }: I18nMarkdownTranslateOptions): Promise<
+    | {
+        result: string;
+        tokenUsage: number;
+      }
+    | undefined
+  > {
     const target = await this.translateMarkdownService.genTarget(md);
 
     const translatedTarget = await this.translate({
@@ -131,16 +154,25 @@ export class I18n {
       target: {},
     });
 
-    return this.translateMarkdownService.genMarkdownByMdast(translatedTarget);
+    if (!translatedTarget?.result) return;
+
+    const result = await this.translateMarkdownService.genMarkdownByMdast(translatedTarget);
+
+    if (!result) return;
+
+    return {
+      result,
+      tokenUsage: translatedTarget.tokenUsage,
+    };
   }
 
-  async translate({
-    entry,
-    target,
-    to,
-    onProgress,
-    from,
-  }: I18nTranslateOptions): Promise<LocaleObj | undefined> {
+  async translate({ entry, target, to, onProgress, from }: I18nTranslateOptions): Promise<
+    | {
+        result: LocaleObj;
+        tokenUsage: number;
+      }
+    | undefined
+  > {
     const prompt = await this.translateLocaleService.promptJson.formatMessages({
       from,
       json: {},
@@ -153,9 +185,13 @@ export class I18n {
 
     if (splitJson.length === 0) return;
 
+    const needToken =
+      splitJson.length * calcToken(JSON.stringify(prompt)) + calcToken(JSON.stringify(splitJson));
+
     onProgress?.({
       isLoading: true,
       maxStep: this.maxStep,
+      needToken,
       progress: 0,
       step: 0,
     });
@@ -166,6 +202,7 @@ export class I18n {
         onProgress?.({
           isLoading: this.step < this.maxStep,
           maxStep: this.maxStep,
+          needToken,
           progress: this.step < this.maxStep ? Math.floor((this.step / this.maxStep) * 100) : 100,
           step: this.step,
         });
@@ -183,10 +220,16 @@ export class I18n {
     onProgress?.({
       isLoading: false,
       maxStep: this.maxStep,
+      needToken,
       progress: 100,
       step: this.maxStep,
     });
 
-    return merge(target, mergeJsonFromChunks(translatedSplitJson));
+    const result = await merge(target, mergeJsonFromChunks(translatedSplitJson));
+
+    return {
+      result,
+      tokenUsage: needToken + calcToken(JSON.stringify(translatedSplitJson)),
+    };
   }
 }
