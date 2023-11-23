@@ -5,7 +5,6 @@ import { ChatPromptTemplate } from 'langchain/prompts';
 import { promptJsonTranslate, promptStringTranslate } from '@/prompts/translate';
 import { LocaleObj } from '@/types';
 import { I18nConfig } from '@/types/config';
-import { LanguageModel, ModelTokens } from '@/types/models';
 
 export class TranslateLocale {
   private model: ChatOpenAI;
@@ -19,6 +18,7 @@ export class TranslateLocale {
       configuration: {
         baseURL: openAIProxyUrl,
       },
+      maxConcurrency: config.concurrency,
       maxRetries: 4,
       maxTokens: config.splitToken,
       modelName: config.modelName,
@@ -71,10 +71,6 @@ export class TranslateLocale {
         json: JSON.stringify(json),
         to,
       });
-
-      this.model.maxTokens =
-        ModelTokens[this.config.modelName || LanguageModel.GPT3_5] -
-        JSON.stringify(formattedChatPrompt).length;
 
       const res = await this.model.call(
         formattedChatPrompt,

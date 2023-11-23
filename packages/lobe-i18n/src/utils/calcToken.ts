@@ -7,8 +7,8 @@ export const PRIMITIVE_EXTRA_TOKENS = 3;
 export const KEY_EXTRA_TOKENS = 2; // For `"key":`
 export const OBJECT_EXTRA_TOKENS = 2; // For `{}`
 
-export const calcToken = (str: any) => {
-  return encode(String(str)).length;
+export const calcToken = (str: string) => {
+  return encode(str).length;
 };
 
 // Function to calculate the size of encoded key

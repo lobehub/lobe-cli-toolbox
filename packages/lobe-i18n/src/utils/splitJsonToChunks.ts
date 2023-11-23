@@ -38,8 +38,7 @@ const splitJSONtoSmallChunks = (object: LocaleObj, splitToken: number) =>
   ).map(([chunk]) => chunk);
 
 export const getSplitToken = (config: I18nConfig, prompt: string) => {
-  let splitToken =
-    (ModelTokens[config.modelName || LanguageModel.GPT3_5] - calcToken(prompt)) / 2.5;
+  let splitToken = (ModelTokens[config.modelName || LanguageModel.GPT3_5] - calcToken(prompt)) / 3;
   if (config.splitToken && config.splitToken < splitToken) {
     splitToken = config.splitToken;
   }
