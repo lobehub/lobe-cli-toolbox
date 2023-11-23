@@ -20,7 +20,6 @@ export class TranslateLocale {
       },
       maxConcurrency: config.concurrency,
       maxRetries: 4,
-      maxTokens: config.splitToken,
       modelName: config.modelName,
       openAIApiKey,
       temperature: config.temperature,
