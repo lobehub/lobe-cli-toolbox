@@ -187,6 +187,6 @@ export class I18n {
       step: this.maxStep,
     });
 
-    return merge(entry, mergeJsonFromChunks(translatedSplitJson));
+    return merge(target, mergeJsonFromChunks(translatedSplitJson));
   }
 }
