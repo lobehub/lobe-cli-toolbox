@@ -6,7 +6,7 @@ import { ChatPromptTemplate } from 'langchain/prompts';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { execSync } from 'node:child_process';
 
-import { promptCommits } from '@/prompts/commits';
+import { SUMMARY_PROMPT, SUMMARY_REFINE_PROMPT, promptCommits } from '@/prompts/commits';
 import { selectors } from '@/store';
 import { Config } from '@/types/config';
 import { ModelTokens } from '@/types/models';
@@ -97,7 +97,11 @@ export class Commits {
       );
 
       // STEP 2
-      const chain = loadSummarizationChain(this.model, { type: 'map_reduce' });
+      const chain = loadSummarizationChain(this.model, {
+        questionPrompt: SUMMARY_PROMPT,
+        refinePrompt: SUMMARY_REFINE_PROMPT,
+        type: 'refine',
+      });
       setLoadingInfo(
         ` [2/3] Split diff info to (${diffDocument.length} * ${this.config.diffChunkSize} chunk-size), generate summary...`,
       );

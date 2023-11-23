@@ -4,9 +4,9 @@
 <img height="120" src="https://gw.alipayobjects.com/zos/kitchen/qJ3l3EPsdW/split.svg">
 <img height="120" src="https://registry.npmmirror.com/@lobehub/assets-emoji/1.3.0/files/assets/label.webp">
 
-<h1>Lobe Label</h1>
+<h1>Lobe标签</h1>
 
-Automatically copy issues labels from template repo
+自动从模板仓库复制 Issues 标签
 
 [![][npm-release-shield]][npm-release-link]
 [![][github-releasedate-shield]][github-releasedate-link]
@@ -18,22 +18,22 @@ Automatically copy issues labels from template repo
 [![][github-issues-shield]][github-issues-link]
 [![][github-license-shield]][github-license-link]
 
-English ・ [简体中文](./README.zh-CN.md) ・ [Changelog](./CHANGELOG.md) · [Report Bug][github-issues-link] · [Request Feature][github-issues-link]
+[English](./README.md) ・ 简体中文 ・ [变更日志](./CHANGELOG.md) · [报告问题][github-issues-link] · [请求功能][github-issues-link]
 
 ![](https://gw.alipayobjects.com/zos/kitchen/qeTFEqgF8O/437shots_so.png)
 
 </div>
 
-## 📦 Installation
+## 📦 安装
 
-To install Lobe Label, run the following command:
+要安装 Lobe 标签，请运行以下命令：
 
 ```bash
 npm install -g @lobehub/label-cli
 ```
 
 > \[!NOTE]\
-> Make sure you have Node.js version >= 18\*
+> 确保您的 Node.js 版本 >= 18\*
 
 <div align="right">
 
@@ -41,33 +41,33 @@ npm install -g @lobehub/label-cli
 
 </div>
 
-## 🤯 Usage
+## 🤯 使用
 
-To initialize the Lobe i8n configuration, run the following command:
+要初始化 Lobe i8n 配置，请运行以下命令：
 
 ```shell
-$ lobe-label --config # or use the short flag -o
+$ lobe-label --config # 或使用短标志 -o
 ```
 
-### Options
+### 选项
 
-Lobe Label supports the following options:
+Lobe 标签支持以下选项：
 
 ```shell
---target -t Target repo
---source -s Source repo
+--target -t 目标仓库
+--source -s 源仓库
 ```
 
 > \[!NOTE]\
-> Default source repo is [canisminor1990/canisminor-template](https://github.com/canisminor1990/canisminor-template)\*
+> 默认源仓库是[canisminor1990/canisminor-template](https://github.com/canisminor1990/canisminor-template)\*
 
-### Copy issues labels
+### 复制问题标签
 
 ```shell
-# Copy issues labels from canisminor1990/canisminor-template to lobehub/chat
+# 从canisminor1990/canisminor-template复制问题标签到lobehub/chat
 $ lobe-label -t lobehub/chat
 
-# Copy issues labels from lobehub/commit to lobehub/chat
+# 从lobehub/commit复制问题标签到lobehub/chat
 $ lobe-label -t lobehub/chat -s lobehub/commit
 ```
 
@@ -77,13 +77,13 @@ $ lobe-label -t lobehub/chat -s lobehub/commit
 
 </div>
 
-## ⌨️ Local Development
+## ⌨️ 本地开发
 
-You can use Github Codespaces for online development:
+您可以使用 Github Codespaces 进行在线开发：
 
 [![][github-codespace-shield]][github-codespace-link]
 
-Or clone it for local development:
+或者克隆它进行本地开发：
 
 [![][bun-shield]][bun-link]
 
@@ -101,9 +101,9 @@ $ bun dev
 
 </div>
 
-## 🤝 Contributing
+## 🤝 贡献
 
-Contributions of all types are more than welcome, if you are interested in contributing code, feel free to check out our GitHub [Issues][github-issues-link] to get stuck in to show us what you’re made of.
+欢迎各种类型的贡献，如果您有兴趣贡献代码，请随时查看我们的 GitHub [问题][github-issues-link]，展示您的才华。
 
 [![][pr-welcome-shield]][pr-welcome-link]
 
@@ -115,14 +115,14 @@ Contributions of all types are more than welcome, if you are interested in contr
 
 </div>
 
-## 🔗 Links
+## 🔗 链接
 
-### More Products
+### 更多产品
 
-- **[🤖 Lobe Chat][lobe-chat]** - An open-source, extensible (Function Calling), high-performance chatbot framework. It supports one-click free deployment of your private ChatGPT/LLM web application.
-- **[🤯 Lobe Theme][lobe-theme]** - The modern theme for stable diffusion webui, exquisite interface design, highly customizable UI, and efficiency boosting features.
+- **[🤖 Lobe Chat][lobe-chat]** - 一个开源、可扩展（函数调用）、高性能的聊天机器人框架。支持一键免费部署您的私有 ChatGPT/LLM Web 应用程序。
+- **[🤯 Lobe Theme][lobe-theme]** - 稳定扩散 WebUI 的现代主题，精美的界面设计，高度可定制的 UI 和提高效率的功能。
 
-### Credits
+### 鸣谢
 
 - **ink** - <https://github.com/vadimdemedes/ink>
 
