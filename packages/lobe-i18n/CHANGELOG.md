@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.15.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.14.4...@lobehub/i18n-cli@1.15.0)
+
+<sup>Released on **2023-11-23**</sup>
+
+#### ✨ Features
+
+- **misc**: I18n add token info output.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: I18n add token info output ([240e7ca](https://github.com/lobehub/lobe-cli-toolbox/commit/240e7ca))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.14.4](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.14.3...@lobehub/i18n-cli@1.14.4)
 
 <sup>Released on **2023-11-23**</sup>
