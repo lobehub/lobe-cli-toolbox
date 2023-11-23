@@ -8,12 +8,15 @@ import { onProgressProps } from '@/core/I18n';
 interface ProgressProps extends onProgressProps {
   filename: string;
   from: string;
+  hide?: boolean;
   to: string;
 }
 
 const Progress = memo<ProgressProps>(
-  ({ filename, to, from, progress, maxStep, step, isLoading }) => {
+  ({ hide, filename, to, from, progress, maxStep, step, isLoading }) => {
     const theme = useTheme();
+
+    if (hide) return null;
 
     return (
       <SplitView flexDirection={'column'}>

@@ -68,16 +68,20 @@ class TranslateMarkdown {
       };
 
       const { rerender, clear } = render(
-        <Progress isLoading={true} maxStep={1} progress={0} step={0} {...props} />,
+        <Progress hide isLoading maxStep={1} progress={0} step={0} {...props} />,
       );
       const data = await this.i18n.translateMarkdown({
         ...item,
         onProgress: (rest) => {
-          rerender(<Progress {...rest} {...props} />);
+          if (rest.maxStep > 0) {
+            rerender(<Progress {...rest} {...props} />);
+          } else {
+            clear();
+          }
         },
       });
       clear();
-      if (data) {
+      if (data && Object.keys(data).length > 0) {
         writeMarkdown(item.filename, data);
         consola.success(chalk.yellow(relative('.', item.filename)));
       }

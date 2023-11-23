@@ -1,4 +1,3 @@
-import { consola } from 'consola';
 import { isPlainObject, reduce } from 'lodash-es';
 
 import { LocaleObj } from '@/types';
@@ -44,7 +43,6 @@ export const getSplitToken = (config: I18nConfig, prompt: string) => {
     splitToken = config.splitToken;
   }
   splitToken = Math.floor(splitToken);
-  consola.info(`Split token: ${splitToken}`);
   return splitToken;
 };
 
@@ -56,7 +54,6 @@ export const splitJsonToChunks = (
 ): LocaleObj[] => {
   const extraJSON = diffJson(entry, target);
   const splitToken = getSplitToken(config, prompt);
-  consola.info(`Split token: ${splitToken}`);
   const splitObj = splitJSONtoSmallChunks(extraJSON, splitToken);
   return splitObj;
 };

@@ -77,10 +77,10 @@ export class I18n {
       JSON.stringify(prompt),
     );
 
-    if (splitString.length === 0) return;
-
     this.maxStep = splitString.length;
     this.step = 0;
+
+    if (splitString.length === 0) return;
 
     onProgress?.({
       isLoading: true,
@@ -148,10 +148,10 @@ export class I18n {
     });
     const splitJson = splitJsonToChunks(this.config, entry, target, JSON.stringify(prompt));
 
-    if (splitJson.length === 0) return;
-
     this.maxStep = splitJson.length;
     this.step = 0;
+
+    if (splitJson.length === 0) return;
 
     onProgress?.({
       isLoading: true,
