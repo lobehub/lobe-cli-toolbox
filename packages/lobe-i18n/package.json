@@ -74,7 +74,7 @@
     "remark-frontmatter": "^4",
     "remark-gfm": "^3",
     "remark-parse": "^10",
-    "remark-stringify": "^10",
+    "remark-stringify": "^11.0.0",
     "swr": "^2",
     "unified": "^11",
     "unist-util-visit": "^5",
