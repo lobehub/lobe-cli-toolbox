@@ -72,7 +72,7 @@
     "pangu": "^4",
     "react": "^18",
     "remark-frontmatter": "^4",
-    "remark-gfm": "^3",
+    "remark-gfm": "^4.0.0",
     "remark-parse": "^10",
     "remark-stringify": "^10",
     "swr": "^2",
