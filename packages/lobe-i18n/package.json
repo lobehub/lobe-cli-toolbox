@@ -60,7 +60,7 @@
     "commander": "^11",
     "conf": "^12",
     "consola": "^3",
-    "cosmiconfig": "^8",
+    "cosmiconfig": "^9",
     "dotenv": "^16",
     "fast-deep-equal": "^3",
     "glob": "^10",
