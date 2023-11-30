@@ -1,7 +1,7 @@
 {
   "buttons": {
-    "ok": "Ok",
-    "cancel": "Cancel"
+    "ok": "OK",
+    "cancel": "キャンセル"
   },
   "welcome": "ようこそ！"
 }
