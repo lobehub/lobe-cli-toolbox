@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.15.1](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.15.0...@lobehub/i18n-cli@1.15.1)
+
+<sup>Released on **2023-11-30**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix i18n defineConfig.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix i18n defineConfig ([2513ce1](https://github.com/lobehub/lobe-cli-toolbox/commit/2513ce1))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.15.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.14.4...@lobehub/i18n-cli@1.15.0)
 
 <sup>Released on **2023-11-23**</sup>
