@@ -35,7 +35,7 @@ export const promptCommits = () => {
   ]);
 };
 
-const sumaryTemplate = [
+const summaryTemplate = [
   `You are to act as the author of a commit message in git. Your mission is to create clean and comprehensive commit messages in the conventional commit convention and explain WHAT were the changes and WHY the changes were done.`,
   `I'll enter a git diff summary, and your job is to convert it into a useful commit message.`,
   `--------`,
@@ -47,7 +47,7 @@ const sumaryTemplate = [
   .join('\n');
 
 const summaryRefineTemplate = [
-  sumaryTemplate,
+  summaryTemplate,
   `## Rules`,
   `- Choose only 1 type from the type-to-description below: <${TYPES_EXAMPLE}>`,
   `- Commit message must be a maximum of ${MAX_LENGTH} characters.`,
@@ -56,5 +56,5 @@ const summaryRefineTemplate = [
   .filter(Boolean)
   .join('\n');
 
-export const SUMMARY_PROMPT = PromptTemplate.fromTemplate(sumaryTemplate);
+export const SUMMARY_PROMPT = PromptTemplate.fromTemplate(summaryTemplate);
 export const SUMMARY_REFINE_PROMPT = PromptTemplate.fromTemplate(summaryRefineTemplate);
