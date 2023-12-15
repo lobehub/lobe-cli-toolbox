@@ -27,7 +27,6 @@ export class TranslateMarkdown {
   }
   async genTarget(md: string) {
     this.mdast = await convertMarkdownToMdast(md);
-    console.log(this.mdast);
     this.entry = convertMdastToMdastObj(this.mdast, this.check);
     return pickMdastObj(this.entry);
   }

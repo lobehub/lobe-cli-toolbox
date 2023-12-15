@@ -1,3 +1,4 @@
+import stringify from 'json-stable-stringify';
 import { readFileSync, writeFileSync } from 'node:fs';
 
 export const readJSON = (filePath: string) => {
@@ -6,7 +7,7 @@ export const readJSON = (filePath: string) => {
 };
 
 export const writeJSON = (filePath: string, data: any) => {
-  const jsonStr = JSON.stringify(data, null, 2);
+  const jsonStr = stringify(data, { space: '  ' });
   writeFileSync(filePath, jsonStr, 'utf8');
 };
 

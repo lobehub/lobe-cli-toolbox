@@ -12,7 +12,7 @@ import {
   calcPrimitiveValueToken,
   calcToken,
 } from './calcToken';
-import { diffJson } from './diffJson';
+import { diff } from './diffJson';
 
 const splitJSONtoSmallChunks = (object: LocaleObj, splitToken: number) =>
   reduce(
@@ -52,7 +52,7 @@ export const splitJsonToChunks = (
   target: LocaleObj,
   prompt: string,
 ): LocaleObj[] => {
-  const extraJSON = diffJson(entry, target);
+  const extraJSON = diff(entry, target).entry;
   const splitToken = getSplitToken(config, prompt);
   const splitObj = splitJSONtoSmallChunks(extraJSON, splitToken);
   return splitObj;

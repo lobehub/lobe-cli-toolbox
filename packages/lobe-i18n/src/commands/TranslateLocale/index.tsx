@@ -9,6 +9,7 @@ import { selectors } from '@/store';
 import type { LocaleFolderObj, LocaleObj } from '@/types';
 import type { I18nConfig } from '@/types/config';
 import { checkLocaleFolders, checkLocales } from '@/utils/checkLocales';
+import { diff } from '@/utils/diffJson';
 import { writeJSON } from '@/utils/fs';
 import { getEntryFile, getEntryFolderFiles } from '@/utils/getEntryFile';
 import { getLocaleObj } from '@/utils/getLocaleObj';
@@ -50,6 +51,7 @@ class TranslateLocale {
       )}) ${this.config.experimental?.jsonMode ? chalk.red(' [JSON Mode]') : ''}}`,
     );
     let totalTokenUsage = 0;
+
     for (const item of this.query) {
       const props = {
         filename: item.filename,
@@ -97,7 +99,8 @@ class TranslateLocale {
         consola.info(`${chalk.cyan(locale)}${chalk.gray(' - ')}${chalk.yellow(filename)}`);
         const targetFilename = resolve(config.output, locale, filename);
         const entryObj = entry[filename] as LocaleObj;
-        const targetObj = getLocaleObj(targetFilename);
+        const targetObj = diff(entryObj, getLocaleObj(targetFilename)).target;
+        writeJSON(targetFilename, targetObj);
         if (isEqualJsonKeys(entryObj, targetObj)) continue;
         this.query.push({
           entry: entryObj,
@@ -122,7 +125,8 @@ class TranslateLocale {
     for (const locale of config.outputLocales) {
       const targetFilename = resolve(config.output, locale) + '.json';
       const entryObj = entry;
-      const targetObj = getLocaleObj(targetFilename);
+      const targetObj = diff(entryObj, getLocaleObj(targetFilename)).target;
+      writeJSON(targetFilename, targetObj);
       if (isEqualJsonKeys(entryObj, targetObj)) continue;
       this.query.push({
         entry: entryObj,
