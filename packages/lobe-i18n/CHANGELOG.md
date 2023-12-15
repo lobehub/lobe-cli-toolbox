@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.15.3](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.15.2...@lobehub/i18n-cli@1.15.3)
+
+<sup>Released on **2023-12-15**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix lobe-i18n.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix lobe-i18n ([e064841](https://github.com/lobehub/lobe-cli-toolbox/commit/e064841))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.15.2](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.15.1...@lobehub/i18n-cli@1.15.2)
 
 <sup>Released on **2023-12-15**</sup>
