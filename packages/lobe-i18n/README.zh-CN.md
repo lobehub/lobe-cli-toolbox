@@ -70,7 +70,7 @@ Lobe i18n 是一款使用 ChatGPT 自动化 i18n 的 CLI 流程工具
 
 ## 📦 安装
 
-要安装 Lobe i8n，请运行以下命令：
+要安装 Lobe i18n，请运行以下命令：
 
 ```bash
 npm install -g @lobehub/i18n-cli
