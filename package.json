@@ -65,7 +65,7 @@
     "clean-pkg-json": "^1",
     "commitlint": "^18",
     "eslint": "^8",
-    "husky": "^8",
+    "husky": "^9",
     "ink-testing-library": "^3",
     "lerna": "^8",
     "lint-staged": "^15",
