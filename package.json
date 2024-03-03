@@ -63,7 +63,7 @@
     "@umijs/lint": "^4",
     "@vitest/coverage-v8": "latest",
     "clean-pkg-json": "^1",
-    "commitlint": "^18",
+    "commitlint": "^19.0.0",
     "eslint": "^8",
     "husky": "^8",
     "ink-testing-library": "^3",
