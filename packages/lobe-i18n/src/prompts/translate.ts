@@ -1,9 +1,9 @@
-import { ChatPromptTemplate } from 'langchain/prompts';
+import { ChatPromptTemplate } from '@langchain/core/prompts';
 
 const DEFAULT_REFERENCE =
   'You can adjust the tone and style, taking into account the cultural connotations and regional differences of certain words. As a translator, you need to translate the original text into a translation that meets the standards of accuracy and elegance.';
 export const promptJsonTranslate = (reference: string = DEFAULT_REFERENCE) => {
-  return ChatPromptTemplate.fromPromptMessages<{
+  return ChatPromptTemplate.fromMessages<{
     from: string;
     json: string;
     to: string;
@@ -23,7 +23,7 @@ export const promptJsonTranslate = (reference: string = DEFAULT_REFERENCE) => {
 };
 
 export const promptStringTranslate = (reference: string = DEFAULT_REFERENCE) => {
-  return ChatPromptTemplate.fromPromptMessages<{
+  return ChatPromptTemplate.fromMessages<{
     from: string;
     text: string;
     to: string;

@@ -1,8 +1,8 @@
+import { ChatPromptTemplate } from '@langchain/core/prompts';
+import { ChatOpenAI } from '@langchain/openai';
 import { alert } from '@lobehub/cli-ui';
 import chalk from 'chalk';
 import { loadSummarizationChain } from 'langchain/chains';
-import { ChatOpenAI } from 'langchain/chat_models/openai';
-import { ChatPromptTemplate } from 'langchain/prompts';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { execSync } from 'node:child_process';
 
