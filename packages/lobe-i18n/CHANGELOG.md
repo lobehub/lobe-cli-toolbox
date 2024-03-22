@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.15.4](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.15.3...@lobehub/i18n-cli@1.15.4)
+
+<sup>Released on **2024-03-22**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix dependency deprecation warning.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix dependency deprecation warning, closes [#86](https://github.com/lobehub/lobe-cli-toolbox/issues/86) ([c869253](https://github.com/lobehub/lobe-cli-toolbox/commit/c869253))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.15.3](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.15.2...@lobehub/i18n-cli@1.15.3)
 
 <sup>Released on **2023-12-15**</sup>
