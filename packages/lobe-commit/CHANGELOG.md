@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.14.1](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.14.0...@lobehub/commit-cli@2.14.1)
+
+<sup>Released on **2024-03-22**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix dependency deprecation warning.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix dependency deprecation warning, closes [#86](https://github.com/lobehub/lobe-cli-toolbox/issues/86) ([c869253](https://github.com/lobehub/lobe-cli-toolbox/commit/c869253))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 2.14.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.13.0...@lobehub/commit-cli@2.14.0)
 
 <sup>Released on **2023-11-23**</sup>
