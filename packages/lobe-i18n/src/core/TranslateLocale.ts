@@ -1,6 +1,6 @@
+import { ChatPromptTemplate } from '@langchain/core/prompts';
+import { ChatOpenAI } from '@langchain/openai';
 import { alert } from '@lobehub/cli-ui';
-import { ChatOpenAI } from 'langchain/chat_models/openai';
-import { ChatPromptTemplate } from 'langchain/prompts';
 
 import { promptJsonTranslate, promptStringTranslate } from '@/prompts/translate';
 import { LocaleObj } from '@/types';

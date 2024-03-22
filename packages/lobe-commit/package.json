@@ -48,6 +48,8 @@
   },
   "dependencies": {
     "@inkjs/ui": "^1",
+    "@langchain/core": "latest",
+    "@langchain/openai": "latest",
     "@lobehub/cli-ui": "1.10.0",
     "chalk": "^5",
     "commander": "^11",

@@ -1,4 +1,4 @@
-import { ChatPromptTemplate, PromptTemplate } from 'langchain/prompts';
+import { ChatPromptTemplate, PromptTemplate } from '@langchain/core/prompts';
 
 import gitmojis from '@/constants/gitmojis';
 import { selectors } from '@/store';
@@ -16,7 +16,7 @@ const LOCALE = selectors.getConfig('locale');
 const MAX_LENGTH = selectors.getConfig('maxLength');
 
 export const promptCommits = () => {
-  return ChatPromptTemplate.fromPromptMessages<{
+  return ChatPromptTemplate.fromMessages<{
     summary: string;
   }>([
     [

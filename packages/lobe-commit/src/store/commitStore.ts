@@ -1,5 +1,5 @@
 import { kebabCase } from 'lodash-es';
-import { create } from 'zustand';
+import { createWithEqualityFn } from 'zustand/traditional';
 
 import { type IssuesType, commitMessageToObj, commotObjToMessage } from '@/utils/genCommitMessage';
 import getIssuesList from '@/utils/getIssuesList';
@@ -31,7 +31,7 @@ export interface CommitStore {
   subject: string;
   type: string;
 }
-export const useCommitStore = create<CommitStore>((set, get) => ({
+export const useCommitStore = createWithEqualityFn<CommitStore>((set, get) => ({
   body: '',
   emoji: '',
   fetchIssuesList: async () => {
