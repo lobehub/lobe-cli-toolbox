@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.16.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.15.4...@lobehub/i18n-cli@1.16.0)
+
+<sup>Released on **2024-03-24**</sup>
+
+#### ✨ Features
+
+- **misc**: Update i18n config.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Update i18n config ([dded0e0](https://github.com/lobehub/lobe-cli-toolbox/commit/dded0e0))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.15.4](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.15.3...@lobehub/i18n-cli@1.15.4)
 
 <sup>Released on **2024-03-22**</sup>
