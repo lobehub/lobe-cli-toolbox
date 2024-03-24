@@ -1,8 +1,8 @@
 import dotenv from 'dotenv';
 
 import { Config, ConfigKeys } from '@/types/config';
-import { ModelTokens } from '@/types/models';
 
+import { ModelTokens } from '../../../common/models';
 import { config, schema } from './config';
 
 dotenv.config();

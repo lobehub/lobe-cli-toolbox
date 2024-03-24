@@ -1,6 +1,7 @@
 import { I18nConfig, MarkdownModeType } from '@/types/config';
-import { LanguageModel } from '@/types/models';
 import { getDefaultExtension } from '@/utils/getDefaultExtension';
+
+import { defaultModel } from '../../../common/models';
 
 export const DEFAULT_CONFIG: Partial<I18nConfig> = {
   concurrency: 5,
@@ -9,6 +10,6 @@ export const DEFAULT_CONFIG: Partial<I18nConfig> = {
     mode: MarkdownModeType.STRING,
     outputExtensions: getDefaultExtension,
   },
-  modelName: LanguageModel.GPT3_5,
+  modelName: defaultModel,
   temperature: 0,
 };

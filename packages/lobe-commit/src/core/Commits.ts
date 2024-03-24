@@ -9,9 +9,10 @@ import { execSync } from 'node:child_process';
 import { SUMMARY_PROMPT, SUMMARY_REFINE_PROMPT, promptCommits } from '@/prompts/commits';
 import { selectors } from '@/store';
 import { Config } from '@/types/config';
-import { ModelTokens } from '@/types/models';
 import { calcToken } from '@/utils/calcToken';
 import { addEmojiToMessage } from '@/utils/genCommitMessage';
+
+import { ModelTokens } from '../../../common/models';
 
 export interface GenAiCommitProps {
   cacheSummary?: string;

@@ -1,4 +1,4 @@
-import { LanguageModel } from './models';
+import { LanguageModel } from '../../../common/models';
 
 export interface I18nConfigLocale {
   /**

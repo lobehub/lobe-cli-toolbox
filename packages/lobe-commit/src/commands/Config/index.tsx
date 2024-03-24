@@ -5,7 +5,8 @@ import { memo, useMemo, useState } from 'react';
 import { BASE_PROMPT } from '@/constants/template';
 import { useConfStore } from '@/store';
 import type { ConfigKeys, Config as LocalConfig } from '@/types/config';
-import { LanguageModel } from '@/types/models';
+
+import { LanguageModel } from '../../../../common/models';
 
 const Config = memo(() => {
   const [active, setActive] = useState<string>();

@@ -1,7 +1,8 @@
 import Conf from 'conf';
 
 import { ConfigSchema } from '@/types/config';
-import { LanguageModel, ModelTokens } from '@/types/models';
+
+import { ModelTokens, defaultModel } from '../../../common/models';
 
 export const schema: ConfigSchema = {
   apiBaseUrl: {
@@ -9,7 +10,7 @@ export const schema: ConfigSchema = {
     type: 'string',
   },
   diffChunkSize: {
-    default: ModelTokens[LanguageModel.GPT3_5] - 512,
+    default: ModelTokens[defaultModel] - 512,
     type: 'number',
   },
   emoji: {
@@ -29,7 +30,7 @@ export const schema: ConfigSchema = {
     type: 'number',
   },
   modelName: {
-    default: LanguageModel.GPT3_5,
+    default: defaultModel,
     type: 'string',
   },
   openaiToken: {
