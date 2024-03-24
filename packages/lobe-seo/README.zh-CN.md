@@ -136,6 +136,7 @@ $ lobe-seo -c './custom-config.js' # or use the full flag --config
 | tagStringify   |      | `boolean`      | `false`         | 将 tags 字符串化             |
 | modelName      |      | `string`       | `gpt-3.5-turbo` | 使用的模型                   |
 | temperature    |      | `number`       | `0`             | 使用的采样温度               |
+| concurrency    |      | `number`       | `5`             | 同时并发的队列请求数量       |
 | experimental   |      | `experimental` | `{}`            | 实验性功能，见下文           |
 
 #### `experimental`

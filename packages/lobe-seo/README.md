@@ -128,15 +128,16 @@ Some additional configurations are provided in this project, set using environme
 
 ## 🔍 Configuration
 
-| Property Name  | Required | Type           | Default Value   | Description                      |
-| -------------- | -------- | -------------- | --------------- | -------------------------------- |
-| entry          | `*`      | `string`       | -               | Entry file or folder             |
-| entryExtension |          | `string`       | `.mdx`          | Entry file extension             |
-| groupKey       |          | `string`       | -               | Set group key for SEO matters    |
-| tagStringify   |          | `boolean`      | `false`         | Stringify the tags array         |
-| modelName      |          | `string`       | `gpt-3.5-turbo` | Model used                       |
-| temperature    |          | `number`       | `0`             | Sampling temperature used        |
-| experimental   |          | `experimental` | `{}`            | Experimental features, see below |
+| Property Name  | Required | Type           | Default Value   | Description                                      |
+| -------------- | -------- | -------------- | --------------- | ------------------------------------------------ |
+| entry          | `*`      | `string`       | -               | Entry file or folder                             |
+| entryExtension |          | `string`       | `.mdx`          | Entry file extension                             |
+| groupKey       |          | `string`       | -               | Set group key for SEO matters                    |
+| tagStringify   |          | `boolean`      | `false`         | Stringify the tags array                         |
+| modelName      |          | `string`       | `gpt-3.5-turbo` | Model used                                       |
+| temperature    |          | `number`       | `0`             | Sampling temperature used                        |
+| concurrency    |          | `number`       | `5`             | Number of concurrently pending promises returned |
+| experimental   |          | `experimental` | `{}`            | Experimental features, see below                 |
 
 #### `experimental`
 

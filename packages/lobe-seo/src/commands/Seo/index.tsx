@@ -3,6 +3,7 @@ import chalk from 'chalk';
 import { consola } from 'consola';
 import { globSync } from 'glob';
 import matter from 'gray-matter';
+import pMap from 'p-map';
 
 import { SeoCore, SeoQueryItem } from '@/core/SeoCore';
 import { selectors } from '@/store';
@@ -54,25 +55,34 @@ class Seo {
       )}) ${this.config.experimental?.jsonMode ? chalk.red(' [JSON Mode]') : ''}}`,
     );
     let totalTokenUsage = 0;
-    for (const item of this.query) {
-      const data = await this.seo.run({
-        ...item,
-        onProgress: ({ isLoading }) => {
-          if (isLoading) {
-            consola.start(item.entry);
-          }
-        },
-      });
 
-      if (data?.result && Object.keys(data.result).length > 0) {
-        const result = matter.stringify(item.content, data.result);
-        writeMarkdown(item.entry, result);
-        totalTokenUsage += data.tokenUsage;
-        consola.success(chalk.yellow(item.entry), chalk.gray(`[Token usage: ${data.tokenUsage}]`));
-      } else {
-        consola.warn('No translation result was found:', chalk.yellow(item.entry));
-      }
-    }
+    await pMap(
+      this.query,
+      async (item) => {
+        const data = await this.seo.run({
+          ...item,
+          onProgress: ({ isLoading }) => {
+            if (isLoading) {
+              consola.start(item.entry);
+            }
+          },
+        });
+
+        if (data?.result && Object.keys(data.result).length > 0) {
+          const result = matter.stringify(item.content, data.result);
+          writeMarkdown(item.entry, result);
+          totalTokenUsage += data.tokenUsage;
+          consola.success(
+            chalk.yellow(item.entry),
+            chalk.gray(`[Token usage: ${data.tokenUsage}]`),
+          );
+        } else {
+          consola.warn('No translation result was found:', chalk.yellow(item.entry));
+        }
+      },
+      { concurrency: this.config.concurrency || 5 },
+    );
+
     if (totalTokenUsage > 0) consola.info('Total token usage:', chalk.cyan(totalTokenUsage));
   }
 
