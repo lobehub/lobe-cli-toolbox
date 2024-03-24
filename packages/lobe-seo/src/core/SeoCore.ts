@@ -18,6 +18,7 @@ export interface SeoQueryItem {
   entry: string;
   matter: BlogPost;
   onProgress?: (props: onProgressProps) => void;
+  rawContent: string;
 }
 
 export class SeoCore {

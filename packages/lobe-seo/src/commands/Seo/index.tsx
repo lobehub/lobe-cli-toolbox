@@ -69,7 +69,7 @@ class Seo {
         });
 
         if (data?.result && Object.keys(data.result).length > 0) {
-          const result = matter.stringify(item.content, data.result);
+          const result = matter.stringify(item.rawContent, data.result);
           writeMarkdown(item.entry, result);
           totalTokenUsage += data.tokenUsage;
           consola.success(
@@ -88,11 +88,12 @@ class Seo {
 
   genFilesQuery(files: string[], skipLog?: boolean) {
     if (!skipLog) consola.start(`Running in ${chalk.bold.cyan(`📄 ${files.length} Mdx`)}..`);
+
     for (const file of files) {
       try {
         const md = readMarkdown(file);
         const { data, content } = matter(md);
-
+        let gptContent = content;
         if (data) {
           let seo: PostSEO;
           seo = this.config.groupKey
@@ -104,10 +105,15 @@ class Seo {
           }
         }
 
+        if (this.config.groupKey && (data as BlogPost)?.title) {
+          gptContent = [`#${(data as BlogPost)?.title}`, content].join('\n\n');
+        }
+
         this.query.push({
-          content,
+          content: gptContent,
           entry: file,
           matter: (data as BlogPost) || {},
+          rawContent: content,
         });
       } catch {
         alert.error(`${file} not found`, true);
