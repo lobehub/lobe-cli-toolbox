@@ -22,7 +22,9 @@ export interface SeoQueryItem {
 
 export class SeoCore {
   private seoService: SeoMdx;
+  private config: SeoConfig;
   constructor({ openAIApiKey, openAIProxyUrl, config }: SeoOptions) {
+    this.config = config;
     this.seoService = new SeoMdx(config, openAIApiKey, openAIProxyUrl);
   }
 
@@ -51,13 +53,24 @@ export class SeoCore {
       needToken,
     });
 
-    const result = {
-      ...matter,
-      seo: {
-        ...seoResult,
-        ...matter.seo,
-      },
-    };
+    let result: BlogPost;
+
+    if (this.config.tagStringify) {
+      seoResult.tags = seoResult.tags.join(', ');
+    }
+
+    result = this.config.groupKey
+      ? {
+          ...matter,
+          [this.config.groupKey]: {
+            ...seoResult,
+            ...matter?.[this.config.groupKey],
+          },
+        }
+      : {
+          ...seoResult,
+          ...matter,
+        };
 
     return {
       result,

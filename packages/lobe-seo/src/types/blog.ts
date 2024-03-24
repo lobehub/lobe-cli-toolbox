@@ -4,7 +4,6 @@ export interface PostSEO {
   title: string;
 }
 
-export interface BlogPost {
-  seo: PostSEO;
-  title: string;
-}
+export type BlogPost = PostSEO & {
+  [groupKey: string]: PostSEO;
+};

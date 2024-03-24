@@ -82,12 +82,18 @@ class Seo {
       try {
         const md = readMarkdown(file);
         const { data, content } = matter(md);
+
         if (data) {
-          const seo = (data as BlogPost)?.seo as PostSEO;
+          let seo: PostSEO;
+          seo = this.config.groupKey
+            ? ((data as BlogPost)?.[this.config.groupKey] as PostSEO)
+            : (data as BlogPost);
+
           if (seo && seo.tags && seo.title && seo.description) {
             continue;
           }
         }
+
         this.query.push({
           content,
           entry: file,

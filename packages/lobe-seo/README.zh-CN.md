@@ -128,13 +128,15 @@ $ lobe-seo -c './custom-config.js' # or use the full flag --config
 
 ## 🔍 配置
 
-| 属性名称       | 必填 | 类型           | 默认值          | 描述               |
-| -------------- | ---- | -------------- | --------------- | ------------------ |
-| entry          | `*`  | `string`       | -               | 入口文件或文件夹   |
-| entryExtension |      | `string`       | `.mdx`          | 入口文件扩展名     |
-| modelName      |      | `string`       | `gpt-3.5-turbo` | 使用的模型         |
-| temperature    |      | `number`       | `0`             | 使用的采样温度     |
-| experimental   |      | `experimental` | `{}`            | 实验性功能，见下文 |
+| 属性名称       | 必填 | 类型           | 默认值          | 描述                         |
+| -------------- | ---- | -------------- | --------------- | ---------------------------- |
+| entry          | `*`  | `string`       | -               | 入口文件或文件夹             |
+| entryExtension |      | `string`       | `.mdx`          | 入口文件扩展名               |
+| groupKey       |      | `string`       | -               | 为 Seo Matter 设置 Gorup key |
+| tagStringify   |      | `boolean`      | `false`         | 将 tags 字符串化             |
+| modelName      |      | `string`       | `gpt-3.5-turbo` | 使用的模型                   |
+| temperature    |      | `number`       | `0`             | 使用的采样温度               |
+| experimental   |      | `experimental` | `{}`            | 实验性功能，见下文           |
 
 #### `experimental`
 
