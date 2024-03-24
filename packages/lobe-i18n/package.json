@@ -67,6 +67,7 @@
     "fast-deep-equal": "^3",
     "glob": "^10",
     "gpt-tokenizer": "^2",
+    "gray-matter": "^4",
     "ink": "^4.2",
     "json-stable-stringify": "^1",
     "just-diff": "^6",

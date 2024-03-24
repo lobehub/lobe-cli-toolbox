@@ -2,6 +2,7 @@ import { alert, render } from '@lobehub/cli-ui';
 import chalk from 'chalk';
 import { consola } from 'consola';
 import { globSync } from 'glob';
+import matter from 'gray-matter';
 import { isString } from 'lodash-es';
 import { existsSync } from 'node:fs';
 import { relative, resolve } from 'node:path';
@@ -94,7 +95,12 @@ class TranslateMarkdown {
       clear();
       const outputPath = relative('.', item.filename);
       if (data?.result && Object.keys(data.result).length > 0) {
-        writeMarkdown(item.filename, data.result);
+        let mdResut = data.result;
+        if (!this.markdownConfig.includeMatter) {
+          mdResut = matter.stringify(data.result, item.matter);
+        }
+
+        writeMarkdown(item.filename, mdResut);
         totalTokenUsage += data.tokenUsage;
         consola.success(chalk.yellow(outputPath), chalk.gray(`[Token usage: ${data.tokenUsage}]`));
       } else {
@@ -120,11 +126,13 @@ class TranslateMarkdown {
           const targetFilename = this.getTargetFilename(file, targetExtension);
           if (existsSync(targetFilename)) continue;
           const mode = this.getMode(file, md);
+          const { data, content } = matter(md);
           consola.info(`📄 To ${locale}: ${chalk.yellow(file)}`);
           this.query.push({
             filename: targetFilename,
             from: config.entryLocale,
-            md,
+            matter: data,
+            md: this.markdownConfig.includeMatter ? md : content,
             mode,
             to: locale,
           });

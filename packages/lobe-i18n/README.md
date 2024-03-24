@@ -301,6 +301,7 @@ $ lobe-i18n
 | outputExtensions |          | `function`                  | `(locale) => '.{locale}.md'` | Output file extension generation                                        |
 | mode             |          | `string`,`mdast`,`function` | `string`                     | Translation mode selection, explained below                             |
 | translateCode    |          | `boolean`                   | `false`                      | Whether to translate code blocks under `mdast`, other modes are invalid |
+| includeMatter    |          | `boolean`                   | `false`                      | Whether to include front matter in the translation                      |
 
 #### `outputExtensions`
 

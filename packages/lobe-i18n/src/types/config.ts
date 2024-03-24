@@ -68,6 +68,10 @@ export interface MarkdownConfig {
    */
   exclude?: string[];
   /**
+   * @description Whether to include matter in the translation
+   */
+  includeMatter?: boolean;
+  /**
    * @description Markdown translate mode
    */
   mode?: MarkdownMode | MarkdownModeFunction;

@@ -33,6 +33,7 @@ export interface I18nTranslateOptions {
 
 export interface I18nMarkdownTranslateOptions
   extends Pick<I18nTranslateOptions, 'from' | 'to' | 'onProgress'> {
+  matter?: any;
   md: string;
   mode: MarkdownModeType;
 }

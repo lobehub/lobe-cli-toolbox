@@ -302,6 +302,7 @@ $ lobe-i18n
 | outputExtensions |      | `function`                  | `(locale) => '.{locale}.md'` | 输出文件的扩展名生成                      |
 | mode             |      | `string`,`mdast`,`function` | `string`                     | 翻译的模式选择，解释见下文                |
 | translateCode    |      | `boolean`                   | `false`                      | 在 `mdast` 下是否翻译代码块，其他模式无效 |
+| includeMatter    |      | `boolean`                   | `false`                      | 是否翻译 `front matter`                   |
 
 #### `outputExtensions`
 
