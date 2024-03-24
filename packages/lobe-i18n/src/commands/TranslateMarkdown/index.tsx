@@ -43,9 +43,14 @@ class TranslateMarkdown {
     if (!entry || entry.length === 0) alert.error('No markdown entry was found.', true);
 
     let files = globSync(matchInputPattern(entry, '.md'), {
-      ignore: matchInputPattern(this.markdownConfig.exclude || [], '.md'),
+      ignore: this.markdownConfig.exclude
+        ? matchInputPattern(this.markdownConfig.exclude || [], '.md')
+        : undefined,
       nodir: true,
-    }).filter((file) => file.includes(this.markdownConfig.entryExtension || '.md'));
+    });
+
+    if (this.markdownConfig.entryExtension)
+      files = files.filter((file) => file.includes(this.markdownConfig.entryExtension || '.md'));
 
     if (!files || files.length === 0) alert.error('No markdown entry was found.', true);
 
@@ -141,10 +146,24 @@ class TranslateMarkdown {
   }
 
   private getTargetFilename(filePath: string, targetExtension: string) {
-    return resolve(
-      '.',
-      filePath.replace(this.markdownConfig.entryExtension || '.md', targetExtension),
-    );
+    if (this.markdownConfig.entryExtension) {
+      return resolve(
+        '.',
+        filePath.replace(this.markdownConfig.entryExtension || '.md', targetExtension),
+      );
+    } else {
+      if (
+        this.markdownConfig.entryLocale &&
+        filePath.includes(`.${this.markdownConfig.entryLocale}.`)
+      ) {
+        const filePaths = filePath.split(`.${this.markdownConfig.entryLocale}.`) as string[];
+        return [filePaths[0], targetExtension].join('');
+      } else {
+        const filePaths = filePath.split('.');
+        filePaths.pop();
+        return [filePaths.join('.'), targetExtension].join('');
+      }
+    }
   }
 
   private getMode(filePath: string, fileContent: string) {

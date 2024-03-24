@@ -6,7 +6,6 @@ export const DEFAULT_CONFIG: Partial<I18nConfig> = {
   concurrency: 5,
   markdown: {
     entry: [],
-    entryExtension: '.md',
     mode: MarkdownModeType.STRING,
     outputExtensions: getDefaultExtension,
   },
