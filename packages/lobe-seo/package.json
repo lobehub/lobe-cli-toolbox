@@ -1,0 +1,104 @@
+{
+  "name": "@lobehub/seo-cli",
+  "version": "1.0.0",
+  "description": "Lobe seo is a CLI tool that automate generation seo content for mdx",
+  "keywords": [
+    "ai",
+    "seo",
+    "mdx",
+    "openai",
+    "gpt",
+    "langchain"
+  ],
+  "homepage": "https://github.comlobehub/lobe-cli-toolbox/tree/master/packages/lobe-seo",
+  "bugs": {
+    "url": "https://github.com/lobehub/lobe-cli-toolbox/issues/new"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lobehub/lobe-cli-toolbox.git"
+  },
+  "license": "MIT",
+  "author": "LobeHub <i@lobehub.com>",
+  "sideEffects": false,
+  "type": "module",
+  "imports": {
+    "@": "./src"
+  },
+  "exports": {
+    "require": {
+      "types": "./dist/index.d.cts",
+      "default": "./dist/index.cjs"
+    },
+    "import": {
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.cts",
+  "bin": {
+    "lobe-seo": "dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "npm run type-check && pkgroll --minify -p tsconfig.prod.json --env.NODE_ENV=production && npm run shebang",
+    "dev": "pkgroll -p tsconfig.prod.json --env.NODE_ENV=development --watch",
+    "link": "npm run build && npm link -f",
+    "shebang": "lobe-shebang -t ./dist/cli.js",
+    "start": "node ./dist/cli.js",
+    "test": "vitest --passWithNoTests",
+    "test:coverage": "vitest run --coverage --passWithNoTests",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@inkjs/ui": "^1",
+    "@langchain/core": "latest",
+    "@langchain/openai": "latest",
+    "@lobehub/cli-ui": "1.10.0",
+    "chalk": "^5",
+    "commander": "^11",
+    "conf": "^12",
+    "consola": "^3",
+    "cosmiconfig": "^9",
+    "dotenv": "^16",
+    "fast-deep-equal": "^3",
+    "glob": "^10",
+    "gpt-tokenizer": "^2",
+    "gray-matter": "^4",
+    "ink": "^4.2",
+    "json-stable-stringify": "^1",
+    "just-diff": "^6",
+    "langchain": "latest",
+    "lodash-es": "^4",
+    "p-map": "^7",
+    "pangu": "^4",
+    "react": "^18",
+    "remark-frontmatter": "^4",
+    "remark-gfm": "^3",
+    "remark-parse": "^10",
+    "remark-stringify": "^10",
+    "swr": "^2",
+    "unified": "^11",
+    "unist-util-visit": "^5",
+    "update-notifier": "^7",
+    "zustand": "^4"
+  },
+  "devDependencies": {
+    "@types/json-stable-stringify": "^1"
+  },
+  "peerDependencies": {
+    "ink": ">=4",
+    "react": ">=18"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}
