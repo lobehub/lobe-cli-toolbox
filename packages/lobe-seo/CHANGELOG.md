@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.2.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/seo-cli@1.1.0...@lobehub/seo-cli@1.2.0)
+
+<sup>Released on **2024-03-24**</sup>
+
+#### ✨ Features
+
+- **misc**: Add concurrency pMap to lobe seo.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add concurrency pMap to lobe seo ([fd5141d](https://github.com/lobehub/lobe-cli-toolbox/commit/fd5141d))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.1.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/seo-cli@1.0.0...@lobehub/seo-cli@1.1.0)
 
 <sup>Released on **2024-03-24**</sup>
