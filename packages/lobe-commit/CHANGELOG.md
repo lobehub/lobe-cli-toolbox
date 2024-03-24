@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 2.15.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.14.1...@lobehub/commit-cli@2.15.0)
+
+<sup>Released on **2024-03-24**</sup>
+
+#### ✨ Features
+
+- **misc**: Add new model info.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add new model info ([cbe785e](https://github.com/lobehub/lobe-cli-toolbox/commit/cbe785e))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.14.1](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.14.0...@lobehub/commit-cli@2.14.1)
 
 <sup>Released on **2024-03-22**</sup>
