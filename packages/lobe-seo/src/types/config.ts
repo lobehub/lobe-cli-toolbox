@@ -29,6 +29,10 @@ export interface SeoConfig {
    */
   modelName?: LanguageModel;
   /**
+   * @description Provide some context for a more accurate translation
+   */
+  reference?: string;
+  /**
    * @description Stringify the tags array
    */
   tagStringify?: boolean;

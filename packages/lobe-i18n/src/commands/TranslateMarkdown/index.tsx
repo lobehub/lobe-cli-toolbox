@@ -127,7 +127,7 @@ class TranslateMarkdown {
           if (existsSync(targetFilename)) continue;
           const mode = this.getMode(file, md);
           const { data, content } = matter(md);
-          consola.info(`📄 To ${locale}: ${chalk.yellow(file)}`);
+          consola.info(`📄 To ${locale}: ${chalk.yellow(targetFilename)}`);
           this.query.push({
             filename: targetFilename,
             from: config.entryLocale,

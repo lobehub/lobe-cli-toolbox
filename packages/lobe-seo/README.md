@@ -136,6 +136,7 @@ Some additional configurations are provided in this project, set using environme
 | tagStringify   |          | `boolean`      | `false`         | Stringify the tags array                         |
 | modelName      |          | `string`       | `gpt-3.5-turbo` | Model used                                       |
 | temperature    |          | `number`       | `0`             | Sampling temperature used                        |
+| reference      |          | `string`       | -               | Provide some rule for more accurate seo          |
 | concurrency    |          | `number`       | `5`             | Number of concurrently pending promises returned |
 | experimental   |          | `experimental` | `{}`            | Experimental features, see below                 |
 

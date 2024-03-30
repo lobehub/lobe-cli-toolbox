@@ -23,7 +23,7 @@ export class SeoMdx {
       openAIApiKey,
       temperature: config.temperature,
     });
-    this.prompt = promptSeo();
+    this.prompt = promptSeo(this.config.reference);
     this.isJsonMode = Boolean(this.config?.experimental?.jsonMode);
   }
   async run(content: string): Promise<PostSEO | any> {
