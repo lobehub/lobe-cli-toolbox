@@ -51,7 +51,7 @@
     ]
   },
   "devDependencies": {
-    "@commitlint/cli": "^18",
+    "@commitlint/cli": "^19",
     "@lobehub/cli-shebang": "^1",
     "@lobehub/lint": "latest",
     "@sindresorhus/tsconfig": "^5",
@@ -63,9 +63,9 @@
     "@umijs/lint": "^4",
     "@vitest/coverage-v8": "latest",
     "clean-pkg-json": "^1",
-    "commitlint": "^18",
+    "commitlint": "^19",
     "eslint": "^8",
-    "husky": "^8",
+    "husky": "^9",
     "ink-testing-library": "^3",
     "lerna": "^8",
     "lint-staged": "^15",
