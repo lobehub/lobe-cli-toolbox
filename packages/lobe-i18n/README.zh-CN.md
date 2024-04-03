@@ -265,7 +265,7 @@ module.exports = defineConfig({
 
 > \[!TIP]
 >
-> `单文件夹结构` 需要在配置文件中将 `entry` 配置为对应的文件夹 [示例](./examples/locale/tree/.i18nrc.cjs)
+> `文件夹结构` 需要在配置文件中将 `entry` 配置为对应的文件夹 [示例](./examples/locale/tree/.i18nrc.cjs)
 
 ```json
 {
