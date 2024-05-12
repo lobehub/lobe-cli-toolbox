@@ -62,7 +62,7 @@
     "ink": "^4.2",
     "langchain": "latest",
     "lodash-es": "^4",
-    "octokit": "^3",
+    "octokit": "^4.0.0",
     "pangu": "^4",
     "path-exists": "^5",
     "react": "^18",
