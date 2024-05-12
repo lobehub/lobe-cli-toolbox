@@ -59,7 +59,7 @@
     "fast-deep-equal": "^3",
     "gitconfig": "^2",
     "gpt-tokenizer": "^2",
-    "ink": "^4.2",
+    "ink": "^5.0.0",
     "langchain": "latest",
     "lodash-es": "^4",
     "octokit": "^3",
