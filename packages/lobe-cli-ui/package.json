@@ -37,7 +37,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@inkjs/ui": "^1",
+    "@inkjs/ui": "^2.0.0",
     "arr-rotate": "^1",
     "consola": "^3",
     "fast-deep-equal": "^3",
