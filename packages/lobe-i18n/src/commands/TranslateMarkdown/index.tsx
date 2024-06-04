@@ -4,9 +4,9 @@ import { consola } from 'consola';
 import { globSync } from 'glob';
 import matter from 'gray-matter';
 import { isString } from 'lodash-es';
-import { existsSync } from 'node:fs';
 import { relative, resolve } from 'node:path';
 
+import { FileHashCache } from '@/cache';
 import Progress from '@/components/Progress';
 import { I18n, I18nMarkdownWriteOptions } from '@/core/I18n';
 import { selectors } from '@/store';
@@ -21,6 +21,7 @@ class TranslateMarkdown {
   markdownConfig: MarkdownConfig;
   query: I18nMarkdownWriteOptions[] = [];
   i18n: I18n;
+  fileHashCache = new FileHashCache();
   constructor() {
     this.markdownConfig = selectors.getMarkdownConfigFile();
     const defaultConfig = selectors.getConfigFile();
@@ -55,7 +56,7 @@ class TranslateMarkdown {
 
     if (!files || files.length === 0) alert.error('No markdown entry was found.', true);
 
-    this.genFilesQuery(files);
+    await this.genFilesQuery(files);
 
     if (this.query.length > 0) {
       await this.runQuery();
@@ -64,7 +65,6 @@ class TranslateMarkdown {
     }
     consola.success('All i18n tasks have been completed！');
   }
-
   async runQuery() {
     consola.info(
       `Current model setting: ${chalk.cyan(this.config.modelName)} (temperature: ${chalk.cyan(
@@ -101,6 +101,7 @@ class TranslateMarkdown {
         }
 
         writeMarkdown(item.filename, mdResut);
+        await this.fileHashCache.setHash(item.filePath, item.hash!);
         totalTokenUsage += data.tokenUsage;
         consola.success(chalk.yellow(outputPath), chalk.gray(`[Token usage: ${data.tokenUsage}]`));
       } else {
@@ -110,7 +111,7 @@ class TranslateMarkdown {
     if (totalTokenUsage > 0) consola.info('Total token usage:', chalk.cyan(totalTokenUsage));
   }
 
-  genFilesQuery(files: string[], skipLog?: boolean) {
+  async genFilesQuery(files: string[], skipLog?: boolean) {
     const config = this.markdownConfig;
     if (!skipLog)
       consola.start(
@@ -121,24 +122,31 @@ class TranslateMarkdown {
     for (const file of files) {
       try {
         const md = readMarkdown(file);
+        const hash = this.fileHashCache.getHash(md);
+        const cacheKey = await this.fileHashCache.hasHash(file, hash);
+        if (cacheKey) {
+          consola.info(`✅ Cahced: ${chalk.green(file)}`);
+          continue;
+        }
         for (const locale of config.outputLocales || []) {
           const targetExtension = this.getTargetExtension(locale, file, md);
           const targetFilename = this.getTargetFilename(file, targetExtension);
-          if (existsSync(targetFilename)) continue;
           const mode = this.getMode(file, md);
           const { data, content } = matter(md);
           consola.info(`📄 To ${locale}: ${chalk.yellow(targetFilename)}`);
           this.query.push({
+            filePath: file,
             filename: targetFilename,
             from: config.entryLocale,
+            hash,
             matter: data,
             md: this.markdownConfig.includeMatter ? md : content,
             mode,
             to: locale,
           });
         }
-      } catch {
-        alert.error(`${file} not found`, true);
+      } catch (error: unknown) {
+        alert.error(`${file} not found. ` + (error as Error).message, true);
       }
     }
   }

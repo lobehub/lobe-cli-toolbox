@@ -16,6 +16,7 @@ notifier.notify({ isGlobal: true });
 const program = new Command();
 
 interface Flags {
+  clear?: boolean;
   config?: string;
   option?: boolean;
   withMd?: boolean;
@@ -27,6 +28,7 @@ program
   .version(packageJson.version)
   .addOption(new Option('-o, --option', 'Setup lobe-i18n preferences'))
   .addOption(new Option('-c, --config <string>', 'Specify the configuration file'))
+  .addOption(new Option('--clear', 'clear cache'))
   .addOption(
     new Option('-m, --with-md', 'Run i18n translation and markdown translation simultaneously'),
   );
@@ -45,7 +47,11 @@ program.command('locale', { isDefault: true }).action(async () => {
 program.command('md').action(async () => {
   const options: Flags = program.opts();
   if (options.config) explorer.loadCustomConfig(options.config);
-  await new TranslateMarkdown().start();
+  const service = new TranslateMarkdown();
+  if (options.clear) {
+    await service.fileHashCache.clear();
+  }
+  await service.start();
 });
 
 program.parse();
