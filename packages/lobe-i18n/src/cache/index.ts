@@ -27,8 +27,9 @@ export class FileHashCache {
     return this.kv.then((kv) => kv.delete(['files', filePath]));
   }
   clear() {
-    return this.kv.then((kv) => {
-      return kv.delete(['files']);
+    return this.kv.then(async (kv) => {
+      const iter = kv.list<string>({ prefix: ['files'] });
+      for await (const res of iter) kv.delete(res.key);
     });
   }
   destory() {
