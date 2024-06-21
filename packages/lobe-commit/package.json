@@ -52,7 +52,7 @@
     "@langchain/openai": "latest",
     "@lobehub/cli-ui": "1.10.0",
     "chalk": "^5",
-    "commander": "^11",
+    "commander": "^12.0.0",
     "conf": "^12",
     "dotenv": "^16",
     "execa": "^8",
