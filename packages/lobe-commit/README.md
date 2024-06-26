@@ -156,6 +156,21 @@ To configure Lobe Commit, run the following command:
 $ lobe-commit --option # or use short flag -o
 ```
 
+### Running
+
+To make a commit, run one of the following commands:
+
+```shell
+$ lobe-commit --hook # Run either of the two commands
+$ git commit
+```
+
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
+
 - To use AI auto-generation, you need to fill in your [OpenAI token](<(https://platform.openai.com/account/api-keys)>) in the settings.
 - To automatically pull private issues, you need to fill in your [GitHub token](https://github.com/settings/tokens) with repo permissions in the settings.
 
@@ -170,13 +185,14 @@ $ lobe-commit --option # or use short flag -o
 Lobe Commit supports the following options:
 
 ```shell
---commit -c Interactively commit using the prompts
---option -o Setup lobe-commit preferences
---help -h Print basic options
---init -i Initialize lobe-commit as a commit hook
---remove -r Remove a previously initialized commit hook
---list -l List all the available commit type
---version -v Print lobe-commit installed version
+--hook         Commit interactively using prompts
+-a, --ai       Generate prompts by ChatGPT
+-o, --option   Setup lobe-commit preferences
+-i, --init     Initialize lobe-commit as a commit hook
+-r, --remove   Remove a previously initialized commit hook
+-l, --list     List all commit types supported
+-V, --version  Print lobe-commit installed version 
+-h, --help     Print basic options
 ```
 
 <div align="right">
