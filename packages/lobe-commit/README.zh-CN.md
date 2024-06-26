@@ -156,6 +156,21 @@ $ lobe-commit --remove # 或使用短标志 -r
 $ lobe-commit --option # 或使用短标志 -o
 ```
 
+### 运行
+
+要进行 commit 提交，请运行以下命令：
+
+```shell
+$ lobe-commit --hook # 两个命令任选其一
+$ git commit
+```
+
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
+
 - 要使用 AI 自动生成，需要在设置中填写 [OpenAI 令牌](https://platform.openai.com/account/api-keys)
 - 要自动拉取私人仓库 issues，需要在设置中填写具有 repo 权限的 [GitHub 令牌](https://github.com/settings/tokens)
 
@@ -170,13 +185,14 @@ $ lobe-commit --option # 或使用短标志 -o
 Lobe Commit 支持以下选项：
 
 ```shell
---commit -c 使用提示交互式提交
---option -o 设置lobe-commit首选项
---help -h 打印基本选项
---init -i 将lobe-commit初始化为提交钩子
---remove -r 删除先前初始化的提交钩子
---list -l 列出所有可用的提交类型
---version -v 打印lobe-commit安装版本
+--hook         使用基于提示的交互方式进行 commit 提交
+-a, --ai       由 Ai 生成提示
+-o, --option   设置 lobe-commit 首选项
+-i, --init     将 lobe-commit 初始化为提交钩子
+-r, --remove   移除先前初始化的提交钩子
+-l, --list     列出所有支持的提交类型
+-V, --version  打印 lobe-commit 的安装版本
+-h, --help     打印基本选项
 ```
 
 <div align="right">
