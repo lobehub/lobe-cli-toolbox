@@ -54,7 +54,7 @@
     "@commitlint/cli": "^19",
     "@lobehub/cli-shebang": "^1",
     "@lobehub/lint": "latest",
-    "@sindresorhus/tsconfig": "^5",
+    "@sindresorhus/tsconfig": "^6.0.0",
     "@types/lodash-es": "^4",
     "@types/node": "^20",
     "@types/pangu": "^4",
