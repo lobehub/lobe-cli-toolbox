@@ -23,6 +23,7 @@ export class TranslateLocale {
       modelName: config.modelName,
       openAIApiKey,
       temperature: config.temperature,
+      topP: config.topP,
     });
     this.promptJson = promptJsonTranslate(config.reference);
     this.promptString = promptStringTranslate(config.reference);
@@ -71,7 +72,7 @@ export class TranslateLocale {
         to,
       });
 
-      const res = await this.model.call(
+      const res = await this.model.invoke(
         formattedChatPrompt,
         this.isJsonMode
           ? {

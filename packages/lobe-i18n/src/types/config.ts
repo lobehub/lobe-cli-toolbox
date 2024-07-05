@@ -37,6 +37,10 @@ export interface I18nConfigLocale {
    * @description Sampling temperature to use
    */
   temperature?: number;
+  /**
+   * @description Nucleus sampling threshold
+   */
+  topP?: number;
 }
 
 export enum MarkdownModeType {
