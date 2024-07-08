@@ -59,7 +59,7 @@ English ・ [简体中文](./README.zh-CN.md) ・ [Changelog](./CHANGELOG.md) ·
 - [x] ♻️ Support incremental i18n updates, automatically extract new content based on `entry` files.
 - [x] 🗂️ Support single file mode `en_US.json` and folder mode `en_US/common.json` to work perfectly with `i18next`.
 - [x] 🌲 Support `flat` and `tree` structure for locale files.
-- [x] 🛠️ Support customizing OpenAI models, API proxies, and temperature.
+- [x] 🛠️ Support customizing OpenAI models, API proxies, temperature and topP.
 - [x] 📝 Support automated i18n translation of `Markdown` files.
 
 <div align="right">
@@ -154,6 +154,7 @@ This project provides some additional configuration items set with environment v
 | reference     |          | `string`       | -               | Provide some context for more accurate translations                          |
 | splitToken    |          | `number`       | -               | Split the localized JSON file by tokens, automatically calculated by default |
 | temperature   |          | `number`       | `0`             | Sampling temperature to use                                                  |
+| topP          |          | `number`       | `1`             | Nucleus sampling threshold, controls the diversity of generated text         |
 | concurrency   |          | `number`       | `5`             | Number of concurrently pending promises returned                             |
 | experimental  |          | `experimental` | `{}`            | Experimental features, see below                                             |
 | markdown      |          | `markdown`     | `{}`            | See `markdown` configuration below                                           |
