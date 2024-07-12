@@ -69,7 +69,7 @@
     "glob": "^10",
     "gpt-tokenizer": "^2",
     "gray-matter": "^4",
-    "ink": "^4.2",
+    "ink": "^5.0.0",
     "json-stable-stringify": "^1",
     "just-diff": "^6",
     "langchain": "latest",
