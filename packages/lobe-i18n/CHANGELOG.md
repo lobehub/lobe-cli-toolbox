@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.19.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.18.1...@lobehub/i18n-cli@1.19.0)
+
+<sup>Released on **2024-08-06**</sup>
+
+#### ✨ Features
+
+- **misc**: Add custom top-p.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add custom top-p, closes [#107](https://github.com/lobehub/lobe-cli-toolbox/issues/107) ([0ed03c2](https://github.com/lobehub/lobe-cli-toolbox/commit/0ed03c2))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.18.1](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.18.0...@lobehub/i18n-cli@1.18.1)
 
 <sup>Released on **2024-03-30**</sup>
