@@ -39,16 +39,16 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@inkjs/ui": "^1",
+    "@inkjs/ui": "^1.0.0",
     "@lobehub/cli-ui": "1.10.0",
-    "@octokit/rest": "^20",
-    "commander": "^12",
-    "conf": "^12",
-    "consola": "^3",
-    "ink": "^4.2",
-    "lodash-es": "^4",
-    "react": "^18",
-    "update-notifier": "^7"
+    "@octokit/rest": "^20.1.1",
+    "commander": "^12.1.0",
+    "conf": "^12.0.0",
+    "consola": "^3.2.3",
+    "ink": "^4.4.1",
+    "lodash-es": "^4.17.21",
+    "react": "^18.3.1",
+    "update-notifier": "^7.2.0"
   },
   "peerDependencies": {
     "ink": ">=4",
