@@ -41,7 +41,7 @@
   "dependencies": {
     "@inkjs/ui": "^1.0.0",
     "@lobehub/cli-ui": "1.10.0",
-    "@octokit/rest": "^20.1.1",
+    "@octokit/rest": "^21.0.1",
     "commander": "^12.1.0",
     "conf": "^12.0.0",
     "consola": "^3.2.3",
