@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.0.2](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/cli-shebang@1.0.1...@lobehub/cli-shebang@1.0.2)
+
+<sup>Released on **2024-08-06**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Update deps.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Update deps ([88832ec](https://github.com/lobehub/lobe-cli-toolbox/commit/88832ec))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.0.1](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/cli-shebang@1.0.0...@lobehub/cli-shebang@1.0.1)
 
 <sup>Released on **2023-11-21**</sup>
