@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.4.2](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/seo-cli@1.4.1...@lobehub/seo-cli@1.4.2)
+
+<sup>Released on **2024-08-06**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Update deps.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Update deps ([88832ec](https://github.com/lobehub/lobe-cli-toolbox/commit/88832ec))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.4.1](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/seo-cli@1.4.0...@lobehub/seo-cli@1.4.1)
 
 <sup>Released on **2024-03-30**</sup>
