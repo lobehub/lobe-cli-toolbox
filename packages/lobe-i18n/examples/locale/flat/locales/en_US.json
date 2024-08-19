@@ -3,5 +3,6 @@
     "ok": "Ok",
     "cancel": "Cancel"
   },
+  "list": ["How are you", "I'm fine."],
   "welcome": "Welcome!"
 }
