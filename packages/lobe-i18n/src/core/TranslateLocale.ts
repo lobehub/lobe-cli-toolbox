@@ -1,6 +1,8 @@
 import { ChatPromptTemplate } from '@langchain/core/prompts';
 import { ChatOpenAI } from '@langchain/openai';
 import { alert } from '@lobehub/cli-ui';
+// @ts-ignore
+import dJSON from 'dirty-json';
 
 import { promptJsonTranslate, promptStringTranslate } from '@/prompts/translate';
 import { LocaleObj } from '@/types';
@@ -85,9 +87,17 @@ export class TranslateLocale {
 
       if (!result) this.handleError();
 
-      const message = JSON.parse(result as string);
-
-      return message;
+      try {
+        return JSON.parse(result as string);
+      } catch {
+        alert.warn('parse fail, try to use dirty json');
+        try {
+          return dJSON.parse(result as string);
+        } catch {
+          alert.error('i18n dirty json fail');
+          alert.error(result as string, true);
+        }
+      }
     } catch (error) {
       this.handleError(error);
     }
