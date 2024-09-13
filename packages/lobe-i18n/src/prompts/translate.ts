@@ -14,6 +14,7 @@ export const promptJsonTranslate = (reference: string = DEFAULT_REFERENCE) => {
         `Translate the i18n JSON file from {from} to {to} according to the BCP 47 standard`,
         `Here are some reference to help with better translation.  ---${reference}---`,
         `Keep the keys the same as the original file and make sure the output remains a valid i18n JSON file.`,
+        `Do not include any additional text or explanations outside the JSON object.Start directly with a left brace and end with a right brace.`,
       ]
         .filter(Boolean)
         .join('\n'),

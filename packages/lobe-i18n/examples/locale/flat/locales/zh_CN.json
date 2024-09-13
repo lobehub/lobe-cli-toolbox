@@ -1,7 +1,8 @@
 {
   "buttons": {
-    "ok": "Ok",
-    "cancel": "Cancel"
+    "cancel": "取消",
+    "ok": "好的"
   },
+  "list": ["你好吗", "我很好。"],
   "welcome": "欢迎！"
 }
