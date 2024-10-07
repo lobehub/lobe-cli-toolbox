@@ -64,7 +64,7 @@
     "@vitest/coverage-v8": "~1.2.2",
     "clean-pkg-json": "^1.2.0",
     "commitlint": "^19.3.0",
-    "eslint": "^8.57.0",
+    "eslint": "^9.12.0",
     "husky": "^9.1.4",
     "ink-testing-library": "^3.0.0",
     "lerna": "^8.1.8",
