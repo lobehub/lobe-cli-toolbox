@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.15.2](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.15.1...@lobehub/commit-cli@2.15.2)
+
+<sup>Released on **2024-10-21**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Remove auto git add all in lobe-commit.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Remove auto git add all in lobe-commit ([5527084](https://github.com/lobehub/lobe-cli-toolbox/commit/5527084))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.15.1](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.15.0...@lobehub/commit-cli@2.15.1)
 
 <sup>Released on **2024-08-06**</sup>
