@@ -24,7 +24,6 @@ const RunGitCommit = memo<RunGitCommitProps>(({ hook }) => {
         fs.writeFileSync(process.argv[3], message);
         setLoading(false);
       } else {
-        execaSync('git', ['add', '--all']);
         execaSync('git', ['commit', '-m', message], {
           buffer: false,
           stdio: 'inherit',
