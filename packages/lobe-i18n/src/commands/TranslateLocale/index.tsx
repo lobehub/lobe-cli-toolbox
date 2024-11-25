@@ -94,9 +94,15 @@ class TranslateLocale {
       )} files.`,
     );
     checkLocaleFolders(config, files);
+
     for (const locale of config.outputLocales) {
-      for (const filename of files) {
-        consola.info(`${chalk.cyan(locale)}${chalk.gray(' - ')}${chalk.yellow(filename)}`);
+      for (const [index, filename] of files.entries()) {
+        process.stdout.clearLine(0);
+        process.stdout.cursorTo(0);
+
+        process.stdout.write(
+          `${chalk.cyan(locale)}${chalk.gray(`[${index + 1}/${files.length}] - `)}${chalk.yellow(filename)}`,
+        );
         const targetFilename = resolve(config.output, locale, filename);
         const entryObj = entry[filename] as LocaleObj;
         const targetObj = diff(entryObj, getLocaleObj(targetFilename)).target;
@@ -111,6 +117,9 @@ class TranslateLocale {
         });
       }
     }
+
+    process.stdout.clearLine(0);
+    process.stdout.cursorTo(0);
   }
 
   genFlatQuery() {

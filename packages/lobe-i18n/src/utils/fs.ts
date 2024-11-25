@@ -8,7 +8,7 @@ export const readJSON = (filePath: string) => {
 
 export const writeJSON = (filePath: string, data: any) => {
   const jsonStr = stringify(data, { space: '  ' });
-  writeFileSync(filePath, jsonStr, 'utf8');
+  writeFileSync(filePath, jsonStr + '\r\n', 'utf8');
 };
 
 export const readMarkdown = (filePath: string): string => {
