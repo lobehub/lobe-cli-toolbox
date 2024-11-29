@@ -60,7 +60,7 @@
     "@lobehub/cli-ui": "1.10.0",
     "chalk": "^5.3.0",
     "commander": "^12.1.0",
-    "conf": "^12.0.0",
+    "conf": "^13.0.1",
     "consola": "^3.2.3",
     "cosmiconfig": "^9.0.0",
     "dirty-json": "^0.9.2",

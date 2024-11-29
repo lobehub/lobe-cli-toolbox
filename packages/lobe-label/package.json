@@ -43,7 +43,7 @@
     "@lobehub/cli-ui": "1.10.0",
     "@octokit/rest": "^20.1.1",
     "commander": "^12.1.0",
-    "conf": "^12.0.0",
+    "conf": "^13.0.1",
     "consola": "^3.2.3",
     "ink": "^4.4.1",
     "lodash-es": "^4.17.21",
