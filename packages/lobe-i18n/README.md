@@ -87,10 +87,31 @@ npm install -g @lobehub/i18n-cli
 
 ## 🤯 Usage
 
+### Step 1: Initialize Configuration
 To initialize the Lobe i18n configuration, run the following command:
 
 ```shell
 $ lobe-i18n -o # or use the full flag --option
+```
+
+### Step 2: Run Translation Commands
+
+This command will guide you through creating a configuration file step by step.
+
+Alternatively, you can manually create a configuration file in one of the formats supported by [cosmiconfig](https://github.com/cosmiconfig/cosmiconfig) (see [Configuration](#configuration) below).
+
+Here's an example of a configuration file (`.i18nrc.js`):  
+This example demonstrates how to generate `locales/zh_CN.json` and `locales/ja_JP.json` automatically based on `locales/en_US.json`.
+
+```javascript
+const { defineConfig } = require('@lobehub/i18n-cli');
+
+module.exports = defineConfig({
+  entry: 'locales/en_US.json',
+  entryLocale: 'en_US',
+  output: 'locales',
+  outputLocales: ['zh_CN', 'ja_JP'],
+});
 ```
 
 > \[!IMPORTANT]\

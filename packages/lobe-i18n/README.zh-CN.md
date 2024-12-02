@@ -87,10 +87,32 @@ npm install -g @lobehub/i18n-cli
 
 ## 🤯 使用
 
+### 第一步：初始化配置
+
 要初始化配置 Lobe i8n，请运行以下命令：
 
 ```shell
 $ lobe-i18n -o # 或使用完整标志 --option
+```
+
+### 第二步：运行翻译命令
+
+此命令将引导您逐步创建配置文件。
+
+或者，您可以手动创建配置文件，支持的格式请参考 [cosmiconfig](https://github.com/cosmiconfig/cosmiconfig) （详见 [Configuration](#configuration)）。
+
+以下是一个配置文件示例（`.i18nrc.js`）：  
+此示例展示了如何基于 `locales/en_US.json` 自动生成 `locales/zh_CN.json` 和 `locales/ja_JP.json`。
+
+```javascript
+const { defineConfig } = require('@lobehub/i18n-cli');
+
+module.exports = defineConfig({
+  entry: 'locales/en_US.json',
+  entryLocale: 'en_US',
+  output: 'locales',
+  outputLocales: ['zh_CN', 'ja_JP'],
+});
 ```
 
 > \[!IMPORTANT]\
