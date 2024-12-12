@@ -97,8 +97,10 @@ class TranslateLocale {
 
     for (const locale of config.outputLocales) {
       for (const [index, filename] of files.entries()) {
-        process.stdout.clearLine(0);
-        process.stdout.cursorTo(0);
+        if (process.stdout.isTTY) {
+          process.stdout.clearLine(0);
+          process.stdout.cursorTo(0);
+        }
 
         process.stdout.write(
           `${chalk.cyan(locale)}${chalk.gray(`[${index + 1}/${files.length}] - `)}${chalk.yellow(filename)}`,
@@ -118,8 +120,10 @@ class TranslateLocale {
       }
     }
 
-    process.stdout.clearLine(0);
-    process.stdout.cursorTo(0);
+    if (process.stdout.isTTY) {
+      process.stdout.clearLine(0);
+      process.stdout.cursorTo(0);
+    }
   }
 
   genFlatQuery() {
