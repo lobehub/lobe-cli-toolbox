@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.20.2](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.20.1...@lobehub/i18n-cli@1.20.2)
+
+<sup>Released on **2024-12-22**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Add tty check on stdout.clearLine.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Add tty check on stdout.clearLine, closes [#158](https://github.com/lobehub/lobe-cli-toolbox/issues/158) ([e0e1fde](https://github.com/lobehub/lobe-cli-toolbox/commit/e0e1fde))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.20.1](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.20.0...@lobehub/i18n-cli@1.20.1)
 
 <sup>Released on **2024-11-25**</sup>
