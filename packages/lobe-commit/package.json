@@ -71,10 +71,6 @@
     "zustand": "^4.5.4",
     "zustand-utils": "^1.3.2"
   },
-  "peerDependencies": {
-    "ink": ">=4",
-    "react": ">=18"
-  },
   "engines": {
     "node": ">=18"
   },

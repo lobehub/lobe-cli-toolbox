@@ -93,10 +93,6 @@
     "@types/node": "^20.16.13",
     "@types/unist": "^3.0.3"
   },
-  "peerDependencies": {
-    "ink": ">=4",
-    "react": ">=18"
-  },
   "engines": {
     "node": ">=18"
   },

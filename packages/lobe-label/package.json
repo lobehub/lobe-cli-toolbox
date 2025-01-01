@@ -50,10 +50,6 @@
     "react": "^18.3.1",
     "update-notifier": "^7.2.0"
   },
-  "peerDependencies": {
-    "ink": ">=4",
-    "react": ">=18"
-  },
   "engines": {
     "node": ">=18"
   },

@@ -90,10 +90,6 @@
   "devDependencies": {
     "@types/json-stable-stringify": "^1.0.36"
   },
-  "peerDependencies": {
-    "ink": ">=4",
-    "react": ">=18"
-  },
   "engines": {
     "node": ">=18"
   },

@@ -42,14 +42,12 @@
     "consola": "^3",
     "fast-deep-equal": "^3",
     "figures": "^6",
-    "ink": "^4.2",
-    "react": "^18"
+    "ink": "^4.4.1",
+    "react": "^18.3.1"
   },
   "peerDependencies": {
     "@inkjs/ui": ">=1",
-    "consola": ">=3",
-    "ink": ">=4",
-    "react": ">=18"
+    "consola": ">=3"
   },
   "engines": {
     "node": ">=18"
