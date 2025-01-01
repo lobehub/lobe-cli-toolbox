@@ -2,6 +2,35 @@
 
 # Changelog
 
+### [Version 2.15.3](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.15.2...@lobehub/commit-cli@2.15.3)
+
+<sup>Released on **2025-01-01**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix deps.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix deps ([1f98174](https://github.com/lobehub/lobe-cli-toolbox/commit/1f98174))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### Dependencies
+
+- **@lobehub/cli-ui:** upgraded to 1.10.1
+
 ### [Version 2.15.2](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.15.1...@lobehub/commit-cli@2.15.2)
 
 <sup>Released on **2024-10-21**</sup>
