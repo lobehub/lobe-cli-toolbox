@@ -36,7 +36,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "commander": "^12.1.0",
+    "commander": "^13.0.0",
     "consola": "^3.2.3",
     "update-notifier": "^7.2.0"
   },

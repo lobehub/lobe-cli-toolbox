@@ -60,7 +60,6 @@ export const convertMdastToMarkdown = async (json: any): Promise<string> => {
       bullet: '-',
       emphasis: '*',
       fences: true,
-      listItemIndent: 1,
       rule: '-',
       strong: '*',
       tightDefinitions: true,

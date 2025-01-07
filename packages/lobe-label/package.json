@@ -41,14 +41,14 @@
   "dependencies": {
     "@inkjs/ui": "^1.0.0",
     "@lobehub/cli-ui": "1.10.1",
-    "@octokit/rest": "^20.1.1",
-    "commander": "^12.1.0",
-    "conf": "^12.0.0",
-    "consola": "^3.2.3",
+    "@octokit/rest": "^21.0.2",
+    "commander": "^13.0.0",
+    "conf": "^13.1.0",
+    "consola": "^3.3.3",
     "ink": "^4.4.1",
     "lodash-es": "^4.17.21",
     "react": "^18.3.1",
-    "update-notifier": "^7.2.0"
+    "update-notifier": "^7.3.1"
   },
   "engines": {
     "node": ">=18"
