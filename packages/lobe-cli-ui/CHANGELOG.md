@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.11.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/cli-ui@1.10.1...@lobehub/cli-ui@1.11.0)
+
+<sup>Released on **2025-05-22**</sup>
+
+#### ✨ Features
+
+- **misc**: Update remark.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Update remark ([e03229b](https://github.com/lobehub/lobe-cli-toolbox/commit/e03229b))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.10.1](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/cli-ui@1.10.0...@lobehub/cli-ui@1.10.1)
 
 <sup>Released on **2025-01-01**</sup>
