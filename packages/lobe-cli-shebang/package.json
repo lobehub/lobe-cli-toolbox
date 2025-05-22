@@ -1,6 +1,6 @@
 {
   "name": "@lobehub/cli-shebang",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Add shebang to target file",
   "homepage": "https://github.comlobehub/lobe-cli-toolbox/tree/master/packages/cli-shebang",
   "bugs": {
