@@ -2,6 +2,43 @@
 
 # Changelog
 
+## [Version 2.16.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.15.3...@lobehub/commit-cli@2.16.0)
+
+<sup>Released on **2025-05-22**</sup>
+
+#### ✨ Features
+
+- **misc**: Update remark.
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix hook in wsl.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Update remark ([e03229b](https://github.com/lobehub/lobe-cli-toolbox/commit/e03229b))
+
+#### What's fixed
+
+- **misc**: Fix hook in wsl ([ad5b7cd](https://github.com/lobehub/lobe-cli-toolbox/commit/ad5b7cd))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### Dependencies
+
+- **@lobehub/cli-ui:** upgraded to 1.11.0
+
 ### [Version 2.15.3](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.15.2...@lobehub/commit-cli@2.15.3)
 
 <sup>Released on **2025-01-01**</sup>
