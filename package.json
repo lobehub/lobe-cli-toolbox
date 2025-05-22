@@ -73,7 +73,7 @@
     "ink-testing-library": "^3.0.0",
     "lerna": "^8.1.9",
     "lint-staged": "^15.3.0",
-    "multi-semantic-release": "3.0.2",
+    "multi-semantic-release": "^3.0.2",
     "pkgroll": "^2.6.1",
     "prettier": "^3.4.2",
     "remark": "^15.0.1",
