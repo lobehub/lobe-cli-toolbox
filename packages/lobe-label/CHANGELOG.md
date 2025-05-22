@@ -2,6 +2,35 @@
 
 # Changelog
 
+## [Version 1.4.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/label-cli@1.3.2...@lobehub/label-cli@1.4.0)
+
+<sup>Released on **2025-05-22**</sup>
+
+#### ✨ Features
+
+- **misc**: Update remark.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Update remark ([e03229b](https://github.com/lobehub/lobe-cli-toolbox/commit/e03229b))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### Dependencies
+
+- **@lobehub/cli-ui:** upgraded to 1.11.0
+
 ### [Version 1.3.2](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/label-cli@1.3.1...@lobehub/label-cli@1.3.2)
 
 <sup>Released on **2025-01-01**</sup>
