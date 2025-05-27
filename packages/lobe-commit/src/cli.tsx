@@ -18,7 +18,7 @@ program
   .name('lobe-commit')
   .description(packageJson.description)
   .version(packageJson.version)
-  .addOption(new Option('--hook', 'Interactively commit using the prompts'))
+  .addOption(new Option('--hook <file>', 'Interactively commit using the prompts'))
   .addOption(new Option('-a, --ai', 'Generate prompts by ChatGPT'))
   .addOption(new Option('-o, --option', 'Setup lobe-commit preferences'))
   .addOption(new Option('-i, --init', 'Initialize lobe-commit as a commit hook'))
@@ -28,7 +28,7 @@ program
 
 interface Flags {
   ai?: boolean;
-  hook?: boolean;
+  hook?: string;
   init?: boolean;
   list?: boolean;
   option?: boolean;
@@ -48,7 +48,7 @@ if (options.ai) {
 } else if (options.list) {
   render(<List />);
 } else if (options.hook) {
-  render(<Commit hook />);
+  render(<Commit hook={options.hook} />);
 } else {
   render(<Commit />);
 }

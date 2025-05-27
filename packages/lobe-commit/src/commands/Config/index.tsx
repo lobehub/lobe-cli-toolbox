@@ -72,32 +72,10 @@ const Config = memo(() => {
       {
         children: (
           <SelectInput
-            items={[
-              {
-                label: LanguageModel.GPT3_5,
-                value: LanguageModel.GPT3_5,
-              },
-              {
-                label: LanguageModel.GPT3_5_1106,
-                value: LanguageModel.GPT3_5_1106,
-              },
-              {
-                label: LanguageModel.GPT3_5_16K,
-                value: LanguageModel.GPT3_5_16K,
-              },
-              {
-                label: LanguageModel.GPT4,
-                value: LanguageModel.GPT4,
-              },
-              {
-                label: LanguageModel.GPT4_PREVIEW,
-                value: LanguageModel.GPT4_PREVIEW,
-              },
-              {
-                label: LanguageModel.GPT4_32K,
-                value: LanguageModel.GPT4_32K,
-              },
-            ]}
+            items={Object.values(LanguageModel).map((model) => ({
+              label: model,
+              value: model,
+            }))}
             onSelect={(item) => setConfig('modelName', item.value as LanguageModel)}
           />
         ),

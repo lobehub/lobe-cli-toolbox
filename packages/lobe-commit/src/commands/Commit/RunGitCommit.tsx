@@ -7,7 +7,7 @@ import { shallow } from 'zustand/shallow';
 import { useCommitStore } from '@/store/commitStore';
 
 interface RunGitCommitProps {
-  hook?: boolean;
+  hook?: boolean | string;
 }
 const RunGitCommit = memo<RunGitCommitProps>(({ hook }) => {
   const { message } = useCommitStore(
@@ -20,8 +20,10 @@ const RunGitCommit = memo<RunGitCommitProps>(({ hook }) => {
   try {
     useEffect(() => {
       if (hook) {
-        // @ts-ignore
-        fs.writeFileSync(process.argv[3], message);
+        const commitMsgFile = typeof hook === 'string' ? hook : process.argv[3];
+        if (commitMsgFile) {
+          fs.writeFileSync(commitMsgFile, message);
+        }
         setLoading(false);
       } else {
         execaSync('git', ['commit', '-m', message], {

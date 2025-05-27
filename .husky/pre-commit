@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 
-git add .
+npm run type-check
 npx --no-install lint-staged

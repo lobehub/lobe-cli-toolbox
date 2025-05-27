@@ -17,7 +17,7 @@ import InputType from './InputType';
 import RunGitCommit from './RunGitCommit';
 
 interface CommitProps {
-  hook?: boolean;
+  hook?: boolean | string;
 }
 
 const Commit = memo<CommitProps>(({ hook }) => {
