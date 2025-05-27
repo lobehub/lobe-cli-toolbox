@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 2.17.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.16.0...@lobehub/commit-cli@2.17.0)
+
+<sup>Released on **2025-05-27**</sup>
+
+#### ✨ Features
+
+- **misc**: Update model list.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Update model list ([1ad37e7](https://github.com/lobehub/lobe-cli-toolbox/commit/1ad37e7))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 2.16.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.15.3...@lobehub/commit-cli@2.16.0)
 
 <sup>Released on **2025-05-22**</sup>
