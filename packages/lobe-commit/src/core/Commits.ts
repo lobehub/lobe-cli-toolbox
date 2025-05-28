@@ -20,6 +20,7 @@ import { RecursiveCharacterTextSplitter } from '../../../common/textSplitter';
 export interface GenAiCommitProps {
   cacheSummary?: string;
   onStreamMessage?: (message: string) => void;
+  onTokenUsage?: (tokenUsage: number) => void;
   setLoadingInfo: (text: string) => void;
   setSummary: (text: string) => void;
 }
@@ -52,7 +53,13 @@ export class Commits {
     this.prompt = promptCommits();
   }
 
-  async genCommit({ setLoadingInfo, setSummary, cacheSummary, onStreamMessage }: GenAiCommitProps) {
+  async genCommit({
+    setLoadingInfo,
+    setSummary,
+    cacheSummary,
+    onStreamMessage,
+    onTokenUsage,
+  }: GenAiCommitProps) {
     setLoadingInfo(' Generating...');
 
     // STEP 1
@@ -63,16 +70,21 @@ export class Commits {
       summary,
     });
 
+    // Calculate input tokens
+    const inputTokens = calcToken(JSON.stringify(messages));
+
     if (this.config.stream && onStreamMessage) {
-      return this.genCommitStream(messages, onStreamMessage);
+      return this.genCommitStream(messages, onStreamMessage, onTokenUsage, inputTokens);
     } else {
-      return this.genCommitNonStream(messages);
+      return this.genCommitNonStream(messages, onTokenUsage, inputTokens);
     }
   }
 
   private async genCommitStream(
     messages: any[],
     onStreamMessage: (message: string) => void,
+    onTokenUsage?: (tokenUsage: number) => void,
+    inputTokens?: number,
   ): Promise<string> {
     // 开始流式输出，先调用一次回调来切换UI状态
     onStreamMessage('');
@@ -85,6 +97,7 @@ export class Commits {
     });
 
     let fullMessage = '';
+    let tokenUsage = inputTokens || 0;
 
     for await (const chunk of stream) {
       const content = chunk.choices[0]?.delta?.content || '';
@@ -95,6 +108,7 @@ export class Commits {
           fullMessage.replace(/\((.*?)\):/, (match, p1) => match && `(${p1.toLowerCase()}):`),
         );
         onStreamMessage(processedMessage);
+        tokenUsage += calcToken(content);
       }
     }
 
@@ -102,12 +116,18 @@ export class Commits {
       alert.error('Diff summary failed, please check your network or try again...', true);
     }
 
+    onTokenUsage?.(tokenUsage);
+
     return addEmojiToMessage(
       fullMessage.replace(/\((.*?)\):/, (match, p1) => match && `(${p1.toLowerCase()}):`),
     );
   }
 
-  private async genCommitNonStream(messages: any[]): Promise<string> {
+  private async genCommitNonStream(
+    messages: any[],
+    onTokenUsage?: (tokenUsage: number) => void,
+    inputTokens?: number,
+  ): Promise<string> {
     const completion = await this.client.chat.completions.create({
       messages: messages as OpenAI.Chat.Completions.ChatCompletionMessageParam[],
       model: this.config.modelName,
@@ -118,6 +138,10 @@ export class Commits {
 
     if (!result)
       alert.error('Diff summary failed, please check your network or try again...', true);
+
+    const outputTokens = calcToken(result!);
+    const totalTokenUsage = (inputTokens || 0) + outputTokens;
+    onTokenUsage?.(totalTokenUsage);
 
     return addEmojiToMessage(
       result!.replace(/\((.*?)\):/, (match, p1) => match && `(${p1.toLowerCase()}):`),

@@ -16,6 +16,7 @@ const Ai = memo(() => {
     start,
     loadingInfo,
     loading,
+    tokenUsage,
     message: streamingMessage,
   } = useCommits({ setMessage });
 
@@ -34,7 +35,7 @@ const Ai = memo(() => {
         )
       }
       reverse
-      title={`🤯 AI Commit Generator ${commitConfig.stream ? '(Streaming)' : ''}`}
+      title={`🤯 AI Commit Generator ${commitConfig.stream ? '(Streaming)' : ''} ${tokenUsage > 0 ? `[Tokens: ${tokenUsage}]` : ''}`}
     >
       <AiMessageDisplay
         loading={loading}

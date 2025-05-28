@@ -16,6 +16,7 @@ export const useCommits = ({ setMessage, onSuccess, onError, ...config }: Commit
   const [isGlobalLoading, setIsGlobalLoading] = useState(true);
   const [key, setKey] = useState<string>(Date.now().toString());
   const [streamingMessage, setStreamingMessage] = useState<string>('');
+  const [tokenUsage, setTokenUsage] = useState<number>(0);
   const commitConfig = selectors.getCommitConfig();
 
   const handleStreamMessage = useCallback(
@@ -27,6 +28,10 @@ export const useCommits = ({ setMessage, onSuccess, onError, ...config }: Commit
     [setMessage],
   );
 
+  const handleTokenUsage = useCallback((usage: number) => {
+    setTokenUsage(usage);
+  }, []);
+
   const { data, isLoading } = useSWR(
     shouldFetch ? key : null,
     async () => {
@@ -36,6 +41,7 @@ export const useCommits = ({ setMessage, onSuccess, onError, ...config }: Commit
       return commits.current.genCommit({
         cacheSummary: summary,
         onStreamMessage: commitConfig.stream ? handleStreamMessage : undefined,
+        onTokenUsage: handleTokenUsage,
         setLoadingInfo,
         setSummary,
       });
@@ -60,6 +66,7 @@ export const useCommits = ({ setMessage, onSuccess, onError, ...config }: Commit
     setKey(Date.now().toString());
     setIsGlobalLoading(true);
     setStreamingMessage('');
+    setTokenUsage(0);
     setShouldFetch(true);
   }, []);
 
@@ -68,6 +75,7 @@ export const useCommits = ({ setMessage, onSuccess, onError, ...config }: Commit
     setKey(Date.now().toString());
     setIsGlobalLoading(true);
     setStreamingMessage('');
+    setTokenUsage(0);
     setShouldFetch(true);
   }, []);
 
@@ -84,5 +92,6 @@ export const useCommits = ({ setMessage, onSuccess, onError, ...config }: Commit
     start,
     stop,
     summary,
+    tokenUsage,
   };
 };

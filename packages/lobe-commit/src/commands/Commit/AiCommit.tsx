@@ -23,6 +23,7 @@ const AiCommit = memo(() => {
     loadingInfo,
     loading,
     restart,
+    tokenUsage,
     message: streamingMessage,
   } = useCommits({ setMessage });
 
@@ -71,7 +72,7 @@ const AiCommit = memo(() => {
   return (
     <Panel
       footer={!loading && message && <SelectInput items={items} onSelect={handleSelect} />}
-      title={`🤯 AI Commit Generator ${commitConfig.stream ? '(Streaming)' : ''}`}
+      title={`🤯 AI Commit Generator ${commitConfig.stream ? '(Streaming)' : ''} ${tokenUsage > 0 ? `[Tokens: ${tokenUsage}]` : ''}`}
     >
       {summary && (
         <SplitView direction={'bottom'}>
