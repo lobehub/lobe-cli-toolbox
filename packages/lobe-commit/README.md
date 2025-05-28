@@ -34,6 +34,7 @@ English · [简体中文](./README.zh-CN.md) · [Changelog](./CHANGELOG.md) · [
 - [🤯 Usage](#-usage)
   - [Git hook](#git-hook)
   - [Configuration](#configuration)
+  - [Running](#running)
   - [Options](#options)
 - [⌨️ Local Development](#️-local-development)
 - [🤝 Contributing](#-contributing)
@@ -109,6 +110,8 @@ In Editor mode, you can choose the `<type>(<optional scope>): <subject> [<issues
 
 > \[!NOTE]\
 > If your project is a GitHub repository, the Editor mode feature will automatically fetch the issues associated with your repository. You can select multiple issues to link to your commit message by <kbd>space</kbd> .
+>
+> **Auto-Skip for Private Repositories**: When working with private repositories, if you haven't configured a GitHub token or encounter authentication issues, the tool will automatically skip the issues linking step and proceed to commit generation. This prevents the workflow from getting stuck while still allowing manual issue linking if needed.
 
 ![](https://gw.alipayobjects.com/zos/kitchen/QkJ5V8nbY6/preview-editor.webp)
 
@@ -174,6 +177,17 @@ $ git commit
 - To use AI auto-generation, you need to fill in your [OpenAI token](<(https://platform.openai.com/account/api-keys)>) in the settings.
 - To automatically pull private issues, you need to fill in your [GitHub token](https://github.com/settings/tokens) with repo permissions in the settings.
 
+> \[!NOTE]\
+> **GitHub Token Configuration**: For private repositories or when you want to link issues automatically, you need to configure a GitHub token with appropriate permissions. If no token is provided or if there are authentication issues (invalid token, network timeout, etc.), the tool will automatically skip the issues linking step and continue with the commit process. You can still manually input issue numbers if needed.
+>
+> **Error Handling**: The tool gracefully handles various scenarios including:
+>
+> - No GitHub token configured
+> - Invalid or expired tokens
+> - Network connection issues
+> - Private repository access restrictions
+> - API rate limiting and timeouts
+
 <div align="right">
 
 [![][back-to-top]](#readme-top)
@@ -185,14 +199,14 @@ $ git commit
 Lobe Commit supports the following options:
 
 ```shell
---hook         Commit interactively using prompts
--a, --ai       Generate prompts by ChatGPT
--o, --option   Setup lobe-commit preferences
--i, --init     Initialize lobe-commit as a commit hook
--r, --remove   Remove a previously initialized commit hook
--l, --list     List all commit types supported
--V, --version  Print lobe-commit installed version 
--h, --help     Print basic options
+--hook Commit interactively using prompts
+-a, --ai Generate prompts by ChatGPT
+-o, --option Setup lobe-commit preferences
+-i, --init Initialize lobe-commit as a commit hook
+-r, --remove Remove a previously initialized commit hook
+-l, --list List all commit types supported
+-V, --version Print lobe-commit installed version
+-h, --help Print basic options
 ```
 
 <div align="right">
@@ -227,7 +241,7 @@ $ bun dev
 
 ## 🤝 Contributing
 
-Contributions of all types are more than welcome, if you are interested in contributing code, feel free to check out our GitHub [Issues][github-issues-link] to get stuck in to show us what you’re made of.
+Contributions of all types are more than welcome, if you are interested in contributing code, feel free to check out our GitHub [Issues][github-issues-link] to get stuck in to show us what you're made of.
 
 [![][pr-welcome-shield]][pr-welcome-link]
 

@@ -34,6 +34,7 @@ Lobe Commit 是一款使用 ChatGPT 生成基于 Gitmoji 的 CLI 提交工具
 - [🤯 使用](#-使用)
   - [Git hook](#git-hook)
   - [配置](#配置)
+  - [运行](#运行)
   - [选项](#选项)
 - [⌨️ 本地开发](#️-本地开发)
 - [🤝 参与贡献](#-参与贡献)
@@ -109,6 +110,8 @@ $ lobe-commit
 
 > \[!NOTE]\
 > 如果项目是 GitHub Repo，则将自动获取该仓库的 issues，可以使用 <kbd>空格</kbd> 选择多个问题将其链接到提交信息中
+>
+> **私密仓库自动跳过**: 当处理私密仓库时，如果您未配置 GitHub 令牌或遇到认证问题，工具将自动跳过 issues 链接步骤并继续进行提交生成。这样可以防止工作流程卡住，同时仍允许在需要时手动链接 issues。
 
 ![](https://gw.alipayobjects.com/zos/kitchen/QkJ5V8nbY6/preview-editor.webp)
 
@@ -174,6 +177,17 @@ $ git commit
 - 要使用 AI 自动生成，需要在设置中填写 [OpenAI 令牌](https://platform.openai.com/account/api-keys)
 - 要自动拉取私人仓库 issues，需要在设置中填写具有 repo 权限的 [GitHub 令牌](https://github.com/settings/tokens)
 
+> \[!NOTE]\
+> **GitHub 令牌配置**: 对于私密仓库或当您想要自动链接 issues 时，您需要配置具有适当权限的 GitHub 令牌。如果未提供令牌或存在认证问题（无效令牌、网络超时等），工具将自动跳过 issues 链接步骤并继续提交过程。您仍然可以在需要时手动输入 issue 编号。
+>
+> **错误处理**: 工具优雅地处理各种场景，包括：
+>
+> - 未配置 GitHub 令牌
+> - 无效或过期的令牌
+> - 网络连接问题
+> - 私密仓库访问限制
+> - API 速率限制和超时
+
 <div align="right">
 
 [![][back-to-top]](#readme-top)
@@ -185,14 +199,14 @@ $ git commit
 Lobe Commit 支持以下选项：
 
 ```shell
---hook         使用基于提示的交互方式进行 commit 提交
--a, --ai       由 Ai 生成提示
--o, --option   设置 lobe-commit 首选项
--i, --init     将 lobe-commit 初始化为提交钩子
--r, --remove   移除先前初始化的提交钩子
--l, --list     列出所有支持的提交类型
--V, --version  打印 lobe-commit 的安装版本
--h, --help     打印基本选项
+--hook 使用基于提示的交互方式进行 commit 提交
+-a, --ai 由 Ai 生成提示
+-o, --option 设置 lobe-commit 首选项
+-i, --init 将 lobe-commit 初始化为提交钩子
+-r, --remove 移除先前初始化的提交钩子
+-l, --list 列出所有支持的提交类型
+-V, --version 打印 lobe-commit 的安装版本
+-h, --help 打印基本选项
 ```
 
 <div align="right">

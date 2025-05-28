@@ -11,20 +11,32 @@ import { useCommitStore } from '@/store/commitStore';
 import Header from './Header';
 
 const InputIssues = memo(() => {
-  const { message, setIssues, setStep, issues, fetchIssuesList, isGithubRepo, issuesLoading } =
-    useCommitStore(
-      (st) => ({
-        fetchIssuesList: st.fetchIssuesList,
-        isGithubRepo: st.isGithubRepo,
-        issues: st.issues,
-        issuesLoading: st.issuesLoading,
-        message: st.message,
-        refreshMessage: st.refreshMessage,
-        setIssues: st.setIssues,
-        setStep: st.setStep,
-      }),
-      shallow,
-    );
+  const {
+    message,
+    setIssues,
+    setStep,
+    issues,
+    fetchIssuesList,
+    isGithubRepo,
+    issuesLoading,
+    issuesError,
+    shouldSkipIssues,
+  } = useCommitStore(
+    (st) => ({
+      fetchIssuesList: st.fetchIssuesList,
+      isGithubRepo: st.isGithubRepo,
+      issues: st.issues,
+      issuesError: st.issuesError,
+      issuesLoading: st.issuesLoading,
+      message: st.message,
+      refreshMessage: st.refreshMessage,
+      setIssues: st.setIssues,
+      setStep: st.setStep,
+      shouldSkipIssues: st.shouldSkipIssues,
+    }),
+    shallow,
+  );
+
   const issueList = useCommitStore((st) => st.issueList, isEqual);
   useInput(useCallback((_, key) => key.tab && setStep('subject'), []));
   const [keywords, setKeywords] = useState<string>('');
@@ -33,6 +45,19 @@ const InputIssues = memo(() => {
   useEffect(() => {
     fetchIssuesList();
   }, []);
+
+  // 如果检测到应该跳过且有错误，自动跳转到下一步
+  useEffect(() => {
+    if (shouldSkipIssues && issuesError && !issuesLoading) {
+      // 延迟一下让用户能看到错误信息
+      const timer = setTimeout(() => {
+        setStep('ai');
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+    // 显式返回 undefined，满足 TypeScript 的要求
+    return undefined;
+  }, [shouldSkipIssues, issuesError, issuesLoading, setStep]);
 
   const options: MultiSelectProps['options'] = useMemo(() => {
     let localIssueList = issueList;
@@ -77,8 +102,30 @@ const InputIssues = memo(() => {
   );
 
   const handleSubmit = useCallback(() => {
-    setStep(issues ? 'issuesType' : 'commit');
+    setStep(issues ? 'issuesType' : 'ai');
   }, [issues]);
+
+  // 如果有错误，显示错误信息和跳过选项
+  if (issuesError) {
+    return (
+      <Panel
+        footer={<Text>{message}</Text>}
+        header={<Header step={4} steps={4} title="Link issues (optional)" />}
+      >
+        <Text color={theme.colorError}>⚠️ {issuesError}</Text>
+        <Text color={theme.colorWarning}>
+          {shouldSkipIssues
+            ? 'Automatically skipping issues step in 2 seconds, or press [Enter] to skip now...'
+            : 'Press [Enter] to skip linking issues and continue...'}
+        </Text>
+        <TextInput
+          onChange={debounce(setIssues, 100)}
+          onSubmit={handleSubmit}
+          placeholder="Press [Enter] to skip or input issue numbers manually..."
+        />
+      </Panel>
+    );
+  }
 
   return (
     <Panel

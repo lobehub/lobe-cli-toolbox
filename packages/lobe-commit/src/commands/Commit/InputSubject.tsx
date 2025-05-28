@@ -2,7 +2,7 @@ import { TextInput } from '@inkjs/ui';
 import { Panel } from '@lobehub/cli-ui';
 import { Text, useInput } from 'ink';
 import { debounce } from 'lodash-es';
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useEffect } from 'react';
 import { shallow } from 'zustand/shallow';
 
 import { useCommitStore } from '@/store/commitStore';
@@ -10,16 +10,36 @@ import { useCommitStore } from '@/store/commitStore';
 import Header from './Header';
 
 const InputScope = memo(() => {
-  const { message, setSubject, setStep, subject } = useCommitStore(
-    (st) => ({
-      message: st.message,
-      setStep: st.setStep,
-      setSubject: st.setSubject,
-      subject: st.subject,
-    }),
-    shallow,
-  );
+  const { message, setSubject, setStep, subject, shouldSkipIssues, fetchIssuesList } =
+    useCommitStore(
+      (st) => ({
+        fetchIssuesList: st.fetchIssuesList,
+        message: st.message,
+        setStep: st.setStep,
+        setSubject: st.setSubject,
+        shouldSkipIssues: st.shouldSkipIssues,
+        subject: st.subject,
+      }),
+      shallow,
+    );
+
   useInput(useCallback((_, key) => key.tab && setStep('scope'), []));
+
+  // 预先获取 issues 信息来判断是否需要跳过
+  useEffect(() => {
+    fetchIssuesList();
+  }, [fetchIssuesList]);
+
+  const handleSubmit = useCallback(() => {
+    if (subject) {
+      // 如果应该跳过 issues 步骤，直接跳转到 AI 生成
+      if (shouldSkipIssues) {
+        setStep('ai');
+      } else {
+        setStep('issues');
+      }
+    }
+  }, [subject, shouldSkipIssues, setStep]);
 
   return (
     <Panel
@@ -29,7 +49,7 @@ const InputScope = memo(() => {
       <TextInput
         defaultValue={subject}
         onChange={debounce(setSubject, 100)}
-        onSubmit={() => subject && setStep('issues')}
+        onSubmit={handleSubmit}
         placeholder="Input commit <subject>..."
       />
     </Panel>

@@ -2,7 +2,7 @@ import { kebabCase } from 'lodash-es';
 import { createWithEqualityFn } from 'zustand/traditional';
 
 import { type IssuesType, commitMessageToObj, commotObjToMessage } from '@/utils/genCommitMessage';
-import getIssuesList from '@/utils/getIssuesList';
+import getIssuesList, { type IssuesResult } from '@/utils/getIssuesList';
 import getRepo from '@/utils/getRepo';
 
 export type Step = 'type' | 'scope' | 'subject' | 'issues' | 'issuesType' | 'ai' | 'commit';
@@ -14,6 +14,7 @@ export interface CommitStore {
   isGithubRepo: boolean;
   issueList: any[];
   issues: string;
+  issuesError?: string;
   issuesLoading: boolean;
   issuesType: IssuesType;
   message: string;
@@ -27,29 +28,79 @@ export interface CommitStore {
   setStep: (step: Step) => void;
   setSubject: (subject: string) => void;
   setType: (type: string) => void;
+  shouldSkipIssues: boolean;
   step: Step;
   subject: string;
   type: string;
 }
+
+const getErrorMessage = (error: IssuesResult['error']): string => {
+  switch (error) {
+    case 'NO_TOKEN': {
+      return 'No GitHub token provided';
+    }
+    case 'INVALID_TOKEN': {
+      return 'Invalid GitHub token';
+    }
+    case 'PERMISSION_DENIED': {
+      return 'Permission denied or private repository';
+    }
+    case 'TIMEOUT': {
+      return 'Request timeout';
+    }
+    case 'NETWORK_ERROR': {
+      return 'Network connection error';
+    }
+    case 'NO_REPO': {
+      return 'Not a GitHub repository';
+    }
+    default: {
+      return 'Unknown error occurred';
+    }
+  }
+};
+
 export const useCommitStore = createWithEqualityFn<CommitStore>((set, get) => ({
   body: '',
   emoji: '',
   fetchIssuesList: async () => {
     const data = await getRepo();
     if (data) {
-      set({ isGithubRepo: true, issuesLoading: true });
-      const issuesData = await getIssuesList();
-      const issueList = issuesData?.filter((item: any) => item.state === 'open') || [];
-      if (issueList?.length > 0) {
-        set({ issueList, issuesLoading: false });
+      set({ isGithubRepo: true, issuesError: undefined, issuesLoading: true });
+      const result = await getIssuesList();
+
+      if (result.success && result.data) {
+        const issueList = result.data.filter((item: any) => item.state === 'open') || [];
+        if (issueList.length > 0) {
+          set({ issueList, issuesLoading: false, shouldSkipIssues: false });
+        } else {
+          // 没有 issues，但不需要跳过步骤，用户可能想手动输入
+          set({ isGithubRepo: false, issuesLoading: false, shouldSkipIssues: false });
+        }
       } else {
-        set({ isGithubRepo: false, issuesLoading: false });
+        // 根据错误类型决定是否自动跳过
+        const shouldSkip =
+          result.error === 'NO_TOKEN' ||
+          result.error === 'INVALID_TOKEN' ||
+          result.error === 'PERMISSION_DENIED' ||
+          result.error === 'TIMEOUT' ||
+          result.error === 'NETWORK_ERROR';
+
+        set({
+          isGithubRepo: false,
+          issuesError: getErrorMessage(result.error),
+          issuesLoading: false,
+          shouldSkipIssues: shouldSkip,
+        });
       }
+    } else {
+      set({ shouldSkipIssues: false });
     }
   },
   isGithubRepo: false,
   issueList: [],
   issues: '',
+  issuesError: undefined,
   issuesLoading: false,
   issuesType: '',
   message: '',
@@ -92,6 +143,7 @@ export const useCommitStore = createWithEqualityFn<CommitStore>((set, get) => ({
     set({ type });
     get().refreshMessage();
   },
+  shouldSkipIssues: false,
   step: 'type',
   subject: '',
   type: '',
