@@ -46,6 +46,8 @@
     "build": "npm run type-check && pkgroll --minify -p tsconfig.prod.json --env.NODE_ENV=production && npm run shebang",
     "dev": "pkgroll -p tsconfig.prod.json --env.NODE_ENV=development --watch",
     "link": "npm run build && npm link -f",
+    "prepack": "clean-package",
+    "postpack": "clean-package restore",
     "shebang": "lobe-shebang -t ./dist/cli.js",
     "start": "node ./dist/cli.js",
     "test": "vitest --passWithNoTests",
@@ -88,7 +90,8 @@
     "@types/json-stable-stringify": "^1.1.0",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^22.10.5",
-    "@types/unist": "^3.0.3"
+    "@types/unist": "^3.0.3",
+    "clean-package": "^2.2.0"
   },
   "engines": {
     "node": ">=18"
