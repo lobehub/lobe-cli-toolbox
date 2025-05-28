@@ -41,6 +41,21 @@ English · [简体中文](./README.zh-CN.md) · [Changelog](./CHANGELOG.md) · [
 - [🔗 Links](#-links)
   - [More Products](#more-products)
   - [Credits](#credits)
+- [🚀 Advanced Features](#-advanced-features)
+  - [File Filtering](#file-filtering)
+  - [Enhanced Prompts](#enhanced-prompts)
+  - [Message Templates](#message-templates)
+  - [Diff Compression](#diff-compression)
+  - [Full GitMoji Support](#full-gitmoji-support)
+- [🔧 Configuration Reference](#-configuration-reference)
+  - [New Configuration Options](#new-configuration-options)
+  - [File Filtering Rules](#file-filtering-rules)
+- [📊 Comparison with OpenCommit](#-comparison-with-opencommit)
+- [🎯 Best Practices](#-best-practices)
+  - [Optimal Workflow](#optimal-workflow)
+  - [Performance Tips](#performance-tips)
+  - [Quality Guidelines](#quality-guidelines)
+- [🔄 Migration from OpenCommit](#-migration-from-opencommit)
 
 ####
 
@@ -281,6 +296,158 @@ Copyright © 2023 [LobeHub][profile-link]. <br />
 This project is [MIT](./LICENSE) licensed.
 
 <!-- LINK GROUP -->
+
+## 🚀 Advanced Features
+
+### File Filtering
+
+Lobe Commit supports intelligent file filtering to exclude irrelevant files from analysis:
+
+#### Default Exclusions
+
+- Lock files (`*-lock.*`, `*.lock`)
+- Binary files (images, videos, archives)
+- Build artifacts (`dist/`, `node_modules/`, etc.)
+- Minified files (`*.min.js`, `*.min.css`)
+
+#### Custom Exclusions
+
+Create a `.lobecommitignore` file in your project root:
+
+```gitignore
+# Custom ignore patterns
+path/to/large-asset.zip
+**/*.custom-extension
+docs/api/*.json
+
+# Environment-specific files
+.env.staging
+config/secrets.yaml
+```
+
+### Enhanced Prompts
+
+The new prompt system provides:
+
+- **Context Awareness**: Analyzes file paths, function names, and change patterns
+- **Business Impact Focus**: Emphasizes user-facing changes and business value
+- **Technical Precision**: Better understanding of architectural decisions
+- **WHY Explanations**: Optional explanations of change motivations
+
+#### Configuration Options
+
+```bash
+# Include "why" explanations in commit messages
+lobe-commit --config
+
+# Select "includeWhy" and set to true
+```
+
+### Message Templates
+
+Support for custom message templates with placeholders:
+
+```bash
+# Example: Include issue references
+git commit # message: "feat: add user authentication"
+# With template: "feat: add user authentication (#123)"
+```
+
+Configure template in settings:
+
+- `messageTemplate`: Pattern like `"$msg (#123)"` or `"[PROJ-456] $msg"`
+
+### Diff Compression
+
+Intelligent diff compression for large changes:
+
+- Prioritizes actual code changes over context
+- Maintains file headers and change indicators
+- Truncates verbose output while preserving meaning
+- Maximum 200 lines by default (configurable)
+
+### Full GitMoji Support
+
+Toggle between:
+
+- **Simplified**: 10 most common emojis (default)
+- **Full Specification**: Complete gitmoji.dev standard
+
+```bash
+# Enable full GitMoji specification
+lobe-commit --config
+# Set "useFullGitmoji" to true
+```
+
+## 🔧 Configuration Reference
+
+### New Configuration Options
+
+| Option            | Type    | Default  | Description                                    |
+| ----------------- | ------- | -------- | ---------------------------------------------- |
+| `includeWhy`      | boolean | `false`  | Include explanation of why changes were made   |
+| `messageTemplate` | string  | `"$msg"` | Template for commit messages with placeholders |
+| `oneLineCommit`   | boolean | `false`  | Force single-line commit messages              |
+| `useFullGitmoji`  | boolean | `false`  | Use complete GitMoji specification             |
+
+### File Filtering Rules
+
+1. **Default patterns** are always applied
+2. **Custom patterns** from `.lobecommitignore` are added
+3. **Glob patterns** supported (e.g., `**/*.test.js`)
+4. **Comments** supported with `#` prefix
+5. **Case sensitive** pattern matching
+
+## 📊 Comparison with OpenCommit
+
+| Feature           | Lobe Commit            | OpenCommit             |
+| ----------------- | ---------------------- | ---------------------- |
+| Interactive UI    | ✅ Rich CLI UI         | ❌ Simple prompts      |
+| File Filtering    | ✅ `.lobecommitignore` | ✅ `.opencommitignore` |
+| Streaming         | ✅ Real-time           | ❌ Batch only          |
+| Issue Integration | ✅ GitHub Issues       | ❌ Manual only         |
+| Custom Prompts    | ✅ Enhanced system     | ✅ Basic templates     |
+| Diff Compression  | ✅ Intelligent         | ❌ Raw diff            |
+| Multi-language    | ✅ Built-in            | ✅ Via config          |
+
+## 🎯 Best Practices
+
+### Optimal Workflow
+
+1. **Stage relevant changes**: `git add <specific-files>`
+2. **Use file filtering**: Create `.lobecommitignore` for project
+3. **Configure templates**: Set up issue/PR reference patterns
+4. **Enable WHY mode**: For complex architectural changes
+5. **Review and edit**: Use the interactive interface to refine
+
+### Performance Tips
+
+- Use `.lobecommitignore` to exclude large files
+- Enable diff compression for complex changes
+- Use specific staging rather than `git add .`
+- Configure appropriate `maxLength` for your team
+
+### Quality Guidelines
+
+- Enable `includeWhy` for refactoring commits
+- Use full GitMoji for detailed categorization
+- Configure locale for international teams
+- Set up message templates for consistency
+
+## 🔄 Migration from OpenCommit
+
+If you're migrating from OpenCommit:
+
+1. **Rename ignore file**: `.opencommitignore` → `.lobecommitignore`
+2. **Update config**: Most settings transfer directly
+3. **Enable streaming**: For better user experience
+4. **Try interactive mode**: Leverage the rich UI features
+
+```bash
+# Quick migration
+cp .opencommitignore .lobecommitignore
+lobe-commit --config # Set up your preferences
+```
 
 [back-to-top]: https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square
 [bun-link]: https://bun.sh

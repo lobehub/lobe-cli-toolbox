@@ -1,0 +1,72 @@
+# Lobe Commit Ignore File
+# This file specifies which files should be excluded from git diff analysis
+# Each line should contain a glob pattern
+
+# Lock files (included by default)
+*-lock.*
+*.lock
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Large binary files
+**/*.jpg
+**/*.jpeg
+**/*.png
+**/*.gif
+**/*.svg
+**/*.ico
+**/*.webp
+**/*.mp4
+**/*.mp3
+**/*.wav
+**/*.avi
+**/*.mov
+
+# Compressed files
+**/*.zip
+**/*.tar
+**/*.tar.gz
+**/*.rar
+**/*.7z
+
+# Build artifacts
+node_modules/**
+dist/**
+build/**
+out/**
+.next/**
+.nuxt/**
+coverage/**
+
+# Minified files
+**/*.min.js
+**/*.min.css
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# Database files
+**/*.db
+**/*.sqlite
+**/*.sqlite3
+
+# Log files
+**/*.log
+logs/**
+
+# IDE and editor files
+.vscode/settings.json
+.idea/**
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Add your custom patterns below
+# path/to/large-asset.zip
+# **/*.custom-extension 

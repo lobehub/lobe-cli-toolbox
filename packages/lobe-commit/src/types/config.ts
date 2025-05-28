@@ -5,12 +5,16 @@ export interface Config {
   diffChunkSize: number;
   emoji: 'emoji' | 'code';
   githubToken: string;
+  includeWhy: boolean;
   locale: string;
   maxLength: number;
+  messageTemplate: string;
   modelName: LanguageModel;
+  oneLineCommit: boolean;
   openaiToken: string;
   prompt: string;
   stream: boolean;
+  useFullGitmoji: boolean;
 }
 
 export type ConfigKeys = keyof Config;

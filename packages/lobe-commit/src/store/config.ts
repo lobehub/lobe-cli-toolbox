@@ -21,6 +21,10 @@ export const schema: ConfigSchema = {
     default: '',
     type: 'string',
   },
+  includeWhy: {
+    default: false,
+    type: 'boolean',
+  },
   locale: {
     default: '',
     type: 'string',
@@ -29,9 +33,17 @@ export const schema: ConfigSchema = {
     default: 100,
     type: 'number',
   },
+  messageTemplate: {
+    default: '$msg',
+    type: 'string',
+  },
   modelName: {
     default: defaultModel,
     type: 'string',
+  },
+  oneLineCommit: {
+    default: false,
+    type: 'boolean',
   },
   openaiToken: {
     default: '',
@@ -43,6 +55,10 @@ export const schema: ConfigSchema = {
   },
   stream: {
     default: true,
+    type: 'boolean',
+  },
+  useFullGitmoji: {
+    default: false,
     type: 'boolean',
   },
 };
