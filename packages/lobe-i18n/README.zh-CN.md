@@ -34,6 +34,8 @@ Lobe i18n 是一款使用 ChatGPT 自动化 i18n 的 CLI 流程工具
 - [✨ 特性](#-特性)
 - [📦 安装](#-安装)
 - [🤯 使用](#-使用)
+  - [第一步：初始化配置](#第一步初始化配置)
+  - [第二步：运行翻译命令](#第二步运行翻译命令)
   - [配置](#配置)
   - [环境变量](#环境变量)
 - [🌏 Locale 配置](#-locale-配置)
@@ -101,7 +103,7 @@ $ lobe-i18n -o # 或使用完整标志 --option
 
 或者，您可以手动创建配置文件，支持的格式请参考 [cosmiconfig](https://github.com/cosmiconfig/cosmiconfig) （详见 [Configuration](#configuration)）。
 
-以下是一个配置文件示例（`.i18nrc.js`）：  
+以下是一个配置文件示例（`.i18nrc.js`）：\
 此示例展示了如何基于 `locales/en_US.json` 自动生成 `locales/zh_CN.json` 和 `locales/ja_JP.json`。
 
 ```javascript
@@ -472,7 +474,7 @@ $ bun dev
 
 ### Credits
 
-- **langchainjs** - <https://github.com/hwchase17/langchainjs>
+- **OpenAI** - <https://github.com/openai/openai-node>
 - **ink** - <https://github.com/vadimdemedes/ink>
 - **transmart** - <https://github.com/Quilljou/transmart>
 

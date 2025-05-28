@@ -34,6 +34,8 @@ English ・ [简体中文](./README.zh-CN.md) ・ [Changelog](./CHANGELOG.md) ·
 - [✨ Features](#-features)
 - [📦 Installation](#-installation)
 - [🤯 Usage](#-usage)
+  - [Step 1: Initialize Configuration](#step-1-initialize-configuration)
+  - [Step 2: Run Translation Commands](#step-2-run-translation-commands)
   - [Configuration](#configuration)
   - [Environment Variable](#environment-variable)
 - [🌏 Locale Configuration](#-locale-configuration)
@@ -88,6 +90,7 @@ npm install -g @lobehub/i18n-cli
 ## 🤯 Usage
 
 ### Step 1: Initialize Configuration
+
 To initialize the Lobe i18n configuration, run the following command:
 
 ```shell
@@ -100,7 +103,7 @@ This command will guide you through creating a configuration file step by step.
 
 Alternatively, you can manually create a configuration file in one of the formats supported by [cosmiconfig](https://github.com/cosmiconfig/cosmiconfig) (see [Configuration](#configuration) below).
 
-Here's an example of a configuration file (`.i18nrc.js`):  
+Here's an example of a configuration file (`.i18nrc.js`):\
 This example demonstrates how to generate `locales/zh_CN.json` and `locales/ja_JP.json` automatically based on `locales/en_US.json`.
 
 ```javascript
@@ -470,7 +473,7 @@ We welcome contributions in all forms. If you're interested in contributing code
 
 ### Credits
 
-- **langchainjs** - <https://github.com/hwchase17/langchainjs>
+- **OpenAI** - <https://github.com/openai/openai-node>
 - **ink** - <https://github.com/vadimdemedes/ink>
 - **transmart** - <https://github.com/Quilljou/transmart>
 

@@ -1,5 +1,3 @@
-import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
-
 import { LocaleObj } from '@/types';
 import { I18nConfig } from '@/types/config';
 import { calcToken } from '@/utils/calcToken';
@@ -11,6 +9,7 @@ import {
   pickMdastObj,
 } from '@/utils/convertMarkdown';
 import { getSplitToken } from '@/utils/splitJsonToChunks';
+import { RecursiveCharacterTextSplitter } from '@/utils/textSplitter';
 
 export class TranslateMarkdown {
   mdast: any;

@@ -6,8 +6,7 @@
     "ai",
     "i18n",
     "openai",
-    "gpt",
-    "langchain"
+    "gpt"
   ],
   "homepage": "https://github.comlobehub/lobe-cli-toolbox/tree/master/packages/lobe-i18n",
   "bugs": {
@@ -55,8 +54,6 @@
   },
   "dependencies": {
     "@inkjs/ui": "^1.0.0",
-    "@langchain/core": "^0.3.27",
-    "@langchain/openai": "^0.3.16",
     "@lobehub/cli-ui": "1.11.0",
     "chalk": "^5.4.1",
     "commander": "^13.0.0",
@@ -72,8 +69,8 @@
     "ink": "^4.4.1",
     "json-stable-stringify": "^1.2.1",
     "just-diff": "^6.0.2",
-    "langchain": "^0.3.10",
     "lodash-es": "^4.17.21",
+    "openai": "^4.103.0",
     "p-map": "^7.0.3",
     "pangu": "^4.0.7",
     "react": "^18.3.1",

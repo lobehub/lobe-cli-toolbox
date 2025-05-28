@@ -1,31 +1,26 @@
-import { ChatPromptTemplate } from '@langchain/core/prompts';
-import { ChatOpenAI } from '@langchain/openai';
 import { alert } from '@lobehub/cli-ui';
 // @ts-ignore
 import dJSON from 'dirty-json';
+import OpenAI from 'openai';
 
 import { promptJsonTranslate, promptStringTranslate } from '@/prompts/translate';
 import { LocaleObj } from '@/types';
 import { I18nConfig } from '@/types/config';
+import { ChatPromptTemplate } from '@/utils/promptTemplate';
 
 export class TranslateLocale {
-  private model: ChatOpenAI;
+  private client: OpenAI;
   private config: I18nConfig;
   private isJsonMode: boolean;
-  promptJson: ChatPromptTemplate<{ from: string; json: string; to: string }>;
-  promptString: ChatPromptTemplate<{ from: string; text: string; to: string }>;
+  promptJson: ChatPromptTemplate<{ from?: string; json: string; to: string }>;
+  promptString: ChatPromptTemplate<{ from?: string; text: string; to: string }>;
+
   constructor(config: I18nConfig, openAIApiKey: string, openAIProxyUrl?: string) {
     this.config = config;
-    this.model = new ChatOpenAI({
-      configuration: {
-        baseURL: openAIProxyUrl,
-      },
-      maxConcurrency: config.concurrency,
+    this.client = new OpenAI({
+      apiKey: openAIApiKey,
+      baseURL: openAIProxyUrl,
       maxRetries: 4,
-      modelName: config.modelName,
-      openAIApiKey,
-      temperature: config.temperature,
-      topP: config.topP,
     });
     this.promptJson = promptJsonTranslate(config.reference);
     this.promptString = promptStringTranslate(config.reference);
@@ -42,15 +37,20 @@ export class TranslateLocale {
     to: string;
   }): Promise<string | any> {
     try {
-      const formattedChatPrompt = await this.promptString.formatMessages({
+      const messages = await this.promptString.formatMessages({
         from: from || this.config.entryLocale,
         text: text,
         to,
       });
 
-      const res = await this.model.call(formattedChatPrompt);
+      const completion = await this.client.chat.completions.create({
+        messages: messages as OpenAI.Chat.Completions.ChatCompletionMessageParam[],
+        model: this.config.modelName || 'gpt-3.5-turbo',
+        temperature: this.config.temperature,
+        top_p: this.config.topP,
+      });
 
-      const result = res['text'];
+      const result = completion.choices[0]?.message?.content;
 
       if (!result) this.handleError();
       return result;
@@ -58,6 +58,7 @@ export class TranslateLocale {
       this.handleError(error);
     }
   }
+
   async runByJson({
     from,
     to,
@@ -68,22 +69,23 @@ export class TranslateLocale {
     to: string;
   }): Promise<LocaleObj | any> {
     try {
-      const formattedChatPrompt = await this.promptJson.formatMessages({
+      const messages = await this.promptJson.formatMessages({
         from: from || this.config.entryLocale,
         json: JSON.stringify(json),
         to,
       });
 
-      const res = await this.model.invoke(
-        formattedChatPrompt,
-        this.isJsonMode
-          ? {
-              response_format: { type: 'json_object' },
-            }
-          : undefined,
-      );
+      const completion = await this.client.chat.completions.create({
+        messages: messages as OpenAI.Chat.Completions.ChatCompletionMessageParam[],
+        model: this.config.modelName || 'gpt-3.5-turbo',
+        temperature: this.config.temperature,
+        top_p: this.config.topP,
+        ...(this.isJsonMode && {
+          response_format: { type: 'json_object' },
+        }),
+      });
 
-      const result = this.isJsonMode ? res['content'] : res['text'];
+      const result = completion.choices[0]?.message?.content;
 
       if (!result) this.handleError();
 

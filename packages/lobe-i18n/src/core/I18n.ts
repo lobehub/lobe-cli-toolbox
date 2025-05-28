@@ -48,7 +48,6 @@ export interface I18nMarkdownWriteOptions extends I18nMarkdownTranslateOptions {
 
 export class I18n {
   private config: I18nConfig;
-  private step: number = 0;
   private maxStep: number = 1;
   private translateLocaleService: TranslateLocale;
   private translateMarkdownService: TranslateMarkdown;
@@ -77,7 +76,7 @@ export class I18n {
     from,
   }: I18nMarkdownTranslateOptions): Promise<{ result: string; tokenUsage: number } | undefined> {
     const prompt = await this.translateLocaleService.promptString.formatMessages({
-      from,
+      from: from || this.config.entryLocale,
       text: '',
       to,
     });
@@ -87,13 +86,41 @@ export class I18n {
     );
 
     this.maxStep = splitString.length;
-    this.step = 0;
 
     if (splitString.length === 0) return;
 
     const needToken =
       splitString.length * calcToken(JSON.stringify(prompt)) +
       calcToken(JSON.stringify(splitString));
+
+    // 创建进度跟踪数组：0=未开始，1=进行中，2=已完成
+    const chunkProgress = Array.from({ length: this.maxStep }, () => 0);
+
+    const updateProgress = () => {
+      const completedChunks = chunkProgress.filter((status) => status === 2).length;
+      const inProgressChunks = chunkProgress.filter((status) => status === 1).length;
+
+      let progress = 0;
+      if (completedChunks === this.maxStep) {
+        progress = 100;
+      } else if (inProgressChunks > 0) {
+        // 有正在进行的chunk，计算接近完成的进度
+        const baseProgress = (completedChunks / this.maxStep) * 100;
+        const nextMilestone = ((completedChunks + 1) / this.maxStep) * 100;
+        progress = Math.floor(Math.max(baseProgress, nextMilestone - 1));
+      } else {
+        // 只有已完成的chunk
+        progress = Math.floor((completedChunks / this.maxStep) * 100);
+      }
+
+      onProgress?.({
+        isLoading: completedChunks < this.maxStep,
+        maxStep: this.maxStep,
+        needToken,
+        progress,
+        step: completedChunks,
+      });
+    };
 
     onProgress?.({
       isLoading: true,
@@ -105,20 +132,26 @@ export class I18n {
 
     const translatedSplitString: string[] = await pMap(
       splitString,
-      async (text) => {
-        onProgress?.({
-          isLoading: this.step < this.maxStep,
-          maxStep: this.maxStep,
-          needToken,
-          progress: this.step < this.maxStep ? Math.floor((this.step / this.maxStep) * 100) : 100,
-          step: this.step,
-        });
+      async (text, index) => {
+        // 标记为进行中
+        chunkProgress[index] = 1;
+        updateProgress();
+
+        // 延迟一下再更新进度，模拟处理过程
+        setTimeout(() => {
+          updateProgress();
+        }, 800);
+
         const result = await this.translateLocaleService.runByString({
-          from,
+          from: from || this.config.entryLocale,
           text,
           to,
         });
-        if (this.step < this.maxStep) this.step++;
+
+        // 标记为已完成
+        chunkProgress[index] = 2;
+        updateProgress();
+
         return result;
       },
       { concurrency: this.config?.concurrency },
@@ -175,19 +208,47 @@ export class I18n {
     | undefined
   > {
     const prompt = await this.translateLocaleService.promptJson.formatMessages({
-      from,
-      json: {},
+      from: from || this.config.entryLocale,
+      json: JSON.stringify({}),
       to,
     });
     const splitJson = splitJsonToChunks(this.config, entry, target, JSON.stringify(prompt));
 
     this.maxStep = splitJson.length;
-    this.step = 0;
 
     if (splitJson.length === 0) return;
 
     const needToken =
       splitJson.length * calcToken(JSON.stringify(prompt)) + calcToken(JSON.stringify(splitJson));
+
+    // 创建进度跟踪数组：0=未开始，1=进行中，2=已完成
+    const chunkProgress = Array.from({ length: this.maxStep }, () => 0);
+
+    const updateProgress = () => {
+      const completedChunks = chunkProgress.filter((status) => status === 2).length;
+      const inProgressChunks = chunkProgress.filter((status) => status === 1).length;
+
+      let progress = 0;
+      if (completedChunks === this.maxStep) {
+        progress = 100;
+      } else if (inProgressChunks > 0) {
+        // 有正在进行的chunk，计算接近完成的进度
+        const baseProgress = (completedChunks / this.maxStep) * 100;
+        const nextMilestone = ((completedChunks + 1) / this.maxStep) * 100;
+        progress = Math.floor(Math.max(baseProgress, nextMilestone - 1));
+      } else {
+        // 只有已完成的chunk
+        progress = Math.floor((completedChunks / this.maxStep) * 100);
+      }
+
+      onProgress?.({
+        isLoading: completedChunks < this.maxStep,
+        maxStep: this.maxStep,
+        needToken,
+        progress,
+        step: completedChunks,
+      });
+    };
 
     onProgress?.({
       isLoading: true,
@@ -199,20 +260,26 @@ export class I18n {
 
     const translatedSplitJson: LocaleObj[] = await pMap(
       splitJson,
-      async (json) => {
-        onProgress?.({
-          isLoading: this.step < this.maxStep,
-          maxStep: this.maxStep,
-          needToken,
-          progress: this.step < this.maxStep ? Math.floor((this.step / this.maxStep) * 100) : 100,
-          step: this.step,
-        });
+      async (json, index) => {
+        // 标记为进行中
+        chunkProgress[index] = 1;
+        updateProgress();
+
+        // 延迟一下再更新进度，模拟处理过程
+        setTimeout(() => {
+          updateProgress();
+        }, 800);
+
         const result = await this.translateLocaleService.runByJson({
-          from,
+          from: from || this.config.entryLocale,
           json,
           to,
         });
-        if (this.step < this.maxStep) this.step++;
+
+        // 标记为已完成
+        chunkProgress[index] = 2;
+        updateProgress();
+
         return result;
       },
       { concurrency: this.config?.concurrency },
