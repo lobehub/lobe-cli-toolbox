@@ -1,4 +1,4 @@
-import { ChatPromptTemplate } from '@langchain/core/prompts';
+import { ChatPromptTemplate } from '../../../common/promptTemplate';
 
 const DEFAULT_RULE = `
 ## Rules
@@ -60,6 +60,6 @@ ${reference || DEFAULT_RULE}
 3. The output seo json language matches the provided markdown original language (if the original text is in Chinese, the seo content will also be in Chinese):
 4. Based on the extracted information, generate JSON format matter data for SEO, including title, description, and tags.`,
     ],
-    ['human', '{content}'],
+    ['user', '{content}'],
   ]);
 };

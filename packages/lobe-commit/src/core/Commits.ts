@@ -1,10 +1,7 @@
-import { ChatPromptTemplate } from '@langchain/core/prompts';
-import { ChatOpenAI } from '@langchain/openai';
 import { alert } from '@lobehub/cli-ui';
 import chalk from 'chalk';
-import { loadSummarizationChain } from 'langchain/chains';
-import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { execSync } from 'node:child_process';
+import OpenAI from 'openai';
 
 import { SUMMARY_PROMPT, SUMMARY_REFINE_PROMPT, promptCommits } from '@/prompts/commits';
 import { selectors } from '@/store';
@@ -13,6 +10,9 @@ import { calcToken } from '@/utils/calcToken';
 import { addEmojiToMessage } from '@/utils/genCommitMessage';
 
 import { ModelTokens } from '../../../common/models';
+import { ChatPromptTemplate } from '../../../common/promptTemplate';
+import { loadSummarizationChain } from '../../../common/summarizationChain';
+import { RecursiveCharacterTextSplitter } from '../../../common/textSplitter';
 
 export interface GenAiCommitProps {
   cacheSummary?: string;
@@ -20,10 +20,11 @@ export interface GenAiCommitProps {
   setSummary: (text: string) => void;
 }
 export class Commits {
-  private model: ChatOpenAI;
+  private client: OpenAI;
   private config: Config;
   private textSplitter: RecursiveCharacterTextSplitter;
   prompt: ChatPromptTemplate<{ summary: string }>;
+
   constructor() {
     this.config = selectors.getCommitConfig();
 
@@ -34,14 +35,10 @@ export class Commits {
       );
     }
 
-    this.model = new ChatOpenAI({
-      configuration: {
-        baseURL: this.config.apiBaseUrl,
-      },
+    this.client = new OpenAI({
+      apiKey: this.config.openaiToken,
+      baseURL: this.config.apiBaseUrl,
       maxRetries: 10,
-      modelName: this.config.modelName,
-      openAIApiKey: this.config.openaiToken,
-      temperature: 0.5,
     });
     this.textSplitter = new RecursiveCharacterTextSplitter({
       chunkOverlap: 0,
@@ -58,16 +55,23 @@ export class Commits {
     const summary = cacheSummary || (await this.genSummary({ setLoadingInfo, setSummary }));
 
     // STEP 2
-    const formattedPrompt = await this.prompt.formatMessages({
+    const messages = await this.prompt.formatMessages({
       summary,
     });
-    const res = await this.model.call(formattedPrompt);
 
-    if (!res['text'])
+    const completion = await this.client.chat.completions.create({
+      messages: messages as OpenAI.Chat.Completions.ChatCompletionMessageParam[],
+      model: this.config.modelName,
+      temperature: 0.5,
+    });
+
+    const result = completion.choices[0]?.message?.content;
+
+    if (!result)
       alert.error('Diff summary failed, please check your network or try again...', true);
 
     return addEmojiToMessage(
-      res['text'].replace(/\((.*?)\):/, (match, p1) => match && `(${p1.toLowerCase()}):`),
+      result!.replace(/\((.*?)\):/, (match, p1) => match && `(${p1.toLowerCase()}):`),
     );
   }
 
@@ -98,7 +102,7 @@ export class Commits {
       );
 
       // STEP 2
-      const chain = loadSummarizationChain(this.model, {
+      const chain = loadSummarizationChain(this.client, {
         questionPrompt: SUMMARY_PROMPT,
         refinePrompt: SUMMARY_REFINE_PROMPT,
         type: 'refine',

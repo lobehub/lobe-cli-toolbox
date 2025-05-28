@@ -1,7 +1,7 @@
-import { ChatPromptTemplate, PromptTemplate } from '@langchain/core/prompts';
-
 import gitmojis from '@/constants/gitmojis';
 import { selectors } from '@/store';
+
+import { ChatPromptTemplate, PromptTemplate } from '../../../common/promptTemplate';
 
 const BASE_PROMPT =
   `You are to act as the author of a commit message in git. Your mission is to create clean and comprehensive commit messages in the conventional commit convention and explain WHAT were the changes and WHY the changes were done.` +
@@ -31,7 +31,7 @@ export const promptCommits = () => {
         .filter(Boolean)
         .join('\n'),
     ],
-    ['human', 'Return only 1 type commit message describes the git diff summary: {summary}'],
+    ['user', 'Return only 1 type commit message describes the git diff summary: {summary}'],
   ]);
 };
 

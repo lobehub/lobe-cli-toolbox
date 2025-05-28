@@ -75,6 +75,7 @@
     "lerna": "^8.2.2",
     "lint-staged": "^15.5.2",
     "multi-semantic-release": "^3.0.2",
+    "openai": "^4.103.0",
     "pkgroll": "^2.12.2",
     "prettier": "^3.5.3",
     "remark": "^15.0.1",
