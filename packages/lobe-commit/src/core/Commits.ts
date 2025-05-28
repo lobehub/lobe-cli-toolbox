@@ -71,6 +71,9 @@ export class Commits {
     messages: any[],
     onStreamMessage: (message: string) => void,
   ): Promise<string> {
+    // 开始流式输出，先调用一次回调来切换UI状态
+    onStreamMessage('');
+
     const stream = await this.client.chat.completions.create({
       messages: messages as OpenAI.Chat.Completions.ChatCompletionMessageParam[],
       model: this.config.modelName,
@@ -84,11 +87,11 @@ export class Commits {
       const content = chunk.choices[0]?.delta?.content || '';
       if (content) {
         fullMessage += content;
-        onStreamMessage(
-          addEmojiToMessage(
-            fullMessage.replace(/\((.*?)\):/, (match, p1) => match && `(${p1.toLowerCase()}):`),
-          ),
+        // 实时更新显示的消息
+        const processedMessage = addEmojiToMessage(
+          fullMessage.replace(/\((.*?)\):/, (match, p1) => match && `(${p1.toLowerCase()}):`),
         );
+        onStreamMessage(processedMessage);
       }
     }
 

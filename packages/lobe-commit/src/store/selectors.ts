@@ -20,12 +20,13 @@ const getDiffChunkSize = () => {
   const diffChunkSize = getConfig('diffChunkSize');
   return defaultDiffChunkSize > diffChunkSize ? defaultDiffChunkSize : diffChunkSize;
 };
-const getCommitConfig = () => ({
+const getCommitConfig = (): Config => ({
   ...(config.store as Config),
   apiBaseUrl: getOpenAIProxyUrl(),
   diffChunkSize: getDiffChunkSize(),
   githubToken: getGithubToken(),
   openaiToken: getOpenAIApiKey(),
+  stream: getConfig('stream'),
 });
 
 export default {

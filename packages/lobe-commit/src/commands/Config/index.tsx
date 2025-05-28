@@ -135,6 +135,7 @@ const Config = memo(() => {
         desc: 'Enable streaming output for AI responses, default as enabled',
         key: 'stream',
         label: 'Streaming output',
+        showValue: false,
         value: store.stream,
       },
       {

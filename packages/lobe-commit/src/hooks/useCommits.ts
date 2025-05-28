@@ -22,19 +22,24 @@ export const useCommits = ({ setMessage, onSuccess, onError, ...config }: Commit
     (message: string) => {
       setStreamingMessage(message);
       setMessage?.(message);
+      setIsGlobalLoading(false);
     },
     [setMessage],
   );
 
   const { data, isLoading } = useSWR(
     shouldFetch ? key : null,
-    async () =>
-      commits.current.genCommit({
+    async () => {
+      if (commitConfig.stream) {
+        setIsGlobalLoading(false);
+      }
+      return commits.current.genCommit({
         cacheSummary: summary,
         onStreamMessage: commitConfig.stream ? handleStreamMessage : undefined,
         setLoadingInfo,
         setSummary,
-      }),
+      });
+    },
     {
       onError: (err, ...rest) => {
         onError?.(err, ...rest);

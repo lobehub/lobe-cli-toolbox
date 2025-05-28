@@ -1,9 +1,10 @@
-import { Spinner } from '@inkjs/ui';
 import { Panel, SelectInput, type SelectInputItem, SplitView, useTheme } from '@lobehub/cli-ui';
 import { Text, useInput } from 'ink';
 import { memo, useCallback, useEffect, useMemo } from 'react';
 
+import AiMessageDisplay from '@/components/AiMessageDisplay';
 import { useCommits } from '@/hooks/useCommits';
+import { selectors } from '@/store';
 import { useCommitStore } from '@/store/commitStore';
 
 const AiCommit = memo(() => {
@@ -14,8 +15,16 @@ const AiCommit = memo(() => {
   }));
   useInput(useCallback((_, key) => key.tab && setStep('type'), []));
   const theme = useTheme();
+  const commitConfig = selectors.getCommitConfig();
 
-  const { summary, start, loadingInfo, loading, restart } = useCommits({ setMessage });
+  const {
+    summary,
+    start,
+    loadingInfo,
+    loading,
+    restart,
+    message: streamingMessage,
+  } = useCommits({ setMessage });
 
   const handleSelect = useCallback(
     (item: any) => {
@@ -62,7 +71,7 @@ const AiCommit = memo(() => {
   return (
     <Panel
       footer={!loading && message && <SelectInput items={items} onSelect={handleSelect} />}
-      title={`🤯 AI Commit Generator`}
+      title={`🤯 AI Commit Generator ${commitConfig.stream ? '(Streaming)' : ''}`}
     >
       {summary && (
         <SplitView direction={'bottom'}>
@@ -72,7 +81,12 @@ const AiCommit = memo(() => {
           </Text>
         </SplitView>
       )}
-      {!loading && message ? <Text>{message}</Text> : <Spinner label={loadingInfo} />}
+      <AiMessageDisplay
+        loading={loading}
+        loadingInfo={loadingInfo}
+        message={message}
+        streamingMessage={streamingMessage}
+      />
     </Panel>
   );
 });

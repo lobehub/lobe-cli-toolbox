@@ -74,6 +74,7 @@
     "ink-testing-library": "^3.0.0",
     "lerna": "^8.2.2",
     "lint-staged": "^15.5.2",
+    "lodash-es": "^4.17.21",
     "multi-semantic-release": "^3.0.2",
     "openai": "^4.103.0",
     "pkgroll": "^2.12.2",
