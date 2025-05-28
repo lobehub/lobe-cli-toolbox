@@ -2,6 +2,47 @@
 
 # Changelog
 
+## [Version 2.18.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.17.0...@lobehub/commit-cli@2.18.0)
+
+<sup>Released on **2025-05-28**</sup>
+
+#### ♻ Code Refactoring
+
+- **misc**: Add tsconfig paths plugin to Vitest configs for module resolution.
+
+#### ✨ Features
+
+- **misc**: Add AiMessageDisplay component for streaming and static messages, Add OpenAI integration and new prompt templates for summarization, Add streaming option for real-time AI commit message generation, Enhance AI commit generation with token tracking and streaming support, Update release process to use multi-semantic-release with sequential prepare.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **misc**: Add tsconfig paths plugin to Vitest configs for module resolution ([b981def](https://github.com/lobehub/lobe-cli-toolbox/commit/b981def))
+
+#### What's improved
+
+- **misc**: Add AiMessageDisplay component for streaming and static messages ([8145015](https://github.com/lobehub/lobe-cli-toolbox/commit/8145015))
+- **misc**: Add OpenAI integration and new prompt templates for summarization ([a83e61e](https://github.com/lobehub/lobe-cli-toolbox/commit/a83e61e))
+- **misc**: Add streaming option for real-time AI commit message generation ([cb8c92d](https://github.com/lobehub/lobe-cli-toolbox/commit/cb8c92d))
+- **misc**: Enhance AI commit generation with token tracking and streaming support ([af97d87](https://github.com/lobehub/lobe-cli-toolbox/commit/af97d87))
+- **misc**: Update release process to use multi-semantic-release with sequential prepare ([e296f25](https://github.com/lobehub/lobe-cli-toolbox/commit/e296f25))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### Dependencies
+
+- **@lobehub/cli-ui:** upgraded to 1.12.0
+
 ## [Version 2.17.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.16.0...@lobehub/commit-cli@2.17.0)
 
 <sup>Released on **2025-05-27**</sup>
