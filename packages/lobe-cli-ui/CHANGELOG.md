@@ -2,6 +2,39 @@
 
 # Changelog
 
+## [Version 1.12.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/cli-ui@1.11.0...@lobehub/cli-ui@1.12.0)
+
+<sup>Released on **2025-05-28**</sup>
+
+#### ♻ Code Refactoring
+
+- **misc**: Add tsconfig paths plugin to Vitest configs for module resolution.
+
+#### ✨ Features
+
+- **misc**: Update release process to use multi-semantic-release with sequential prepare.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **misc**: Add tsconfig paths plugin to Vitest configs for module resolution ([b981def](https://github.com/lobehub/lobe-cli-toolbox/commit/b981def))
+
+#### What's improved
+
+- **misc**: Update release process to use multi-semantic-release with sequential prepare ([e296f25](https://github.com/lobehub/lobe-cli-toolbox/commit/e296f25))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.11.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/cli-ui@1.10.1...@lobehub/cli-ui@1.11.0)
 
 <sup>Released on **2025-05-22**</sup>
