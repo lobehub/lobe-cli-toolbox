@@ -16,6 +16,7 @@ import { RecursiveCharacterTextSplitter } from '../../../common/textSplitter';
 
 export interface GenAiCommitProps {
   cacheSummary?: string;
+  onStreamMessage?: (message: string) => void;
   setLoadingInfo: (text: string) => void;
   setSummary: (text: string) => void;
 }
@@ -48,7 +49,7 @@ export class Commits {
     this.prompt = promptCommits();
   }
 
-  async genCommit({ setLoadingInfo, setSummary, cacheSummary }: GenAiCommitProps) {
+  async genCommit({ setLoadingInfo, setSummary, cacheSummary, onStreamMessage }: GenAiCommitProps) {
     setLoadingInfo(' Generating...');
 
     // STEP 1
@@ -59,6 +60,48 @@ export class Commits {
       summary,
     });
 
+    if (this.config.stream && onStreamMessage) {
+      return this.genCommitStream(messages, onStreamMessage);
+    } else {
+      return this.genCommitNonStream(messages);
+    }
+  }
+
+  private async genCommitStream(
+    messages: any[],
+    onStreamMessage: (message: string) => void,
+  ): Promise<string> {
+    const stream = await this.client.chat.completions.create({
+      messages: messages as OpenAI.Chat.Completions.ChatCompletionMessageParam[],
+      model: this.config.modelName,
+      stream: true,
+      temperature: 0.5,
+    });
+
+    let fullMessage = '';
+
+    for await (const chunk of stream) {
+      const content = chunk.choices[0]?.delta?.content || '';
+      if (content) {
+        fullMessage += content;
+        onStreamMessage(
+          addEmojiToMessage(
+            fullMessage.replace(/\((.*?)\):/, (match, p1) => match && `(${p1.toLowerCase()}):`),
+          ),
+        );
+      }
+    }
+
+    if (!fullMessage) {
+      alert.error('Diff summary failed, please check your network or try again...', true);
+    }
+
+    return addEmojiToMessage(
+      fullMessage.replace(/\((.*?)\):/, (match, p1) => match && `(${p1.toLowerCase()}):`),
+    );
+  }
+
+  private async genCommitNonStream(messages: any[]): Promise<string> {
     const completion = await this.client.chat.completions.create({
       messages: messages as OpenAI.Chat.Completions.ChatCompletionMessageParam[],
       model: this.config.modelName,

@@ -10,6 +10,7 @@ export interface Config {
   modelName: LanguageModel;
   openaiToken: string;
   prompt: string;
+  stream: boolean;
 }
 
 export type ConfigKeys = keyof Config;

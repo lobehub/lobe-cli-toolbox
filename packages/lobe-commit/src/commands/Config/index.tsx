@@ -117,6 +117,28 @@ const Config = memo(() => {
       },
       {
         children: (
+          <SelectInput
+            items={[
+              {
+                label: 'Enabled',
+                value: 'true',
+              },
+              {
+                label: 'Disabled',
+                value: 'false',
+              },
+            ]}
+            onSelect={(item) => setConfig('stream', item.value === 'true')}
+          />
+        ),
+        defaultValue: getDefault('stream'),
+        desc: 'Enable streaming output for AI responses, default as enabled',
+        key: 'stream',
+        label: 'Streaming output',
+        value: store.stream,
+      },
+      {
+        children: (
           <TextInput
             defaultValue={store.openaiToken}
             onSubmit={(v) => setConfig('openaiToken', v)}

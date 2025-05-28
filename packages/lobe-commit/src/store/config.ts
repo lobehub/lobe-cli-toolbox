@@ -41,6 +41,10 @@ export const schema: ConfigSchema = {
     default: '',
     type: 'string',
   },
+  stream: {
+    default: true,
+    type: 'boolean',
+  },
 };
 
 export const config = new Conf({
