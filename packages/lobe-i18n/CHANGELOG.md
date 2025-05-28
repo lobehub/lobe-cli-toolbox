@@ -2,6 +2,44 @@
 
 # Changelog
 
+## [Version 1.22.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.21.0...@lobehub/i18n-cli@1.22.0)
+
+<sup>Released on **2025-05-28**</sup>
+
+#### ✨ Features
+
+- **misc**: Update release process to use multi-semantic-release with sequential prepare.
+
+#### 💄 Styles
+
+- **misc**: Update i18n progress animation, Update i18n test.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Update release process to use multi-semantic-release with sequential prepare ([e296f25](https://github.com/lobehub/lobe-cli-toolbox/commit/e296f25))
+
+#### Styles
+
+- **misc**: Update i18n progress animation ([60ef832](https://github.com/lobehub/lobe-cli-toolbox/commit/60ef832))
+- **misc**: Update i18n test ([abd6965](https://github.com/lobehub/lobe-cli-toolbox/commit/abd6965))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### Dependencies
+
+- **@lobehub/cli-ui:** upgraded to 1.12.0
+
 ## [Version 1.21.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.20.3...@lobehub/i18n-cli@1.21.0)
 
 <sup>Released on **2025-05-22**</sup>
