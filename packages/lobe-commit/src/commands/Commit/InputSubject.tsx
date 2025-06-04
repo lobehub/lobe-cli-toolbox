@@ -32,9 +32,8 @@ const InputScope = memo(() => {
 
   const handleSubmit = useCallback(() => {
     if (subject) {
-      // 如果应该跳过 issues 步骤，直接跳转到 AI 生成
       if (shouldSkipIssues) {
-        setStep('ai');
+        setStep('commit');
       } else {
         setStep('issues');
       }

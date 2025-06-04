@@ -63,6 +63,11 @@ class TranslateLocale {
       );
       const data = await this.i18n.translate({
         ...item,
+        filename: item.filename,
+        onChunkComplete: () => {
+          // 可以在这里添加额外的日志或处理逻辑
+          // 例如显示当前完成的 chunk 进度
+        },
         onProgress: (rest) => {
           if (rest.maxStep > 0) {
             rerender(<Progress {...rest} {...props} />);
@@ -74,7 +79,13 @@ class TranslateLocale {
       clear();
       const outputPath = relative('.', item.filename);
       if (data?.result && Object.keys(data.result).length > 0) {
-        writeJSON(item.filename, data.result);
+        // 使用立即保存时，文件已经被保存，无需再次保存
+        // writeJSON(item.filename, data.result);
+
+        // 如果没有开启立即保存，则需要保存文件
+        if (!this.config.saveImmediately) {
+          writeJSON(item.filename, data.result);
+        }
         totalTokenUsage += data.tokenUsage;
         consola.success(chalk.yellow(outputPath), chalk.gray(`[Token usage: ${data.tokenUsage}]`));
       } else {

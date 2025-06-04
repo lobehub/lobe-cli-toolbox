@@ -27,7 +27,10 @@ export const checkLocaleFolders = (config: I18nConfig, filenames: string[]) => {
       try {
         const dirPath = dirname(filePath);
         mkdirSync(dirPath, { recursive: true });
-      } catch {}
+      } catch {
+        // 忽略目录已存在的错误
+      }
+
       if (!existsSync(filePath)) {
         writeJSON(filePath, {});
       }

@@ -51,7 +51,7 @@ const InputIssues = memo(() => {
     if (shouldSkipIssues && issuesError && !issuesLoading) {
       // 延迟一下让用户能看到错误信息
       const timer = setTimeout(() => {
-        setStep('ai');
+        setStep('commit');
       }, 2000);
       return () => clearTimeout(timer);
     }
@@ -102,7 +102,7 @@ const InputIssues = memo(() => {
   );
 
   const handleSubmit = useCallback(() => {
-    setStep(issues ? 'issuesType' : 'ai');
+    setStep(issues ? 'issuesType' : 'commit');
   }, [issues]);
 
   // 如果有错误，显示错误信息和跳过选项

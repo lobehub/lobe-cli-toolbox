@@ -5,6 +5,7 @@ import { TranslateMarkdown } from '@/core/TranslateMarkdown';
 import { LocaleObj } from '@/types';
 import { I18nConfig, MarkdownModeType } from '@/types/config';
 import { calcToken } from '@/utils/calcToken';
+import { writeJSON, writeMarkdown } from '@/utils/fs';
 import { mergeJsonFromChunks } from '@/utils/mergeJsonFromChunks';
 import { splitJsonToChunks } from '@/utils/splitJsonToChunks';
 
@@ -25,7 +26,9 @@ export interface onProgressProps {
 }
 export interface I18nTranslateOptions {
   entry: LocaleObj;
+  filename?: string;
   from?: string;
+  onChunkComplete?: (chunkResult: LocaleObj, mergedResult: LocaleObj) => void;
   onProgress?: (props: onProgressProps) => void;
   target: LocaleObj;
   to: string;
@@ -33,9 +36,11 @@ export interface I18nTranslateOptions {
 
 export interface I18nMarkdownTranslateOptions
   extends Pick<I18nTranslateOptions, 'from' | 'to' | 'onProgress'> {
+  filename?: string;
   matter?: any;
   md: string;
   mode: MarkdownModeType;
+  onChunkComplete?: (chunkResult: string, mergedResult: string) => void;
 }
 
 export interface I18nWriteOptions extends I18nTranslateOptions {
@@ -74,6 +79,8 @@ export class I18n {
     to,
     onProgress,
     from,
+    filename,
+    onChunkComplete,
   }: I18nMarkdownTranslateOptions): Promise<{ result: string; tokenUsage: number } | undefined> {
     const prompt = await this.translateLocaleService.promptString.formatMessages({
       from: from || this.config.entryLocale,
@@ -95,6 +102,9 @@ export class I18n {
 
     // 创建进度跟踪数组：0=未开始，1=进行中，2=已完成
     const chunkProgress = Array.from({ length: this.maxStep }, () => 0);
+
+    // 用于存储合并的结果
+    let mergedResult = '';
 
     const updateProgress = () => {
       const completedChunks = chunkProgress.filter((status) => status === 2).length;
@@ -150,6 +160,22 @@ export class I18n {
 
         // 标记为已完成
         chunkProgress[index] = 2;
+
+        // 如果开启立即保存，则每个 chunk 完成后立即合并并保存
+        if (this.config.saveImmediately && filename) {
+          // 对于字符串类型，我们需要重新组装并保存
+          const tempTranslatedArray = [...translatedSplitString];
+          tempTranslatedArray[index] = result;
+          // 只有当前面的 chunks 都完成了，才能正确组装
+          if (index === 0 || chunkProgress.slice(0, index).every((status) => status === 2)) {
+            mergedResult = await this.translateMarkdownService.genMarkdownByString(
+              tempTranslatedArray.filter(Boolean),
+            );
+            writeMarkdown(filename, mergedResult);
+            onChunkComplete?.(result, mergedResult);
+          }
+        }
+
         updateProgress();
 
         return result;
@@ -165,7 +191,10 @@ export class I18n {
       step: this.maxStep,
     });
 
-    const result = await this.translateMarkdownService.genMarkdownByString(translatedSplitString);
+    // 如果没有开启立即保存，则使用原有逻辑
+    const result = filename
+      ? mergedResult
+      : await this.translateMarkdownService.genMarkdownByString(translatedSplitString);
 
     return {
       result,
@@ -182,8 +211,13 @@ export class I18n {
   > {
     const target = await this.translateMarkdownService.genTarget(md);
 
+    // 过滤掉 Markdown 特有的参数，只保留 translate 方法需要的参数
+    /* eslint-disable @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars */
+    const { matter, mode, onChunkComplete, ...translateOptions } = rest;
+    /* eslint-enable @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars */
+
     const translatedTarget = await this.translate({
-      ...rest,
+      ...translateOptions,
       entry: target,
       target: {},
     });
@@ -200,7 +234,15 @@ export class I18n {
     };
   }
 
-  async translate({ entry, target, to, onProgress, from }: I18nTranslateOptions): Promise<
+  async translate({
+    entry,
+    target,
+    to,
+    onProgress,
+    from,
+    filename,
+    onChunkComplete,
+  }: I18nTranslateOptions): Promise<
     | {
         result: LocaleObj;
         tokenUsage: number;
@@ -223,6 +265,9 @@ export class I18n {
 
     // 创建进度跟踪数组：0=未开始，1=进行中，2=已完成
     const chunkProgress = Array.from({ length: this.maxStep }, () => 0);
+
+    // 用于存储合并的结果
+    let mergedResult = merge({}, target);
 
     const updateProgress = () => {
       const completedChunks = chunkProgress.filter((status) => status === 2).length;
@@ -278,6 +323,14 @@ export class I18n {
 
         // 标记为已完成
         chunkProgress[index] = 2;
+
+        // 如果开启立即保存，则每个 chunk 完成后立即合并并保存
+        if (this.config.saveImmediately && filename) {
+          mergedResult = merge(mergedResult, result);
+          writeJSON(filename, mergedResult);
+          onChunkComplete?.(result, mergedResult);
+        }
+
         updateProgress();
 
         return result;
@@ -293,7 +346,10 @@ export class I18n {
       step: this.maxStep,
     });
 
-    const result = await merge(target, mergeJsonFromChunks(translatedSplitJson));
+    // 如果没有开启立即保存，则使用原有逻辑
+    const result = filename
+      ? mergedResult
+      : await merge(target, mergeJsonFromChunks(translatedSplitJson));
 
     return {
       result,

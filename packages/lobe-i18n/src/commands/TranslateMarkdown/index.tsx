@@ -100,7 +100,10 @@ class TranslateMarkdown {
           mdResut = matter.stringify(data.result, item.matter);
         }
 
-        writeMarkdown(item.filename, mdResut);
+        // 如果没有开启立即保存，则需要保存文件
+        if (!this.config.saveImmediately) {
+          writeMarkdown(item.filename, mdResut);
+        }
         totalTokenUsage += data.tokenUsage;
         consola.success(chalk.yellow(outputPath), chalk.gray(`[Token usage: ${data.tokenUsage}]`));
       } else {

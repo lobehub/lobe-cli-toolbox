@@ -30,6 +30,11 @@ export interface I18nConfigLocale {
    */
   reference?: string;
   /**
+   * @description Save translation results immediately after each chunk is completed
+   * @default false
+   */
+  saveImmediately?: boolean;
+  /**
    * @description Split locale JSON by token
    */
   splitToken?: number;

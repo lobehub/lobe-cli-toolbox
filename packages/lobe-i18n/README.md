@@ -168,20 +168,21 @@ This project provides some additional configuration items set with environment v
 
 ## 🌏 Locale Configuration
 
-| Property Name | Required | Type           | Default Value   | Description                                                                  |
-| ------------- | -------- | -------------- | --------------- | ---------------------------------------------------------------------------- |
-| entry         | `*`      | `string`       | -               | Entry file or folder                                                         |
-| entryLocale   | `*`      | `string`       | -               | Language to use as translation reference                                     |
-| modelName     |          | `string`       | `gpt-3.5-turbo` | Model to use                                                                 |
-| output        | `*`      | `string`       | -               | Location to store localized files                                            |
-| outputLocales | `*`      | `string[]  `   | `[]`            | All the languages to be translated                                           |
-| reference     |          | `string`       | -               | Provide some context for more accurate translations                          |
-| splitToken    |          | `number`       | -               | Split the localized JSON file by tokens, automatically calculated by default |
-| temperature   |          | `number`       | `0`             | Sampling temperature to use                                                  |
-| topP          |          | `number`       | `1`             | Nucleus sampling threshold, controls the diversity of generated text         |
-| concurrency   |          | `number`       | `5`             | Number of concurrently pending promises returned                             |
-| experimental  |          | `experimental` | `{}`            | Experimental features, see below                                             |
-| markdown      |          | `markdown`     | `{}`            | See `markdown` configuration below                                           |
+| Property Name   | Required | Type           | Default Value   | Description                                                                  |
+| --------------- | -------- | -------------- | --------------- | ---------------------------------------------------------------------------- |
+| entry           | `*`      | `string`       | -               | Entry file or folder                                                         |
+| entryLocale     | `*`      | `string`       | -               | Language to use as translation reference                                     |
+| modelName       |          | `string`       | `gpt-3.5-turbo` | Model to use                                                                 |
+| output          | `*`      | `string`       | -               | Location to store localized files                                            |
+| outputLocales   | `*`      | `string[]  `   | `[]`            | All the languages to be translated                                           |
+| reference       |          | `string`       | -               | Provide some context for more accurate translations                          |
+| saveImmediately |          | `boolean`      | `false`         | Save translation results immediately after each chunk is completed           |
+| splitToken      |          | `number`       | -               | Split the localized JSON file by tokens, automatically calculated by default |
+| temperature     |          | `number`       | `0`             | Sampling temperature to use                                                  |
+| topP            |          | `number`       | `1`             | Nucleus sampling threshold, controls the diversity of generated text         |
+| concurrency     |          | `number`       | `5`             | Number of concurrently pending promises returned                             |
+| experimental    |          | `experimental` | `{}`            | Experimental features, see below                                             |
+| markdown        |          | `markdown`     | `{}`            | See `markdown` configuration below                                           |
 
 #### `experimental`
 
@@ -228,6 +229,26 @@ module.exports = defineConfig({
   }
 }
 ```
+
+#### Example 4 - Enable Immediate Save
+
+```js
+const { defineConfig } = require('@lobehub/i18n-cli');
+
+module.exports = defineConfig({
+  entry: 'locales/en_US.json',
+  entryLocale: 'en_US',
+  output: 'locales',
+  outputLocales: ['zh_CN', 'ja_JP'],
+  saveImmediately: true, // Save results immediately after each chunk completes
+  concurrency: 5,
+  temperature: 0.3,
+});
+```
+
+> \[!TIP]
+>
+> Enabling `saveImmediately` allows you to see translation progress in real-time and provides better fault tolerance. If the translation process is interrupted, completed chunks won't be lost.
 
 <div align="right">
 

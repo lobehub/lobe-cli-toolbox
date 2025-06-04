@@ -169,20 +169,21 @@ $ lobe-i18n -c './custom-config.js' # or use the full flag --config
 
 ## 🌏 Locale 配置
 
-| 属性名称      | 必填 | 类型           | 默认值          | 描述                                                     |
-| ------------- | ---- | -------------- | --------------- | -------------------------------------------------------- |
-| entry         | `*`  | `string`       | -               | 入口文件或文件夹                                         |
-| entryLocale   | `*`  | `string`       | -               | 作为翻译参考的语言                                       |
-| modelName     |      | `string`       | `gpt-3.5-turbo` | 使用的模型                                               |
-| output        | `*`  | `string`       | -               | 存储本地化文件的位置                                     |
-| outputLocales | `*`  | `string[] `    | `[]`            | 需要进行翻译的所有语言                                   |
-| reference     |      | `string`       | -               | 提供一些上下文以获得更准确的翻译                         |
-| splitToken    |      | `number`       | -               | 按令牌分割本地化 JSON 文件，默认自动计算                 |
-| temperature   |      | `number`       | `0`             | 使用的采样温度                                           |
-| topP          |      | `number`       | `1`             | 生成过程中的核采样方法概率阈值，取值越大生成的随机性越高 |
-| concurrency   |      | `number`       | `5`             | 同时并发的队列请求数量                                   |
-| experimental  |      | `experimental` | `{}`            | 实验性功能，见下文                                       |
-| markdown      |      | `markdown`     | `{}`            | 见 `markdown` 配置说明                                   |
+| 属性名称        | 必填 | 类型           | 默认值          | 描述                                                     |
+| --------------- | ---- | -------------- | --------------- | -------------------------------------------------------- |
+| entry           | `*`  | `string`       | -               | 入口文件或文件夹                                         |
+| entryLocale     | `*`  | `string`       | -               | 作为翻译参考的语言                                       |
+| modelName       |      | `string`       | `gpt-3.5-turbo` | 使用的模型                                               |
+| output          | `*`  | `string`       | -               | 存储本地化文件的位置                                     |
+| outputLocales   | `*`  | `string[] `    | `[]`            | 需要进行翻译的所有语言                                   |
+| reference       |      | `string`       | -               | 提供一些上下文以获得更准确的翻译                         |
+| saveImmediately |      | `boolean`      | `false`         | 在每个翻译块完成后立即保存翻译结果                       |
+| splitToken      |      | `number`       | -               | 按令牌分割本地化 JSON 文件，默认自动计算                 |
+| temperature     |      | `number`       | `0`             | 使用的采样温度                                           |
+| topP            |      | `number`       | `1`             | 生成过程中的核采样方法概率阈值，取值越大生成的随机性越高 |
+| concurrency     |      | `number`       | `5`             | 同时并发的队列请求数量                                   |
+| experimental    |      | `experimental` | `{}`            | 实验性功能，见下文                                       |
+| markdown        |      | `markdown`     | `{}`            | 见 `markdown` 配置说明                                   |
 
 #### `experimental`
 
@@ -229,6 +230,26 @@ module.exports = defineConfig({
   }
 }
 ```
+
+#### 示例四 - 启用立即保存
+
+```js
+const { defineConfig } = require('@lobehub/i18n-cli');
+
+module.exports = defineConfig({
+  entry: 'locales/en_US.json',
+  entryLocale: 'en_US',
+  output: 'locales',
+  outputLocales: ['zh_CN', 'ja_JP'],
+  saveImmediately: true, // 每个翻译块完成后立即保存结果
+  concurrency: 5,
+  temperature: 0.3,
+});
+```
+
+> \[!TIP]
+>
+> 启用 `saveImmediately` 可以让你实时看到翻译进度，并提供更好的容错性。如果翻译过程中断，已完成的翻译块不会丢失。
 
 <div align="right">
 
