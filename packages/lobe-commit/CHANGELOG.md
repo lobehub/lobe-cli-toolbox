@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.18.1](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.18.0...@lobehub/commit-cli@2.18.1)
+
+<sup>Released on **2025-06-04**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Update step logic and add saveImmediately option in i18n config.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Update step logic and add saveImmediately option in i18n config ([4668c75](https://github.com/lobehub/lobe-cli-toolbox/commit/4668c75))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 2.18.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.17.0...@lobehub/commit-cli@2.18.0)
 
 <sup>Released on **2025-05-28**</sup>
