@@ -6,10 +6,10 @@
     "moduleResolution": "bundler",
     "paths": {
       "@/*": ["src/*"],
-      "@lobehub/cli-ui": ["./packages/lobe-cli-ui/src"],
-      "@lobehub/cli-ui/*": ["./packages/lobe-cli-ui/src/*"],
-      "@lobehub/lobe-i18n": ["./packages/lobe-i18n/src"],
-      "@lobehub/lobe-i18n/*": ["./packages/lobe-i18n/src/*"]
+      "@lobehub/cli-ui": ["../lobe-cli-ui/dist"],
+      "@lobehub/cli-ui/*": ["../lobe-cli-ui/dist/*"],
+      "@lobehub/lobe-i18n": ["./src"],
+      "@lobehub/lobe-i18n/*": ["./src/*"]
     }
   },
   "extends": "../../tsconfig.json",

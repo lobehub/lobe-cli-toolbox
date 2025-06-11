@@ -1,4 +1,4 @@
-import { Alert, Spinner } from '@inkjs/ui';
+import { Alert, Spinner } from '@lobehub/cli-ui';
 import { execaSync } from 'execa';
 import fs from 'node:fs';
 import { memo, useEffect, useState } from 'react';

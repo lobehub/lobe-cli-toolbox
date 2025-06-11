@@ -1,5 +1,4 @@
-import { TextInput } from '@inkjs/ui';
-import { Panel } from '@lobehub/cli-ui';
+import { Panel, TextInput } from '@lobehub/cli-ui';
 import { Text, useInput } from 'ink';
 import { debounce } from 'lodash-es';
 import { memo, useCallback, useEffect } from 'react';

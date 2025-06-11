@@ -6,8 +6,8 @@
     "moduleResolution": "bundler",
     "paths": {
       "@/*": ["src/*"],
-      "@lobehub/cli-ui": ["./packages/lobe-cli-ui/src"],
-      "@lobehub/cli-ui/*": ["./packages/lobe-cli-ui/src/*"]
+      "@lobehub/cli-ui": ["../lobe-cli-ui/dist"],
+      "@lobehub/cli-ui/*": ["../lobe-cli-ui/dist/*"]
     }
   },
   "extends": "../../tsconfig.json",

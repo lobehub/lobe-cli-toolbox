@@ -1,5 +1,4 @@
-import { ProgressBar, Spinner, StatusMessage } from '@inkjs/ui';
-import { SplitView, useTheme } from '@lobehub/cli-ui';
+import { ProgressBar, Spinner, SplitView, StatusMessage, useTheme } from '@lobehub/cli-ui';
 import { Box, Text } from 'ink';
 import { memo, useEffect, useRef, useState } from 'react';
 

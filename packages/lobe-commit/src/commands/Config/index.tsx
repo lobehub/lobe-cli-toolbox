@@ -1,4 +1,4 @@
-import { TextInput } from '@inkjs/ui';
+import { TextInput } from '@lobehub/cli-ui';
 import { ConfigPanel, type ConfigPanelProps, SelectInput } from '@lobehub/cli-ui';
 import { memo, useMemo, useState } from 'react';
 

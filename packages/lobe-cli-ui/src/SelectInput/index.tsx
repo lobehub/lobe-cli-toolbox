@@ -6,10 +6,10 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useTheme } from '@/hooks/useTheme';
 
-import Indicator from './Indicator.js';
-import type { IndicatorProps } from './Indicator.js';
-import ItemComponent from './Item.js';
-import type { ItemProps } from './Item.js';
+import Indicator from './Indicator';
+import type { IndicatorProps } from './Indicator';
+import ItemComponent from './Item';
+import type { ItemProps } from './Item';
 
 export interface SelectInputItem {
   key?: string;

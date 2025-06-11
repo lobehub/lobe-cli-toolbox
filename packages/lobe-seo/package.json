@@ -56,7 +56,6 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@inkjs/ui": "^1.0.0",
     "@lobehub/cli-ui": "1.12.0",
     "chalk": "^5.4.1",
     "commander": "^13.0.0",
@@ -69,14 +68,14 @@
     "glob": "^10.4.5",
     "gpt-tokenizer": "^2.8.1",
     "gray-matter": "^4.0.3",
-    "ink": "^4.4.1",
+    "ink": "^6.0.0",
     "json-stable-stringify": "^1.2.1",
     "just-diff": "^6.0.2",
     "lodash-es": "^4.17.21",
     "openai": "^4.103.0",
     "p-map": "^7.0.3",
     "pangu": "^4.0.7",
-    "react": "^18.3.1",
+    "react": "^19.0.0",
     "remark-frontmatter": "^5.0.0",
     "remark-gfm": "^4.0.0",
     "remark-parse": "^11.0.0",
@@ -91,6 +90,7 @@
     "@types/json-stable-stringify": "^1.1.0",
     "clean-package": "^2.2.0"
   },
+  "packageManager": "pnpm@10.10.0",
   "engines": {
     "node": ">=18"
   },

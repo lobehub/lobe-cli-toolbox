@@ -49,7 +49,6 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@inkjs/ui": "^1.0.0",
     "@lobehub/cli-ui": "1.12.0",
     "chalk": "^5.4.1",
     "commander": "^13.0.0",
@@ -59,19 +58,20 @@
     "fast-deep-equal": "^3.1.3",
     "gitconfig": "^2.0.8",
     "gpt-tokenizer": "^2.8.1",
-    "ink": "^4.4.1",
+    "ink": "^6.0.0",
     "lodash-es": "^4",
     "minimatch": "^10.0.1",
     "octokit": "^4.0.3",
     "openai": "^4",
     "pangu": "^4.0.7",
     "path-exists": "^5.0.0",
-    "react": "^18.3.1",
+    "react": "^19.0.0",
     "swr": "^2.3.0",
     "update-notifier": "^7.3.1",
     "zustand": "^5.0.3",
     "zustand-utils": "^1.3.2"
   },
+  "packageManager": "pnpm@10.10.0",
   "engines": {
     "node": ">=18"
   },

@@ -45,6 +45,7 @@
   "devDependencies": {
     "clean-package": "^2.2.0"
   },
+  "packageManager": "pnpm@10.10.0",
   "engines": {
     "node": ">=18"
   },

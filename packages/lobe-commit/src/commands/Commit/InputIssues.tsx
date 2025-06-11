@@ -1,4 +1,4 @@
-import { MultiSelect, type MultiSelectProps, Spinner, TextInput } from '@inkjs/ui';
+import { MultiSelect, type MultiSelectProps, Spinner, TextInput } from '@lobehub/cli-ui';
 import { Panel, SplitView, useTheme } from '@lobehub/cli-ui';
 import isEqual from 'fast-deep-equal';
 import { Text, useInput } from 'ink';

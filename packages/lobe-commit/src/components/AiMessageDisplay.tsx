@@ -1,4 +1,4 @@
-import { Spinner } from '@inkjs/ui';
+import { Spinner } from '@lobehub/cli-ui';
 import { Text } from 'ink';
 import { memo } from 'react';
 

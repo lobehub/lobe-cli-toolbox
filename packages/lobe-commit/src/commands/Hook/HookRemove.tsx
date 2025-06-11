@@ -1,5 +1,4 @@
-import { Alert, Spinner } from '@inkjs/ui';
-import { useTheme } from '@lobehub/cli-ui';
+import { Alert, Spinner, useTheme } from '@lobehub/cli-ui';
 import { Text } from 'ink';
 import fs from 'node:fs';
 import process from 'node:process';

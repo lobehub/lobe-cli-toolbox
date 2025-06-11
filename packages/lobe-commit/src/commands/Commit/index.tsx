@@ -1,4 +1,4 @@
-import { Alert } from '@inkjs/ui';
+import { Alert } from '@lobehub/cli-ui';
 import fs from 'node:fs';
 import * as process from 'node:process';
 import { memo, useEffect, useState } from 'react';

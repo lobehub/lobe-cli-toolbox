@@ -1,5 +1,4 @@
-import { Badge } from '@inkjs/ui';
-import { useTheme } from '@lobehub/cli-ui';
+import { Badge, useTheme } from '@lobehub/cli-ui';
 import { Text } from 'ink';
 import { memo } from 'react';
 

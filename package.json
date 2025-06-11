@@ -72,7 +72,7 @@
     "commitlint": "^19.8.1",
     "eslint": "^8.57.1",
     "husky": "^9.1.7",
-    "ink-testing-library": "^3.0.0",
+    "ink-testing-library": "^4.0.0",
     "lerna": "^8.2.2",
     "lint-staged": "^15.5.2",
     "lodash-es": "^4.17.21",
@@ -89,6 +89,7 @@
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "~1.2.2"
   },
+  "packageManager": "pnpm@10.10.0",
   "engines": {
     "node": ">=18"
   },

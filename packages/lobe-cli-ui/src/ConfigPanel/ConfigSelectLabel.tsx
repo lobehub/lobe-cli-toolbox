@@ -1,8 +1,9 @@
-import { Badge } from '@inkjs/ui';
 import { Text } from 'ink';
 import { memo, useMemo } from 'react';
 
 import { useTheme } from '@/hooks/useTheme';
+
+import { Badge } from '../components/badge';
 
 export interface ConfigSelectLabelProps {
   defaultValue: any;

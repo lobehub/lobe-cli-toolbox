@@ -21,7 +21,7 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
           inactive-label: 'Inactive'
           inactive-day: 30
-          
+
   issue-close-require:
     permissions:
       issues: write # for actions-cool/issues-helper to update issues
