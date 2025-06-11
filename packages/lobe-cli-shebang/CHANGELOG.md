@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.3.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/cli-shebang@1.2.0...@lobehub/cli-shebang@1.3.0)
+
+<sup>Released on **2025-06-11**</sup>
+
+#### ✨ Features
+
+- **misc**: Update React 19.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Update React 19 ([9776ea0](https://github.com/lobehub/lobe-cli-toolbox/commit/9776ea0))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.2.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/cli-shebang@1.1.0...@lobehub/cli-shebang@1.2.0)
 
 <sup>Released on **2025-05-28**</sup>
