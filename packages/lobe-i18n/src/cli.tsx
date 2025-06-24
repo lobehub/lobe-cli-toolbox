@@ -3,7 +3,7 @@ import { Command, Option } from 'commander';
 import updateNotifier from 'update-notifier';
 
 import packageJson from '@/../package.json';
-import { Config, TranslateLocale, TranslateMarkdown } from '@/commands';
+import { Config, Lint, TranslateLocale, TranslateMarkdown } from '@/commands';
 import { explorer } from '@/store/config';
 
 const notifier = updateNotifier({
@@ -17,7 +17,9 @@ const program = new Command();
 
 interface Flags {
   config?: string;
+  lint?: boolean;
   option?: boolean;
+  quiet?: boolean;
   withMd?: boolean;
 }
 
@@ -29,12 +31,17 @@ program
   .addOption(new Option('-c, --config <string>', 'Specify the configuration file'))
   .addOption(
     new Option('-m, --with-md', 'Run i18n translation and markdown translation simultaneously'),
-  );
+  )
+  .addOption(new Option('--lint', 'Lint translation files for language correctness'))
+  .addOption(new Option('--quiet', 'Only show errors, suppress warnings'));
 
 program.command('locale', { isDefault: true }).action(async () => {
   const options: Flags = program.opts();
   if (options.option) {
     render(<Config />);
+  } else if (options.lint) {
+    if (options.config) explorer.loadCustomConfig(options.config);
+    await new Lint().start(options.quiet);
   } else {
     if (options.config) explorer.loadCustomConfig(options.config);
     await new TranslateLocale().start();
@@ -46,6 +53,12 @@ program.command('md').action(async () => {
   const options: Flags = program.opts();
   if (options.config) explorer.loadCustomConfig(options.config);
   await new TranslateMarkdown().start();
+});
+
+program.command('lint').action(async () => {
+  const options: Flags = program.opts();
+  if (options.config) explorer.loadCustomConfig(options.config);
+  await new Lint().start(options.quiet);
 });
 
 program.parse();

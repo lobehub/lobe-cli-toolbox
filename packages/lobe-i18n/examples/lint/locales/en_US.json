@@ -1,0 +1,8 @@
+{
+  "buttons": {
+    "ok": "Ok",
+    "cancel": "取消"
+  },
+  "list": ["How are you", "I'm fine."],
+  "welcome": "Welcome!"
+}

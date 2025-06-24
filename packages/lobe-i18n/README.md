@@ -63,6 +63,7 @@ English ・ [简体中文](./README.zh-CN.md) ・ [Changelog](./CHANGELOG.md) ·
 - [x] 🌲 Support `flat` and `tree` structure for locale files.
 - [x] 🛠️ Support customizing OpenAI models, API proxies, temperature and topP.
 - [x] 📝 Support automated i18n translation of `Markdown` files.
+- [x] 🔍 Support linting translation files for language correctness using eld.
 
 <div align="right">
 
@@ -126,6 +127,9 @@ $ lobe-i18n # or $ lobe-i18n locale
 
 # Translate Markdown files
 $ lobe-i18n md
+
+# Lint translation files for language correctness
+$ lobe-i18n lint # or $ lobe-i18n --lint
 
 # Run i18n translation and markdown translation simultaneously
 $ lobe-i18n --with-md
