@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.24.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.23.1...@lobehub/i18n-cli@1.24.0)
+
+<sup>Released on **2025-06-24**</sup>
+
+#### ✨ Features
+
+- **misc**: Extend language similarity checks to include Kurdish and Malay languages.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Extend language similarity checks to include Kurdish and Malay languages ([64c466f](https://github.com/lobehub/lobe-cli-toolbox/commit/64c466f))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.23.1](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.23.0...@lobehub/i18n-cli@1.23.1)
 
 <sup>Released on **2025-06-24**</sup>
