@@ -2,6 +2,39 @@
 
 # Changelog
 
+### [Version 1.25.1](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.25.0...@lobehub/i18n-cli@1.25.1)
+
+<sup>Released on **2025-06-24**</sup>
+
+#### ♻ Code Refactoring
+
+- **lint**: Update language family sets and improve severity logic for accuracy.
+
+#### 🐛 Bug Fixes
+
+- **misc**: Correct East Asian language set to include 'zh' for accurate grouping.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **lint**: Update language family sets and improve severity logic for accuracy ([028ac5a](https://github.com/lobehub/lobe-cli-toolbox/commit/028ac5a))
+
+#### What's fixed
+
+- **misc**: Correct East Asian language set to include 'zh' for accurate grouping ([6ca06ba](https://github.com/lobehub/lobe-cli-toolbox/commit/6ca06ba))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.25.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.24.0...@lobehub/i18n-cli@1.25.0)
 
 <sup>Released on **2025-06-24**</sup>
