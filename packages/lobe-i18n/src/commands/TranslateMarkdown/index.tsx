@@ -140,7 +140,8 @@ class TranslateMarkdown {
             to: locale,
           });
         }
-      } catch {
+      } catch (error) {
+        consola.error(`Error processing file ${file}:`, error);
         alert.error(`${file} not found`, true);
       }
     }

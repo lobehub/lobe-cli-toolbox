@@ -119,8 +119,8 @@ class TranslateLocale {
         const targetFilename = resolve(config.output, locale, filename);
         const entryObj = entry[filename] as LocaleObj;
         const targetObj = diff(entryObj, getLocaleObj(targetFilename)).target;
-        writeJSON(targetFilename, targetObj);
         if (isEqualJsonKeys(entryObj, targetObj)) continue;
+
         this.query.push({
           entry: entryObj,
           filename: targetFilename,
@@ -150,8 +150,8 @@ class TranslateLocale {
       const targetFilename = resolve(config.output, locale) + '.json';
       const entryObj = entry;
       const targetObj = diff(entryObj, getLocaleObj(targetFilename)).target;
-      writeJSON(targetFilename, targetObj);
       if (isEqualJsonKeys(entryObj, targetObj)) continue;
+
       this.query.push({
         entry: entryObj,
         filename: targetFilename,

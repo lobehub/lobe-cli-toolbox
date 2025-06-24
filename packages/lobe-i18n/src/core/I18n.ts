@@ -106,6 +106,9 @@ export class I18n {
     // 用于存储合并的结果
     let mergedResult = '';
 
+    // 预先初始化翻译结果数组，用于立即保存功能
+    const tempResults: string[] = Array.from({ length: this.maxStep }, () => '');
+
     const updateProgress = () => {
       const completedChunks = chunkProgress.filter((status) => status === 2).length;
       const inProgressChunks = chunkProgress.filter((status) => status === 1).length;
@@ -163,13 +166,12 @@ export class I18n {
 
         // 如果开启立即保存，则每个 chunk 完成后立即合并并保存
         if (this.config.saveImmediately && filename) {
-          // 对于字符串类型，我们需要重新组装并保存
-          const tempTranslatedArray = [...translatedSplitString];
-          tempTranslatedArray[index] = result;
+          // 存储当前结果到临时数组
+          tempResults[index] = result;
           // 只有当前面的 chunks 都完成了，才能正确组装
           if (index === 0 || chunkProgress.slice(0, index).every((status) => status === 2)) {
             mergedResult = await this.translateMarkdownService.genMarkdownByString(
-              tempTranslatedArray.filter(Boolean),
+              tempResults.filter(Boolean),
             );
             writeMarkdown(filename, mergedResult);
             onChunkComplete?.(result, mergedResult);
@@ -191,10 +193,11 @@ export class I18n {
       step: this.maxStep,
     });
 
-    // 如果没有开启立即保存，则使用原有逻辑
-    const result = filename
-      ? mergedResult
-      : await this.translateMarkdownService.genMarkdownByString(translatedSplitString);
+    // 如果开启了立即保存且有合并结果，则使用合并结果，否则使用原有逻辑
+    const result =
+      this.config.saveImmediately && mergedResult
+        ? mergedResult
+        : await this.translateMarkdownService.genMarkdownByString(translatedSplitString);
 
     return {
       result,
