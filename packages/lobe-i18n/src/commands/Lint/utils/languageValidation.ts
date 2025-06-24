@@ -63,32 +63,43 @@ export function determineSeverity(
   mainLanguage: string,
   text: string,
 ): 'error' | 'warning' {
-  // 对于短文本（<=3），置信度低于0.7时只报 warning
-  let severity: 'error' | 'warning' =
-    textLength <= 3
-      ? confidence > CONFIDENCE_THRESHOLDS.SHORT_TEXT
-        ? 'error'
-        : 'warning'
-      : confidence > CONFIDENCE_THRESHOLDS.LONG_TEXT
-        ? 'error'
-        : 'warning';
+  // 默认为 warning
+  let severity: 'error' | 'warning' = 'warning';
 
-  // 如果是东亚语言和其他语系的混用，判定为 error
-  const isDetectedEastAsian = LANGUAGE_FAMILIES.EAST_ASIAN.has(detectedLanguage);
-  const isMainEastAsian = LANGUAGE_FAMILIES.EAST_ASIAN.has(mainLanguage);
-
-  if (isDetectedEastAsian !== isMainEastAsian && confidence > 0.5) {
-    return 'error';
+  // 规则1：对于长文本，如果置信度足够高，则为 error
+  if (textLength > 3 && confidence > CONFIDENCE_THRESHOLDS.LONG_TEXT) {
+    severity = 'error';
   }
 
-  // 检测明显英文内容的逻辑
+  // 规则2：对于短文本，如果置信度足够高，则为 error
+  if (textLength <= 3 && confidence > CONFIDENCE_THRESHOLDS.SHORT_TEXT) {
+    severity = 'error';
+  }
+
+  // 规则3：检测到东亚语言和其他语系混用，则为 error
+  const isDetectedEastAsian = LANGUAGE_FAMILIES.EAST_ASIAN.has(detectedLanguage);
+  const isMainEastAsian = LANGUAGE_FAMILIES.EAST_ASIAN.has(mainLanguage);
+  if (isDetectedEastAsian !== isMainEastAsian && confidence > 0.5) {
+    severity = 'error';
+  }
+
+  // 规则4：如果主语言和检测语言不属于同一个语系，则为 error
+  const mainFamily = Object.values(LANGUAGE_FAMILIES).find((family) => family.has(mainLanguage));
+  const detectedFamily = Object.values(LANGUAGE_FAMILIES).find((family) =>
+    family.has(detectedLanguage),
+  );
+  if (mainFamily && detectedFamily && mainFamily !== detectedFamily && confidence > 0.6) {
+    severity = 'error';
+  }
+
+  // 规则5：检测到明显英文内容，则为 error
   if (
     detectedLanguage === 'en' &&
     mainLanguage !== 'en' &&
     containsEnglishTerms(text) &&
     confidence > 0.5
   ) {
-    severity = 'error'; // 明显英文内容直接设为error
+    severity = 'error';
   }
 
   return severity;

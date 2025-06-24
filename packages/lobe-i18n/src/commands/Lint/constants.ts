@@ -176,7 +176,7 @@ export const HYPHENATED_LANGUAGE_MAP: { [key: string]: string } = {
 export const ARABIC_SIMILAR_LANGUAGES = new Set(['ar', 'fa', 'ur', 'ku']);
 
 export const LANGUAGE_FAMILIES = {
-  EAST_ASIAN: new Set(['zh', 'ja', 'ko', 'vi', 'th', 'my', 'km', 'lo', 'mn', 'bo', 'ug']),
+  EAST_ASIAN: new Set(['ja', 'ko', 'vi', 'th', 'my', 'km', 'lo', 'mn', 'bo', 'ug']),
   GERMANIC: new Set(['de', 'nl', 'da', 'no', 'sv', 'is', 'fo', 'af']),
   MALAY: new Set(['id', 'ms']),
   ROMANCE: new Set(['es', 'pt', 'ca', 'it', 'fr', 'ro', 'gl']),
