@@ -1,4 +1,9 @@
-import { CONFIDENCE_THRESHOLDS, ENGLISH_TERMS, LANGUAGE_FAMILIES } from '../constants';
+import {
+  ARABIC_SIMILAR_LANGUAGES,
+  CONFIDENCE_THRESHOLDS,
+  ENGLISH_TERMS,
+  LANGUAGE_FAMILIES,
+} from '../constants';
 import { LintIssue } from '../types';
 
 /**
@@ -9,18 +14,10 @@ export function isSimilarLanguage(
   detectedLanguage: string,
   confidence: number,
 ): boolean {
-  // 特殊处理：阿拉伯语与波斯语、乌尔都语相似
+  // 特殊处理：阿拉伯语与波斯语、乌尔都语、库尔德语相似
   if (
-    mainLanguage === 'ar' &&
-    ['fa', 'ur', 'ku'].includes(detectedLanguage) &&
-    confidence < CONFIDENCE_THRESHOLDS.ARABIC_SIMILAR
-  ) {
-    return true;
-  }
-
-  if (
-    mainLanguage === 'fa' &&
-    ['ar', 'ku', 'ur'].includes(detectedLanguage) &&
+    ARABIC_SIMILAR_LANGUAGES.has(mainLanguage) &&
+    ARABIC_SIMILAR_LANGUAGES.has(detectedLanguage) &&
     confidence < CONFIDENCE_THRESHOLDS.ARABIC_SIMILAR
   ) {
     return true;
@@ -41,15 +38,6 @@ export function isSimilarLanguage(
   if (
     mainLanguage === 'tl' &&
     ['es', 'pt'].includes(detectedLanguage) &&
-    confidence < CONFIDENCE_THRESHOLDS.SIMILAR_LANGUAGES
-  ) {
-    return true;
-  }
-
-  // 特殊处理：马来语与印尼语相似
-  if (
-    ((mainLanguage === 'ms' && detectedLanguage === 'id') ||
-      (mainLanguage === 'id' && detectedLanguage === 'ms')) &&
     confidence < CONFIDENCE_THRESHOLDS.SIMILAR_LANGUAGES
   ) {
     return true;
@@ -84,6 +72,14 @@ export function determineSeverity(
       : confidence > CONFIDENCE_THRESHOLDS.LONG_TEXT
         ? 'error'
         : 'warning';
+
+  // 如果是东亚语言和其他语系的混用，判定为 error
+  const isDetectedEastAsian = LANGUAGE_FAMILIES.EAST_ASIAN.has(detectedLanguage);
+  const isMainEastAsian = LANGUAGE_FAMILIES.EAST_ASIAN.has(mainLanguage);
+
+  if (isDetectedEastAsian !== isMainEastAsian && confidence > 0.5) {
+    return 'error';
+  }
 
   // 检测明显英文内容的逻辑
   if (

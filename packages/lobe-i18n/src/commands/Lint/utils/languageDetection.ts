@@ -12,7 +12,7 @@ export async function initializeELD(): Promise<void> {
   if (!initPromise) {
     initPromise = (async () => {
       console.log('🔧 Initializing ELD language detector...');
-      await eld.init('M'); // 使用中等规模的数据集
+      await eld.init('L'); // 使用中等规模的数据集
       console.log('✅ ELD language detector initialized');
     })();
   }

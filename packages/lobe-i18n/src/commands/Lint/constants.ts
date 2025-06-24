@@ -173,12 +173,15 @@ export const HYPHENATED_LANGUAGE_MAP: { [key: string]: string } = {
 };
 
 // 语言族系分组
+export const ARABIC_SIMILAR_LANGUAGES = new Set(['ar', 'fa', 'ur', 'ku']);
+
 export const LANGUAGE_FAMILIES = {
   EAST_ASIAN: new Set(['zh', 'ja', 'ko', 'vi', 'th', 'my', 'km', 'lo', 'mn', 'bo', 'ug']),
   GERMANIC: new Set(['de', 'nl', 'da', 'no', 'sv', 'is', 'fo', 'af']),
+  MALAY: new Set(['id', 'ms']),
   ROMANCE: new Set(['es', 'pt', 'ca', 'it', 'fr', 'ro', 'gl']),
   SEMITIC: new Set(['ar', 'he', 'fa', 'ur', 'tg', 'am', 'ti', 'om', 'so', 'aa', 'mt']),
-  SLAVIC: new Set(['bg', 'sr', 'ru', 'uk', 'be', 'hr', 'sl', 'mk', 'bs', 'me']),
+  SLAVIC: new Set(['bg', 'sr', 'ru', 'uk', 'be', 'hr', 'sl', 'mk', 'bs', 'me', 'pl', 'cs', 'sk']),
   SOUTH_ASIAN: new Set(['hi', 'bn', 'ne', 'gu', 'pa', 'ta', 'ml', 'te', 'kn', 'si', 'as', 'or']),
   TURKIC: new Set(['tr', 'az', 'ky', 'kk', 'uz']),
 } as const;
