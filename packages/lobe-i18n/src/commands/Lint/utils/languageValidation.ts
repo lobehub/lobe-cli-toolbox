@@ -12,7 +12,15 @@ export function isSimilarLanguage(
   // 特殊处理：阿拉伯语与波斯语、乌尔都语相似
   if (
     mainLanguage === 'ar' &&
-    ['fa', 'ur'].includes(detectedLanguage) &&
+    ['fa', 'ur', 'ku'].includes(detectedLanguage) &&
+    confidence < CONFIDENCE_THRESHOLDS.ARABIC_SIMILAR
+  ) {
+    return true;
+  }
+
+  if (
+    mainLanguage === 'fa' &&
+    ['ar', 'ku', 'ur'].includes(detectedLanguage) &&
     confidence < CONFIDENCE_THRESHOLDS.ARABIC_SIMILAR
   ) {
     return true;
