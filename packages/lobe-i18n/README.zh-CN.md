@@ -129,6 +129,9 @@ $ lobe-i18n locale
 # 翻译 Markdown 文件
 $ lobe-i18n md
 
+# Lint 校验翻译文件语言正确性
+$ lobe-i18n lint
+
 # 同时运行 i18n 翻译和 markdown 翻译
 $ lobe-i18n --with-md
 
