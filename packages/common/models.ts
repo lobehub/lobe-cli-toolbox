@@ -1,12 +1,20 @@
 // refs: https://github.com/lobehub/lobe-chat/blob/main/src/config/modelProviders/openai.ts
 // Auto-generated file. Do not edit manually.
-// Last updated: 2025-05-27T03:49:33.481Z
+// Last updated: 2025-08-08T14:08:59.877Z
 
 export enum LanguageModel {
   /**
    * ChatGPT-4o
    */
   CHATGPT_4O_LATEST = 'chatgpt-4o-latest',
+  /**
+   * Codex mini
+   */
+  CODEX_MINI_LATEST = 'codex-mini-latest',
+  /**
+   * Computer Use Preview
+   */
+  COMPUTER_USE_PREVIEW = 'computer-use-preview',
   /**
    * GPT-3.5 Turbo
    */
@@ -36,9 +44,25 @@ export enum LanguageModel {
    */
   GPT_4O_2024_11_20 = 'gpt-4o-2024-11-20',
   /**
+   * GPT-4o Audio
+   */
+  GPT_4O_AUDIO_PREVIEW = 'gpt-4o-audio-preview',
+  /**
    * GPT-4o mini
    */
   GPT_4O_MINI = 'gpt-4o-mini',
+  /**
+   * GPT-4o mini Audio
+   */
+  GPT_4O_MINI_AUDIO_PREVIEW = 'gpt-4o-mini-audio-preview',
+  /**
+   * GPT-4o mini Search Preview
+   */
+  GPT_4O_MINI_SEARCH_PREVIEW = 'gpt-4o-mini-search-preview',
+  /**
+   * GPT-4o Search Preview
+   */
+  GPT_4O_SEARCH_PREVIEW = 'gpt-4o-search-preview',
   /**
    * GPT-4 Turbo Preview 0125
    */
@@ -64,10 +88,6 @@ export enum LanguageModel {
    */
   GPT_4_1_NANO = 'gpt-4.1-nano',
   /**
-   * GPT-4 32K
-   */
-  GPT_4_32K = 'gpt-4-32k',
-  /**
    * GPT-4.5 Preview
    */
   GPT_4_5_PREVIEW = 'gpt-4.5-preview',
@@ -84,6 +104,22 @@ export enum LanguageModel {
    */
   GPT_4_TURBO_PREVIEW = 'gpt-4-turbo-preview',
   /**
+   * GPT-5
+   */
+  GPT_5 = 'gpt-5',
+  /**
+   * GPT-5 Chat
+   */
+  GPT_5_CHAT_LATEST = 'gpt-5-chat-latest',
+  /**
+   * GPT-5 mini
+   */
+  GPT_5_MINI = 'gpt-5-mini',
+  /**
+   * GPT-5 nano
+   */
+  GPT_5_NANO = 'gpt-5-nano',
+  /**
    * o1
    */
   O1 = 'o1',
@@ -96,34 +132,62 @@ export enum LanguageModel {
    */
   O1_PREVIEW = 'o1-preview',
   /**
+   * o1-pro
+   */
+  O1_PRO = 'o1-pro',
+  /**
    * o3
    */
   O3 = 'o3',
+  /**
+   * o3 Deep Research
+   */
+  O3_DEEP_RESEARCH = 'o3-deep-research',
   /**
    * o3-mini
    */
   O3_MINI = 'o3-mini',
   /**
+   * o3-pro
+   */
+  O3_PRO = 'o3-pro',
+  /**
    * o4-mini
    */
   O4_MINI = 'o4-mini',
+  /**
+   * o4-mini Deep Research
+   */
+  O4_MINI_DEEP_RESEARCH = 'o4-mini-deep-research',
 }
 
 export const ModelTokens: Record<LanguageModel, number> = {
-  [LanguageModel.O3]: 200_000,
+  [LanguageModel.GPT_5]: 400_000,
+  [LanguageModel.GPT_5_MINI]: 400_000,
+  [LanguageModel.GPT_5_NANO]: 400_000,
+  [LanguageModel.GPT_5_CHAT_LATEST]: 400_000,
   [LanguageModel.O4_MINI]: 200_000,
-  [LanguageModel.GPT_4_1]: 1_047_576,
-  [LanguageModel.GPT_4_1_MINI]: 1_047_576,
-  [LanguageModel.GPT_4_1_NANO]: 1_047_576,
+  [LanguageModel.O4_MINI_DEEP_RESEARCH]: 200_000,
+  [LanguageModel.O3_PRO]: 200_000,
+  [LanguageModel.O3]: 200_000,
+  [LanguageModel.O3_DEEP_RESEARCH]: 200_000,
   [LanguageModel.O3_MINI]: 200_000,
+  [LanguageModel.O1_PRO]: 200_000,
   [LanguageModel.O1_MINI]: 128_000,
   [LanguageModel.O1]: 200_000,
   [LanguageModel.O1_PREVIEW]: 128_000,
+  [LanguageModel.GPT_4_1]: 1_047_576,
+  [LanguageModel.GPT_4_1_MINI]: 1_047_576,
+  [LanguageModel.GPT_4_1_NANO]: 1_047_576,
   [LanguageModel.GPT_4_5_PREVIEW]: 128_000,
   [LanguageModel.GPT_4O_MINI]: 128_000,
-  [LanguageModel.GPT_4O_2024_11_20]: 128_000,
+  [LanguageModel.GPT_4O_MINI_SEARCH_PREVIEW]: 128_000,
+  [LanguageModel.GPT_4O_MINI_AUDIO_PREVIEW]: 128_000,
   [LanguageModel.GPT_4O]: 128_000,
+  [LanguageModel.GPT_4O_SEARCH_PREVIEW]: 128_000,
+  [LanguageModel.GPT_4O_2024_11_20]: 128_000,
   [LanguageModel.GPT_4O_2024_05_13]: 128_000,
+  [LanguageModel.GPT_4O_AUDIO_PREVIEW]: 128_000,
   [LanguageModel.CHATGPT_4O_LATEST]: 128_000,
   [LanguageModel.GPT_4_TURBO]: 128_000,
   [LanguageModel.GPT_4_TURBO_2024_04_09]: 128_000,
@@ -132,10 +196,11 @@ export const ModelTokens: Record<LanguageModel, number> = {
   [LanguageModel.GPT_4_1106_PREVIEW]: 128_000,
   [LanguageModel.GPT_4]: 8192,
   [LanguageModel.GPT_4_0613]: 8192,
-  [LanguageModel.GPT_4_32K]: 32_768,
   [LanguageModel.GPT_3_5_TURBO]: 16_384,
   [LanguageModel.GPT_3_5_TURBO_0125]: 16_384,
   [LanguageModel.GPT_3_5_TURBO_1106]: 16_384,
+  [LanguageModel.CODEX_MINI_LATEST]: 200_000,
+  [LanguageModel.COMPUTER_USE_PREVIEW]: 8192,
 };
 
-export const defaultModel = LanguageModel.O4_MINI;
+export const defaultModel = LanguageModel.GPT_5_MINI;
