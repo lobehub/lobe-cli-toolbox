@@ -79,6 +79,46 @@ describe('diffJson', () => {
       });
     });
 
+    it('should flatten nested paths when keyStyle is flat', () => {
+      const entry = {
+        a: {
+          bc: {
+            b: 'value',
+          },
+        },
+      };
+      const target = {
+        a: {
+          bc: {},
+        },
+      };
+
+      const result = diff(entry, target, { keyStyle: 'flat' });
+
+      expect(result.entry).toEqual({
+        'a.bc.b': 'value',
+      });
+    });
+
+    it('should preserve mixed keys when keyStyle is auto', () => {
+      const entry = {
+        'a.bc.b': 'value',
+        'nested': {
+          key: 'value2',
+        },
+      };
+      const target = {};
+
+      const result = diff(entry, target, { keyStyle: 'auto' });
+
+      expect(result.entry).toEqual({
+        'a.bc.b': 'value',
+        'nested': {
+          key: 'value2',
+        },
+      });
+    });
+
     it('should handle mixed add and remove operations', () => {
       const entry = {
         common: 'value',

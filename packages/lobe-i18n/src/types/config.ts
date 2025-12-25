@@ -1,5 +1,7 @@
 import { LanguageModel } from '../../../common/models';
 
+export type KeyStyle = 'auto' | 'flat' | 'nested';
+
 export interface I18nConfigLocale {
   /**
    * @description Number of concurrently pending promises returned
@@ -13,6 +15,11 @@ export interface I18nConfigLocale {
    * @description The language that will use as translation ref
    */
   entryLocale: string;
+  /**
+   * @description How to resolve dot-delimited keys when building diff entries
+   * @default 'nested'
+   */
+  keyStyle?: KeyStyle;
   /**
    * @description ChatGPT model name to use
    */

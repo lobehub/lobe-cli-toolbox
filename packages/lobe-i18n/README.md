@@ -179,6 +179,7 @@ This project provides some additional configuration items set with environment v
 | modelName       |          | `string`       | `gpt-3.5-turbo` | Model to use                                                                 |
 | output          | `*`      | `string`       | -               | Location to store localized files                                            |
 | outputLocales   | `*`      | `string[]  `   | `[]`            | All the languages to be translated                                           |
+| keyStyle        |          | `string`       | `nested`        | How to resolve dotted keys: `nested`, `flat`, or `auto` (preserve entry)     |
 | reference       |          | `string`       | -               | Provide some context for more accurate translations                          |
 | saveImmediately |          | `boolean`      | `false`         | Save translation results immediately after each chunk is completed           |
 | splitToken      |          | `number`       | -               | Split the localized JSON file by tokens, automatically calculated by default |

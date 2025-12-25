@@ -52,7 +52,7 @@ export const splitJsonToChunks = (
   target: LocaleObj,
   prompt: string,
 ): LocaleObj[] => {
-  const extraJSON = diff(entry, target).entry;
+  const extraJSON = diff(entry, target, config).entry;
   const splitToken = getSplitToken(config, prompt);
   const splitObj = splitJSONtoSmallChunks(extraJSON, splitToken);
   return splitObj;
