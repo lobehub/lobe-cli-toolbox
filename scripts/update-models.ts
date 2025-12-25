@@ -17,7 +17,7 @@ interface AIChatModelCard {
 }
 
 const LOBE_CHAT_CONFIG_URL =
-  'https://raw.githubusercontent.com/lobehub/lobe-chat/refs/heads/main/src/config/aiModels/openai.ts';
+  'https://raw.githubusercontent.com/lobehub/lobe-chat/refs/heads/next/packages/model-bank/src/aiModels/openai.ts';
 const MODELS_FILE_PATH = path.join(__dirname, '../packages/common/models.ts');
 
 /**
@@ -118,10 +118,6 @@ function parseOpenAIConfig(content: string): AIChatModelCard[] {
       // 提取 enabled (可选，默认为 true)
       const enabledMatch = modelStr.match(/enabled:\s*(true|false)/);
       const enabled = enabledMatch ? enabledMatch[1] === 'true' : true;
-
-      // 检查是否为 chat 类型
-      const typeMatch = modelStr.match(/type:\s*["'`]([^"'`]+)["'`]/);
-      if (!typeMatch || typeMatch[1] !== 'chat') continue;
 
       // 确保必需的字段不为 undefined
       if (!displayName || !id) continue;
