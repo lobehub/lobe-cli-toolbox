@@ -50,7 +50,7 @@ To install Lobe UI, run the following command:
 [![][bun-shield]][bun-link]
 
 ```bash
-bun add @lobehub/lobe-cli-ui
+bun add @lobehub/cli-ui
 ```
 
 <div align="right">
