@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.26.1](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.26.0...@lobehub/i18n-cli@1.26.1)
+
+<sup>Released on **2026-02-15**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Preserve numeric string keys as objects instead of arrays.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Preserve numeric string keys as objects instead of arrays, closes [#164](https://github.com/lobehub/lobe-cli-toolbox/issues/164) [Comfy-Org/ComfyUI_frontend#8718](https://github.com/Comfy-Org/ComfyUI_frontend/issues/8718) ([9645ed8](https://github.com/lobehub/lobe-cli-toolbox/commit/9645ed8))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.26.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.25.1...@lobehub/i18n-cli@1.26.0)
 
 <sup>Released on **2025-12-25**</sup>
