@@ -1,8 +1,10 @@
 import { diff as justDiff } from 'just-diff';
-import { cloneDeep, set, unset } from 'lodash-es';
+import { cloneDeep, unset } from 'lodash-es';
 
 import { LocaleObj } from '@/types';
 import { I18nConfig, KeyStyle } from '@/types/config';
+
+import { setByPath } from './setByPath';
 
 type DiffPath = string | Array<number | string>;
 
@@ -45,7 +47,9 @@ export const diff = (
 
   for (const item of add) {
     const path = resolveDiffPath(entry, item.path as DiffPath, keyStyle);
-    set(extra, path, item.value);
+    // Use custom setByPath to preserve numeric string keys as object keys
+    const pathArray = Array.isArray(path) ? path : [path];
+    setByPath(extra, pathArray, item.value);
   }
 
   return {
