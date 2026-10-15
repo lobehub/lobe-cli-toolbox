@@ -22,7 +22,7 @@ English ・ [简体中文](./README.zh-CN.md) ・ [Changelog](./CHANGELOG.md) ·
 [![][github-issues-shield]][github-issues-link]
 [![][github-license-shield]][github-license-link]
 
-![](https://gw.alipayobjects.com/zos/kitchen/AH7rvv06qn/preview-i18n.webp)
+![](https://raw.githubusercontent.com/lobehub/lobe-assets/master/assets/lobe-i18n-preview.webp)
 
 </div>
 
