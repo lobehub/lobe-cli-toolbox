@@ -147,7 +147,7 @@ This project is [MIT](./LICENSE) licensed.
 [lobe-commit-github-cn]: https://github.com/lobehub/lobe-cli-toolbox/blob/master/packages/lobe-commit/README.zh-CN.md
 [lobe-commit-url]: https://www.npmjs.com/package/@lobehub/commit-cli
 [lobe-commit-version]: https://img.shields.io/npm/v/@lobehub/commit-cli?color=369eff&labelColor=black&logo=npm&logoColor=white&style=flat-square
-[lobe-i18n-cover]: https://gw.alipayobjects.com/zos/kitchen/AH7rvv06qn/preview-i18n.webp
+[lobe-i18n-cover]: https://raw.githubusercontent.com/lobehub/lobe-assets/master/assets/lobe-i18n-preview.webp
 [lobe-i18n-download]: https://img.shields.io/npm/dt/@lobehub/i18n-cli?labelColor=black&&style=flat-square
 [lobe-i18n-github]: https://github.com/lobehub/lobe-cli-toolbox/tree/master/packages/lobe-i18n/README.md
 [lobe-i18n-github-cn]: https://github.com/lobehub/lobe-cli-toolbox/blob/master/packages/lobe-i18n/README.zh-CN.md
