@@ -22,7 +22,7 @@ Lobe i18n 是一款使用 ChatGPT 自动化 i18n 的 CLI 流程工具
 [![][github-issues-shield]][github-issues-link]
 [![][github-license-shield]][github-license-link]
 
-![](https://gw.alipayobjects.com/zos/kitchen/AH7rvv06qn/preview-i18n.webp)
+![](https://raw.githubusercontent.com/lobehub/lobe-assets/master/assets/lobe-i18n-preview.webp)
 
 </div>
 
