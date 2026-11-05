@@ -1,40 +1,51 @@
-import dotenv from 'dotenv';
+import { loadEnv } from '@lobehub/cli-common/env';
+import { resolveProviderConfig } from '@lobehub/cli-common/providers';
 
-import { Config, ConfigKeys } from '@/types/config';
+import type { Config, ConfigKeys } from '@/types/config';
 
-import { ModelTokens } from '../../../common/models';
-import { config, schema } from './config';
+import { config, DEFAULT_DIFF_CHUNK_TOKENS, schema } from './config';
 
-dotenv.config();
+loadEnv();
 const getConfig = <K extends ConfigKeys>(key: K): Config[K] => config.get(key) as Config[K];
-const getDefulatConfig = <K extends ConfigKeys>(key: K) => schema[key].default as Config[K];
-const setConfig = <K extends ConfigKeys>(key: K, value: Config[K]) => config.set(key, value);
-const getOpenAIApiKey = () => process.env.OPENAI_API_KEY || getConfig('openaiToken');
-const getOpenAIProxyUrl = () => process.env.OPENAI_PROXY_URL || getConfig('apiBaseUrl');
+const getDefaultConfig = <K extends ConfigKeys>(key: K) => schema[key].default as Config[K];
+const setConfig = <K extends ConfigKeys>(key: K, value: Config[K]) =>
+  config.set(key as string, value);
+
+const getProviderConfig = () =>
+  resolveProviderConfig({
+    apiKey: getConfig('openaiToken'),
+    apiType: getConfig('apiType'),
+    baseURL: getConfig('apiBaseUrl'),
+    model: getConfig('modelName'),
+    provider: getConfig('provider'),
+  });
 
 const getGithubToken = () =>
-  process.env.GITHUB_TOKEN || process.env.GH_TOKEN || getConfig('githubToken');
-const getModelMaxToken = () => ModelTokens[getConfig('modelName')];
-const getDiffChunkSize = () => {
-  let defaultDiffChunkSize = getModelMaxToken() - 512;
-  const diffChunkSize = getConfig('diffChunkSize');
-  return defaultDiffChunkSize > diffChunkSize ? defaultDiffChunkSize : diffChunkSize;
+  process.env['GITHUB_TOKEN'] || process.env['GH_TOKEN'] || getConfig('githubToken');
+
+const getDiffChunkTokens = () => getConfig('diffChunkTokens') || DEFAULT_DIFF_CHUNK_TOKENS;
+
+const getCommitConfig = (): Config => {
+  const provider = getProviderConfig();
+  return {
+    ...(config.store as Config),
+    apiBaseUrl: provider.baseURL,
+    apiType: provider.apiType,
+    diffChunkTokens: getDiffChunkTokens(),
+    githubToken: getGithubToken(),
+    modelName: provider.model,
+    openaiToken: provider.apiKey,
+    provider: provider.provider,
+    stream: getConfig('stream'),
+  };
 };
-const getCommitConfig = (): Config => ({
-  ...(config.store as Config),
-  apiBaseUrl: getOpenAIProxyUrl(),
-  diffChunkSize: getDiffChunkSize(),
-  githubToken: getGithubToken(),
-  openaiToken: getOpenAIApiKey(),
-  stream: getConfig('stream'),
-});
 
 export default {
   getCommitConfig,
   getConfig,
-  getDefulatConfig,
+  getDefaultConfig,
+  getDiffChunkTokens,
   getGithubToken,
-  getOpenAIApiKey,
-  getOpenAIProxyUrl,
+  getProviderConfig,
   setConfig,
 };

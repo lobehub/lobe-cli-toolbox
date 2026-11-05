@@ -1,8 +1,8 @@
 import { diff as justDiff } from 'just-diff';
 import { cloneDeep, unset } from 'lodash-es';
 
-import { LocaleObj } from '@/types';
-import { I18nConfig, KeyStyle } from '@/types/config';
+import type { LocaleObj } from '@/types';
+import type { I18nConfig, KeyStyle } from '@/types/config';
 
 import { setByPath } from './setByPath';
 

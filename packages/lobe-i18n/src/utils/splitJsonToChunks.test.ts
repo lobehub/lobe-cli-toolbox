@@ -1,9 +1,8 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { LanguageModel } from '../../../common/models';
-import { LocaleObj } from '../types';
-import { I18nConfig } from '../types/config';
-import { getSplitToken, splitJsonToChunks } from './splitJsonToChunks';
+import type { LocaleObj } from '../types';
+import type { I18nConfig } from '../types/config';
+import { DEFAULT_SPLIT_TOKEN, getSplitToken, splitJsonToChunks } from './splitJsonToChunks';
 
 // Mock dependencies
 vi.mock('./diffJson', () => ({
@@ -30,7 +29,7 @@ describe('splitJsonToChunks', () => {
   const mockConfig: I18nConfig = {
     entry: './locales/en',
     entryLocale: 'en',
-    modelName: LanguageModel.GPT_3_5_TURBO,
+    modelName: 'gpt-3.5-turbo',
     output: './locales',
     outputLocales: ['zh-CN'],
   };
@@ -46,53 +45,24 @@ describe('splitJsonToChunks', () => {
   };
 
   describe('getSplitToken', () => {
-    it('should calculate split token based on model capacity', () => {
-      const prompt = 'Translate the following:';
-      const result = getSplitToken(mockConfig, prompt);
-
-      // Should be calculated as (model_tokens - prompt_tokens) / 3
-      expect(result).toBeGreaterThan(0);
-      expect(typeof result).toBe('number');
+    it('should use the default split token', () => {
+      expect(getSplitToken(mockConfig)).toBe(DEFAULT_SPLIT_TOKEN);
     });
 
-    it('should respect custom splitToken config', () => {
-      const configWithCustomSplit: I18nConfig = {
-        ...mockConfig,
-        splitToken: 500,
-      };
-
-      const prompt = 'Translate the following:';
-      const result = getSplitToken(configWithCustomSplit, prompt);
-
-      expect(result).toBeLessThanOrEqual(500);
+    it('should respect custom splitToken config, including values above the default', () => {
+      expect(getSplitToken({ ...mockConfig, splitToken: 500 })).toBe(500);
+      expect(getSplitToken({ ...mockConfig, splitToken: 20_000 })).toBe(20_000);
     });
 
-    it('should use default model when no model specified', () => {
-      const configWithoutModel: I18nConfig = {
-        entry: './locales/en',
-        entryLocale: 'en',
-        output: './locales',
-        outputLocales: ['zh-CN'],
-      };
-
-      const prompt = 'Translate:';
-      const result = getSplitToken(configWithoutModel, prompt);
-
-      expect(result).toBeGreaterThan(0);
-    });
-
-    it('should floor the calculated token value', () => {
-      const prompt = 'Test prompt';
-      const result = getSplitToken(mockConfig, prompt);
-
-      expect(Number.isInteger(result)).toBe(true);
+    it('should ignore invalid values and floor the result', () => {
+      expect(getSplitToken({ ...mockConfig, splitToken: 0 })).toBe(DEFAULT_SPLIT_TOKEN);
+      expect(getSplitToken({ ...mockConfig, splitToken: 1234.7 })).toBe(1234);
     });
   });
 
   describe('splitJsonToChunks', () => {
     it('should split JSON into manageable chunks', () => {
-      const prompt = 'Translate the following JSON:';
-      const result = splitJsonToChunks(mockConfig, mockEntry, mockTarget, prompt);
+      const result = splitJsonToChunks(mockConfig, mockEntry, mockTarget);
 
       expect(Array.isArray(result)).toBe(true);
       expect(result.length).toBeGreaterThan(0);
@@ -100,25 +70,22 @@ describe('splitJsonToChunks', () => {
 
     it('should handle empty entry object', () => {
       const emptyEntry: LocaleObj = {};
-      const prompt = 'Translate:';
 
-      const result = splitJsonToChunks(mockConfig, emptyEntry, mockTarget, prompt);
+      const result = splitJsonToChunks(mockConfig, emptyEntry, mockTarget);
 
       expect(Array.isArray(result)).toBe(true);
     });
 
     it('should handle empty target object', () => {
       const emptyTarget: LocaleObj = {};
-      const prompt = 'Translate:';
 
-      const result = splitJsonToChunks(mockConfig, mockEntry, emptyTarget, prompt);
+      const result = splitJsonToChunks(mockConfig, mockEntry, emptyTarget);
 
       expect(Array.isArray(result)).toBe(true);
     });
 
     it('should return chunks with proper structure', () => {
-      const prompt = 'Translate:';
-      const result = splitJsonToChunks(mockConfig, mockEntry, mockTarget, prompt);
+      const result = splitJsonToChunks(mockConfig, mockEntry, mockTarget);
 
       result.forEach((chunk) => {
         expect(typeof chunk).toBe('object');
@@ -134,9 +101,7 @@ describe('splitJsonToChunks', () => {
         },
         simple: 'value',
       };
-
-      const prompt = 'Translate:';
-      const result = splitJsonToChunks(mockConfig, nestedEntry, {}, prompt);
+      const result = splitJsonToChunks(mockConfig, nestedEntry, {});
 
       expect(Array.isArray(result)).toBe(true);
     });
@@ -152,9 +117,7 @@ describe('splitJsonToChunks', () => {
         key2: 'Another long string for testing purposes',
         key3: 'Yet another string to test chunking behavior',
       };
-
-      const prompt = 'Translate:';
-      const result = splitJsonToChunks(smallTokenConfig, largeEntry, {}, prompt);
+      const result = splitJsonToChunks(smallTokenConfig, largeEntry, {});
 
       // Should create multiple chunks due to token limit
       expect(result.length).toBeGreaterThanOrEqual(1);
@@ -170,9 +133,7 @@ describe('splitJsonToChunks', () => {
         'key_with_underscores': 'value',
         '中文键': 'Chinese key',
       };
-
-      const prompt = 'Translate:';
-      const result = splitJsonToChunks(mockConfig, specialEntry, {}, prompt);
+      const result = splitJsonToChunks(mockConfig, specialEntry, {});
 
       expect(Array.isArray(result)).toBe(true);
     });
@@ -182,9 +143,7 @@ describe('splitJsonToChunks', () => {
         long: 'a'.repeat(1000),
         longer: 'b'.repeat(2000),
       };
-
-      const prompt = 'Translate:';
-      const result = splitJsonToChunks(mockConfig, longStringEntry, {}, prompt);
+      const result = splitJsonToChunks(mockConfig, longStringEntry, {});
 
       expect(Array.isArray(result)).toBe(true);
     });
@@ -196,9 +155,7 @@ describe('splitJsonToChunks', () => {
         number: 42,
         string: 'text',
       };
-
-      const prompt = 'Translate:';
-      const result = splitJsonToChunks(mockConfig, mixedEntry, {}, prompt);
+      const result = splitJsonToChunks(mockConfig, mixedEntry, {});
 
       expect(Array.isArray(result)).toBe(true);
     });
@@ -209,9 +166,7 @@ describe('splitJsonToChunks', () => {
         normal: 'value',
         whitespace: '   ',
       };
-
-      const prompt = 'Translate:';
-      const result = splitJsonToChunks(mockConfig, emptyStringEntry, {}, prompt);
+      const result = splitJsonToChunks(mockConfig, emptyStringEntry, {});
 
       expect(Array.isArray(result)).toBe(true);
     });

@@ -1,17 +1,9 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "bundler",
     "paths": {
-      "@/*": ["src/*"],
-      "@lobehub/cli-ui": ["../lobe-cli-ui/dist"],
-      "@lobehub/cli-ui/*": ["../lobe-cli-ui/dist/*"],
-      "@lobehub/lobe-seo": ["./src"],
-      "@lobehub/lobe-seo/*": ["./src/*"]
+      "@/*": ["./src/*"]
     }
   },
   "extends": "../../tsconfig.json",
-  "include": ["src", "**/*.ts", "**/*.d.ts", "**/*.tsx", ".i18nrc.ts"]
+  "include": ["src", "*.config.ts"]
 }

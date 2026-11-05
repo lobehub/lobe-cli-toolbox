@@ -1,11 +1,13 @@
-import { Octokit } from 'octokit';
+import { Octokit, type RestEndpointMethodTypes } from '@octokit/rest';
 
 import { selectors } from '@/store';
 
 import getRepo from './getRepo';
 
+export type Issue = RestEndpointMethodTypes['issues']['listForRepo']['response']['data'][number];
+
 export interface IssuesResult {
-  data?: any[];
+  data?: Issue[];
   error?:
     | 'NO_TOKEN'
     | 'NO_REPO'
@@ -17,66 +19,38 @@ export interface IssuesResult {
   success: boolean;
 }
 
-// 创建一个带超时的 Promise
-const withTimeout = <T>(promise: Promise<T>, timeoutMs: number): Promise<T> => {
-  return Promise.race([
-    promise,
-    new Promise<T>((_, reject) => {
-      setTimeout(() => reject(new Error('TIMEOUT')), timeoutMs);
-    }),
-  ]);
+const NETWORK_ERROR_CODES = new Set(['ECONNREFUSED', 'ENOTFOUND', 'ETIMEDOUT']);
+
+export const toIssuesError = (error: any): IssuesResult['error'] => {
+  if (error?.name === 'TimeoutError' || error?.cause?.name === 'TimeoutError') return 'TIMEOUT';
+  if (error?.status === 401) return 'INVALID_TOKEN';
+  // 404 means the repository is private or does not exist for this token.
+  if (error?.status === 403 || error?.status === 404) return 'PERMISSION_DENIED';
+  if (NETWORK_ERROR_CODES.has(error?.code) || NETWORK_ERROR_CODES.has(error?.cause?.code))
+    return 'NETWORK_ERROR';
+  return 'UNKNOWN_ERROR';
 };
 
-export default async (): Promise<IssuesResult> => {
+const getIssuesList = async (): Promise<IssuesResult> => {
+  const repoInfo = await getRepo();
+  if (!repoInfo) return { error: 'NO_REPO', success: false };
+
+  const githubToken = selectors.getGithubToken();
+  if (!githubToken) return { error: 'NO_TOKEN', success: false };
+
   try {
-    const repoInfo = await getRepo();
-    if (!repoInfo) {
-      return { error: 'NO_REPO', success: false };
-    }
-
-    const githubToken = selectors.getGithubToken();
-    if (!githubToken) {
-      return { error: 'NO_TOKEN', success: false };
-    }
-
-    const octokit = new Octokit({
-      auth: githubToken,
+    const { data } = await new Octokit({ auth: githubToken }).rest.issues.listForRepo({
+      owner: repoInfo.owner,
+      repo: repoInfo.repoName,
+      request: { signal: AbortSignal.timeout(5000) },
+      state: 'open',
     });
 
-    // 设置 5 秒超时
-    const { data } = await withTimeout(
-      octokit.rest.issues.listForRepo({
-        owner: repoInfo.owner,
-        repo: repoInfo.repoName,
-        state: 'open',
-      }),
-      5000,
-    );
-
-    return { data, success: true };
-  } catch (error: any) {
-    // 处理不同类型的错误
-    if (error.message === 'TIMEOUT') {
-      return { error: 'TIMEOUT', success: false };
-    }
-
-    if (error.status === 401) {
-      return { error: 'INVALID_TOKEN', success: false };
-    }
-
-    if (error.status === 403) {
-      return { error: 'PERMISSION_DENIED', success: false };
-    }
-
-    if (error.status === 404) {
-      // 404 可能是仓库不存在或者没有权限访问
-      return { error: 'PERMISSION_DENIED', success: false };
-    }
-
-    if (error.code === 'ENOTFOUND' || error.code === 'ECONNREFUSED' || error.code === 'ETIMEDOUT') {
-      return { error: 'NETWORK_ERROR', success: false };
-    }
-
-    return { error: 'UNKNOWN_ERROR', success: false };
+    // The issues endpoint also returns pull requests.
+    return { data: data.filter((issue) => !issue.pull_request), success: true };
+  } catch (error) {
+    return { error: toIssuesError(error), success: false };
   }
 };
+
+export default getIssuesList;

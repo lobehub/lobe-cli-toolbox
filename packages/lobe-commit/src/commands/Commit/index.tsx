@@ -1,6 +1,7 @@
-import { Alert } from '@lobehub/cli-ui';
 import fs from 'node:fs';
 import * as process from 'node:process';
+
+import { Alert } from '@lobehub/cli-ui';
 import { memo, useEffect, useState } from 'react';
 import { shallow } from 'zustand/shallow';
 

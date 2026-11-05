@@ -1,5 +1,12 @@
-import { MultiSelect, type MultiSelectProps, Spinner, TextInput } from '@lobehub/cli-ui';
-import { Panel, SplitView, useTheme } from '@lobehub/cli-ui';
+import {
+  MultiSelect,
+  type MultiSelectProps,
+  Panel,
+  Spinner,
+  SplitView,
+  TextInput,
+  useTheme,
+} from '@lobehub/cli-ui';
 import isEqual from 'fast-deep-equal';
 import { Text, useInput } from 'ink';
 import { debounce } from 'lodash-es';
@@ -60,50 +67,36 @@ const InputIssues = memo(() => {
   }, [shouldSkipIssues, issuesError, issuesLoading, setStep]);
 
   const options: MultiSelectProps['options'] = useMemo(() => {
-    let localIssueList = issueList;
-    if (keywords) {
-      localIssueList = localIssueList.filter(
-        (item: any) =>
-          item.title.toLowerCase().includes(keywords) || String(item.number).includes(keywords),
-      );
-    }
-    return localIssueList.map((item: any) => ({
-      label: (
-        <>
-          <Text
-            backgroundColor={theme.colorBgLayout}
-            color={theme.colorText}
-          >{` #${item.number} `}</Text>
-          {` ${item.title}`}
-        </>
-      ),
+    const keyword = keywords.toLowerCase();
+    const localIssueList = keyword
+      ? issueList.filter(
+          (item) =>
+            item.title.toLowerCase().includes(keyword) || String(item.number).includes(keyword),
+        )
+      : issueList;
+    return localIssueList.map((item) => ({
+      label: `#${item.number} ${item.title}`,
       value: String(item.number),
-    })) as any;
+    }));
   }, [keywords, issueList]);
 
-  const handleKeywords = useCallback((v: string) => {
-    setKeywords(v.replaceAll(' ', ''));
-  }, []);
+  const handleKeywords = useMemo(
+    () => debounce((v: string) => setKeywords(v.replaceAll(' ', '')), 100),
+    [],
+  );
+  const handleIssuesInput = useMemo(() => debounce(setIssues, 100), [setIssues]);
 
-  const handleSelect = useCallback((v: string[]) => {
-    setIssues(v.join(','));
-    setKeywords('');
-  }, []);
-
-  const InputKeywords = useCallback(
-    () => (
-      <TextInput
-        defaultValue={keywords}
-        onChange={debounce(handleKeywords, 100)}
-        placeholder="Input to keywords to filter issues, press [Space] to multi-select..."
-      />
-    ),
-    [issues],
+  const handleSelect = useCallback(
+    (v: string[]) => {
+      setIssues(v.join(','));
+      setKeywords('');
+    },
+    [setIssues],
   );
 
   const handleSubmit = useCallback(() => {
     setStep(issues ? 'issuesType' : 'commit');
-  }, [issues]);
+  }, [issues, setStep]);
 
   // 如果有错误，显示错误信息和跳过选项
   if (issuesError) {
@@ -119,9 +112,9 @@ const InputIssues = memo(() => {
             : 'Press [Enter] to skip linking issues and continue...'}
         </Text>
         <TextInput
-          onChange={debounce(setIssues, 100)}
-          onSubmit={handleSubmit}
           placeholder="Press [Enter] to skip or input issue numbers manually..."
+          onChange={handleIssuesInput}
+          onSubmit={handleSubmit}
         />
       </Panel>
     );
@@ -137,13 +130,16 @@ const InputIssues = memo(() => {
           <Spinner label=" Loading issues..." />
         ) : (
           <>
-            <InputKeywords />
+            <TextInput
+              placeholder="Input to keywords to filter issues, press [Space] to multi-select..."
+              onChange={handleKeywords}
+            />
             <SplitView>
               <MultiSelect
                 defaultValue={issues.split(',')}
+                options={options}
                 onChange={handleSelect}
                 onSubmit={handleSubmit}
-                options={options}
               />
               {options.length === 0 && (
                 <Text color={theme.colorWarning}>No issues found, press [Enter] to skip...</Text>
@@ -154,9 +150,9 @@ const InputIssues = memo(() => {
       ) : (
         <TextInput
           defaultValue={issues}
-          onChange={debounce(setIssues, 100)}
-          onSubmit={handleSubmit}
           placeholder="Input number to link issues, press [Enter] to confirm or skip..."
+          onChange={handleIssuesInput}
+          onSubmit={handleSubmit}
         />
       )}
     </Panel>

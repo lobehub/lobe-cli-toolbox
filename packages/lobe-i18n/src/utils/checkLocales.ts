@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 
-import { I18nConfig } from '@/types/config';
+import type { I18nConfig } from '@/types/config';
 import { writeJSON } from '@/utils/fs';
 
 export const checkLocales = (config: I18nConfig) => {

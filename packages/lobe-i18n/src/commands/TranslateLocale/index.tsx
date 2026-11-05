@@ -1,10 +1,12 @@
+import { relative, resolve } from 'node:path';
+
 import { render } from '@lobehub/cli-ui';
 import chalk from 'chalk';
 import { consola } from 'consola';
-import { relative, resolve } from 'node:path';
 
 import Progress from '@/components/Progress';
-import { I18n, I18nWriteOptions } from '@/core/I18n';
+import type { I18nWriteOptions } from '@/core/I18n';
+import { I18n } from '@/core/I18n';
 import { selectors } from '@/store';
 import type { LocaleFolderObj, LocaleObj } from '@/types';
 import type { I18nConfig } from '@/types/config';
@@ -23,8 +25,7 @@ class TranslateLocale {
     this.config = selectors.getLocaleConfig();
     this.i18n = new I18n({
       config: this.config,
-      openAIApiKey: selectors.getOpenAIApiKey(),
-      openAIProxyUrl: selectors.getOpenAIProxyUrl(),
+      provider: selectors.getCheckedProviderConfig(this.config.modelName),
     });
   }
 
@@ -48,7 +49,7 @@ class TranslateLocale {
     consola.info(
       `Current model setting: ${chalk.cyan(this.config.modelName)} (temperature: ${chalk.cyan(
         this.config.temperature,
-      )}) ${this.config.experimental?.jsonMode ? chalk.red(' [JSON Mode]') : ''}}`,
+      )}) ${this.config.experimental?.jsonMode ? chalk.red(' [JSON Mode]') : ''}`,
     );
     let totalTokenUsage = 0;
 
@@ -79,13 +80,7 @@ class TranslateLocale {
       clear();
       const outputPath = relative('.', item.filename);
       if (data?.result && Object.keys(data.result).length > 0) {
-        // 使用立即保存时，文件已经被保存，无需再次保存
-        // writeJSON(item.filename, data.result);
-
-        // 如果没有开启立即保存，则需要保存文件
-        if (!this.config.saveImmediately) {
-          writeJSON(item.filename, data.result);
-        }
+        writeJSON(item.filename, data.result);
         totalTokenUsage += data.tokenUsage;
         consola.success(chalk.yellow(outputPath), chalk.gray(`[Token usage: ${data.tokenUsage}]`));
       } else {

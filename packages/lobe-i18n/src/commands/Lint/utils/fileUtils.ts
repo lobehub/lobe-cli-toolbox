@@ -1,6 +1,8 @@
-import { resolve } from 'node:path';
+import { readFileSync } from 'node:fs';
+import { relative, resolve } from 'node:path';
 
-import { LintIssue } from '../types';
+import type { LintIssue } from '../types';
+import { extractMainLanguageFromLocale } from './languageDetection';
 
 /**
  * 查找字段在文件中的行号
@@ -11,8 +13,7 @@ export function findLineNumber(
   value: string,
 ): number | undefined {
   try {
-    const fs = require('node:fs');
-    const content = fs.readFileSync(filePath, 'utf8');
+    const content = readFileSync(filePath, 'utf8');
     const lines = content.split('\n');
 
     // 构建搜索模式
@@ -46,12 +47,10 @@ export async function processLintFile(
   ) => Promise<LintIssue[]>,
 ): Promise<LintIssue[]> {
   try {
-    const fs = require('node:fs');
-    const content = fs.readFileSync(filePath, 'utf8');
+    const content = readFileSync(filePath, 'utf8');
     const localeObj = JSON.parse(content);
 
     // 提取主语言代码
-    const { extractMainLanguageFromLocale } = await import('./languageDetection');
     const mainLanguage = extractMainLanguageFromLocale(expectedLanguage);
 
     // 检查字段级别的语言
@@ -74,7 +73,7 @@ export async function processLintFile(
  * 获取相对路径
  */
 export function getRelativePath(filePath: string): string {
-  return filePath.replace(process.cwd() + '/', '');
+  return relative(process.cwd(), filePath);
 }
 
 /**

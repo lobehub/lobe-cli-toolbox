@@ -2,8 +2,9 @@ import { Command, Option } from 'commander';
 import { consola } from 'consola';
 import updateNotifier from 'update-notifier';
 
-import packageJson from '@/../package.json';
 import Shebang from '@/commands/Shebang';
+
+import packageJson from '../package.json';
 
 const notifier = updateNotifier({
   pkg: packageJson,
@@ -28,8 +29,9 @@ interface Flags {
 }
 
 const options: Flags = program.opts();
-if (options.target) {
-  Shebang(options.target, options.shebang);
-} else {
+if (!options.target) {
   consola.error('Please input target file with -t <file>');
+  process.exitCode = 1;
+} else if (!Shebang(options.target, options.shebang)) {
+  process.exitCode = 1;
 }

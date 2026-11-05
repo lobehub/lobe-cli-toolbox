@@ -1,72 +1,35 @@
 import { alert } from '@lobehub/cli-ui';
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { checkOptionKeys } from './checkOptionKeys';
 
-// Mock the alert module
 vi.mock('@lobehub/cli-ui', () => ({
   alert: {
     error: vi.fn(),
   },
 }));
 
-describe('checkOptionKeys', () => {
-  it('should not call alert.error when option key exists', () => {
-    const opt = {
-      outputLocales: ['en', 'zh-CN'],
-    };
+beforeEach(() => {
+  vi.mocked(alert.error).mockClear();
+});
 
-    checkOptionKeys(opt, 'outputLocales');
+describe('checkOptionKeys', () => {
+  it('accepts a present option', () => {
+    checkOptionKeys({ outputLocales: ['en', 'zh-CN'] }, 'outputLocales');
 
     expect(alert.error).not.toHaveBeenCalled();
   });
 
-  it('should call alert.error when option key is missing', () => {
-    const opt = {};
+  it.each([
+    ['missing', {}],
+    ['null', { entry: null }],
+    ['undefined', { entry: undefined }],
+    ['an empty string', { entry: '' }],
+    ['an empty array', { entry: [] }],
+  ])('exits with the option name when it is %s', (_, opt) => {
+    checkOptionKeys(opt, 'entry');
 
-    checkOptionKeys(opt, 'outputLocales');
-
-    expect(alert.error).toHaveBeenCalledWith(expect.stringContaining("Can't find"));
-    expect(alert.error).toHaveBeenCalledWith(expect.stringContaining('outputLocales'));
-  });
-
-  it('should call alert.error when option key is null', () => {
-    const opt = {
-      outputLocales: null,
-    };
-
-    checkOptionKeys(opt, 'outputLocales');
-
-    expect(alert.error).toHaveBeenCalled();
-  });
-
-  it('should call alert.error when option key is undefined', () => {
-    const opt = {
-      outputLocales: undefined,
-    };
-
-    checkOptionKeys(opt, 'outputLocales');
-
-    expect(alert.error).toHaveBeenCalled();
-  });
-
-  it('should call alert.error when option key is empty string', () => {
-    const opt = {
-      outputLocales: '',
-    };
-
-    checkOptionKeys(opt, 'outputLocales');
-
-    expect(alert.error).toHaveBeenCalled();
-  });
-
-  it('should call alert.error when option key is empty array', () => {
-    const opt = {
-      outputLocales: [],
-    };
-
-    checkOptionKeys(opt, 'outputLocales');
-
-    expect(alert.error).toHaveBeenCalled();
+    expect(alert.error).toHaveBeenCalledTimes(1);
+    expect(alert.error).toHaveBeenCalledWith(expect.stringMatching(/Can't find .*entry/), true);
   });
 });

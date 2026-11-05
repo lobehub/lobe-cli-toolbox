@@ -1,7 +1,7 @@
 import { encode } from 'gpt-tokenizer';
 import { isPlainObject, sumBy } from 'lodash-es';
 
-import { LocaleObj } from '@/types';
+import type { LocaleObj } from '@/types';
 
 export const PRIMITIVE_EXTRA_TOKENS = 3;
 export const KEY_EXTRA_TOKENS = 2; // For `"key":`

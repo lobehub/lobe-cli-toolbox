@@ -16,7 +16,7 @@ describe('Panel', () => {
   });
   it('reverse', () => {
     const { lastFrame } = render(
-      <Panel footer={<Text>footer</Text>} reverse title="title">
+      <Panel reverse footer={<Text>footer</Text>} title="title">
         <Text>reverse</Text>
       </Panel>,
     );

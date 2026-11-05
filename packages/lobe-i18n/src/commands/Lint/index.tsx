@@ -1,34 +1,29 @@
+import { resolve } from 'node:path';
+
 import chalk from 'chalk';
 import { consola } from 'consola';
-import { resolve } from 'node:path';
 
 import { selectors } from '@/store';
 
-import { HYPHENATED_LANGUAGE_MAP, REVERSE_LANGUAGE_MAP } from './constants';
-import { LintResult } from './types';
+import type { LintResult } from './types';
 import { displayResults } from './utils/displayUtils';
 import { checkFieldLanguages } from './utils/fieldChecker';
 import { processLintFile } from './utils/fileUtils';
 
-// 将带连字符的映射添加到反向映射中
-Object.entries(HYPHENATED_LANGUAGE_MAP).forEach(([locale, iso]) => {
-  REVERSE_LANGUAGE_MAP[locale] = iso;
-});
-
 class Lint {
   async start(quiet?: boolean) {
     try {
-      console.log('🔍 Linting translation files...');
+      consola.log('🔍 Linting translation files...');
 
       const config = selectors.getLocaleConfig();
       const localesPath = resolve(config.output);
       const isFolder = !config.entry.includes('.json') || config.entry.includes('*');
 
       if (isFolder) {
-        console.log(`Running in ${chalk.bold.cyan('📂 Folder Mode')}`);
+        consola.log(`Running in ${chalk.bold.cyan('📂 Folder Mode')}`);
         await this.lintFolderMode(config, localesPath, quiet);
       } else {
-        console.log(`Running in ${chalk.bold.cyan('📄 Flat Mode')}`);
+        consola.log(`Running in ${chalk.bold.cyan('📄 Flat Mode')}`);
         await this.lintFlatMode(config, localesPath, quiet);
       }
     } catch (error) {

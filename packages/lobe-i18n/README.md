@@ -36,6 +36,7 @@ English ・ [简体中文](./README.zh-CN.md) ・ [Changelog](./CHANGELOG.md) ·
 - [🤯 Usage](#-usage)
   - [Step 1: Initialize Configuration](#step-1-initialize-configuration)
   - [Step 2: Run Translation Commands](#step-2-run-translation-commands)
+  - [AI Agent Skill](#ai-agent-skill)
   - [Configuration](#configuration)
   - [Environment Variable](#environment-variable)
 - [🌏 Locale Configuration](#-locale-configuration)
@@ -80,7 +81,7 @@ npm install -g @lobehub/i18n-cli
 ```
 
 > \[!IMPORTANT]\
-> Please make sure you have `Node.js` version **>= 18**.
+> Please make sure you have `Node.js` version **>= 22**.
 
 <div align="right">
 
@@ -119,7 +120,7 @@ module.exports = defineConfig({
 ```
 
 > \[!IMPORTANT]\
-> To use AI auto-generation, you need to fill in the [OpenAI Token](https://platform.openai.com/account/api-keys) in the settings.
+> To use AI auto-generation, run `lobe-i18n -o` to pick a provider, API protocol, base URL, API key and model, or set the `LOBE_*` environment variables below.
 
 ```shell
 # Translate Locale files
@@ -127,6 +128,9 @@ $ lobe-i18n # or $ lobe-i18n locale
 
 # Translate Markdown files
 $ lobe-i18n md
+
+# Ignore the markdown cache and retranslate all markdown files
+$ lobe-i18n md --force
 
 # Lint translation files for language correctness
 $ lobe-i18n lint # or $ lobe-i18n --lint
@@ -137,6 +141,20 @@ $ lobe-i18n --with-md
 # Specify the configuration file
 $ lobe-i18n -c './custom-config.js' # or use the full flag --config
 ```
+
+<br/>
+
+### AI Agent Skill
+
+Install the `lobe-i18n` skill so coding agents (Claude Code, Cursor, Codex, Copilot...) know how to use it:
+
+```shell
+$ lobe-i18n skill                # project: .agents/skills, plus .claude/skills if .claude exists
+$ lobe-i18n skill --global       # home directory
+$ lobe-i18n skill --agent claude # only .claude/skills (agents / claude)
+```
+
+Configs written by older versions are migrated automatically the next time any `lobe-i18n` command runs.
 
 <br/>
 
@@ -159,10 +177,14 @@ You can choose any configuration method in [cosmiconfig](https://github.com/cosm
 
 This project provides some additional configuration items set with environment variables:
 
-| Environment Variable | Required | Description                                                                                                                                   | Example                                                                                   |
-| -------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| `OPENAI_API_KEY`     | Yes      | This is the API key you apply on the OpenAI account page                                                                                      | `sk-xxxxxx...xxxxxx`                                                                      |
-| `OPENAI_PROXY_URL`   | No       | If you manually configure the OpenAI interface proxy, you can use this configuration item to override the default OpenAI API request base URL | `https://api.chatanywhere.cn/v1`<br/>The default value is<br/>`https://api.openai.com/v1` |
+| Environment Variable | Required | Description                                                                                                                                                                                                               | Example                                                                   |
+| -------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `LOBE_PROVIDER`      | No       | Provider preset, overrides `lobe-i18n --option`: `openai` `anthropic` `google` `deepseek` `qwen` `moonshot` `zhipu` `minimax` `openrouter` `siliconflow` `volcengine` `groq` `xai` `mistral` `ollama` `lmstudio` `custom` | `deepseek`                                                                |
+| `LOBE_API_TYPE`      | No       | API protocol: `chat-completions` (`/v1/chat/completions`), `responses` (`/v1/responses`), `anthropic` (`/v1/messages`), `gemini`                                                                                          | `anthropic`                                                               |
+| `LOBE_BASE_URL`      | No       | API base URL                                                                                                                                                                                                              | `https://api.deepseek.com/anthropic`                                      |
+| `LOBE_API_KEY`       | No       | API key. Presets also read their own variable, e.g. `ANTHROPIC_API_KEY` `GEMINI_API_KEY` `DEEPSEEK_API_KEY` `DASHSCOPE_API_KEY` `OPENROUTER_API_KEY`. Not needed for `ollama` / `lmstudio`                                | `sk-xxxxxx...xxxxxx`                                                      |
+| `OPENAI_API_KEY`     | No       | Legacy: used with `OPENAI_PROXY_URL` when no provider is configured (OpenAI Chat Completions compatible)                                                                                                                  | `sk-xxxxxx...xxxxxx`                                                      |
+| `OPENAI_PROXY_URL`   | No       | Legacy: OpenAI compatible base URL                                                                                                                                                                                        | `https://api.chatanywhere.cn/v1`<br/>Default: `https://api.openai.com/v1` |
 
 <div align="right">
 
@@ -172,22 +194,22 @@ This project provides some additional configuration items set with environment v
 
 ## 🌏 Locale Configuration
 
-| Property Name   | Required | Type           | Default Value   | Description                                                                  |
-| --------------- | -------- | -------------- | --------------- | ---------------------------------------------------------------------------- |
-| entry           | `*`      | `string`       | -               | Entry file or folder                                                         |
-| entryLocale     | `*`      | `string`       | -               | Language to use as translation reference                                     |
-| modelName       |          | `string`       | `gpt-3.5-turbo` | Model to use                                                                 |
-| output          | `*`      | `string`       | -               | Location to store localized files                                            |
-| outputLocales   | `*`      | `string[]  `   | `[]`            | All the languages to be translated                                           |
-| keyStyle        |          | `string`       | `nested`        | How to resolve dotted keys: `nested`, `flat`, or `auto` (preserve entry)     |
-| reference       |          | `string`       | -               | Provide some context for more accurate translations                          |
-| saveImmediately |          | `boolean`      | `false`         | Save translation results immediately after each chunk is completed           |
-| splitToken      |          | `number`       | -               | Split the localized JSON file by tokens, automatically calculated by default |
-| temperature     |          | `number`       | `0`             | Sampling temperature to use                                                  |
-| topP            |          | `number`       | `1`             | Nucleus sampling threshold, controls the diversity of generated text         |
-| concurrency     |          | `number`       | `5`             | Number of concurrently pending promises returned                             |
-| experimental    |          | `experimental` | `{}`            | Experimental features, see below                                             |
-| markdown        |          | `markdown`     | `{}`            | See `markdown` configuration below                                           |
+| Property Name   | Required | Type           | Default Value    | Description                                                                                               |
+| --------------- | -------- | -------------- | ---------------- | --------------------------------------------------------------------------------------------------------- |
+| entry           | `*`      | `string`       | -                | Entry file or folder                                                                                      |
+| entryLocale     | `*`      | `string`       | -                | Language to use as translation reference                                                                  |
+| modelName       |          | `string`       | provider default | Overrides the model chosen by `lobe-i18n --option`, e.g. `gpt-5-mini` `claude-sonnet-4-5` `deepseek-chat` |
+| output          | `*`      | `string`       | -                | Location to store localized files                                                                         |
+| outputLocales   | `*`      | `string[]  `   | `[]`             | All the languages to be translated                                                                        |
+| keyStyle        |          | `string`       | `nested`         | How to resolve dotted keys: `nested`, `flat`, or `auto` (preserve entry)                                  |
+| reference       |          | `string`       | -                | Provide some context for more accurate translations                                                       |
+| saveImmediately |          | `boolean`      | `true`           | Save translation results immediately after each chunk is completed                                        |
+| splitToken      |          | `number`       | `4000`           | Split the localized JSON file by tokens. Large chunks may exceed the max output tokens of the model       |
+| temperature     |          | `number`       | `0`              | Sampling temperature to use                                                                               |
+| topP            |          | `number`       | `1`              | Nucleus sampling threshold, controls the diversity of generated text                                      |
+| concurrency     |          | `number`       | `5`              | Number of concurrently pending promises returned                                                          |
+| experimental    |          | `experimental` | `{}`             | Experimental features, see below                                                                          |
+| markdown        |          | `markdown`     | `{}`             | See `markdown` configuration below                                                                        |
 
 #### `experimental`
 
@@ -353,6 +375,11 @@ $ lobe-i18n
 | mode             |          | `string`,`mdast`,`function` | `string`                     | Translation mode selection, explained below                             |
 | translateCode    |          | `boolean`                   | `false`                      | Whether to translate code blocks under `mdast`, other modes are invalid |
 | includeMatter    |          | `boolean`                   | `false`                      | Whether to include front matter in the translation                      |
+| cacheFile        |          | `string`                    | `.i18n-cache.json`           | File storing source hashes, used to retranslate changed markdown        |
+
+#### Markdown cache
+
+Each translated file records the hash of its source markdown in `cacheFile`. When the source changes, the outdated translations are retranslated automatically; unchanged ones are skipped. Existing translations without a cache entry are trusted as up to date on the first run. Commit the cache file to share it with your team and CI, and use `--force` to retranslate everything.
 
 #### `outputExtensions`
 

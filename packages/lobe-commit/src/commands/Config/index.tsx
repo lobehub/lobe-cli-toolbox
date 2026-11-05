@@ -1,24 +1,52 @@
-import { TextInput } from '@lobehub/cli-ui';
-import { ConfigPanel, type ConfigPanelProps, SelectInput } from '@lobehub/cli-ui';
+import { API_TYPE_SHORT } from '@lobehub/cli-common/llm';
+import ProviderSetup, { saveProviderSetup } from '@lobehub/cli-common/ProviderSetup';
+import { ConfigPanel, type ConfigPanelProps, SelectInput, TextInput } from '@lobehub/cli-ui';
 import { memo, useMemo, useState } from 'react';
 
-import { BASE_PROMPT } from '@/constants/template';
-import { useConfStore } from '@/store';
-import type { ConfigKeys, Config as LocalConfig } from '@/types/config';
-
-import { LanguageModel } from '../../../../common/models';
+import { DEFAULT_PROMPT } from '@/prompts/commits';
+import { selectors, useConfStore } from '@/store';
+import type { Config as LocalConfig, ConfigKeys } from '@/types/config';
 
 const Config = memo(() => {
   const [active, setActive] = useState<string>();
   const { store, set, getDefault } = useConfStore();
+  const provider = selectors.getProviderConfig();
 
   const setConfig = <K extends ConfigKeys>(key: K, value: LocalConfig[K]) => {
     set(key, value);
     setActive('');
   };
 
+  const providerSetup = (mode: 'full' | 'model') => (
+    <ProviderSetup
+      current={provider}
+      mode={mode}
+      onCancel={() => setActive('')}
+      onSubmit={(value) => {
+        saveProviderSetup(value, provider, set);
+        setActive('');
+      }}
+    />
+  );
+
   const items: ConfigPanelProps['items'] = useMemo(
     () => [
+      {
+        children: providerSetup('full'),
+        defaultValue: 'OpenAI',
+        desc: 'Pick a provider or a custom endpoint, then the API type, base URL, API key and model',
+        key: 'provider',
+        label: 'Provider',
+        value: `${provider.providerName} · ${API_TYPE_SHORT[provider.apiType]}`,
+      },
+      {
+        children: providerSetup('model'),
+        defaultValue: getDefault('modelName'),
+        desc: `Models are fetched from ${provider.baseURL}, any model id can be typed`,
+        key: 'modelName',
+        label: 'Model',
+        value: provider.model || '(not set)',
+      },
       {
         children: (
           <SelectInput
@@ -44,8 +72,8 @@ const Config = memo(() => {
         children: (
           <TextInput
             defaultValue={store.locale}
-            onSubmit={(v) => setConfig('locale', v)}
             placeholder="Input commit message locale..."
+            onSubmit={(v) => setConfig('locale', v)}
           />
         ),
         defaultValue: getDefault('locale') || 'en_US',
@@ -58,53 +86,39 @@ const Config = memo(() => {
         children: (
           <TextInput
             defaultValue={store.prompt}
-            onSubmit={(v) => setConfig('prompt', v)}
             placeholder="Input ChatGPT prompt..."
+            onSubmit={(v) => setConfig('prompt', v)}
           />
         ),
-        defaultValue: getDefault('prompt') || BASE_PROMPT,
-        desc: BASE_PROMPT,
+        defaultValue: getDefault('prompt') || DEFAULT_PROMPT,
+        desc: DEFAULT_PROMPT,
         key: 'prompt',
         label: 'Custom prompt',
         showValue: false,
-        value: store.prompt || BASE_PROMPT,
-      },
-      {
-        children: (
-          <SelectInput
-            items={Object.values(LanguageModel).map((model) => ({
-              label: model,
-              value: model,
-            }))}
-            onSelect={(item) => setConfig('modelName', item.value as LanguageModel)}
-          />
-        ),
-        defaultValue: getDefault('modelName'),
-        desc: `Default model as ${getDefault('modelName')}`,
-        key: 'modelName',
-        label: 'Model Name',
-        value: store.modelName,
+        value: store.prompt || DEFAULT_PROMPT,
       },
       {
         children: (
           <TextInput
-            defaultValue={String(store.diffChunkSize)}
-            onSubmit={(v) => setConfig('diffChunkSize', Number(v))}
-            placeholder={`Input diff split chunk size ...`}
+            defaultValue={String(store.diffChunkTokens)}
+            placeholder="Input diff chunk size in tokens..."
+            onSubmit={(v) =>
+              setConfig('diffChunkTokens', Number(v) || getDefault('diffChunkTokens'))
+            }
           />
         ),
-        defaultValue: getDefault('diffChunkSize'),
-        desc: `Default chunk size as ${getDefault('diffChunkSize')}`,
-        key: 'diffChunkSize',
-        label: 'Diff split chunk size',
-        value: store.diffChunkSize,
+        defaultValue: getDefault('diffChunkTokens'),
+        desc: `Diffs larger than this are summarized chunk by chunk, default as ${getDefault('diffChunkTokens')}. Lower it for small local models`,
+        key: 'diffChunkTokens',
+        label: 'Diff chunk tokens',
+        value: store.diffChunkTokens,
       },
       {
         children: (
           <TextInput
             defaultValue={String(store.maxLength)}
-            onSubmit={(v) => setConfig('maxLength', Number(v))}
             placeholder={`Input maximum character length of the generated commit message...`}
+            onSubmit={(v) => setConfig('maxLength', Number(v))}
           />
         ),
         defaultValue: getDefault('maxLength'),
@@ -141,38 +155,9 @@ const Config = memo(() => {
       {
         children: (
           <TextInput
-            defaultValue={store.openaiToken}
-            onSubmit={(v) => setConfig('openaiToken', v)}
-            placeholder="Input OpenAI token..."
-          />
-        ),
-        defaultValue: getDefault('openaiToken'),
-        key: 'openaiToken',
-        label: 'OpenAI token',
-        showValue: false,
-        value: store.openaiToken,
-      },
-      {
-        children: (
-          <TextInput
-            defaultValue={store.apiBaseUrl}
-            onSubmit={(v) => setConfig('apiBaseUrl', v)}
-            placeholder="Set openAI API proxy, default value: https://api.openai.com/v1/..."
-          />
-        ),
-        defaultValue: getDefault('apiBaseUrl'),
-        desc: 'OpenAI API proxy, default value: https://api.openai.com/v1/',
-        key: 'apiBaseUrl',
-        label: 'OpenAI API proxy',
-        showValue: false,
-        value: store.apiBaseUrl,
-      },
-      {
-        children: (
-          <TextInput
             defaultValue={store.githubToken}
-            onSubmit={(v) => setConfig('githubToken', v)}
             placeholder="Input Github token..."
+            onSubmit={(v) => setConfig('githubToken', v)}
           />
         ),
         defaultValue: getDefault('githubToken'),

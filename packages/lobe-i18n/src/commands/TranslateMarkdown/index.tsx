@@ -1,27 +1,44 @@
+import { relative, resolve } from 'node:path';
+
 import { alert, render } from '@lobehub/cli-ui';
 import chalk from 'chalk';
 import { consola } from 'consola';
 import { globSync } from 'glob';
 import matter from 'gray-matter';
 import { isString } from 'lodash-es';
-import { existsSync } from 'node:fs';
-import { relative, resolve } from 'node:path';
 
 import Progress from '@/components/Progress';
-import { I18n, I18nMarkdownWriteOptions } from '@/core/I18n';
+import type { I18nMarkdownWriteOptions } from '@/core/I18n';
+import { I18n } from '@/core/I18n';
 import { selectors } from '@/store';
-import type { I18nConfig } from '@/types/config';
-import { MarkdownConfig, MarkdownModeType } from '@/types/config';
+import type { I18nConfig, MarkdownConfig } from '@/types/config';
+import { MarkdownModeType } from '@/types/config';
 import { readMarkdown, writeMarkdown } from '@/utils/fs';
 import { getDefaultExtension } from '@/utils/getDefaultExtension';
+import { hashContent, MarkdownCache } from '@/utils/markdownCache';
 import { matchInputPattern } from '@/utils/matchInputPattern';
+
+interface MarkdownQueryItem extends I18nMarkdownWriteOptions {
+  hash: string;
+  source: string;
+}
+
+export interface TranslateMarkdownOptions {
+  /**
+   * @description Ignore the cache and retranslate every target file
+   */
+  force?: boolean;
+}
 
 class TranslateMarkdown {
   config: I18nConfig;
   markdownConfig: MarkdownConfig;
-  query: I18nMarkdownWriteOptions[] = [];
+  query: MarkdownQueryItem[] = [];
   i18n: I18n;
-  constructor() {
+  cache: MarkdownCache;
+  force: boolean;
+  constructor({ force = false }: TranslateMarkdownOptions = {}) {
+    this.force = force;
     this.markdownConfig = selectors.getMarkdownConfigFile();
     const defaultConfig = selectors.getConfigFile();
     this.config = {
@@ -32,9 +49,9 @@ class TranslateMarkdown {
     };
     this.i18n = new I18n({
       config: this.config,
-      openAIApiKey: selectors.getOpenAIApiKey(),
-      openAIProxyUrl: selectors.getOpenAIProxyUrl(),
+      provider: selectors.getCheckedProviderConfig(this.config.modelName),
     });
+    this.cache = new MarkdownCache(this.markdownConfig.cacheFile);
   }
 
   async start() {
@@ -69,16 +86,17 @@ class TranslateMarkdown {
     consola.info(
       `Current model setting: ${chalk.cyan(this.config.modelName)} (temperature: ${chalk.cyan(
         this.config.temperature,
-      )}) ${this.config.experimental?.jsonMode ? chalk.red(' [JSON Mode]') : ''}}`,
+      )}) ${this.config.experimental?.jsonMode ? chalk.red(' [JSON Mode]') : ''}`,
     );
     let totalTokenUsage = 0;
-    for (const item of this.query) {
+    for (const { hash, source, ...item } of this.query) {
       const props = {
         filename: item.filename,
         from: item.from || this.markdownConfig.entryLocale || this.config.entryLocale,
         to: item.to,
       };
 
+      this.cache.markPending(source, item.filename);
       const { rerender, clear } = render(
         <Progress hide isLoading maxStep={1} progress={0} step={0} {...props} />,
       );
@@ -100,10 +118,8 @@ class TranslateMarkdown {
           mdResut = matter.stringify(data.result, item.matter);
         }
 
-        // 如果没有开启立即保存，则需要保存文件
-        if (!this.config.saveImmediately) {
-          writeMarkdown(item.filename, mdResut);
-        }
+        writeMarkdown(item.filename, mdResut);
+        this.cache.set(source, item.filename, hash);
         totalTokenUsage += data.tokenUsage;
         consola.success(chalk.yellow(outputPath), chalk.gray(`[Token usage: ${data.tokenUsage}]`));
       } else {
@@ -124,19 +140,34 @@ class TranslateMarkdown {
     for (const file of files) {
       try {
         const md = readMarkdown(file);
+        const hash = hashContent(md);
         for (const locale of config.outputLocales || []) {
           const targetExtension = this.getTargetExtension(locale, file, md);
           const targetFilename = this.getTargetFilename(file, targetExtension);
-          if (existsSync(targetFilename)) continue;
+          const status = this.cache.getStatus(file, targetFilename, hash);
+
+          if (!this.force) {
+            if (status === 'cached') continue;
+            // Targets translated before the cache existed are trusted as up to date,
+            // otherwise the first run would retranslate and overwrite every existing file.
+            if (status === 'untracked') {
+              this.cache.set(file, targetFilename, hash);
+              continue;
+            }
+          }
+
           const mode = this.getMode(file, md);
           const { data, content } = matter(md);
-          consola.info(`📄 To ${locale}: ${chalk.yellow(targetFilename)}`);
+          const reason = status === 'changed' ? chalk.gray(' [source changed]') : '';
+          consola.info(`📄 To ${locale}: ${chalk.yellow(targetFilename)}${reason}`);
           this.query.push({
             filename: targetFilename,
             from: config.entryLocale,
+            hash,
             matter: data,
             md: this.markdownConfig.includeMatter ? md : content,
             mode,
+            source: file,
             to: locale,
           });
         }

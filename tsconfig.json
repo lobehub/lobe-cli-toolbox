@@ -1,19 +1,27 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "declaration": true,
-    "downlevelIteration": true,
-    "esModuleInterop": true,
+    "target": "ES2023",
+    "lib": ["ES2023"],
+    "module": "Preserve",
+    "moduleResolution": "Bundler",
+    "moduleDetection": "force",
     "jsx": "react-jsx",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "module": "esnext",
-    "moduleResolution": "node",
+    "types": ["node", "vitest/globals"],
     "resolveJsonModule": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "noEmit": true,
     "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "target": "es6",
-    "types": ["vitest/globals"]
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "useDefineForClassFields": true
   },
-  "extends": "@sindresorhus/tsconfig",
-  "include": ["packages", "**/*.ts", "**/*.d.ts", "**/*.tsx"]
+  "files": []
 }

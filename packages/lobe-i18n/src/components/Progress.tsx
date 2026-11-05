@@ -2,7 +2,7 @@ import { ProgressBar, Spinner, SplitView, StatusMessage, useTheme } from '@lobeh
 import { Box, Text } from 'ink';
 import { memo, useEffect, useRef, useState } from 'react';
 
-import { onProgressProps } from '@/core/I18n';
+import type { onProgressProps } from '@/core/I18n';
 
 interface ProgressProps extends onProgressProps {
   filename: string;

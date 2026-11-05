@@ -1,12 +1,14 @@
+import type { ResolvedProviderConfig } from '@lobehub/cli-common/providers';
+
 import { SeoMdx } from '@/core/SeoMdx';
-import { BlogPost } from '@/types/blog';
-import { SeoConfig } from '@/types/config';
+import type { BlogPost } from '@/types/blog';
+import type { SeoConfig } from '@/types/config';
 import { calcToken } from '@/utils/calcToken';
+import { mergeSeoResult } from '@/utils/mergeSeoResult';
 
 export interface SeoOptions {
   config: SeoConfig;
-  openAIApiKey: string;
-  openAIProxyUrl: string;
+  provider: ResolvedProviderConfig;
 }
 
 export interface onProgressProps {
@@ -24,9 +26,9 @@ export interface SeoQueryItem {
 export class SeoCore {
   private seoService: SeoMdx;
   private config: SeoConfig;
-  constructor({ openAIApiKey, openAIProxyUrl, config }: SeoOptions) {
+  constructor({ provider, config }: SeoOptions) {
     this.config = config;
-    this.seoService = new SeoMdx(config, openAIApiKey, openAIProxyUrl);
+    this.seoService = new SeoMdx(config, provider);
   }
 
   async run({ content, onProgress, matter }: SeoQueryItem): Promise<
@@ -36,7 +38,7 @@ export class SeoCore {
       }
     | undefined
   > {
-    const prompt = await this.seoService.prompt.formatMessages({
+    const prompt = this.seoService.prompt.formatMessages({
       content,
     });
 
@@ -54,24 +56,10 @@ export class SeoCore {
       needToken,
     });
 
-    let result: BlogPost;
-
-    if (this.config.tagStringify) {
-      seoResult.tags = seoResult.tags.join(', ');
-    }
-
-    result = this.config.groupKey
-      ? {
-          ...matter,
-          [this.config.groupKey]: {
-            ...seoResult,
-            ...matter?.[this.config.groupKey],
-          },
-        }
-      : {
-          ...seoResult,
-          ...matter,
-        };
+    const result = mergeSeoResult(matter, seoResult, {
+      groupKey: this.config.groupKey,
+      tagStringify: this.config.tagStringify,
+    });
 
     return {
       result,

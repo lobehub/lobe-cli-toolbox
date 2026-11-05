@@ -1,5 +1,5 @@
 import { Text } from 'ink';
-import { type ReactNode, memo } from 'react';
+import { memo, type ReactNode } from 'react';
 
 export interface ItemProps {
   highlightColor: string;

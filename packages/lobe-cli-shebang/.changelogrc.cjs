@@ -1,1 +1,1 @@
-module.exports = require('../../.changelogrc');
+module.exports = require('../../.changelogrc.cjs');

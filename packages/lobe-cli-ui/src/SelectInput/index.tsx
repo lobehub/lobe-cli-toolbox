@@ -1,15 +1,23 @@
-import arrayRotate from 'arr-rotate';
 import isEqual from 'fast-deep-equal';
 import { Box, useInput } from 'ink';
-import { type FC, type ReactNode, createElement, memo, useMemo } from 'react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  createElement,
+  type FC,
+  memo,
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
-import { useTheme } from '@/hooks/useTheme';
-
-import Indicator from './Indicator';
+import { useTheme } from '../hooks/useTheme';
+import { arrayRotate } from '../lib/arrayRotate';
 import type { IndicatorProps } from './Indicator';
-import ItemComponent from './Item';
+import Indicator from './Indicator';
 import type { ItemProps } from './Item';
+import ItemComponent from './Item';
 
 export interface SelectInputItem {
   key?: string;
@@ -122,7 +130,7 @@ const SelectInput = memo<SelectInputProps>(
 
     const slicedItems = useMemo(
       () => (hasLimit ? arrayRotate(items, rotateIndex).slice(0, limit) : items),
-      [hasLimit, rotateIndex, limit],
+      [items, hasLimit, rotateIndex, limit],
     );
 
     return (

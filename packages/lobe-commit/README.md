@@ -33,6 +33,7 @@ English · [简体中文](./README.zh-CN.md) · [Changelog](./CHANGELOG.md) · [
 - [📦 Installation](#-installation)
 - [🤯 Usage](#-usage)
   - [Git hook](#git-hook)
+  - [AI Agent Skill](#ai-agent-skill)
   - [Configuration](#configuration)
   - [Running](#running)
   - [Options](#options)
@@ -86,7 +87,7 @@ npm install -g @lobehub/commit-cli
 ```
 
 > \[!IMPORTANT]\
-> Please make sure you have `Node.js` version **>= 18**
+> Please make sure you have `Node.js` version **>= 22**
 
 <div align="right">
 
@@ -113,7 +114,7 @@ $ lobe-commit
 With AI mode, you can generate a complete commit message using ChatGPT.
 
 > \[!IMPORTANT]\
-> To use AI auto-generation, you need to fill in your OpenAI token in the settings by `lobe-commit -o`. and if you have special network requirements, you can add OpenAI's forwarding address in the settings.
+> To use AI auto-generation, pick an AI provider (OpenAI, Anthropic, Gemini, DeepSeek, Qwen, Kimi, GLM, OpenRouter, Ollama, any OpenAI compatible endpoint...) in the settings by `lobe-commit -o`: choose the API protocol (Chat Completions / Responses / Anthropic Messages / Gemini), base URL, API key, then search and pick a model from the provider's model list. Any compatible endpoint works with `custom`. The settings can also be overridden by `LOBE_PROVIDER` `LOBE_API_TYPE` `LOBE_BASE_URL` `LOBE_API_KEY`. Large diffs are split by `Diff chunk tokens` (default `32000`).
 
 ![](https://gw.alipayobjects.com/zos/kitchen/qmXcNvnjKf/preview-ai.webp)
 
@@ -138,7 +139,7 @@ In Editor mode, you can choose the `<type>(<optional scope>): <subject> [<issues
 
 ### Git hook
 
-You can integrate Lobe Commit with Git via the `prepare-commit-msg` hook. This allows you to use Git as you normally would and edit the commit message before committing.
+You can integrate Lobe Commit with Git via the `prepare-commit-msg` hook. This allows you to use Git as you normally would and edit the commit message before committing. `git commit -m` / `-F`, merges, squashes and amends keep their message and skip the wizard.
 
 <br/>
 
@@ -166,6 +167,20 @@ $ lobe-commit --remove # or use short flag -r
 
 </div>
 
+### AI Agent Skill
+
+Install the `lobe-commit` skill so coding agents (Claude Code, Cursor, Codex, Copilot...) know how to use it, including writing commit messages in the lobe-commit format:
+
+```shell
+$ lobe-commit skill                # project: .agents/skills, plus .claude/skills if .claude exists
+$ lobe-commit skill --global       # home directory
+$ lobe-commit skill --agent claude # only .claude/skills (agents / claude)
+```
+
+Configs written by older versions are migrated automatically the next time any `lobe-commit` command runs.
+
+<br/>
+
 ### Configuration
 
 To configure Lobe Commit, run the following command:
@@ -189,7 +204,7 @@ $ git commit
 
 </div>
 
-- To use AI auto-generation, you need to fill in your [OpenAI token](<(https://platform.openai.com/account/api-keys)>) in the settings.
+- To use AI auto-generation, pick a provider and model in the settings.
 - To automatically pull private issues, you need to fill in your [GitHub token](https://github.com/settings/tokens) with repo permissions in the settings.
 
 > \[!NOTE]\

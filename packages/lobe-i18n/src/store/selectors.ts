@@ -1,27 +1,45 @@
+import { loadEnv } from '@lobehub/cli-common/env';
+import { getProviderConfigError, resolveProviderConfig } from '@lobehub/cli-common/providers';
 import { alert } from '@lobehub/cli-ui';
 import chalk from 'chalk';
-import dotenv from 'dotenv';
 import { merge } from 'lodash-es';
 
 import { DEFAULT_CONFIG } from '@/store/initialState';
-import { Config, ConfigKeys, I18nConfig, MarkdownConfig } from '@/types/config';
+import type { Config, ConfigKeys, I18nConfig, MarkdownConfig } from '@/types/config';
 import { checkOptionKeys } from '@/utils/checkOptionKeys';
 
 import { config, explorer, schema } from './config';
 
-dotenv.config();
+loadEnv();
 
 const getConfig = <K extends ConfigKeys>(key: K): Config[K] => config.get(key) as Config[K];
-const getDefulatConfig = <K extends ConfigKeys>(key: K) => schema[key].default as Config[K];
-const setConfig = <K extends ConfigKeys>(key: K, value: Config[K]) => config.set(key, value);
-const getOpenAIApiKey = () => process.env.OPENAI_API_KEY || getConfig('openaiToken');
-const getOpenAIProxyUrl = () => process.env.OPENAI_PROXY_URL || getConfig('apiBaseUrl');
+const getDefaultConfig = <K extends ConfigKeys>(key: K) => schema[key].default as Config[K];
+const setConfig = <K extends ConfigKeys>(key: K, value: Config[K]) =>
+  config.set(key as string, value);
+
+/**
+ * `modelName` from the project config file wins over the globally configured model.
+ */
+const getProviderConfig = (modelName?: string) =>
+  resolveProviderConfig({
+    apiKey: getConfig('openaiToken'),
+    apiType: getConfig('apiType'),
+    baseURL: getConfig('apiBaseUrl'),
+    model: modelName || getConfig('modelName'),
+    provider: getConfig('provider'),
+  });
+
+const getCheckedProviderConfig = (modelName?: string) => {
+  const provider = getProviderConfig(modelName);
+  const error = getProviderConfigError(provider, chalk.bold.yellow('lobe-i18n --option'));
+  if (error) alert.error(error, true);
+  return provider;
+};
 
 const getConfigFile = (): I18nConfig => {
-  const config: any = explorer.getConfigFile();
-  // @ts-ignore
-  if (!config) return alert.error(`Can't find ${chalk.bold.yellow('config')}`, true);
-  return merge(DEFAULT_CONFIG, config);
+  const config = explorer.getConfigFile();
+  if (!config) alert.error(`Can't find ${chalk.bold.yellow('config')}`, true);
+  return merge({}, DEFAULT_CONFIG, config);
 };
 
 const getLocaleConfig = (): I18nConfig => {
@@ -35,30 +53,29 @@ const getLocaleConfig = (): I18nConfig => {
 
 const getMarkdownConfigFile = (): MarkdownConfig => {
   const config = getConfigFile();
-  if (!config.markdown) {
-    // @ts-ignore
+  if (!config.markdown)
     return alert.error(`Can't find ${chalk.bold.yellow('config.markdown')}`, true);
-  }
 
-  const markdownConfig = merge(config?.markdown || {}, {
-    entryLocale: config?.markdown?.entryLocale || config.entryLocale,
-    outputLocales: config?.markdown?.outputLocales || config.outputLocales,
-  });
+  const markdownConfig = {
+    ...config.markdown,
+    entryLocale: config.markdown.entryLocale || config.entryLocale,
+    outputLocales: config.markdown.outputLocales || config.outputLocales,
+  };
 
   checkOptionKeys(markdownConfig, 'entry');
   checkOptionKeys(markdownConfig, 'entryLocale');
   checkOptionKeys(markdownConfig, 'outputLocales');
 
-  return markdownConfig;
+  return markdownConfig as MarkdownConfig;
 };
 
 export default {
+  getCheckedProviderConfig,
   getConfig,
   getConfigFile,
-  getDefulatConfig,
+  getDefaultConfig,
   getLocaleConfig,
   getMarkdownConfigFile,
-  getOpenAIApiKey,
-  getOpenAIProxyUrl,
+  getProviderConfig,
   setConfig,
 };

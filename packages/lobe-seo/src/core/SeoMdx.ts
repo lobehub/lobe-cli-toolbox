@@ -1,47 +1,39 @@
+import { LLMClient } from '@lobehub/cli-common/llm';
+import type { ChatPromptTemplate } from '@lobehub/cli-common/promptTemplate';
+import type { ResolvedProviderConfig } from '@lobehub/cli-common/providers';
 import { alert } from '@lobehub/cli-ui';
 // @ts-ignore
 import dJSON from 'dirty-json';
-import OpenAI from 'openai';
 
 import { promptSeo } from '@/prompts/seo';
-import { PostSEO } from '@/types/blog';
-import { SeoConfig } from '@/types/config';
-
-import { ChatPromptTemplate } from '../../../common/promptTemplate';
+import type { PostSEO } from '@/types/blog';
+import type { SeoConfig } from '@/types/config';
 
 export class SeoMdx {
-  private client: OpenAI;
+  private client: LLMClient;
   private config: SeoConfig;
   private isJsonMode: boolean;
   prompt: ChatPromptTemplate<{ content: string }>;
 
-  constructor(config: SeoConfig, openAIApiKey: string, openAIProxyUrl?: string) {
+  constructor(config: SeoConfig, provider: ResolvedProviderConfig) {
     this.config = config;
-    this.client = new OpenAI({
-      apiKey: openAIApiKey,
-      baseURL: openAIProxyUrl,
-      maxRetries: 4,
-    });
+    this.config.modelName = provider.model;
+    this.client = new LLMClient(provider);
     this.prompt = promptSeo(this.config.reference);
     this.isJsonMode = Boolean(this.config?.experimental?.jsonMode);
   }
 
   async run(content: string): Promise<PostSEO | any> {
     try {
-      const messages = await this.prompt.formatMessages({
+      const messages = this.prompt.formatMessages({
         content,
       });
 
-      const completion = await this.client.chat.completions.create({
-        messages: messages as OpenAI.Chat.Completions.ChatCompletionMessageParam[],
-        model: this.config.modelName || 'gpt-3.5-turbo',
+      const { text: result } = await this.client.generate({
+        json: this.isJsonMode,
+        messages,
         temperature: this.config.temperature,
-        ...(this.isJsonMode && {
-          response_format: { type: 'json_object' },
-        }),
       });
-
-      const result = completion.choices[0]?.message?.content;
 
       if (!result) this.handleError();
 

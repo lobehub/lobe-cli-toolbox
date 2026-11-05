@@ -1,7 +1,7 @@
 import { Box, type BoxProps } from 'ink';
-import { type ReactNode, memo } from 'react';
+import { memo, type ReactNode } from 'react';
 
-import { useTheme } from '@/hooks/useTheme';
+import { useTheme } from '../hooks/useTheme';
 
 export interface SplitViewProps extends BoxProps {
   children: ReactNode;

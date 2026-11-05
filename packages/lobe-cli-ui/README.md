@@ -6,9 +6,8 @@
 
 <h1>Lobe CLI UI</h1>
 
-Lobe CLI UI is an open-source UI component library for building _AIGC_ cli apps
+Ink components shared by the Lobe CLIs. This package is private and bundled into each CLI at build time.
 
-[![][npm-release-shield]][npm-release-link]
 [![][github-releasedate-shield]][github-releasedate-link]
 [![][github-action-test-shield]][github-action-test-link]
 [![][github-action-release-shield]][github-action-release-link]<br/>
@@ -42,16 +41,7 @@ Lobe CLI UI is an open-source UI component library for building _AIGC_ cli apps
 
 ## 📦 Installation
 
-> \[!IMPORTANT]\
-> This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c).
-
-To install Lobe UI, run the following command:
-
-[![][bun-shield]][bun-link]
-
-```bash
-bun add @lobehub/cli-ui
-```
+This package is not published. The CLIs depend on it with `workspace:*` and bundle it at build time.
 
 <div align="right">
 
@@ -116,8 +106,6 @@ This project is [MIT](./LICENSE) licensed.
 <!-- LINK GROUP -->
 
 [back-to-top]: https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square
-[bun-link]: https://bun.sh
-[bun-shield]: https://img.shields.io/badge/-speedup%20with%20bun-black?logo=bun&style=for-the-badge
 [github-action-release-link]: https://github.com/lobehub/lobe-cli-toolbox/actions/workflows/release.yml
 [github-action-release-shield]: https://img.shields.io/github/actions/workflow/status/lobehub/lobe-cli-toolbox/release.yml?label=release&labelColor=black&logo=githubactions&logoColor=white&style=flat-square
 [github-action-test-link]: https://github.com/lobehub/lobe-cli-toolbox/actions/workflows/test.yml
@@ -140,8 +128,6 @@ This project is [MIT](./LICENSE) licensed.
 [github-stars-shield]: https://img.shields.io/github/stars/lobehub/lobe-cli-toolbox?color=ffcb47&labelColor=black&style=flat-square
 [lobe-chat]: https://github.com/lobehub/lobe-chat
 [lobe-theme]: https://github.com/lobehub/sd-webui-lobe-theme
-[npm-release-link]: https://www.npmjs.com/package/@lobehub/cli-ui
-[npm-release-shield]: https://img.shields.io/npm/v/@lobehub/cli-ui?color=369eff&labelColor=black&logo=npm&logoColor=white&style=flat-square
 [pr-welcome-link]: https://github.com/lobehub/lobe-cli-toolbox/pulls
 [pr-welcome-shield]: https://img.shields.io/badge/%F0%9F%A4%AF%20PR%20WELCOME-%E2%86%92-ffcb47?labelColor=black&style=for-the-badge
 [profile-link]: https://github.com/lobehub

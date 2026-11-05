@@ -7,7 +7,6 @@ export type OrderedListContextProps = {
   marker: string;
 };
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export const OrderedListContext = createContext<OrderedListContextProps>({
   marker: '',
 });

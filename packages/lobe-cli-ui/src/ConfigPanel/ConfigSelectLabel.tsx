@@ -1,9 +1,8 @@
 import { Text } from 'ink';
 import { memo, useMemo } from 'react';
 
-import { useTheme } from '@/hooks/useTheme';
-
 import { Badge } from '../components/badge';
+import { useTheme } from '../hooks/useTheme';
 
 export interface ConfigSelectLabelProps {
   defaultValue: any;

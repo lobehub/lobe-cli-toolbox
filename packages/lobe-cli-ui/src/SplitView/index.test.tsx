@@ -2,7 +2,7 @@ import { Text } from 'ink';
 import { render } from 'ink-testing-library';
 import { describe, expect, it } from 'vitest';
 
-import { SplitView } from '@/index';
+import { SplitView } from '../index';
 
 describe('SplitView', () => {
   it('render', () => {

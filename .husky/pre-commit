@@ -1,4 +1,2 @@
-#!/usr/bin/env sh
-
-npm run type-check
-npx --no-install lint-staged
+pnpm run type-check
+pnpm exec lint-staged

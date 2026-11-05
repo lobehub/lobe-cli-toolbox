@@ -1,30 +1,55 @@
 import { consola } from 'consola';
 
-import { formatRepoProps } from '@/utlis/formatRepoProps';
-import { createLabel, queryLabels } from '@/utlis/octokit';
+import { planLabelSync } from '@/utils/labels';
+import { createLabel, deleteLabel, listLabels, updateLabel } from '@/utils/octokit';
+import { parseRepo } from '@/utils/repo';
 
-import Delete from './Delete';
-
-const Copy = async (target: string, source: string) => {
-  await Delete(target, source);
-
-  const { getOwner, getRepo, targetOwner, targetRepo } = formatRepoProps(target, source);
-
+const run = async (description: string, task: () => Promise<unknown>) => {
   try {
-    const getLabels = await queryLabels(getOwner, getRepo);
-
-    if (getLabels?.length > 0) {
-      for (const lable of getLabels) {
-        const { name, color, description }: any = lable;
-        await createLabel(targetOwner, targetRepo, name, color, description);
-      }
-    } else {
-      consola.warn(`${getOwner}/${getRepo} labels is empty`);
-    }
-    consola.info(`Copy ${getLabels.length} labels success`);
+    await task();
+    consola.success(description);
+    return true;
   } catch (error) {
-    consola.error(error);
+    consola.error(`${description} failed:`, (error as Error).message);
+    return false;
   }
+};
+
+/**
+ * Makes the labels of `target` match `source`: same-name labels are updated in place (issues keep
+ * them), missing ones are created and labels that only exist in the target are deleted.
+ *
+ * Resolves to `false` when any step failed.
+ */
+const Copy = async (target: string, source: string): Promise<boolean> => {
+  const targetRepo = parseRepo(target);
+  const sourceRepo = parseRepo(source);
+  if (!targetRepo || !sourceRepo) {
+    consola.error(`Wrong ${targetRepo ? 'source' : 'target'} repo, should be owner/repo`);
+    return false;
+  }
+
+  const sourceLabels = await listLabels(sourceRepo);
+  if (sourceLabels.length === 0) {
+    consola.warn(`${source} has no labels, nothing to copy`);
+    return true;
+  }
+
+  const plan = planLabelSync(sourceLabels, await listLabels(targetRepo));
+  const results: boolean[] = [];
+
+  for (const { from, to } of plan.update)
+    results.push(await run(`[${to.name}] updated`, () => updateLabel(targetRepo, from, to)));
+  for (const label of plan.create)
+    results.push(await run(`[${label.name}] created`, () => createLabel(targetRepo, label)));
+  for (const label of plan.remove)
+    results.push(await run(`[${label.name}] deleted`, () => deleteLabel(targetRepo, label)));
+
+  consola.info(
+    `Copied ${sourceLabels.length} labels from ${source} to ${target}: ` +
+      `${plan.create.length} created, ${plan.update.length} updated, ${plan.remove.length} deleted`,
+  );
+  return results.every(Boolean);
 };
 
 export default Copy;

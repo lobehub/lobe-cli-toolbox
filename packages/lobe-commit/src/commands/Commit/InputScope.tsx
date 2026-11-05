@@ -1,4 +1,5 @@
-import { Panel, SelectInput, SelectInputItem, SplitView, TextInput } from '@lobehub/cli-ui';
+import type { SelectInputItem } from '@lobehub/cli-ui';
+import { Panel, SelectInput, SplitView, TextInput } from '@lobehub/cli-ui';
 import { Text, useInput } from 'ink';
 import { debounce } from 'lodash-es';
 import { memo, useCallback, useState } from 'react';
@@ -117,9 +118,9 @@ const InputScope = memo(() => {
     >
       <TextInput
         defaultValue={scope}
+        placeholder="Input commit <scope>, or select below, press [Enter] to skip..."
         onChange={debounce(handleInput, 100)}
         onSubmit={handleSubmit}
-        placeholder="Input commit <scope>, or select below, press [Enter] to skip..."
       />
       <SplitView>
         <SelectInput

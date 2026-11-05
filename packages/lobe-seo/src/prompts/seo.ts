@@ -1,4 +1,4 @@
-import { ChatPromptTemplate } from '../../../common/promptTemplate';
+import { ChatPromptTemplate } from '@lobehub/cli-common/promptTemplate';
 
 const DEFAULT_RULE = `
 ## Rules

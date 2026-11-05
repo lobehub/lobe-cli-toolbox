@@ -21,7 +21,7 @@ export type ConfirmInputProps = {
   /**
    * Callback to trigger on cancellation.
    */
-  readonly onCancel: () => void; // eslint-disable-line react/boolean-prop-naming
+  readonly onCancel: () => void;
 
   /**
    * Callback to trigger on confirmation.

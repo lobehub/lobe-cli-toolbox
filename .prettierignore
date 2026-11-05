@@ -21,12 +21,14 @@ node_modules
 *.log
 *.lock
 package-lock.json
+pnpm-lock.yaml
 
 # ci
 .coverage
 .eslintcache
 .stylelintcache
 test-output
+coverage
 
 # production
 dist
@@ -55,3 +57,5 @@ Dockerfile*
 
 # misc
 # add other ignore file below
+.agents
+CHANGELOG.md

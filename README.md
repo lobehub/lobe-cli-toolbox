@@ -43,7 +43,6 @@ English ・ [简体中文](./README.zh-CN.md) ・ [Report Bug][github-issues-lin
 
 | NAME                                | REPO                                        | NPM                                | DOWNLOAD              |
 | ----------------------------------- | ------------------------------------------- | ---------------------------------- | --------------------- |
-| [@lobehub/cli-ui][ui-url]           | [packages/lobe-cli-ui][ui-github]           | [![][ui-shield]][ui-url]           | ![][ui-download]      |
 | [@lobehub/cli-shebang][shebang-url] | [packages/lobe-cli-shebang][shebang-github] | [![][shebang-shield]][shebang-url] | ![][shebang-download] |
 
 <div align="right">
@@ -60,12 +59,13 @@ You can use Github Codespaces for online development:
 
 Or clone it for local development:
 
-[![][bun-shield]][bun-link]
-
 ```bash
 $ git clone https://github.com/lobehub/lobe-cli-toolbox.git
 $ cd lobe-cli-toolbox
-$ bun install
+$ corepack enable # uses the pnpm version pinned in package.json
+$ pnpm install
+$ pnpm run ci # lint + type-check + test
+$ pnpm run build && pnpm run smoke
 ```
 
 <div align="right">
@@ -116,8 +116,6 @@ This project is [MIT](./LICENSE) licensed.
 <!-- LINK GROUP -->
 
 [back-to-top]: https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square
-[bun-link]: https://bun.sh
-[bun-shield]: https://img.shields.io/badge/-speedup%20with%20bun-black?logo=bun&style=for-the-badge
 [github-action-release-link]: https://github.com/lobehub/lobe-cli-toolbox/actions/workflows/release.yml
 [github-action-release-shield]: https://img.shields.io/github/actions/workflow/status/lobehub/lobe-cli-toolbox/release.yml?label=release&labelColor=black&logo=githubactions&logoColor=white&style=flat-square
 [github-action-test-link]: https://github.com/lobehub/lobe-cli-toolbox/actions/workflows/test.yml
@@ -168,7 +166,3 @@ This project is [MIT](./LICENSE) licensed.
 [shebang-shield]: https://img.shields.io/npm/v/@lobehub/cli-shebang?color=369eff&labelColor=black&logo=npm&logoColor=white&style=flat-square
 [shebang-url]: https://www.npmjs.com/package/@lobehub/cli-shebang
 [split]: https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png
-[ui-download]: https://img.shields.io/npm/dt/@lobehub/cli-ui?labelColor=black&style=flat-square
-[ui-github]: https://github.com/lobehub/lobe-cli-toolbox/tree/master/packages/lobe-cli-ui/README.md
-[ui-shield]: https://img.shields.io/npm/v/@lobehub/cli-ui?color=369eff&labelColor=black&logo=npm&logoColor=white&style=flat-square
-[ui-url]: https://www.npmjs.com/package/@lobehub/cli-ui

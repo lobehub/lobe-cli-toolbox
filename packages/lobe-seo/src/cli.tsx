@@ -1,10 +1,13 @@
-import { render } from '@lobehub/cli-ui';
+import { skillAgents } from '@lobehub/cli-common/skill';
+import { runSkillInstall, type SkillFlags } from '@lobehub/cli-common/skillCommand';
+import { alert, render } from '@lobehub/cli-ui';
 import { Command, Option } from 'commander';
 import updateNotifier from 'update-notifier';
 
-import packageJson from '@/../package.json';
 import { Config, Seo } from '@/commands';
-import { explorer } from '@/store/config';
+import { explorer, migrateConfig } from '@/store/config';
+
+import packageJson from '../package.json';
 
 const notifier = updateNotifier({
   pkg: packageJson,
@@ -12,6 +15,8 @@ const notifier = updateNotifier({
 });
 
 notifier.notify({ isGlobal: true });
+
+if (migrateConfig()) alert.info('Migrated the lobe-seo config to the latest format');
 
 const program = new Command();
 
@@ -37,5 +42,16 @@ program.command('locale', { isDefault: true }).action(async () => {
     await new Seo().start();
   }
 });
+
+program
+  .command('skill')
+  .description('Install the lobe-seo skill for AI coding agents')
+  .option('-g, --global', 'Install into the home directory instead of the current project')
+  .addOption(
+    new Option('--agent <agents...>', 'Agents to install for, detected by default').choices(
+      skillAgents,
+    ),
+  )
+  .action((flags: SkillFlags) => runSkillInstall('lobe-seo', import.meta.url, flags));
 
 program.parse();

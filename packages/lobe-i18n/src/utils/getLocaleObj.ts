@@ -1,4 +1,4 @@
-import { LocaleObj } from '@/types';
+import type { LocaleObj } from '@/types';
 import { readJSON, writeJSON } from '@/utils/fs';
 
 export const getLocaleObj = (filename: string): LocaleObj => {

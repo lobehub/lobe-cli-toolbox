@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest';
 
-import { LanguageModel } from '../../common/models';
 import { defineConfig } from './index';
 
 describe('index', () => {
@@ -8,7 +7,7 @@ describe('index', () => {
     it('should return the config as is', () => {
       const config = {
         entryLocale: 'en',
-        modelName: LanguageModel.GPT_3_5_TURBO,
+        modelName: 'gpt-3.5-turbo',
         outputLocales: ['zh-CN', 'ja'],
       };
 

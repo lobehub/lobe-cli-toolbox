@@ -1,7 +1,8 @@
 import { Box, type BoxProps, Text } from 'ink';
-import { ReactNode, memo } from 'react';
+import type { ReactNode } from 'react';
+import { memo } from 'react';
 
-import { useTheme } from '@/hooks/useTheme';
+import { useTheme } from '../hooks/useTheme';
 
 export interface PanelProps extends BoxProps {
   bodyConfig?: BoxProps;

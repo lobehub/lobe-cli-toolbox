@@ -1,8 +1,7 @@
-import { TextInput } from '@lobehub/cli-ui';
-import { ConfigPanel, type ConfigPanelProps } from '@lobehub/cli-ui';
+import { ConfigPanel, type ConfigPanelProps, TextInput } from '@lobehub/cli-ui';
 import { memo, useMemo, useState } from 'react';
 
-import { type ConfigKeys, type Config as LocalConfig, useConfStore } from '@/store/confStore';
+import { type Config as LocalConfig, type ConfigKeys, useConfStore } from '@/store/confStore';
 
 const Config = memo(() => {
   const [active, setActive] = useState<string>();
@@ -19,8 +18,8 @@ const Config = memo(() => {
         children: (
           <TextInput
             defaultValue={store.githubToken}
-            onSubmit={(v: string) => setConfig('githubToken', v)}
             placeholder="Input Github token..."
+            onSubmit={(v: string) => setConfig('githubToken', v)}
           />
         ),
         defaultValue: getDefault('githubToken'),

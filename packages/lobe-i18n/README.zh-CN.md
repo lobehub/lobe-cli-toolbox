@@ -36,6 +36,7 @@ Lobe i18n 是一款使用 ChatGPT 自动化 i18n 的 CLI 流程工具
 - [🤯 使用](#-使用)
   - [第一步：初始化配置](#第一步初始化配置)
   - [第二步：运行翻译命令](#第二步运行翻译命令)
+  - [AI Agent Skill](#ai-agent-skill)
   - [配置](#配置)
   - [环境变量](#环境变量)
 - [🌏 Locale 配置](#-locale-配置)
@@ -79,7 +80,7 @@ npm install -g @lobehub/i18n-cli
 ```
 
 > \[!IMPORTANT]\
-> 请确保环境中 `Node.js` 版本 **>= 18**
+> 请确保环境中 `Node.js` 版本 **>= 22**
 
 <div align="right">
 
@@ -118,7 +119,7 @@ module.exports = defineConfig({
 ```
 
 > \[!IMPORTANT]\
-> 要使用 AI 自动生成，需要在设置中填写 [OpenAI 令牌](https://platform.openai.com/account/api-keys)
+> 要使用 AI 自动生成，请运行 `lobe-i18n -o` 选择供应商、接口协议、API 地址、API 密钥和模型，或设置下方的 `LOBE_*` 环境变量
 
 ```shell
 # 翻译 Locale 文件
@@ -129,6 +130,9 @@ $ lobe-i18n locale
 # 翻译 Markdown 文件
 $ lobe-i18n md
 
+# 忽略 Markdown 缓存，重新翻译所有 Markdown 文件
+$ lobe-i18n md --force
+
 # Lint 校验翻译文件语言正确性
 $ lobe-i18n lint
 
@@ -138,6 +142,20 @@ $ lobe-i18n --with-md
 # 指定配置文件
 $ lobe-i18n -c './custom-config.js' # or use the full flag --config
 ```
+
+<br/>
+
+### AI Agent Skill
+
+安装 `lobe-i18n` skill，让 Claude Code、Cursor、Codex、Copilot 等编程 Agent 知道如何使用它：
+
+```shell
+$ lobe-i18n skill                # 当前项目：.agents/skills，存在 .claude 时同时安装到 .claude/skills
+$ lobe-i18n skill --global       # 安装到用户目录
+$ lobe-i18n skill --agent claude # 只安装到 .claude/skills（可选 agents / claude）
+```
+
+旧版本写入的配置会在下次运行任意 `lobe-i18n` 命令时自动迁移到新格式。
 
 <br/>
 
@@ -159,10 +177,14 @@ $ lobe-i18n -c './custom-config.js' # or use the full flag --config
 
 本项目提供了一些额外的配置项，使用环境变量进行设置：
 
-| 环境变量           | 类型 | 描述                                                                                   | 示例                                                                         |
-| ------------------ | ---- | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `OPENAI_API_KEY`   | 必选 | 这是你在 OpenAI 账户页面申请的 API 密钥                                                | `sk-xxxxxx...xxxxxx`                                                         |
-| `OPENAI_PROXY_URL` | 可选 | 如果你手动配置了 OpenAI 接口代理，可以使用此配置项来覆盖默认的 OpenAI API 请求基础 URL | `https://api.chatanywhere.cn/v1`<br/>默认值:<br/>`https://api.openai.com/v1` |
+| 环境变量           | 类型 | 描述                                                                                                                                                                                                                       | 示例                                                                     |
+| ------------------ | ---- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| `LOBE_PROVIDER`    | 可选 | 供应商预设，优先于 `lobe-i18n --option` 中的配置：`openai` `anthropic` `google` `deepseek` `qwen` `moonshot` `zhipu` `minimax` `openrouter` `siliconflow` `volcengine` `groq` `xai` `mistral` `ollama` `lmstudio` `custom` | `deepseek`                                                               |
+| `LOBE_API_TYPE`    | 可选 | 接口协议：`chat-completions`（`/v1/chat/completions`）、`responses`（`/v1/responses`）、`anthropic`（`/v1/messages`）、`gemini`                                                                                            | `anthropic`                                                              |
+| `LOBE_BASE_URL`    | 可选 | API 地址                                                                                                                                                                                                                   | `https://api.deepseek.com/anthropic`                                     |
+| `LOBE_API_KEY`     | 可选 | API 密钥。各预设也会读取自己的变量，如 `ANTHROPIC_API_KEY` `GEMINI_API_KEY` `DEEPSEEK_API_KEY` `DASHSCOPE_API_KEY` `OPENROUTER_API_KEY`；`ollama` / `lmstudio` 无需密钥                                                    | `sk-xxxxxx...xxxxxx`                                                     |
+| `OPENAI_API_KEY`   | 可选 | 旧版配置：未配置供应商时，与 `OPENAI_PROXY_URL` 一起按 OpenAI Chat Completions 兼容接口使用                                                                                                                                | `sk-xxxxxx...xxxxxx`                                                     |
+| `OPENAI_PROXY_URL` | 可选 | 旧版配置：OpenAI 兼容接口地址                                                                                                                                                                                              | `https://api.chatanywhere.cn/v1`<br/>默认值: `https://api.openai.com/v1` |
 
 <div align="right">
 
@@ -172,22 +194,22 @@ $ lobe-i18n -c './custom-config.js' # or use the full flag --config
 
 ## 🌏 Locale 配置
 
-| 属性名称        | 必填 | 类型           | 默认值          | 描述                                                         |
-| --------------- | ---- | -------------- | --------------- | ------------------------------------------------------------ |
-| entry           | `*`  | `string`       | -               | 入口文件或文件夹                                             |
-| entryLocale     | `*`  | `string`       | -               | 作为翻译参考的语言                                           |
-| modelName       |      | `string`       | `gpt-3.5-turbo` | 使用的模型                                                   |
-| output          | `*`  | `string`       | -               | 存储本地化文件的位置                                         |
-| outputLocales   | `*`  | `string[] `    | `[]`            | 需要进行翻译的所有语言                                       |
-| keyStyle        |      | `string`       | `nested`        | 处理点分隔键的方式：`nested`、`flat` 或 `auto`（按入口文件） |
-| reference       |      | `string`       | -               | 提供一些上下文以获得更准确的翻译                             |
-| saveImmediately |      | `boolean`      | `false`         | 在每个翻译块完成后立即保存翻译结果                           |
-| splitToken      |      | `number`       | -               | 按令牌分割本地化 JSON 文件，默认自动计算                     |
-| temperature     |      | `number`       | `0`             | 使用的采样温度                                               |
-| topP            |      | `number`       | `1`             | 生成过程中的核采样方法概率阈值，取值越大生成的随机性越高     |
-| concurrency     |      | `number`       | `5`             | 同时并发的队列请求数量                                       |
-| experimental    |      | `experimental` | `{}`            | 实验性功能，见下文                                           |
-| markdown        |      | `markdown`     | `{}`            | 见 `markdown` 配置说明                                       |
+| 属性名称        | 必填 | 类型           | 默认值     | 描述                                                                                        |
+| --------------- | ---- | -------------- | ---------- | ------------------------------------------------------------------------------------------- |
+| entry           | `*`  | `string`       | -          | 入口文件或文件夹                                                                            |
+| entryLocale     | `*`  | `string`       | -          | 作为翻译参考的语言                                                                          |
+| modelName       |      | `string`       | 供应商默认 | 覆盖 `lobe-i18n --option` 中选择的模型，如 `gpt-5-mini` `claude-sonnet-4-5` `deepseek-chat` |
+| output          | `*`  | `string`       | -          | 存储本地化文件的位置                                                                        |
+| outputLocales   | `*`  | `string[] `    | `[]`       | 需要进行翻译的所有语言                                                                      |
+| keyStyle        |      | `string`       | `nested`   | 处理点分隔键的方式：`nested`、`flat` 或 `auto`（按入口文件）                                |
+| reference       |      | `string`       | -          | 提供一些上下文以获得更准确的翻译                                                            |
+| saveImmediately |      | `boolean`      | `true`     | 在每个翻译块完成后立即保存翻译结果                                                          |
+| splitToken      |      | `number`       | `4000`     | 按令牌分割本地化 JSON 文件，单块过大可能超出模型的最大输出长度                              |
+| temperature     |      | `number`       | `0`        | 使用的采样温度                                                                              |
+| topP            |      | `number`       | `1`        | 生成过程中的核采样方法概率阈值，取值越大生成的随机性越高                                    |
+| concurrency     |      | `number`       | `5`        | 同时并发的队列请求数量                                                                      |
+| experimental    |      | `experimental` | `{}`       | 实验性功能，见下文                                                                          |
+| markdown        |      | `markdown`     | `{}`       | 见 `markdown` 配置说明                                                                      |
 
 #### `experimental`
 
@@ -353,6 +375,11 @@ $ lobe-i18n
 | mode             |      | `string`,`mdast`,`function` | `string`                     | 翻译的模式选择，解释见下文                |
 | translateCode    |      | `boolean`                   | `false`                      | 在 `mdast` 下是否翻译代码块，其他模式无效 |
 | includeMatter    |      | `boolean`                   | `false`                      | 是否翻译 `front matter`                   |
+| cacheFile        |      | `string`                    | `.i18n-cache.json`           | 存储源文件 hash 的缓存文件，用于增量翻译  |
+
+#### Markdown 缓存
+
+每个译文都会在 `cacheFile` 中记录其源 Markdown 的 hash。源文件变更后，过期的译文会自动重新翻译，未变更的则跳过。首次运行时，已存在但没有缓存记录的译文会被视为最新。建议将缓存文件提交到仓库，以便团队和 CI 共享；使用 `--force` 可重新翻译全部文件。
 
 #### `outputExtensions`
 

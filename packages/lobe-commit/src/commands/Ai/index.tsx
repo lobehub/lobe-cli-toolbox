@@ -26,6 +26,8 @@ const Ai = memo(() => {
 
   return (
     <Panel
+      reverse
+      title={`🤯 AI Commit Generator ${commitConfig.stream ? '(Streaming)' : ''} ${tokenUsage > 0 ? `[Tokens: ${tokenUsage}]` : ''}`}
       footer={
         summary && (
           <Text color={theme.colorTextDescription}>
@@ -34,8 +36,6 @@ const Ai = memo(() => {
           </Text>
         )
       }
-      reverse
-      title={`🤯 AI Commit Generator ${commitConfig.stream ? '(Streaming)' : ''} ${tokenUsage > 0 ? `[Tokens: ${tokenUsage}]` : ''}`}
     >
       <AiMessageDisplay
         loading={loading}

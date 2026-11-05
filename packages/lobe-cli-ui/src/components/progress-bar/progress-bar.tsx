@@ -1,4 +1,4 @@
-import { Box, type DOMElement, Text, measureElement } from 'ink';
+import { Box, type DOMElement, measureElement, Text } from 'ink';
 import { useState } from 'react';
 
 import { useComponentTheme } from '../../theme';
@@ -17,7 +17,6 @@ export type ProgressBarProps = {
 export function ProgressBar({ value }: ProgressBarProps) {
   const [width, setWidth] = useState(0);
 
-  // eslint-disable-next-line @typescript-eslint/ban-types
   const [ref, setRef] = useState<DOMElement | null>(null);
 
   if (ref) {

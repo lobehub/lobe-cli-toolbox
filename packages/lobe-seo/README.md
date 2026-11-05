@@ -32,6 +32,7 @@ English ・ [简体中文](./README.zh-CN.md) ・ [Changelog](./CHANGELOG.md) ·
 - [✨ Features](#-features)
 - [📦 Installation](#-installation)
 - [🤯 Usage](#-usage)
+  - [AI Agent Skill](#ai-agent-skill)
   - [Configuration](#configuration)
   - [Environment Variables](#environment-variables)
 - [🔍 Configuration](#-configuration)
@@ -68,7 +69,7 @@ npm install -g @lobehub/seo-cli
 ```
 
 > \[!IMPORTANT]\
-> Make sure your environment has `Node.js` version **>= 18**
+> Make sure your environment has `Node.js` version **>= 22**
 
 <div align="right">
 
@@ -85,7 +86,7 @@ $ lobe-seo -o # or use the full flag --option
 ```
 
 > \[!IMPORTANT]\
-> To use AI auto-generation, you need to fill in the [OpenAI token](https://platform.openai.com/account/api-keys) in the settings
+> To use AI auto-generation, run `lobe-seo -o` to pick a provider, API protocol, base URL, API key and model, or set the `LOBE_*` environment variables below.
 
 ```shell
 # Translate Locale files
@@ -94,6 +95,20 @@ $ lobe-seo
 # Specify a configuration file
 $ lobe-seo -c './custom-config.js' # or use the full flag --config
 ```
+
+<br/>
+
+### AI Agent Skill
+
+Install the `lobe-seo` skill so coding agents (Claude Code, Cursor, Codex, Copilot...) know how to use it:
+
+```shell
+$ lobe-seo skill                # project: .agents/skills, plus .claude/skills if .claude exists
+$ lobe-seo skill --global       # home directory
+$ lobe-seo skill --agent claude # only .claude/skills (agents / claude)
+```
+
+Configs written by older versions are migrated automatically the next time any `lobe-seo` command runs.
 
 <br/>
 
@@ -115,10 +130,14 @@ You can choose any configuration method in [cosmiconfig](https://github.com/cosm
 
 Some additional configurations are provided in this project, set using environment variables:
 
-| Environment Variable | Type     | Description                                                                                                                 | Example                                                                       |
-| -------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| `OPENAI_API_KEY`     | Required | This is the API key you obtained from the OpenAI account page                                                               | `sk-xxxxxx...xxxxxx`                                                          |
-| `OPENAI_PROXY_URL`   | Optional | If you manually configure an OpenAI API proxy, you can use this setting to override the default OpenAI API request base URL | `https://api.chatanywhere.cn/v1`<br/>Default:<br/>`https://api.openai.com/v1` |
+| Environment Variable | Required | Description                                                                                                                                                                                                              | Example                                                                   |
+| -------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------- |
+| `LOBE_PROVIDER`      | No       | Provider preset, overrides `lobe-seo --option`: `openai` `anthropic` `google` `deepseek` `qwen` `moonshot` `zhipu` `minimax` `openrouter` `siliconflow` `volcengine` `groq` `xai` `mistral` `ollama` `lmstudio` `custom` | `deepseek`                                                                |
+| `LOBE_API_TYPE`      | No       | API protocol: `chat-completions` (`/v1/chat/completions`), `responses` (`/v1/responses`), `anthropic` (`/v1/messages`), `gemini`                                                                                         | `anthropic`                                                               |
+| `LOBE_BASE_URL`      | No       | API base URL                                                                                                                                                                                                             | `https://api.deepseek.com/anthropic`                                      |
+| `LOBE_API_KEY`       | No       | API key. Presets also read their own variable, e.g. `ANTHROPIC_API_KEY` `GEMINI_API_KEY` `DEEPSEEK_API_KEY` `DASHSCOPE_API_KEY` `OPENROUTER_API_KEY`. Not needed for `ollama` / `lmstudio`                               | `sk-xxxxxx...xxxxxx`                                                      |
+| `OPENAI_API_KEY`     | No       | Legacy: used with `OPENAI_PROXY_URL` when no provider is configured (OpenAI Chat Completions compatible)                                                                                                                 | `sk-xxxxxx...xxxxxx`                                                      |
+| `OPENAI_PROXY_URL`   | No       | Legacy: OpenAI compatible base URL                                                                                                                                                                                       | `https://api.chatanywhere.cn/v1`<br/>Default: `https://api.openai.com/v1` |
 
 <div align="right">
 
@@ -128,17 +147,17 @@ Some additional configurations are provided in this project, set using environme
 
 ## 🔍 Configuration
 
-| Property Name  | Required | Type           | Default Value   | Description                                      |
-| -------------- | -------- | -------------- | --------------- | ------------------------------------------------ |
-| entry          | `*`      | `string`       | -               | Entry file or folder                             |
-| entryExtension |          | `string`       | `.mdx`          | Entry file extension                             |
-| groupKey       |          | `string`       | -               | Set group key for SEO matters                    |
-| tagStringify   |          | `boolean`      | `false`         | Stringify the tags array                         |
-| modelName      |          | `string`       | `gpt-3.5-turbo` | Model used                                       |
-| temperature    |          | `number`       | `0`             | Sampling temperature used                        |
-| reference      |          | `string`       | -               | Provide some rule for more accurate seo          |
-| concurrency    |          | `number`       | `5`             | Number of concurrently pending promises returned |
-| experimental   |          | `experimental` | `{}`            | Experimental features, see below                 |
+| Property Name  | Required | Type           | Default Value    | Description                                                                                              |
+| -------------- | -------- | -------------- | ---------------- | -------------------------------------------------------------------------------------------------------- |
+| entry          | `*`      | `string`       | -                | Entry file or folder                                                                                     |
+| entryExtension |          | `string`       | `.mdx`           | Entry file extension                                                                                     |
+| groupKey       |          | `string`       | -                | Set group key for SEO matters                                                                            |
+| tagStringify   |          | `boolean`      | `false`          | Stringify the tags array                                                                                 |
+| modelName      |          | `string`       | provider default | Overrides the model chosen by `lobe-seo --option`, e.g. `gpt-5-mini` `claude-sonnet-4-5` `deepseek-chat` |
+| temperature    |          | `number`       | `0`              | Sampling temperature used                                                                                |
+| reference      |          | `string`       | -                | Provide some rule for more accurate seo                                                                  |
+| concurrency    |          | `number`       | `5`              | Number of concurrently pending promises returned                                                         |
+| experimental   |          | `experimental` | `{}`             | Experimental features, see below                                                                         |
 
 #### `experimental`
 

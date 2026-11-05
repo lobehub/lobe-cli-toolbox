@@ -1,21 +1,7 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
-import { LanguageModel } from '../../../common/models';
 import { defineConfig } from '../index';
 import { MarkdownModeType } from '../types/config';
-
-// Mock the heavy dependencies to focus on core logic
-vi.mock('openai', () => ({
-  default: class MockOpenAI {
-    chat = {
-      completions: {
-        create: vi.fn().mockResolvedValue({
-          choices: [{ message: { content: 'mocked translation' } }],
-        }),
-      },
-    };
-  },
-}));
 
 // Function for mode selection test
 const modeFunction = ({ filePath }: { fileContent: string; filePath: string }) => {
@@ -28,7 +14,7 @@ describe('Core I18n Functionality', () => {
       const config = defineConfig({
         entry: './locales/en',
         entryLocale: 'en',
-        modelName: LanguageModel.GPT_3_5_TURBO,
+        modelName: 'gpt-3.5-turbo',
         output: './locales',
         outputLocales: ['zh-CN', 'ja'],
         temperature: 0.7,
@@ -37,7 +23,7 @@ describe('Core I18n Functionality', () => {
       expect(config).toEqual({
         entry: './locales/en',
         entryLocale: 'en',
-        modelName: LanguageModel.GPT_3_5_TURBO,
+        modelName: 'gpt-3.5-turbo',
         output: './locales',
         outputLocales: ['zh-CN', 'ja'],
         temperature: 0.7,
@@ -166,22 +152,22 @@ describe('Core I18n Functionality', () => {
         defineConfig({
           entry: './locales/en',
           entryLocale: 'en',
-          modelName: LanguageModel.GPT_3_5_TURBO,
+          modelName: 'gpt-3.5-turbo',
           output: './locales',
           outputLocales: ['zh-CN'],
         }),
         defineConfig({
           entry: './locales/en',
           entryLocale: 'en',
-          modelName: LanguageModel.GPT_4,
+          modelName: 'gpt-4',
           output: './locales',
           outputLocales: ['zh-CN'],
         }),
       ];
 
       // Check that modelName is set correctly for both configs
-      expect(configs[0]).toHaveProperty('modelName', LanguageModel.GPT_3_5_TURBO);
-      expect(configs[1]).toHaveProperty('modelName', LanguageModel.GPT_4);
+      expect(configs[0]).toHaveProperty('modelName', 'gpt-3.5-turbo');
+      expect(configs[1]).toHaveProperty('modelName', 'gpt-4');
     });
   });
 

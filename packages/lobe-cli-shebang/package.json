@@ -2,7 +2,7 @@
   "name": "@lobehub/cli-shebang",
   "version": "1.3.0",
   "description": "Add shebang to target file",
-  "homepage": "https://github.comlobehub/lobe-cli-toolbox/tree/master/packages/cli-shebang",
+  "homepage": "https://github.com/lobehub/lobe-cli-toolbox/tree/master/packages/cli-shebang",
   "bugs": {
     "url": "https://github.com/lobehub/lobe-cli-toolbox/issues/new"
   },
@@ -14,9 +14,6 @@
   "author": "LobeHub <i@lobehub.com>",
   "sideEffects": false,
   "type": "module",
-  "imports": {
-    "@": "./src"
-  },
   "bin": {
     "lobe-shebang": "dist/cli.js",
     "shebang": "dist/cli.js"
@@ -25,29 +22,25 @@
     "dist"
   ],
   "scripts": {
-    "build": "npm run type-check && pkgroll --minify -p tsconfig.prod.json --env.NODE_ENV=production && npm run shebang",
-    "dev": "pkgroll -p tsconfig.prod.json --env.NODE_ENV=development --watch",
-    "link": "npm run build && npm link -f",
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "link": "pnpm run build && npm link -f",
     "prepack": "clean-package",
     "postpack": "clean-package restore",
-    "prepare": "npm run build",
-    "shebang": "node ./dist/cli.js -t ./dist/cli.js",
     "start": "node ./dist/cli.js",
-    "test": "vitest --passWithNoTests",
-    "test:coverage": "vitest run --coverage --passWithNoTests",
+    "test": "vitest run",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "commander": "^13.0.0",
-    "consola": "^3.2.3",
-    "update-notifier": "^7.2.0"
+    "commander": "^15.0.0",
+    "consola": "^3.4.2",
+    "update-notifier": "^7.3.1"
   },
   "devDependencies": {
     "clean-package": "^2.2.0"
   },
-  "packageManager": "pnpm@10.10.0",
   "engines": {
-    "node": ">=18"
+    "node": ">=22.18.0"
   },
   "publishConfig": {
     "access": "public",

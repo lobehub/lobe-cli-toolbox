@@ -1,5 +1,5 @@
 import { CONFIDENCE_THRESHOLDS } from '../constants';
-import { LintIssue } from '../types';
+import type { LintIssue } from '../types';
 import { findLineNumber } from './fileUtils';
 import { detectLanguage } from './languageDetection';
 import {
@@ -8,6 +8,39 @@ import {
   createLanguageMismatchIssue,
   isSimilarLanguage,
 } from './languageValidation';
+
+const checkString = async (
+  fieldPath: string,
+  value: string,
+  mainLanguage: string,
+  filePath: string,
+  threshold: number,
+): Promise<LintIssue | undefined> => {
+  if (value.trim() === '')
+    return createEmptyStringIssue(fieldPath, findLineNumber(filePath, fieldPath, value));
+
+  try {
+    const { confidence, detected } = await detectLanguage(value);
+    if (!detected || detected === mainLanguage || confidence <= threshold) return;
+    // 跳过相似语言的低置信度检测
+    if (isSimilarLanguage(mainLanguage, detected, confidence)) return;
+
+    return createLanguageMismatchIssue(
+      fieldPath,
+      detected,
+      mainLanguage,
+      confidence,
+      value,
+      findLineNumber(filePath, fieldPath, value),
+    );
+  } catch (error) {
+    return createELDErrorIssue(
+      fieldPath,
+      error instanceof Error ? error.message : 'Unknown error',
+      findLineNumber(filePath, fieldPath, value),
+    );
+  }
+};
 
 /**
  * 递归检查对象中字段的语言
@@ -19,114 +52,28 @@ export async function checkFieldLanguages(
   filePath: string,
 ): Promise<LintIssue[]> {
   const issues: LintIssue[] = [];
+  const push = (issue?: LintIssue) => issue && issues.push(issue);
 
   for (const [key, value] of Object.entries(obj)) {
     const currentPath = path ? `${path}.${key}` : key;
 
     if (typeof value === 'string') {
-      if (value.trim().length > 0) {
-        // 检查空字符串
-        if (value.trim() === '') {
-          const lineNumber = findLineNumber(filePath, currentPath, value);
-          issues.push(createEmptyStringIssue(currentPath, lineNumber));
-          continue;
-        }
-
-        // 对字符串进行语言检测
-        try {
-          const fieldDetection = await detectLanguage(value);
-          const fieldDetectedLanguage = fieldDetection.detected;
-          const fieldConfidence = fieldDetection.confidence;
-
-          if (
-            fieldDetectedLanguage &&
-            fieldDetectedLanguage !== mainLanguage &&
-            fieldConfidence > 0.5
-          ) {
-            // 检查是否为相似语言
-            if (isSimilarLanguage(mainLanguage, fieldDetectedLanguage, fieldConfidence)) {
-              continue; // 跳过相似语言的低置信度检测
-            }
-
-            const lineNumber = findLineNumber(filePath, currentPath, value);
-            issues.push(
-              createLanguageMismatchIssue(
-                currentPath,
-                fieldDetectedLanguage,
-                mainLanguage,
-                fieldConfidence,
-                value,
-                lineNumber,
-              ),
-            );
-          }
-        } catch (eldError) {
-          const lineNumber = findLineNumber(filePath, currentPath, value);
-          issues.push(
-            createELDErrorIssue(
-              currentPath,
-              eldError instanceof Error ? eldError.message : 'Unknown error',
-              lineNumber,
-            ),
-          );
-        }
-      }
+      push(await checkString(currentPath, value, mainLanguage, filePath, 0.5));
     } else if (Array.isArray(value)) {
-      // 处理数组中的字符串
       for (const [i, element] of value.entries()) {
-        const arrayPath = `${currentPath}[${i}]`;
-        if (typeof element === 'string' && element.trim().length > 0) {
-          // 检查空字符串
-          if (element.trim() === '') {
-            const lineNumber = findLineNumber(filePath, arrayPath, element);
-            issues.push(createEmptyStringIssue(arrayPath, lineNumber));
-            continue;
-          }
-
-          // 对数组中的字符串进行语言检测
-          try {
-            const fieldDetection = await detectLanguage(element);
-            const fieldDetectedLanguage = fieldDetection.detected;
-            const fieldConfidence = fieldDetection.confidence;
-
-            if (
-              fieldDetectedLanguage &&
-              fieldDetectedLanguage !== mainLanguage &&
-              fieldConfidence > CONFIDENCE_THRESHOLDS.ARRAY_TEXT
-            ) {
-              // 检查是否为相似语言
-              if (isSimilarLanguage(mainLanguage, fieldDetectedLanguage, fieldConfidence)) {
-                continue; // 跳过相似语言的低置信度检测
-              }
-
-              const lineNumber = findLineNumber(filePath, arrayPath, element);
-              issues.push(
-                createLanguageMismatchIssue(
-                  arrayPath,
-                  fieldDetectedLanguage,
-                  mainLanguage,
-                  fieldConfidence,
-                  element,
-                  lineNumber,
-                ),
-              );
-            }
-          } catch (eldError) {
-            const lineNumber = findLineNumber(filePath, arrayPath, element);
-            issues.push(
-              createELDErrorIssue(
-                arrayPath,
-                eldError instanceof Error ? eldError.message : 'Unknown error',
-                lineNumber,
-              ),
-            );
-          }
-        }
+        if (typeof element !== 'string') continue;
+        push(
+          await checkString(
+            `${currentPath}[${i}]`,
+            element,
+            mainLanguage,
+            filePath,
+            CONFIDENCE_THRESHOLDS.ARRAY_TEXT,
+          ),
+        );
       }
     } else if (typeof value === 'object' && value !== null) {
-      // 递归检查嵌套对象
-      const nestedIssues = await checkFieldLanguages(value, currentPath, mainLanguage, filePath);
-      issues.push(...nestedIssues);
+      issues.push(...(await checkFieldLanguages(value, currentPath, mainLanguage, filePath)));
     }
   }
 

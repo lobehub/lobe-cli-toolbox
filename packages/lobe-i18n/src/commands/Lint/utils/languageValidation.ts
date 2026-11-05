@@ -4,7 +4,7 @@ import {
   ENGLISH_TERMS,
   LANGUAGE_FAMILIES,
 } from '../constants';
-import { LintIssue } from '../types';
+import type { LintIssue } from '../types';
 
 /**
  * 检查是否为相似语言（基于语言族系）
