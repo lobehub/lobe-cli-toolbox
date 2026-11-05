@@ -32,17 +32,7 @@ AI CLI 工具箱，提高 git 提交和国际化工作流的效率
 | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------- |
 | [**🌏 Lobe i18n**][lobe-i18n-github] [(中文)][lobe-i18n-github-cn]<br/>国际化翻译过程的自动化工具，由 ChatGPT 提供支持。支持大文件的自动分割、增量更新和自定义选项，可以选择 OpenAI 模型、API 代理和温度等功能。<br/><br/>[![][lobe-i18n-version] ![][lobe-i18n-download]][lobe-i18n-url] | [![][lobe-i18n-cover]][lobe-i18n-github]     |
 | [**🔖 Lobe label**][lobe-label-github]<br/>自动从模板仓库复制问题标签。<br/><br/>[![][lobe-label-version] ![][lobe-label-download]][lobe-label-url]                                                                                                                                       | [![][lobe-label-cover]][lobe-label-github]   |
-
-<div align="right">
-
-[![][back-to-top]](#readme-top)
-
-</div>
-
-## 📦 生态系统
-
-| 名称 | 仓库 | NPM | 下载 |
-| ---- | ---- | --- | ---- |
+| [**🔍 Lobe SEO**][lobe-seo-github] [(中文)][lobe-seo-github-cn]<br/>利用 ChatGPT 自动生成 MDX SEO Matter 的 CLI 工具。<br/><br/>[![][lobe-seo-version] ![][lobe-seo-download]][lobe-seo-url]                                                                                              | [![][lobe-seo-cover]][lobe-seo-github]       |
 
 <div align="right">
 
@@ -89,15 +79,13 @@ $ pnpm run build && pnpm run smoke
 
 ## 🔗 链接
 
-### 更多产品
-
-- **[🤖 Lobe Chat][lobe-chat]** - 一个开源、可扩展的（软件功能调用）高性能聊天机器人框架。支持一键免费部署私人 ChatGPT/LLM Web 应用程序。
-- **[🤯 Lobe Theme][lobe-theme]** - 稳定扩散 WebUI 的现代主题，精致的界面设计，高度可定制的用户界面和提高效率的功能。
-
-### 鸣谢
-
-- **langchainjs** - <https://github.com/hwchase17/langchainjs>
-- **ink** - <https://github.com/vadimdemedes/ink>
+- **[LobeHub](https://github.com/lobehub/lobehub)**
+- **[lobe ui](https://github.com/lobehub/lobe-ui)**
+- **[lobe icons](https://github.com/lobehub/lobe-icons)**
+- **[lobe charts](https://github.com/lobehub/lobe-charts)**
+- **[lobe editor](https://github.com/lobehub/lobe-editor)**
+- **[docs kit](https://github.com/lobehub/docs-kit)**
+- **[stream down](https://github.com/lobehub/streamdown)**
 
 <div align="right">
 
@@ -137,7 +125,6 @@ This project is [MIT](./LICENSE) licensed.
 [github-releasedate-shield]: https://img.shields.io/github/release-date/lobehub/lobe-cli-toolbox?labelColor=black&style=flat-square
 [github-stars-link]: https://github.com/lobehub/lobe-cli-toolbox/network/stargazers
 [github-stars-shield]: https://img.shields.io/github/stars/lobehub/lobe-cli-toolbox?color=ffcb47&labelColor=black&style=flat-square
-[lobe-chat]: https://github.com/lobehub/lobe-chat
 [lobe-commit-cover]: https://raw.githubusercontent.com/lobehub/lobe-cli-toolbox/master/docs/preview.webp
 [lobe-commit-download]: https://img.shields.io/npm/dt/@lobehub/commit-cli?labelColor=black&&style=flat-square
 [lobe-commit-github]: https://github.com/lobehub/lobe-cli-toolbox/tree/master/packages/lobe-commit
@@ -154,8 +141,13 @@ This project is [MIT](./LICENSE) licensed.
 [lobe-label-download]: https://img.shields.io/npm/dt/@lobehub/label-cli?labelColor=black&&style=flat-square
 [lobe-label-github]: https://github.com/lobehub/lobe-cli-toolbox/tree/master/packages/lobe-label
 [lobe-label-url]: https://www.npmjs.com/package/@lobehub/label-cli
+[lobe-seo-cover]: https://raw.githubusercontent.com/lobehub/lobe-cli-toolbox/master/docs/preview-seo.webp
+[lobe-seo-download]: https://img.shields.io/npm/dt/@lobehub/seo-cli?labelColor=black&&style=flat-square
+[lobe-seo-github]: https://github.com/lobehub/lobe-cli-toolbox/tree/master/packages/lobe-seo/README.md
+[lobe-seo-github-cn]: https://github.com/lobehub/lobe-cli-toolbox/blob/master/packages/lobe-seo/README.zh-CN.md
+[lobe-seo-url]: https://www.npmjs.com/package/@lobehub/seo-cli
+[lobe-seo-version]: https://img.shields.io/npm/v/@lobehub/seo-cli?color=369eff&labelColor=black&logo=npm&logoColor=white&style=flat-square
 [lobe-label-version]: https://img.shields.io/npm/v/@lobehub/label-cli?color=369eff&labelColor=black&logo=npm&logoColor=white&style=flat-square
-[lobe-theme]: https://github.com/lobehub/sd-webui-lobe-theme
 [pr-welcome-link]: https://github.com/lobehub/lobe-cli-toolbox/pulls
 [pr-welcome-shield]: https://img.shields.io/badge/%F0%9F%A4%AF%20PR%20WELCOME-%E2%86%92-ffcb47?labelColor=black&style=for-the-badge
 [profile-link]: https://github.com/lobehub

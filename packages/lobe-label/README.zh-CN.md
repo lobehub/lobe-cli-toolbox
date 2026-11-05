@@ -136,14 +136,19 @@ $ bun dev
 
 ## 🔗 链接
 
-### 更多产品
+- **[LobeHub](https://github.com/lobehub/lobehub)**
+- **[lobe ui](https://github.com/lobehub/lobe-ui)**
+- **[lobe icons](https://github.com/lobehub/lobe-icons)**
+- **[lobe charts](https://github.com/lobehub/lobe-charts)**
+- **[lobe editor](https://github.com/lobehub/lobe-editor)**
+- **[docs kit](https://github.com/lobehub/docs-kit)**
+- **[stream down](https://github.com/lobehub/streamdown)**
 
-- **[🤖 Lobe Chat][lobe-chat]** - 一个开源、可扩展（函数调用）、高性能的聊天机器人框架。支持一键免费部署您的私有 ChatGPT/LLM Web 应用程序。
-- **[🤯 Lobe Theme][lobe-theme]** - 稳定扩散 WebUI 的现代主题，精美的界面设计，高度可定制的 UI 和提高效率的功能。
+<div align="right">
 
-### 鸣谢
+[![][back-to-top]](#readme-top)
 
-- **ink** - <https://github.com/vadimdemedes/ink>
+</div>
 
 ---
 
@@ -177,8 +182,6 @@ This project is [MIT](./LICENSE) licensed.
 [github-releasedate-shield]: https://img.shields.io/github/release-date/lobehub/lobe-cli-toolbox?labelColor=black&style=flat-square
 [github-stars-link]: https://github.com/lobehub/lobe-cli-toolbox/network/stargazers
 [github-stars-shield]: https://img.shields.io/github/stars/lobehub/lobe-cli-toolbox?color=ffcb47&labelColor=black&style=flat-square
-[lobe-chat]: https://github.com/lobehub/lobe-chat
-[lobe-theme]: https://github.com/lobehub/sd-webui-lobe-theme
 [npm-release-link]: https://www.npmjs.com/package/@lobehub/label-cli
 [npm-release-shield]: https://img.shields.io/npm/v/@lobehub/label-cli?color=369eff&labelColor=black&logo=npm&logoColor=white&style=flat-square
 [pr-welcome-link]: https://github.com/lobehub/lobe-cli-toolbox/pulls

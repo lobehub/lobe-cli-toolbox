@@ -40,8 +40,6 @@ Lobe SEO 是一款使用 ChatGPT 自动化 mdx 的 SEO Matter 的流程工具
 - [⌨️ 本地开发](#️-本地开发)
 - [🤝 参与贡献](#-参与贡献)
 - [🔗 链接](#-链接)
-  - [More Products](#more-products)
-  - [Credits](#credits)
 
 ####
 
@@ -268,14 +266,13 @@ $ bun dev
 
 ## 🔗 链接
 
-### More Products
-
-- **[🤖 Lobe Chat][lobe-chat]** - An open-source, extensible (Function Calling), high-performance chatbot framework. It supports one-click free deployment of your private ChatGPT/LLM web application.
-- **[🤯 Lobe Theme][lobe-theme]** - The modern theme for stable diffusion webui, exquisite interface design, highly customizable UI, and efficiency boosting features.
-
-### Credits
-
-- **langchainjs** - <https://github.com/hwchase17/langchainjs>
+- **[LobeHub](https://github.com/lobehub/lobehub)**
+- **[lobe ui](https://github.com/lobehub/lobe-ui)**
+- **[lobe icons](https://github.com/lobehub/lobe-icons)**
+- **[lobe charts](https://github.com/lobehub/lobe-charts)**
+- **[lobe editor](https://github.com/lobehub/lobe-editor)**
+- **[docs kit](https://github.com/lobehub/docs-kit)**
+- **[stream down](https://github.com/lobehub/streamdown)**
 
 <div align="right">
 
@@ -316,8 +313,6 @@ This project is [MIT](./LICENSE) licensed.
 [github-stars-link]: https://github.com/lobehub/lobe-cli-toolbox/network/stargazers
 [github-stars-shield]: https://img.shields.io/github/stars/lobehub/lobe-cli-toolbox?color=ffcb47&labelColor=black&style=flat-square
 [issues-url]: https://github.com/canisminor1990/lobe-commit/issues/new/choose
-[lobe-chat]: https://github.com/lobehub/lobe-chat
-[lobe-theme]: https://github.com/lobehub/sd-webui-lobe-theme
 [npm-release-link]: https://www.npmjs.com/package/@lobehub/seo-cli
 [npm-release-shield]: https://img.shields.io/npm/v/@lobehub/seo-cli?color=369eff&labelColor=black&logo=npm&logoColor=white&style=flat-square
 [pr-welcome-link]: https://github.com/lobehub/lobe-cli-toolbox/pulls

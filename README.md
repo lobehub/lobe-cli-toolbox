@@ -32,17 +32,7 @@ English ・ [简体中文](./README.zh-CN.md) ・ [Report Bug][github-issues-lin
 | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------- |
 | [**🌏 Lobe i18n**][lobe-i18n-github] [(中文)][lobe-i18n-github-cn]<br/>Automation tool for the i18n (internationalization) translation process, powered by ChatGPT. It supports features such as automatic splitting of large files, incremental updates, and customization options for the OpenAI model, API proxy, and temperature.<br/><br/>[![][lobe-i18n-version] ![][lobe-i18n-download]][lobe-i18n-url] | [![][lobe-i18n-cover]][lobe-i18n-github]     |
 | [**🔖 Lobe label**][lobe-label-github] [(中文)][lobe-label-github-cn]<br/>Automatically copy issues labels from template repo.<br/><br/>[![][lobe-label-version] ![][lobe-label-download]][lobe-label-url]                                                                                                                                                                                                     | [![][lobe-label-cover]][lobe-label-github]   |
-
-<div align="right">
-
-[![][back-to-top]](#readme-top)
-
-</div>
-
-## 📦 Ecosystem
-
-| NAME | REPO | NPM | DOWNLOAD |
-| ---- | ---- | --- | -------- |
+| [**🔍 Lobe SEO**][lobe-seo-github] [(中文)][lobe-seo-github-cn]<br/>CLI tool that automates SEO Matter generation for MDX using ChatGPT.<br/><br/>[![][lobe-seo-version] ![][lobe-seo-download]][lobe-seo-url]                                                                                                                                                                                                 | [![][lobe-seo-cover]][lobe-seo-github]       |
 
 <div align="right">
 
@@ -89,15 +79,13 @@ Contributions of all types are more than welcome, if you are interested in contr
 
 ## 🔗 Links
 
-### More Products
-
-- **[🤖 Lobe Chat][lobe-chat]** - An open-source, extensible (Function Calling), high-performance chatbot framework. It supports one-click free deployment of your private ChatGPT/LLM web application.
-- **[🤯 Lobe Theme][lobe-theme]** - The modern theme for stable diffusion webui, exquisite interface design, highly customizable UI, and efficiency boosting features.
-
-### Credits
-
-- **langchainjs** - <https://github.com/hwchase17/langchainjs>
-- **ink** - <https://github.com/vadimdemedes/ink>
+- **[LobeHub](https://github.com/lobehub/lobehub)**
+- **[lobe ui](https://github.com/lobehub/lobe-ui)**
+- **[lobe icons](https://github.com/lobehub/lobe-icons)**
+- **[lobe charts](https://github.com/lobehub/lobe-charts)**
+- **[lobe editor](https://github.com/lobehub/lobe-editor)**
+- **[docs kit](https://github.com/lobehub/docs-kit)**
+- **[stream down](https://github.com/lobehub/streamdown)**
 
 <div align="right">
 
@@ -137,7 +125,6 @@ This project is [MIT](./LICENSE) licensed.
 [github-releasedate-shield]: https://img.shields.io/github/release-date/lobehub/lobe-cli-toolbox?labelColor=black&style=flat-square
 [github-stars-link]: https://github.com/lobehub/lobe-cli-toolbox/network/stargazers
 [github-stars-shield]: https://img.shields.io/github/stars/lobehub/lobe-cli-toolbox?color=ffcb47&labelColor=black&style=flat-square
-[lobe-chat]: https://github.com/lobehub/lobe-chat
 [lobe-commit-cover]: https://raw.githubusercontent.com/lobehub/lobe-cli-toolbox/master/docs/preview.webp
 [lobe-commit-download]: https://img.shields.io/npm/dt/@lobehub/commit-cli?labelColor=black&&style=flat-square
 [lobe-commit-github]: https://github.com/lobehub/lobe-cli-toolbox/tree/master/packages/lobe-commit/README.md
@@ -155,8 +142,13 @@ This project is [MIT](./LICENSE) licensed.
 [lobe-label-github]: https://github.com/lobehub/lobe-cli-toolbox/tree/master/packages/lobe-label/README.md
 [lobe-label-github-cn]: https://github.com/lobehub/lobe-cli-toolbox/tree/master/packages/lobe-label/README.zh-CN.md
 [lobe-label-url]: https://www.npmjs.com/package/@lobehub/label-cli
+[lobe-seo-cover]: https://raw.githubusercontent.com/lobehub/lobe-cli-toolbox/master/docs/preview-seo.webp
+[lobe-seo-download]: https://img.shields.io/npm/dt/@lobehub/seo-cli?labelColor=black&&style=flat-square
+[lobe-seo-github]: https://github.com/lobehub/lobe-cli-toolbox/tree/master/packages/lobe-seo/README.md
+[lobe-seo-github-cn]: https://github.com/lobehub/lobe-cli-toolbox/blob/master/packages/lobe-seo/README.zh-CN.md
+[lobe-seo-url]: https://www.npmjs.com/package/@lobehub/seo-cli
+[lobe-seo-version]: https://img.shields.io/npm/v/@lobehub/seo-cli?color=369eff&labelColor=black&logo=npm&logoColor=white&style=flat-square
 [lobe-label-version]: https://img.shields.io/npm/v/@lobehub/label-cli?color=369eff&labelColor=black&logo=npm&logoColor=white&style=flat-square
-[lobe-theme]: https://github.com/lobehub/sd-webui-lobe-theme
 [pr-welcome-link]: https://github.com/lobehub/lobe-cli-toolbox/pulls
 [pr-welcome-shield]: https://img.shields.io/badge/%F0%9F%A4%AF%20PR%20WELCOME-%E2%86%92-ffcb47?labelColor=black&style=for-the-badge
 [profile-link]: https://github.com/lobehub

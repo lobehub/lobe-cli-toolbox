@@ -136,14 +136,19 @@ Contributions of all types are more than welcome, if you are interested in contr
 
 ## 🔗 Links
 
-### More Products
+- **[LobeHub](https://github.com/lobehub/lobehub)**
+- **[lobe ui](https://github.com/lobehub/lobe-ui)**
+- **[lobe icons](https://github.com/lobehub/lobe-icons)**
+- **[lobe charts](https://github.com/lobehub/lobe-charts)**
+- **[lobe editor](https://github.com/lobehub/lobe-editor)**
+- **[docs kit](https://github.com/lobehub/docs-kit)**
+- **[stream down](https://github.com/lobehub/streamdown)**
 
-- **[🤖 Lobe Chat][lobe-chat]** - An open-source, extensible (Function Calling), high-performance chatbot framework. It supports one-click free deployment of your private ChatGPT/LLM web application.
-- **[🤯 Lobe Theme][lobe-theme]** - The modern theme for stable diffusion webui, exquisite interface design, highly customizable UI, and efficiency boosting features.
+<div align="right">
 
-### Credits
+[![][back-to-top]](#readme-top)
 
-- **ink** - <https://github.com/vadimdemedes/ink>
+</div>
 
 ---
 
@@ -177,8 +182,6 @@ This project is [MIT](./LICENSE) licensed.
 [github-releasedate-shield]: https://img.shields.io/github/release-date/lobehub/lobe-cli-toolbox?labelColor=black&style=flat-square
 [github-stars-link]: https://github.com/lobehub/lobe-cli-toolbox/network/stargazers
 [github-stars-shield]: https://img.shields.io/github/stars/lobehub/lobe-cli-toolbox?color=ffcb47&labelColor=black&style=flat-square
-[lobe-chat]: https://github.com/lobehub/lobe-chat
-[lobe-theme]: https://github.com/lobehub/sd-webui-lobe-theme
 [npm-release-link]: https://www.npmjs.com/package/@lobehub/label-cli
 [npm-release-shield]: https://img.shields.io/npm/v/@lobehub/label-cli?color=369eff&labelColor=black&logo=npm&logoColor=white&style=flat-square
 [pr-welcome-link]: https://github.com/lobehub/lobe-cli-toolbox/pulls
