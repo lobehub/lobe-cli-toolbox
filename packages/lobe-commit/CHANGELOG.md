@@ -2,6 +2,37 @@
 
 # Changelog
 
+### [Version&nbsp;2.20.1](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.20.0...@lobehub/commit-cli@2.20.1)
+<sup>Released on **2026-11-05**</sup>
+
+
+#### 💄 Styles
+
+- **misc**: Update ui.
+
+
+<br/>
+
+
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+
+
+#### Styles
+
+* **misc**: Update ui ([12d5e04](https://github.com/lobehub/lobe-cli-toolbox/commit/12d5e04))
+
+</details>
+
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version&nbsp;2.20.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.19.0...@lobehub/commit-cli@2.20.0)
 <sup>Released on **2026-11-05**</sup>
 
