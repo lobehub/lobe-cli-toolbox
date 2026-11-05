@@ -1,4 +1,4 @@
-import { isPlainObject, reduce } from 'lodash-es';
+import { isPlainObject } from 'lodash-es';
 
 import type { LocaleObj } from '@/types';
 import type { I18nConfig } from '@/types/config';
@@ -12,29 +12,51 @@ import {
 } from './calcToken';
 import { diff } from './diffJson';
 
-const splitJSONtoSmallChunks = (object: LocaleObj, splitToken: number) =>
-  reduce(
-    Object.entries(object),
-    (chunks: any[], [key, value]: [string, any]) => {
-      const [chunk, initialSize]: [LocaleObj, number] = chunks.pop() || [{}, OBJECT_EXTRA_TOKENS];
-      let chunkSize = initialSize;
-      const nextValueSize = isPlainObject(value)
-        ? calcJsonToken(value, 1)
-        : calcPrimitiveValueToken(value);
-      if (chunkSize + calcEncodedKeyToken(key) + KEY_EXTRA_TOKENS + nextValueSize <= splitToken) {
-        chunk[key] = value;
-        chunkSize += calcEncodedKeyToken(key) + KEY_EXTRA_TOKENS + nextValueSize;
-        chunks.push([chunk, chunkSize]);
-      } else {
-        chunks.push(
-          [chunk, chunkSize],
-          [{ [key]: value }, calcEncodedKeyToken(key) + KEY_EXTRA_TOKENS + nextValueSize],
-        );
+/**
+ * Packs entries into chunks of at most `splitToken` tokens. A nested namespace that does not fit
+ * into one chunk on its own is split recursively, each part keeps the namespace key so the
+ * chunks deep-merge back into the original shape.
+ */
+const splitJSONtoSmallChunks = (object: LocaleObj, splitToken: number): LocaleObj[] => {
+  const chunks: LocaleObj[] = [];
+  let chunk: LocaleObj = {};
+  let chunkSize = OBJECT_EXTRA_TOKENS;
+
+  const flush = () => {
+    if (Object.keys(chunk).length > 0) chunks.push(chunk);
+    chunk = {};
+    chunkSize = OBJECT_EXTRA_TOKENS;
+  };
+
+  for (const [key, value] of Object.entries(object)) {
+    const keySize = calcEncodedKeyToken(key) + KEY_EXTRA_TOKENS;
+    const nested = isPlainObject(value);
+    const itemSize =
+      keySize + (nested ? calcJsonToken(value as LocaleObj, 1) : calcPrimitiveValueToken(value));
+
+    if (chunkSize + itemSize <= splitToken) {
+      chunk[key] = value;
+      chunkSize += itemSize;
+      continue;
+    }
+
+    flush();
+
+    if (nested && OBJECT_EXTRA_TOKENS + itemSize > splitToken) {
+      const innerToken = splitToken - keySize - OBJECT_EXTRA_TOKENS;
+      for (const part of splitJSONtoSmallChunks(value as LocaleObj, innerToken)) {
+        chunks.push({ [key]: part });
       }
-      return chunks;
-    },
-    [],
-  ).map(([chunk]) => chunk);
+      continue;
+    }
+
+    chunk[key] = value;
+    chunkSize += itemSize;
+  }
+
+  flush();
+  return chunks;
+};
 
 /**
  * Translated output is about as long as the input, so chunks are bounded by the
@@ -51,7 +73,5 @@ export const splitJsonToChunks = (
   target: LocaleObj,
 ): LocaleObj[] => {
   const extraJSON = diff(entry, target, config).entry;
-  const splitToken = getSplitToken(config);
-  const splitObj = splitJSONtoSmallChunks(extraJSON, splitToken);
-  return splitObj;
+  return splitJSONtoSmallChunks(extraJSON, getSplitToken(config));
 };

@@ -1,8 +1,15 @@
 export type KeyStyle = 'auto' | 'flat' | 'nested';
 
+/**
+ * Term → translation. A string applies to every locale (e.g. `{ LobeHub: 'LobeHub' }` keeps a
+ * brand name), an object sets the translation per locale.
+ */
+export type Glossary = Record<string, string | Record<string, string>>;
+
 export interface I18nConfigLocale {
   /**
-   * @description Number of concurrently pending promises returned
+   * @description Maximum number of parallel LLM requests, shared across all files and locales
+   * @default 5
    */
   concurrency?: number;
   /**
@@ -13,6 +20,11 @@ export interface I18nConfigLocale {
    * @description The language that will use as translation ref
    */
   entryLocale: string;
+  /**
+   * @description Terms that must always be translated the same way; only the terms found in a
+   * chunk are sent to the model
+   */
+  glossary?: Glossary;
   /**
    * @description How to resolve dot-delimited keys when building diff entries
    * @default 'nested'
@@ -34,6 +46,12 @@ export interface I18nConfigLocale {
    * @description Provide some context for a more accurate translation
    */
   reference?: string;
+  /**
+   * @description Number of existing translations of the target file sent with each chunk as
+   * terminology and style examples, `0` disables it
+   * @default 20
+   */
+  referenceExamples?: number;
   /**
    * @description Save translation results immediately after each chunk is completed
    * @default true

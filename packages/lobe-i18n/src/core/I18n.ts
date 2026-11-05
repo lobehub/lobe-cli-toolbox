@@ -1,17 +1,22 @@
 import { type ResolvedProviderConfig, resolveProviderConfig } from '@lobehub/cli-common/providers';
 import { merge } from 'lodash-es';
-import pMap from 'p-map';
 
 import { TranslateMarkdown } from '@/core/TranslateMarkdown';
+import { buildJsonTranslateMessages, buildMarkdownTranslateMessages } from '@/prompts/translate';
 import type { LocaleObj } from '@/types';
 import type { I18nConfig } from '@/types/config';
 import { MarkdownModeType } from '@/types/config';
 import { calcToken } from '@/utils/calcToken';
+import { isFatalError } from '@/utils/errors';
 import { writeJSON, writeMarkdown } from '@/utils/fs';
-import { mergeJsonFromChunks } from '@/utils/mergeJsonFromChunks';
+import { createLimiter, type Limiter } from '@/utils/limiter';
 import { splitJsonToChunks } from '@/utils/splitJsonToChunks';
+import { createExamplePicker, MAX_EXAMPLES } from '@/utils/translateContext';
+import { formatKeyPath } from '@/utils/translateOutput';
 
 import { TranslateLocale } from './TranslateLocale';
+
+export const DEFAULT_CONCURRENCY = 5;
 
 export interface I18nOptions {
   config: I18nConfig;
@@ -62,11 +67,51 @@ export interface I18nMarkdownWriteOptions extends I18nMarkdownTranslateOptions {
   filename: string;
 }
 
+export interface TranslateOutcome<T> {
+  /** Chunks that failed (network, rate limit, ...), their content is left untranslated. */
+  errors: unknown[];
+  /** Keys the model kept dropping or breaking, they are picked up again by the next run. */
+  failedKeys: string[];
+  /** `undefined` when the result is unusable, e.g. a markdown chunk failed. */
+  result?: T;
+  tokenUsage: number;
+}
+
+type ChunkStatus = 'done' | 'pending' | 'running';
+
+const createProgress = (
+  maxStep: number,
+  needToken: number,
+  onProgress?: (props: onProgressProps) => void,
+) => {
+  const status: ChunkStatus[] = Array.from({ length: maxStep }, () => 'pending');
+  const report = () => {
+    const step = status.filter((item) => item === 'done').length;
+    onProgress?.({
+      isLoading: step < maxStep,
+      maxStep,
+      needToken,
+      progress: Math.floor((step / maxStep) * 100),
+      step,
+    });
+  };
+  report();
+  return {
+    set: (index: number, value: ChunkStatus) => {
+      status[index] = value;
+      report();
+    },
+    status,
+  };
+};
+
 export class I18n {
+  private abortError?: unknown;
   private config: I18nConfig;
-  private maxStep: number = 1;
+  private limit: Limiter;
   private translateLocaleService: TranslateLocale;
   private translateMarkdownService: TranslateMarkdown;
+
   constructor({ openAIApiKey, openAIProxyUrl, config, provider }: I18nOptions) {
     const resolved =
       provider ||
@@ -77,17 +122,35 @@ export class I18n {
       });
     this.config = config;
     this.config.modelName = resolved.model;
+    this.limit = createLimiter(config.concurrency ?? DEFAULT_CONCURRENCY);
     this.translateLocaleService = new TranslateLocale(config, resolved);
     this.translateMarkdownService = new TranslateMarkdown(config);
   }
 
-  async translateMarkdown(options: I18nMarkdownTranslateOptions): Promise<
-    | {
-        result: string;
-        tokenUsage: number;
+  /**
+   * Every LLM request goes through one limiter, so files and locales run in parallel while the
+   * total number of in-flight requests stays at `concurrency`.
+   */
+  private runChunk<T>(task: () => Promise<T>): Promise<T> {
+    return this.limit(async () => {
+      if (this.abortError) throw this.abortError;
+      try {
+        return await task();
+      } catch (error) {
+        if (isFatalError(error)) this.abortError ??= error;
+        throw error;
       }
-    | undefined
-  > {
+    });
+  }
+
+  private collectError(errors: unknown[], error: unknown) {
+    if (isFatalError(error)) throw error;
+    errors.push(error);
+  }
+
+  async translateMarkdown(
+    options: I18nMarkdownTranslateOptions,
+  ): Promise<TranslateOutcome<string> | undefined> {
     return options.mode === MarkdownModeType.STRING
       ? this.translateMarkdownByString(options)
       : this.translateMarkdownByMdast(options);
@@ -100,137 +163,90 @@ export class I18n {
     from,
     filename,
     onChunkComplete,
-  }: I18nMarkdownTranslateOptions): Promise<{ result: string; tokenUsage: number } | undefined> {
-    const prompt = this.translateLocaleService.promptString.formatMessages({
-      from: from || this.config.entryLocale,
-      text: '',
-      to,
-    });
-    const splitString = await this.translateMarkdownService.genSplitMarkdown(md);
+  }: I18nMarkdownTranslateOptions): Promise<TranslateOutcome<string> | undefined> {
+    const { chunks, definition } = await this.translateMarkdownService.genSplitMarkdown(md);
+    if (chunks.length === 0) return;
 
-    this.maxStep = splitString.length;
+    const source = from || this.config.entryLocale;
+    const promptToken = calcToken(
+      JSON.stringify(buildMarkdownTranslateMessages({ from: source, text: '', to })),
+    );
+    const needToken = chunks.length * promptToken + calcToken(JSON.stringify(chunks));
+    const progress = createProgress(chunks.length, needToken, onProgress);
 
-    if (splitString.length === 0) return;
+    const translated: Array<string | undefined> = Array.from({ length: chunks.length });
+    const errors: unknown[] = [];
+    let tokenUsage = 0;
+    let savedPrefix = 0;
 
-    const needToken =
-      splitString.length * calcToken(JSON.stringify(prompt)) +
-      calcToken(JSON.stringify(splitString));
-
-    // 创建进度跟踪数组：0=未开始，1=进行中，2=已完成
-    const chunkProgress = Array.from({ length: this.maxStep }, () => 0);
-
-    // 用于存储合并的结果
-    let mergedResult = '';
-
-    // 预先初始化翻译结果数组，用于立即保存功能
-    const tempResults: string[] = Array.from({ length: this.maxStep }, () => '');
-
-    const updateProgress = () => {
-      const completedChunks = chunkProgress.filter((status) => status === 2).length;
-      const progress = Math.floor((completedChunks / this.maxStep) * 100);
-
-      onProgress?.({
-        isLoading: completedChunks < this.maxStep,
-        maxStep: this.maxStep,
-        needToken,
-        progress,
-        step: completedChunks,
-      });
+    const saveCompletedPrefix = () => {
+      let prefix = savedPrefix;
+      while (prefix < translated.length && translated[prefix] !== undefined) prefix++;
+      if (prefix === savedPrefix) return;
+      savedPrefix = prefix;
+      const merged = this.translateMarkdownService.genMarkdownByString(
+        translated.slice(0, prefix) as string[],
+        prefix === translated.length ? definition : '',
+      );
+      writeMarkdown(filename!, merged);
+      onChunkComplete?.(translated[prefix - 1]!, merged);
     };
 
-    onProgress?.({
-      isLoading: true,
-      maxStep: this.maxStep,
-      needToken,
-      progress: 0,
-      step: 0,
-    });
-
-    const translatedSplitString: string[] = await pMap(
-      splitString,
-      async (text, index) => {
-        // 标记为进行中
-        chunkProgress[index] = 1;
-        updateProgress();
-
-        const result = await this.translateLocaleService.runByString({
-          from: from || this.config.entryLocale,
-          text,
-          to,
-        });
-
-        // 标记为已完成
-        chunkProgress[index] = 2;
-
-        // 如果开启立即保存，则每个 chunk 完成后立即合并并保存
-        if (this.config.saveImmediately && filename) {
-          // 存储当前结果到临时数组
-          tempResults[index] = result;
-          // 只有当前面的 chunks 都完成了，才能正确组装；只取连续完成的前缀，避免顺序错乱
-          if (index === 0 || chunkProgress.slice(0, index).every((status) => status === 2)) {
-            const firstPending = chunkProgress.findIndex((status) => status !== 2);
-            const completedPrefix =
-              firstPending === -1 ? tempResults : tempResults.slice(0, firstPending);
-            mergedResult = await this.translateMarkdownService.genMarkdownByString(completedPrefix);
-            writeMarkdown(filename, mergedResult);
-            onChunkComplete?.(result, mergedResult);
-          }
-        }
-
-        updateProgress();
-
-        return result;
-      },
-      { concurrency: this.config?.concurrency },
+    await Promise.all(
+      chunks.map((text, index) =>
+        this.runChunk(async () => {
+          progress.set(index, 'running');
+          const { result, tokenUsage: usage } = await this.translateLocaleService.runByString({
+            from: source,
+            text,
+            to,
+          });
+          tokenUsage += usage;
+          translated[index] = result;
+          // Only a contiguous prefix can be written, later chunks wait for earlier ones.
+          if (this.config.saveImmediately && filename) saveCompletedPrefix();
+        })
+          .catch((error) => this.collectError(errors, error))
+          .finally(() => progress.set(index, 'done')),
+      ),
     );
 
-    onProgress?.({
-      isLoading: false,
-      maxStep: this.maxStep,
-      needToken,
-      progress: 100,
-      step: this.maxStep,
-    });
-
-    const result = await this.translateMarkdownService.genMarkdownByString(translatedSplitString);
-
+    const complete = errors.length === 0;
     return {
-      result,
-      tokenUsage: needToken + calcToken(JSON.stringify(translatedSplitString)),
+      errors,
+      failedKeys: [],
+      result: complete
+        ? this.translateMarkdownService.genMarkdownByString(translated as string[], definition)
+        : undefined,
+      tokenUsage,
     };
   }
 
-  async translateMarkdownByMdast({ md, ...rest }: I18nMarkdownTranslateOptions): Promise<
-    | {
-        result: string;
-        tokenUsage: number;
-      }
-    | undefined
-  > {
-    const target = await this.translateMarkdownService.genTarget(md);
+  async translateMarkdownByMdast({
+    md,
+    ...rest
+  }: I18nMarkdownTranslateOptions): Promise<TranslateOutcome<string> | undefined> {
+    const document = await this.translateMarkdownService.genTarget(md);
 
-    // 过滤掉 Markdown 特有的参数，只保留 translate 方法需要的参数
+    // filename points to the .md file and must not reach `translate`, which would save it as JSON
     /* eslint-disable unused-imports/no-unused-vars */
-    // filename 指向 .md 文件，不能传给 translate，否则会被立即保存写成 JSON
     const { filename, matter, mode, onChunkComplete, ...translateOptions } = rest;
     /* eslint-enable unused-imports/no-unused-vars */
 
-    const translatedTarget = await this.translate({
+    const translated = await this.translate({
       ...translateOptions,
-      entry: target,
+      entry: document.target,
       target: {},
     });
 
-    if (!translatedTarget?.result) return;
+    if (!translated) return;
 
-    const result = await this.translateMarkdownService.genMarkdownByMdast(translatedTarget);
+    const result =
+      translated.errors.length === 0
+        ? await this.translateMarkdownService.genMarkdownByMdast(document, translated.result)
+        : undefined;
 
-    if (!result) return;
-
-    return {
-      result,
-      tokenUsage: translatedTarget.tokenUsage,
-    };
+    return { ...translated, result };
   }
 
   async translate({
@@ -241,100 +257,53 @@ export class I18n {
     from,
     filename,
     onChunkComplete,
-  }: I18nTranslateOptions): Promise<
-    | {
-        result: LocaleObj;
-        tokenUsage: number;
-      }
-    | undefined
-  > {
-    const prompt = this.translateLocaleService.promptJson.formatMessages({
-      from: from || this.config.entryLocale,
-      json: JSON.stringify({}),
-      to,
-    });
-    const splitJson = splitJsonToChunks(this.config, entry, target);
+  }: I18nTranslateOptions): Promise<TranslateOutcome<LocaleObj> | undefined> {
+    const chunks = splitJsonToChunks(this.config, entry, target);
+    if (chunks.length === 0) return;
 
-    this.maxStep = splitJson.length;
+    const source = from || this.config.entryLocale;
+    const promptToken = calcToken(
+      JSON.stringify(buildJsonTranslateMessages({ from: source, json: '', to })),
+    );
+    const needToken = chunks.length * promptToken + calcToken(JSON.stringify(chunks));
+    const progress = createProgress(chunks.length, needToken, onProgress);
 
-    if (splitJson.length === 0) return;
+    const exampleLimit = this.config.referenceExamples ?? MAX_EXAMPLES;
+    const pickExamples = exampleLimit > 0 ? createExamplePicker(entry, target) : undefined;
 
-    const needToken =
-      splitJson.length * calcToken(JSON.stringify(prompt)) + calcToken(JSON.stringify(splitJson));
+    let mergedResult: LocaleObj = merge({}, target);
+    const errors: unknown[] = [];
+    const failedKeys: string[] = [];
+    let tokenUsage = 0;
 
-    // 创建进度跟踪数组：0=未开始，1=进行中，2=已完成
-    const chunkProgress = Array.from({ length: this.maxStep }, () => 0);
-
-    // 用于存储合并的结果
-    let mergedResult = merge({}, target);
-
-    const updateProgress = () => {
-      const completedChunks = chunkProgress.filter((status) => status === 2).length;
-      const progress = Math.floor((completedChunks / this.maxStep) * 100);
-
-      onProgress?.({
-        isLoading: completedChunks < this.maxStep,
-        maxStep: this.maxStep,
-        needToken,
-        progress,
-        step: completedChunks,
-      });
-    };
-
-    onProgress?.({
-      isLoading: true,
-      maxStep: this.maxStep,
-      needToken,
-      progress: 0,
-      step: 0,
-    });
-
-    const translatedSplitJson: LocaleObj[] = await pMap(
-      splitJson,
-      async (json, index) => {
-        // 标记为进行中
-        chunkProgress[index] = 1;
-        updateProgress();
-
-        const result = await this.translateLocaleService.runByJson({
-          from: from || this.config.entryLocale,
-          json,
-          to,
-        });
-
-        // 标记为已完成
-        chunkProgress[index] = 2;
-
-        // 如果开启立即保存，则每个 chunk 完成后立即合并并保存
-        if (this.config.saveImmediately && filename) {
+    await Promise.all(
+      chunks.map((json, index) =>
+        this.runChunk(async () => {
+          progress.set(index, 'running');
+          const {
+            failed,
+            result,
+            tokenUsage: usage,
+          } = await this.translateLocaleService.runByJson({
+            examples: pickExamples?.(json, exampleLimit),
+            from: source,
+            json,
+            to,
+          });
+          tokenUsage += usage;
+          failedKeys.push(...failed.map(formatKeyPath));
           mergedResult = merge(mergedResult, result);
-          writeJSON(filename, mergedResult);
-          onChunkComplete?.(result, mergedResult);
-        }
 
-        updateProgress();
-
-        return result;
-      },
-      { concurrency: this.config?.concurrency },
+          if (this.config.saveImmediately && filename) {
+            writeJSON(filename, mergedResult);
+            onChunkComplete?.(result, mergedResult);
+          }
+        })
+          .catch((error) => this.collectError(errors, error))
+          .finally(() => progress.set(index, 'done')),
+      ),
     );
 
-    onProgress?.({
-      isLoading: false,
-      maxStep: this.maxStep,
-      needToken,
-      progress: 100,
-      step: this.maxStep,
-    });
-
-    const result =
-      this.config.saveImmediately && filename
-        ? mergedResult
-        : merge(target, mergeJsonFromChunks(translatedSplitJson));
-
-    return {
-      result,
-      tokenUsage: needToken + calcToken(JSON.stringify(translatedSplitJson)),
-    };
+    return { errors, failedKeys, result: mergedResult, tokenUsage };
   }
 }

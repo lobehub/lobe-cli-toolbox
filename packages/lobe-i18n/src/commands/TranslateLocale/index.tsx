@@ -1,17 +1,19 @@
 import { relative, resolve } from 'node:path';
 
-import { createTaskList } from '@lobehub/cli-ui';
+import { alert, createTaskList } from '@lobehub/cli-ui';
 import chalk from 'chalk';
 import { consola } from 'consola';
+import pMap from 'p-map';
 
 import type { I18nWriteOptions } from '@/core/I18n';
-import { I18n } from '@/core/I18n';
+import { DEFAULT_CONCURRENCY, I18n } from '@/core/I18n';
 import { selectors } from '@/store';
 import type { LocaleFolderObj, LocaleObj } from '@/types';
 import type { I18nConfig } from '@/types/config';
 import { checkLocaleFolders, checkLocales } from '@/utils/checkLocales';
 import { diff } from '@/utils/diffJson';
-import { formatTokens, progressDetail } from '@/utils/formatProgress';
+import { getErrorMessage } from '@/utils/errors';
+import { formatTokens, progressDetail, summarizeOutcome } from '@/utils/formatProgress';
 import { writeJSON } from '@/utils/fs';
 import { getEntryFile, getEntryFolderFiles } from '@/utils/getEntryFile';
 import { getLocaleObj } from '@/utils/getLocaleObj';
@@ -56,35 +58,50 @@ class TranslateLocale {
       total: this.query.length,
     });
     let totalTokenUsage = 0;
+    let fatalError: unknown;
 
     try {
-      for (const [index, item] of this.query.entries()) {
-        const id = String(index);
-        const outputPath = relative('.', item.filename);
-        tasks.start(id, { tag: item.to, title: outputPath });
+      // Requests are bounded by the limiter inside I18n, this only bounds the visible tasks.
+      await pMap(
+        this.query.entries(),
+        async ([index, item]) => {
+          if (fatalError) return;
+          const id = String(index);
+          tasks.start(id, { tag: item.to, title: relative('.', item.filename) });
 
-        const data = await this.i18n.translate({
-          ...item,
-          onProgress: ({ maxStep, needToken, progress, step }) => {
-            if (maxStep > 0)
-              tasks.update(id, { detail: progressDetail(step, maxStep, needToken), progress });
-          },
-        });
+          try {
+            const data = await this.i18n.translate({
+              ...item,
+              onProgress: ({ maxStep, needToken, progress, step }) => {
+                if (maxStep > 0)
+                  tasks.update(id, { detail: progressDetail(step, maxStep, needToken), progress });
+              },
+            });
 
-        if (data?.result && Object.keys(data.result).length > 0) {
-          writeJSON(item.filename, data.result);
-          totalTokenUsage += data.tokenUsage;
-          tasks.finish(id, 'done', formatTokens(data.tokenUsage));
-        } else {
-          tasks.finish(id, 'warning', 'no translation result');
-        }
-      }
+            if (!data) return tasks.finish(id, 'warning', 'no translation result');
+
+            totalTokenUsage += data.tokenUsage;
+            if (data.result && Object.keys(data.result).length > 0) {
+              writeJSON(item.filename, data.result);
+            }
+
+            const { status, detail } = summarizeOutcome(data);
+            if (status === 'error') process.exitCode = 1;
+            tasks.finish(id, status, detail);
+          } catch (error) {
+            fatalError ??= error;
+            tasks.finish(id, 'error', getErrorMessage(error));
+          }
+        },
+        { concurrency: this.config.concurrency ?? DEFAULT_CONCURRENCY, stopOnError: false },
+      );
     } finally {
       await tasks.stop();
     }
 
     if (totalTokenUsage > 0)
       consola.info('Total token usage:', chalk.cyan(formatTokens(totalTokenUsage)));
+    if (fatalError) alert.error(`Translate failed, ${getErrorMessage(fatalError)}`, true);
   }
 
   genFolderQuery() {

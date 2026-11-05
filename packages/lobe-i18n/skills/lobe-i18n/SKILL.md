@@ -56,15 +56,17 @@ module.exports = defineConfig({
 });
 ```
 
-| Option                  | Default   | Notes                                                                    |
-| ----------------------- | --------- | ------------------------------------------------------------------------ |
-| `modelName`             | from `-o` | Overrides the model chosen in `lobe-i18n -o`                             |
-| `keyStyle`              | `nested`  | `nested`, `flat` or `auto` (preserve the entry's dotted keys)            |
-| `splitToken`            | `4000`    | Tokens per chunk; larger chunks can exceed the model's max output tokens |
-| `concurrency`           | `5`       | Parallel requests                                                        |
-| `temperature`           | `0`       |                                                                          |
-| `saveImmediately`       | `true`    | Write after each chunk so interrupted runs keep progress                 |
-| `experimental.jsonMode` | `false`   | Ask the model for JSON output                                            |
+| Option                  | Default   | Notes                                                                     |
+| ----------------------- | --------- | ------------------------------------------------------------------------- |
+| `modelName`             | from `-o` | Overrides the model chosen in `lobe-i18n -o`                              |
+| `keyStyle`              | `nested`  | `nested`, `flat` or `auto` (preserve the entry's dotted keys)             |
+| `splitToken`            | `4000`    | Tokens per chunk; larger chunks can exceed the model's max output tokens  |
+| `concurrency`           | `5`       | Max parallel LLM requests, shared across all files and locales            |
+| `glossary`              | -         | Fixed term translations: `{ Brand: 'Brand', agent: { 'zh-CN': '助手' } }` |
+| `referenceExamples`     | `20`      | Existing translations sent per chunk for consistent terms, `0` disables   |
+| `temperature`           | `0`       |                                                                           |
+| `saveImmediately`       | `true`    | Write after each chunk so interrupted runs keep progress                  |
+| `experimental.jsonMode` | `false`   | Ask the model for JSON output                                             |
 
 Markdown options: `entryExtension` (`.md`), `mode` (`string` / `mdast` / function),
 `translateCode`, `includeMatter`, `cacheFile` (`.i18n-cache.json`, records source hashes so only

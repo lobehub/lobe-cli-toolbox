@@ -12,12 +12,25 @@ import {
 } from '@/utils/convertMarkdown';
 import { getSplitToken } from '@/utils/splitJsonToChunks';
 
-export class TranslateMarkdown {
+export interface MdastDocument {
+  entry: LocaleObj;
   mdast: any;
-  entry: LocaleObj = {};
+  /** Text nodes that need translation, keyed by node index. */
+  target: LocaleObj;
+}
+
+export interface SplitMarkdown {
+  chunks: string[];
+  /** Link reference definitions, appended untranslated after the chunks. */
+  definition: string;
+}
+
+/**
+ * Stateless, so documents can be translated concurrently with a single instance.
+ */
+export class TranslateMarkdown {
   config: I18nConfig;
   check: string[];
-  private definition?: string;
 
   constructor(config: I18nConfig) {
     this.config = config;
@@ -25,17 +38,19 @@ export class TranslateMarkdown {
       Boolean,
     ) as string[];
   }
-  async genTarget(md: string) {
-    this.mdast = await convertMarkdownToMdast(md);
-    this.entry = convertMdastToMdastObj(this.mdast, this.check);
-    return pickMdastObj(this.entry);
+
+  async genTarget(md: string): Promise<MdastDocument> {
+    const mdast = await convertMarkdownToMdast(md);
+    const entry = convertMdastToMdastObj(mdast, this.check);
+    return { entry, mdast, target: pickMdastObj(entry) };
   }
-  async genMarkdownByMdast(target?: LocaleObj): Promise<string | undefined> {
+
+  async genMarkdownByMdast(
+    { entry, mdast }: Pick<MdastDocument, 'entry' | 'mdast'>,
+    target?: LocaleObj,
+  ): Promise<string | undefined> {
     if (!target) return;
-    const translatedMdast = mergeMdastObj(
-      { entry: this.entry, mdast: this.mdast, target },
-      this.check,
-    );
+    const translatedMdast = mergeMdastObj({ entry, mdast, target }, this.check);
     return convertMdastToMarkdown(translatedMdast);
   }
 
@@ -61,19 +76,17 @@ export class TranslateMarkdown {
     };
   }
 
-  async genSplitMarkdown(md: string) {
-    this.definition = '';
+  async genSplitMarkdown(md: string): Promise<SplitMarkdown> {
     const { content, definition } = await this.clearMarkdownString(md);
-    this.definition = definition;
     const textSplitter = RecursiveCharacterTextSplitter.fromLanguage('markdown', {
       chunkOverlap: 0,
       chunkSize: getSplitToken(this.config),
       lengthFunction: (text) => calcToken(text),
     });
-    return textSplitter.splitText(content);
+    return { chunks: await textSplitter.splitText(content), definition };
   }
 
-  async genMarkdownByString(translatedMarkdown: string[]) {
-    return [...translatedMarkdown, this.definition].join('\n\n');
+  genMarkdownByString(translatedMarkdown: string[], definition = '') {
+    return [...translatedMarkdown, definition].join('\n\n');
   }
 }

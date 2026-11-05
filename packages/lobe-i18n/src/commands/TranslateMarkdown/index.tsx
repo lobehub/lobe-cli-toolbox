@@ -6,13 +6,15 @@ import { consola } from 'consola';
 import { globSync } from 'glob';
 import matter from 'gray-matter';
 import { isString } from 'lodash-es';
+import pMap from 'p-map';
 
 import type { I18nMarkdownWriteOptions } from '@/core/I18n';
-import { I18n } from '@/core/I18n';
+import { DEFAULT_CONCURRENCY, I18n } from '@/core/I18n';
 import { selectors } from '@/store';
 import type { I18nConfig, MarkdownConfig } from '@/types/config';
 import { MarkdownModeType } from '@/types/config';
-import { formatTokens, progressDetail } from '@/utils/formatProgress';
+import { getErrorMessage } from '@/utils/errors';
+import { formatTokens, progressDetail, summarizeOutcome } from '@/utils/formatProgress';
 import { readMarkdown, writeMarkdown } from '@/utils/fs';
 import { getDefaultExtension } from '@/utils/getDefaultExtension';
 import { hashContent, MarkdownCache } from '@/utils/markdownCache';
@@ -93,40 +95,56 @@ class TranslateMarkdown {
       total: this.query.length,
     });
     let totalTokenUsage = 0;
+    let fatalError: unknown;
 
     try {
-      for (const [index, { hash, source, ...item }] of this.query.entries()) {
-        const id = String(index);
-        const outputPath = relative('.', item.filename);
-        this.cache.markPending(source, item.filename);
-        tasks.start(id, { tag: item.to, title: outputPath });
+      // Requests are bounded by the limiter inside I18n, this only bounds the visible tasks.
+      await pMap(
+        this.query.entries(),
+        async ([index, { hash, source, ...item }]) => {
+          if (fatalError) return;
+          const id = String(index);
+          this.cache.markPending(source, item.filename);
+          tasks.start(id, { tag: item.to, title: relative('.', item.filename) });
 
-        const data = await this.i18n.translateMarkdown({
-          ...item,
-          onProgress: ({ maxStep, needToken, progress, step }) => {
-            if (maxStep > 0)
-              tasks.update(id, { detail: progressDetail(step, maxStep, needToken), progress });
-          },
-        });
+          try {
+            const data = await this.i18n.translateMarkdown({
+              ...item,
+              onProgress: ({ maxStep, needToken, progress, step }) => {
+                if (maxStep > 0)
+                  tasks.update(id, { detail: progressDetail(step, maxStep, needToken), progress });
+              },
+            });
 
-        if (data?.result && Object.keys(data.result).length > 0) {
-          const content = this.markdownConfig.includeMatter
-            ? data.result
-            : matter.stringify(data.result, item.matter);
-          writeMarkdown(item.filename, content);
-          this.cache.set(source, item.filename, hash);
-          totalTokenUsage += data.tokenUsage;
-          tasks.finish(id, 'done', formatTokens(data.tokenUsage));
-        } else {
-          tasks.finish(id, 'warning', 'no translation result');
-        }
-      }
+            if (!data) return tasks.finish(id, 'warning', 'no translation result');
+            totalTokenUsage += data.tokenUsage;
+
+            // A partial document stays pending in the cache, so the next run retranslates it.
+            if (data.result) {
+              const content = this.markdownConfig.includeMatter
+                ? data.result
+                : matter.stringify(data.result, item.matter);
+              writeMarkdown(item.filename, content);
+              this.cache.set(source, item.filename, hash);
+            }
+
+            const { status, detail } = summarizeOutcome(data);
+            if (status === 'error') process.exitCode = 1;
+            tasks.finish(id, status, detail);
+          } catch (error) {
+            fatalError ??= error;
+            tasks.finish(id, 'error', getErrorMessage(error));
+          }
+        },
+        { concurrency: this.config.concurrency ?? DEFAULT_CONCURRENCY, stopOnError: false },
+      );
     } finally {
       await tasks.stop();
     }
 
     if (totalTokenUsage > 0)
       consola.info('Total token usage:', chalk.cyan(formatTokens(totalTokenUsage)));
+    if (fatalError) alert.error(`Translate failed, ${getErrorMessage(fatalError)}`, true);
   }
 
   genFilesQuery(files: string[], skipLog?: boolean) {
@@ -141,6 +159,7 @@ class TranslateMarkdown {
       try {
         const md = readMarkdown(file);
         const hash = hashContent(md);
+        let parsed: { content: string; data: any; mode: MarkdownModeType } | undefined;
         for (const locale of config.outputLocales || []) {
           const targetExtension = this.getTargetExtension(locale, file, md);
           const targetFilename = this.getTargetFilename(file, targetExtension);
@@ -156,8 +175,8 @@ class TranslateMarkdown {
             }
           }
 
-          const mode = this.getMode(file, md);
-          const { data, content } = matter(md);
+          parsed ??= { ...matter(md), mode: this.getMode(file, md) };
+          const { content, data, mode } = parsed;
           const reason = status === 'changed' ? chalk.gray(' [source changed]') : '';
           consola.info(`📄 To ${locale}: ${chalk.yellow(targetFilename)}${reason}`);
           this.query.push({

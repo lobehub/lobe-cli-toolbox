@@ -65,6 +65,9 @@ English ・ [简体中文](./README.zh-CN.md) ・ [Changelog](./CHANGELOG.md) ·
 - [x] 🛠️ Support customizing OpenAI models, API proxies, temperature and topP.
 - [x] 📝 Support automated i18n translation of `Markdown` files.
 - [x] 🔍 Support linting translation files for language correctness using eld.
+- [x] ⚡️ Translate all files and locales in parallel under one shared request limit.
+- [x] 🎯 Validate every translation: missing keys and broken placeholders / tags (`{{name}}`, `{count}`, `<0>`) are retried, and never written to disk.
+- [x] 📚 Keep terminology consistent with a `glossary` and with the existing translations of each target file.
 
 <div align="right">
 
@@ -194,22 +197,24 @@ This project provides some additional configuration items set with environment v
 
 ## 🌏 Locale Configuration
 
-| Property Name   | Required | Type           | Default Value    | Description                                                                                               |
-| --------------- | -------- | -------------- | ---------------- | --------------------------------------------------------------------------------------------------------- |
-| entry           | `*`      | `string`       | -                | Entry file or folder                                                                                      |
-| entryLocale     | `*`      | `string`       | -                | Language to use as translation reference                                                                  |
-| modelName       |          | `string`       | provider default | Overrides the model chosen by `lobe-i18n --option`, e.g. `gpt-5-mini` `claude-sonnet-4-5` `deepseek-chat` |
-| output          | `*`      | `string`       | -                | Location to store localized files                                                                         |
-| outputLocales   | `*`      | `string[]  `   | `[]`             | All the languages to be translated                                                                        |
-| keyStyle        |          | `string`       | `nested`         | How to resolve dotted keys: `nested`, `flat`, or `auto` (preserve entry)                                  |
-| reference       |          | `string`       | -                | Provide some context for more accurate translations                                                       |
-| saveImmediately |          | `boolean`      | `true`           | Save translation results immediately after each chunk is completed                                        |
-| splitToken      |          | `number`       | `4000`           | Split the localized JSON file by tokens. Large chunks may exceed the max output tokens of the model       |
-| temperature     |          | `number`       | `0`              | Sampling temperature to use                                                                               |
-| topP            |          | `number`       | `1`              | Nucleus sampling threshold, controls the diversity of generated text                                      |
-| concurrency     |          | `number`       | `5`              | Number of concurrently pending promises returned                                                          |
-| experimental    |          | `experimental` | `{}`             | Experimental features, see below                                                                          |
-| markdown        |          | `markdown`     | `{}`             | See `markdown` configuration below                                                                        |
+| Property Name     | Required | Type           | Default Value    | Description                                                                                                          |
+| ----------------- | -------- | -------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------- |
+| entry             | `*`      | `string`       | -                | Entry file or folder                                                                                                 |
+| entryLocale       | `*`      | `string`       | -                | Language to use as translation reference                                                                             |
+| modelName         |          | `string`       | provider default | Overrides the model chosen by `lobe-i18n --option`, e.g. `gpt-5-mini` `claude-sonnet-4-5` `deepseek-chat`            |
+| output            | `*`      | `string`       | -                | Location to store localized files                                                                                    |
+| outputLocales     | `*`      | `string[]  `   | `[]`             | All the languages to be translated                                                                                   |
+| keyStyle          |          | `string`       | `nested`         | How to resolve dotted keys: `nested`, `flat`, or `auto` (preserve entry)                                             |
+| reference         |          | `string`       | -                | Provide some context for more accurate translations                                                                  |
+| referenceExamples |          | `number`       | `20`             | Existing translations of the target file sent as terminology / style examples per chunk, `0` disables it             |
+| glossary          |          | `object`       | -                | Fixed term translations, e.g. `{ LobeHub: 'LobeHub', agent: { 'zh-CN': '助手' } }`; a string applies to every locale |
+| saveImmediately   |          | `boolean`      | `true`           | Save translation results immediately after each chunk is completed                                                   |
+| splitToken        |          | `number`       | `4000`           | Split the localized JSON file by tokens. Large chunks may exceed the max output tokens of the model                  |
+| temperature       |          | `number`       | `0`              | Sampling temperature to use                                                                                          |
+| topP              |          | `number`       | `1`              | Nucleus sampling threshold, controls the diversity of generated text                                                 |
+| concurrency       |          | `number`       | `5`              | Maximum parallel LLM requests, shared across all files and locales                                                   |
+| experimental      |          | `experimental` | `{}`             | Experimental features, see below                                                                                     |
+| markdown          |          | `markdown`     | `{}`             | See `markdown` configuration below                                                                                   |
 
 #### `experimental`
 

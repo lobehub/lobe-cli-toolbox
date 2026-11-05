@@ -64,6 +64,9 @@ Lobe i18n 是一款使用 ChatGPT 自动化 i18n 的 CLI 流程工具
 - [x] 🌲 支持 `扁平` 和 `树状` locale 文件
 - [x] 🛠️ 支持自定义 OpenAI 模型、API 代理、temperature、topP
 - [x] 📝 支持 `Markdown` i18n 翻译自动化
+- [x] ⚡️ 所有文件与语言并行翻译，共享同一个请求并发上限
+- [x] 🎯 校验每条译文：缺失的键、被破坏的占位符 / 标签（`{{name}}`、`{count}`、`<0>`）会自动重试，且不会写入文件
+- [x] 📚 通过 `glossary` 术语表和目标文件中已有的译文保持术语一致
 
 <div align="right">
 
@@ -194,22 +197,24 @@ $ lobe-i18n skill --agent claude # 只安装到 .claude/skills（可选 agents /
 
 ## 🌏 Locale 配置
 
-| 属性名称        | 必填 | 类型           | 默认值     | 描述                                                                                        |
-| --------------- | ---- | -------------- | ---------- | ------------------------------------------------------------------------------------------- |
-| entry           | `*`  | `string`       | -          | 入口文件或文件夹                                                                            |
-| entryLocale     | `*`  | `string`       | -          | 作为翻译参考的语言                                                                          |
-| modelName       |      | `string`       | 供应商默认 | 覆盖 `lobe-i18n --option` 中选择的模型，如 `gpt-5-mini` `claude-sonnet-4-5` `deepseek-chat` |
-| output          | `*`  | `string`       | -          | 存储本地化文件的位置                                                                        |
-| outputLocales   | `*`  | `string[] `    | `[]`       | 需要进行翻译的所有语言                                                                      |
-| keyStyle        |      | `string`       | `nested`   | 处理点分隔键的方式：`nested`、`flat` 或 `auto`（按入口文件）                                |
-| reference       |      | `string`       | -          | 提供一些上下文以获得更准确的翻译                                                            |
-| saveImmediately |      | `boolean`      | `true`     | 在每个翻译块完成后立即保存翻译结果                                                          |
-| splitToken      |      | `number`       | `4000`     | 按令牌分割本地化 JSON 文件，单块过大可能超出模型的最大输出长度                              |
-| temperature     |      | `number`       | `0`        | 使用的采样温度                                                                              |
-| topP            |      | `number`       | `1`        | 生成过程中的核采样方法概率阈值，取值越大生成的随机性越高                                    |
-| concurrency     |      | `number`       | `5`        | 同时并发的队列请求数量                                                                      |
-| experimental    |      | `experimental` | `{}`       | 实验性功能，见下文                                                                          |
-| markdown        |      | `markdown`     | `{}`       | 见 `markdown` 配置说明                                                                      |
+| 属性名称          | 必填 | 类型           | 默认值     | 描述                                                                                          |
+| ----------------- | ---- | -------------- | ---------- | --------------------------------------------------------------------------------------------- |
+| entry             | `*`  | `string`       | -          | 入口文件或文件夹                                                                              |
+| entryLocale       | `*`  | `string`       | -          | 作为翻译参考的语言                                                                            |
+| modelName         |      | `string`       | 供应商默认 | 覆盖 `lobe-i18n --option` 中选择的模型，如 `gpt-5-mini` `claude-sonnet-4-5` `deepseek-chat`   |
+| output            | `*`  | `string`       | -          | 存储本地化文件的位置                                                                          |
+| outputLocales     | `*`  | `string[] `    | `[]`       | 需要进行翻译的所有语言                                                                        |
+| keyStyle          |      | `string`       | `nested`   | 处理点分隔键的方式：`nested`、`flat` 或 `auto`（按入口文件）                                  |
+| reference         |      | `string`       | -          | 提供一些上下文以获得更准确的翻译                                                              |
+| referenceExamples |      | `number`       | `20`       | 每个分块附带的目标文件已有译文数量，用于统一术语和风格，`0` 表示关闭                          |
+| glossary          |      | `object`       | -          | 固定术语译法，如 `{ LobeHub: 'LobeHub', agent: { 'zh-CN': '助手' } }`；字符串值对所有语言生效 |
+| saveImmediately   |      | `boolean`      | `true`     | 在每个翻译块完成后立即保存翻译结果                                                            |
+| splitToken        |      | `number`       | `4000`     | 按令牌分割本地化 JSON 文件，单块过大可能超出模型的最大输出长度                                |
+| temperature       |      | `number`       | `0`        | 使用的采样温度                                                                                |
+| topP              |      | `number`       | `1`        | 生成过程中的核采样方法概率阈值，取值越大生成的随机性越高                                      |
+| concurrency       |      | `number`       | `5`        | LLM 请求的最大并发数，由所有文件和语言共享                                                    |
+| experimental      |      | `experimental` | `{}`       | 实验性功能，见下文                                                                            |
+| markdown          |      | `markdown`     | `{}`       | 见 `markdown` 配置说明                                                                        |
 
 #### `experimental`
 
