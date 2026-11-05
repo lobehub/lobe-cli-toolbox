@@ -184,6 +184,21 @@ describe('I18n.translate', () => {
     ]);
   });
 
+  it('appends new array items to an array leaf with flat keys', async () => {
+    generate.mockImplementation(echoUppercase);
+
+    const i18n = new I18n({ config: config({ keyStyle: 'flat' }), provider });
+    const outcome = await i18n.translate({
+      entry: { 'faq.list': [{ q: 'First' }, { q: 'Second' }, { q: 'Third' }] },
+      target: { 'faq.list': [{ q: '第一' }] },
+      to: 'zh-CN',
+    });
+
+    expect(outcome?.result).toEqual({
+      'faq.list': [{ q: '第一' }, { q: 'SECOND' }, { q: 'THIRD' }],
+    });
+  });
+
   it('sends existing translations of the target as examples', async () => {
     generate.mockImplementation(echoUppercase);
 

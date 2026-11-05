@@ -100,6 +100,23 @@ describe('diffJson', () => {
       });
     });
 
+    it('should keep array indexes out of flat keys', () => {
+      const entry = {
+        'faq.list': [{ q: 'First' }, { q: 'Second' }, { q: 'Third' }],
+        'faq.title': 'FAQ',
+      };
+      const target = {
+        'faq.list': [{ q: '第一' }],
+        'faq.title': '常见问题',
+      };
+
+      const result = diff(entry, target, { keyStyle: 'flat' });
+
+      expect(result.entry).toEqual({
+        'faq.list': { '1': { q: 'Second' }, '2': { q: 'Third' } },
+      });
+    });
+
     it('should preserve mixed keys when keyStyle is auto', () => {
       const entry = {
         'a.bc.b': 'value',

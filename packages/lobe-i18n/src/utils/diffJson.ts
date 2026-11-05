@@ -10,10 +10,18 @@ type DiffPath = string | Array<number | string>;
 
 const hasOwnKey = (obj: LocaleObj, key: string) => Object.prototype.hasOwnProperty.call(obj, key);
 
+/** Joins the object keys before the first array index, an array leaf stays an array. */
+const flattenPath = (path: Array<number | string>): Array<number | string> => {
+  const index = path.findIndex((segment) => typeof segment === 'number');
+  if (index === -1) return [path.join('.')];
+  if (index === 0) return path;
+  return [path.slice(0, index).join('.'), ...path.slice(index)];
+};
+
 const resolveDiffPath = (source: LocaleObj, path: DiffPath, keyStyle: KeyStyle): DiffPath => {
   if (Array.isArray(path)) {
     if (keyStyle === 'flat') {
-      return [path.join('.')];
+      return flattenPath(path);
     }
     if (keyStyle === 'auto') {
       const joinedPath = path.join('.');
