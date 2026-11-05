@@ -2,6 +2,37 @@
 
 # Changelog
 
+### [Version&nbsp;1.29.1](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.29.0...@lobehub/i18n-cli@1.29.1)
+<sup>Released on **2026-11-05**</sup>
+
+
+#### 🐛 Bug Fixes
+
+- **lobe-i18n**: Keep array leaves intact for flat-key diffs.
+
+
+<br/>
+
+
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+
+
+#### What's fixed
+
+* **lobe-i18n**: Keep array leaves intact for flat-key diffs ([a8bf5ed](https://github.com/lobehub/lobe-cli-toolbox/commit/a8bf5ed))
+
+</details>
+
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version&nbsp;1.29.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.28.0...@lobehub/i18n-cli@1.29.0)
 <sup>Released on **2026-11-05**</sup>
 
