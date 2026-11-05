@@ -2,6 +2,37 @@
 
 # Changelog
 
+### [Version&nbsp;1.8.1](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/seo-cli@1.8.0...@lobehub/seo-cli@1.8.1)
+<sup>Released on **2026-11-05**</sup>
+
+
+#### 💄 Styles
+
+- **misc**: Update ui.
+
+
+<br/>
+
+
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+
+
+#### Styles
+
+* **misc**: Update ui ([12d5e04](https://github.com/lobehub/lobe-cli-toolbox/commit/12d5e04))
+
+</details>
+
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version&nbsp;1.8.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/seo-cli@1.7.0...@lobehub/seo-cli@1.8.0)
 <sup>Released on **2026-11-05**</sup>
 
