@@ -1,6 +1,15 @@
-import { PasswordInput, Spinner, TextInput } from '@lobehub/cli-ui';
+import {
+  KeyHints,
+  SearchSelect,
+  searchSelectHints,
+  type SearchSelectItem,
+  Spinner,
+  symbols,
+  TextField,
+  useTheme,
+} from '@lobehub/cli-ui';
 import { Box, Text, useInput } from 'ink';
-import { memo, useEffect, useMemo, useState } from 'react';
+import { Fragment, memo, useEffect, useMemo, useState } from 'react';
 
 import { listModels } from './llm';
 import {
@@ -15,7 +24,6 @@ import {
   type ResolvedProviderConfig,
   resolveProviderConfig,
 } from './providers';
-import SearchSelect, { type SearchSelectItem } from './SearchSelect';
 
 export interface ProviderSetupValue {
   apiKey: string;
@@ -44,6 +52,19 @@ export interface ProviderSetupProps {
 
 type Step = 'provider' | 'apiType' | 'baseURL' | 'apiKey' | 'model';
 
+const STEP_TITLES: Record<Step, string> = {
+  apiKey: 'API key',
+  apiType: 'API type',
+  baseURL: 'Base URL',
+  model: 'Model',
+  provider: 'Provider',
+};
+
+const INPUT_HINTS = [
+  ['enter', 'confirm'],
+  ['esc', 'back'],
+] as const;
+
 const PROVIDER_ITEMS: SearchSelectItem[] = [
   ...providerIds.map((id) => ({
     hint: Object.keys(PROVIDERS[id].endpoints)
@@ -59,13 +80,28 @@ const PROVIDER_ITEMS: SearchSelectItem[] = [
   },
 ];
 
+const PROVIDER_LABEL_WIDTH = Math.max(...PROVIDER_ITEMS.map((item) => item.label.length)) + 3;
+
+const validateURL = (input: string) => {
+  if (!input.trim()) return;
+  try {
+    const url = new URL(input.trim());
+    if (url.protocol === 'http:' || url.protocol === 'https:') return;
+  } catch {
+    /* falls through */
+  }
+  return 'Enter a full http(s):// URL';
+};
+
 interface ModelStepProps {
   connection: Pick<ProviderSetupValue, 'apiKey' | 'apiType' | 'baseURL'>;
   initialValue?: string;
+  onCancel: () => void;
   onSelect: (model: string) => void;
 }
 
-const ModelStep = memo<ModelStepProps>(({ connection, initialValue, onSelect }) => {
+const ModelStep = memo<ModelStepProps>(({ connection, initialValue, onCancel, onSelect }) => {
+  const theme = useTheme();
   const [models, setModels] = useState<string[]>();
   const [error, setError] = useState<string>();
 
@@ -83,27 +119,59 @@ const ModelStep = memo<ModelStepProps>(({ connection, initialValue, onSelect }) 
     };
   }, [connection.apiKey, connection.apiType, connection.baseURL]);
 
+  useInput((_, key) => key.escape && onCancel(), { isActive: !models });
+
   const items = useMemo(() => {
     const list = models || [];
     const all = initialValue && !list.includes(initialValue) ? [initialValue, ...list] : list;
     return all.map((model) => ({ label: model, value: model }));
   }, [models, initialValue]);
 
-  if (!models) return <Spinner label="Fetching model list..." />;
+  if (!models) return <Spinner label={`Fetching models from ${connection.baseURL}`} />;
 
   return (
     <Box flexDirection="column">
       {error && (
-        <Text color="yellow">{`Can't fetch model list (${error}), type the model id instead.`}</Text>
+        <Box marginBottom={1}>
+          <Text
+            color={theme.colorWarning}
+          >{`${symbols.warning} Can't fetch the model list (${error}), type a model id instead`}</Text>
+        </Box>
       )}
       <SearchSelect
         allowCustom
+        customLabel={(query) => `Use model "${query}"`}
+        emptyText="Type a model id"
         initialValue={initialValue}
         items={items}
-        placeholder="Search or type a model id"
+        placeholder={`Search ${models.length} models or type an id`}
+        onCancel={onCancel}
         onSelect={onSelect}
       />
     </Box>
+  );
+});
+
+const Breadcrumb = memo<{ current: Step; steps: Step[] }>(({ current, steps }) => {
+  const theme = useTheme();
+  const currentIndex = steps.indexOf(current);
+  return (
+    <Text wrap="truncate-end">
+      {steps.map((step, index) => (
+        <Fragment key={step}>
+          {index > 0 && <Text dimColor>{' › '}</Text>}
+          {index < currentIndex ? (
+            <Text color={theme.colorSuccess}>{`${symbols.tick} ${STEP_TITLES[step]}`}</Text>
+          ) : index === currentIndex ? (
+            <Text bold color={theme.colorPrimary}>
+              {STEP_TITLES[step]}
+            </Text>
+          ) : (
+            <Text dimColor>{STEP_TITLES[step]}</Text>
+          )}
+        </Fragment>
+      ))}
+    </Text>
   );
 });
 
@@ -128,13 +196,12 @@ const ProviderSetup = memo<ProviderSetupProps>(({ current, mode = 'full', onCanc
     setStep(next);
   };
 
-  useInput((_, key) => {
-    if (!key.escape) return;
+  const back = () => {
     const prev = history.at(-1);
     if (!prev) return onCancel();
     setHistory((list) => list.slice(0, -1));
     setStep(prev);
-  });
+  };
 
   const selectProvider = (provider: string) => {
     const types = getProviderApiTypes(provider);
@@ -172,20 +239,12 @@ const ProviderSetup = memo<ProviderSetupProps>(({ current, mode = 'full', onCanc
     goto('model', typed ? { apiKey: typed, apiKeyChanged: true } : {});
   };
 
-  const selectModel = (model: string) => {
-    onSubmit({ ...value, model });
-  };
-
-  const title = {
-    apiKey: 'API key',
-    apiType: 'API type',
-    baseURL: 'API base URL',
-    model: 'Model',
-    provider: 'Provider',
-  }[step];
-
   const steps: Step[] =
-    mode === 'model' ? ['model'] : ['provider', 'apiType', 'baseURL', 'apiKey', 'model'];
+    mode === 'model'
+      ? ['model']
+      : (['provider', 'apiType', 'baseURL', 'apiKey', 'model'] as Step[])
+          .filter((s) => s !== 'apiType' || getProviderApiTypes(value.provider).length > 1)
+          .filter((s) => s !== 'apiKey' || !preset?.noApiKey);
 
   const renderStep = () => {
     switch (step) {
@@ -195,7 +254,9 @@ const ProviderSetup = memo<ProviderSetupProps>(({ current, mode = 'full', onCanc
             initialValue={value.provider}
             items={PROVIDER_ITEMS}
             key="provider"
+            labelWidth={PROVIDER_LABEL_WIDTH}
             placeholder="Search provider"
+            onCancel={back}
             onSelect={selectProvider}
           />
         );
@@ -205,42 +266,44 @@ const ProviderSetup = memo<ProviderSetupProps>(({ current, mode = 'full', onCanc
           <SearchSelect
             initialValue={value.apiType}
             key="apiType"
+            placeholder="Search API type"
             items={getProviderApiTypes(value.provider).map((type) => ({
               label: API_TYPES[type].name,
               value: type,
             }))}
+            onCancel={back}
             onSelect={selectApiType}
           />
         );
       }
       case 'baseURL': {
         return (
-          <Box flexDirection="column">
-            <TextInput
-              defaultValue={value.baseURL}
-              key="baseURL"
-              placeholder={getDefaultBaseURL(value.provider, value.apiType)}
-              onSubmit={submitBaseURL}
-            />
-            <Text dimColor>Enter to confirm · esc back</Text>
-          </Box>
+          <TextField
+            defaultValue={value.baseURL}
+            description="Leave empty to use the default endpoint"
+            key="baseURL"
+            placeholder={getDefaultBaseURL(value.provider, value.apiType)}
+            validate={validateURL}
+            onCancel={back}
+            onSubmit={submitBaseURL}
+          />
         );
       }
       case 'apiKey': {
         const envHint = preset?.apiKeyEnv?.join(' / ');
         return (
-          <Box flexDirection="column">
-            <PasswordInput
-              key="apiKey"
-              placeholder={
-                value.apiKey
-                  ? 'Press enter to keep the current key'
-                  : `Input API key${envHint ? `, or leave empty to use ${envHint}` : ''}`
-              }
-              onSubmit={submitApiKey}
-            />
-            <Text dimColor>Enter to confirm · esc back</Text>
-          </Box>
+          <TextField
+            key="apiKey"
+            mask="•"
+            placeholder={value.apiKey ? 'Paste a new key to replace it' : 'Paste your API key'}
+            description={
+              value.apiKey
+                ? 'A key is already set, press enter to keep it'
+                : envHint && `Leave empty to read it from ${envHint}`
+            }
+            onCancel={back}
+            onSubmit={submitApiKey}
+          />
         );
       }
       case 'model': {
@@ -248,27 +311,27 @@ const ProviderSetup = memo<ProviderSetupProps>(({ current, mode = 'full', onCanc
           <ModelStep
             connection={value}
             initialValue={value.model || undefined}
-            onSelect={selectModel}
+            onCancel={back}
+            onSelect={(model) => onSubmit({ ...value, model })}
           />
         );
       }
     }
   };
 
+  const isSelect = step === 'provider' || step === 'apiType' || step === 'model';
+
   return (
     <Box flexDirection="column">
-      {mode === 'full' && (
+      {steps.length > 1 && (
         <Box marginBottom={1}>
-          <Text dimColor>
-            {steps
-              .filter((s) => s !== 'apiType' || getProviderApiTypes(value.provider).length > 1)
-              .filter((s) => s !== 'apiKey' || !preset?.noApiKey)
-              .map((s) => (s === step ? `[${title}]` : s))
-              .join(' → ')}
-          </Text>
+          <Breadcrumb current={step} steps={steps} />
         </Box>
       )}
       {renderStep()}
+      <Box marginTop={1}>
+        <KeyHints hints={isSelect ? searchSelectHints : [...INPUT_HINTS]} />
+      </Box>
     </Box>
   );
 });

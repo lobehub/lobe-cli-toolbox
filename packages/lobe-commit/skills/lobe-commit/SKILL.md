@@ -47,9 +47,10 @@ Format:
 
 Always pass the message with `git commit -m` / `-F`. If the lobe-commit `prepare-commit-msg` hook
 is installed, it skips the wizard when a message is given. A hook from an older version (no
-`[ -n "$2" ] && exit 0` line, check the hooks path from `git config core.hooksPath` or
-`.git/hooks/prepare-commit-msg`) opens the wizard on `/dev/tty` and blocks; refresh it with
-`lobe-commit -i` (it only rewrites that hook file).
+`[ -n "$2" ] && exit 0` line) opens the wizard on `/dev/tty` and blocks. Look for it in
+`.git/hooks/prepare-commit-msg`, or `.husky/prepare-commit-msg` when Husky is installed (Husky 9
+sets `core.hooksPath` to the shim directory `.husky/_`). Refresh it with `lobe-commit -i` (it only
+rewrites that hook file).
 
 ## CLI commands
 

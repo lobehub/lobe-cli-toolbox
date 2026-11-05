@@ -55,4 +55,25 @@ describe('commitMessageToObj', () => {
       type: 'feat',
     });
   });
+
+  it('keeps colons and parentheses in the subject', () => {
+    expect(commitMessageToObj('🐛 fix: handle a: b (close #12)')).toEqual({
+      body: undefined,
+      emoji: '🐛',
+      scope: undefined,
+      subject: 'handle a: b (close #12)',
+      type: 'fix',
+    });
+  });
+
+  it('derives the emoji from the type when it is missing', () => {
+    expect(commitMessageToObj('docs(readme)!: update').emoji).toBe('📝');
+  });
+
+  it('falls back to chore for free-form messages', () => {
+    expect(commitMessageToObj('update stuff')).toMatchObject({
+      subject: 'update stuff',
+      type: 'chore',
+    });
+  });
 });

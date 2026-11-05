@@ -1,158 +1,77 @@
-import isEqual from 'fast-deep-equal';
-import { Box, useInput } from 'ink';
-import {
-  createElement,
-  type FC,
-  memo,
-  type ReactNode,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { useInput } from 'ink';
+import { memo, useEffect, useEffectEvent, useState } from 'react';
 
-import { useTheme } from '../hooks/useTheme';
-import { arrayRotate } from '../lib/arrayRotate';
-import type { IndicatorProps } from './Indicator';
-import Indicator from './Indicator';
-import type { ItemProps } from './Item';
-import ItemComponent from './Item';
+import { moveIndex } from '../lib/list';
+import OptionList, { type OptionListItem, useListLimit } from '../OptionList';
 
-export interface SelectInputItem {
-  key?: string;
-  label: string | ReactNode;
-  value: string;
-}
+export type SelectInputItem = OptionListItem;
 
 export interface SelectInputProps {
-  highlightColor?: string;
-  indicatorComponent?: FC<IndicatorProps>;
   initialIndex?: number;
+  /** Highlight the item with this value first, wins over `initialIndex`. */
+  initialValue?: string;
   isFocused?: boolean;
-  itemComponent?: FC<ItemProps>;
   items?: SelectInputItem[];
+  labelWidth?: number;
   limit?: number;
+  /** Called for the highlighted item, including the first one on mount. */
   onHighlight?: (item: SelectInputItem) => void;
   onSelect?: (item: SelectInputItem) => void;
 }
 
+/**
+ * Tracks the highlighted item by value, so it survives the item list changing (e.g. a filter);
+ * falls back to the first item when it is gone.
+ */
+export const useHighlight = (items: { value: string }[], initialValue?: string) => {
+  const [value, setValue] = useState(initialValue);
+  const found = items.findIndex((item) => item.value === value);
+  const index = found >= 0 ? found : 0;
+  const setIndex = (next: number) => setValue(items[next]?.value);
+  return { index, setIndex };
+};
+
+/** ↑↓ to move (wraps), pgup/pgdn/home/end to jump, enter to select. */
 const SelectInput = memo<SelectInputProps>(
   ({
-    highlightColor,
-    items = [],
-    isFocused = true,
     initialIndex = 0,
-    indicatorComponent = Indicator,
-    itemComponent = ItemComponent,
-    limit: customLimit,
-    onSelect,
+    initialValue,
+    isFocused = true,
+    items = [],
+    labelWidth,
+    limit: maxLimit,
     onHighlight,
+    onSelect,
   }) => {
-    const theme = useTheme();
-    const hasLimit = typeof customLimit === 'number' && items.length > customLimit;
-    const limit = hasLimit ? Math.min(customLimit, items.length) : items.length;
-    const lastIndex = limit - 1;
-    const [rotateIndex, setRotateIndex] = useState(
-      initialIndex > lastIndex ? lastIndex - initialIndex : 0,
+    const limit = useListLimit(maxLimit);
+    const { index, setIndex } = useHighlight(
+      items,
+      initialValue ?? items[Math.min(Math.max(initialIndex, 0), items.length - 1)]?.value,
     );
-    const [selectedIndex, setSelectedIndex] = useState(
-      initialIndex ? (initialIndex > lastIndex ? lastIndex : initialIndex) : 0,
-    );
-    const previousItems = useRef<SelectInputItem[]>(items);
+    const current = items[index];
 
+    const emitHighlight = useEffectEvent(() => {
+      if (current) onHighlight?.(current);
+    });
     useEffect(() => {
-      if (
-        !isEqual(
-          previousItems.current.map((item) => item.value),
-          items.map((item) => item.value),
-        )
-      ) {
-        setRotateIndex(0);
-        setSelectedIndex(0);
-      }
-
-      previousItems.current = items;
-    }, [items]);
+      emitHighlight();
+    }, [current?.value]);
 
     useInput(
-      useCallback(
-        (_, key) => {
-          if (key.upArrow) {
-            const lastIndex = (hasLimit ? limit : items.length) - 1;
-            const atFirstIndex = selectedIndex === 0;
-            const nextIndex = hasLimit ? selectedIndex : lastIndex;
-            const nextRotateIndex = atFirstIndex ? rotateIndex + 1 : rotateIndex;
-            const nextSelectedIndex = atFirstIndex ? nextIndex : selectedIndex - 1;
-
-            setRotateIndex(nextRotateIndex);
-            setSelectedIndex(nextSelectedIndex);
-
-            const slicedItems = hasLimit
-              ? arrayRotate(items, nextRotateIndex).slice(0, limit)
-              : items;
-
-            if (typeof onHighlight === 'function') {
-              onHighlight(slicedItems[nextSelectedIndex]!);
-            }
-          }
-
-          if (key.downArrow) {
-            const atLastIndex = selectedIndex === (hasLimit ? limit : items.length) - 1;
-            const nextIndex = hasLimit ? selectedIndex : 0;
-            const nextRotateIndex = atLastIndex ? rotateIndex - 1 : rotateIndex;
-            const nextSelectedIndex = atLastIndex ? nextIndex : selectedIndex + 1;
-
-            setRotateIndex(nextRotateIndex);
-            setSelectedIndex(nextSelectedIndex);
-
-            const slicedItems = hasLimit
-              ? arrayRotate(items, nextRotateIndex).slice(0, limit)
-              : items;
-
-            if (typeof onHighlight === 'function') {
-              onHighlight(slicedItems[nextSelectedIndex]!);
-            }
-          }
-
-          if (key.return) {
-            const slicedItems = hasLimit ? arrayRotate(items, rotateIndex).slice(0, limit) : items;
-
-            if (typeof onSelect === 'function') {
-              onSelect(slicedItems[selectedIndex]!);
-            }
-          }
-        },
-        [hasLimit, limit, rotateIndex, selectedIndex, items, onSelect, onHighlight],
-      ),
+      (_, key) => {
+        const count = items.length;
+        if (key.upArrow) setIndex(moveIndex(count, index, -1));
+        else if (key.downArrow) setIndex(moveIndex(count, index, 1));
+        else if (key.pageUp) setIndex(moveIndex(count, index, -limit));
+        else if (key.pageDown) setIndex(moveIndex(count, index, limit));
+        else if (key.home) setIndex(0);
+        else if (key.end) setIndex(count - 1);
+        else if (key.return && current) onSelect?.(current);
+      },
       { isActive: isFocused },
     );
 
-    const slicedItems = useMemo(
-      () => (hasLimit ? arrayRotate(items, rotateIndex).slice(0, limit) : items),
-      [items, hasLimit, rotateIndex, limit],
-    );
-
-    return (
-      <Box flexDirection="column">
-        {slicedItems.map((item, index) => {
-          const isSelected = index === selectedIndex;
-          return (
-            <Box key={item.key ?? item.value}>
-              {createElement(indicatorComponent, {
-                highlightColor: highlightColor ?? theme.colorPrimary,
-                isSelected,
-              })}
-              {createElement(itemComponent, {
-                ...item,
-                highlightColor: highlightColor ?? theme.colorPrimary,
-                isSelected,
-              })}
-            </Box>
-          );
-        })}
-      </Box>
-    );
+    return <OptionList activeIndex={index} items={items} labelWidth={labelWidth} limit={limit} />;
   },
 );
 

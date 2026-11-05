@@ -1,49 +1,42 @@
-import { Spinner } from '@lobehub/cli-ui';
-import { Text } from 'ink';
+import { Spinner, useTheme } from '@lobehub/cli-ui';
+import { Box, Text, useAnimation } from 'ink';
 import { memo } from 'react';
-
-import { selectors } from '@/store';
-
-import StreamingCursor from './StreamingCursor';
 
 interface AiMessageDisplayProps {
   loading: boolean;
   loadingInfo: string;
   message?: string;
-  streamingMessage?: string;
 }
 
-const AiMessageDisplay = memo<AiMessageDisplayProps>(
-  ({ loading, loadingInfo, message, streamingMessage }) => {
-    const commitConfig = selectors.getCommitConfig();
+const Cursor = memo(() => {
+  const theme = useTheme();
+  const { frame } = useAnimation({ interval: 500 });
+  return <Text color={theme.colorPrimary}>{frame % 2 === 0 ? '▍' : ' '}</Text>;
+});
 
-    if (commitConfig.stream) {
-      if (loading) {
-        if (streamingMessage) {
-          return (
-            <Text>
-              {streamingMessage}
-              <StreamingCursor />
-            </Text>
-          );
-        } else {
-          return (
-            <Text>
-              <StreamingCursor />
-            </Text>
-          );
-        }
-      } else {
-        return <Text>{message}</Text>;
-      }
-    } else {
-      if (!loading && message) {
-        return <Text>{message}</Text>;
-      } else {
-        return <Spinner label={loadingInfo} />;
-      }
-    }
-  },
-);
+/** Spinner until text arrives, then the (streaming) message with the header in bold. */
+const AiMessageDisplay = memo<AiMessageDisplayProps>(({ loading, loadingInfo, message }) => {
+  if (!message) return <Spinner label={loadingInfo} />;
+
+  const [header, ...rest] = message.split('\n');
+  const body = rest.join('\n').trim();
+
+  return (
+    <Box flexDirection="column">
+      <Text>
+        <Text bold>{header}</Text>
+        {loading && !body && <Cursor />}
+      </Text>
+      {body && (
+        <Box marginTop={1}>
+          <Text>
+            {body}
+            {loading && <Cursor />}
+          </Text>
+        </Box>
+      )}
+    </Box>
+  );
+});
 
 export default AiMessageDisplay;

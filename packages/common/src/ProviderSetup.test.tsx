@@ -4,28 +4,6 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { resolveProviderConfig } from './providers';
 import ProviderSetup from './ProviderSetup';
 
-// The real inputs live in the local cli-ui build, which vite can't load in tests.
-vi.mock('@lobehub/cli-ui', async () => {
-  const { Text, useInput } = await import('ink');
-  const { useState } = await import('react');
-
-  const Input = ({ defaultValue = '', onSubmit, placeholder }: any) => {
-    const [value, setValue] = useState<string>(defaultValue);
-    useInput((input, key) => {
-      if (key.return) onSubmit?.(value);
-      else if (key.backspace || key.delete) setValue((v) => v.slice(0, -1));
-      else if (input && !key.escape) setValue((v) => v + input);
-    });
-    return <Text>{value || placeholder}</Text>;
-  };
-
-  return {
-    PasswordInput: Input,
-    Spinner: ({ label }: { label: string }) => <Text>{label}</Text>,
-    TextInput: Input,
-  };
-});
-
 const ENTER = '\r';
 const ESC = '\u001B';
 const DOWN = '\u001B[B';

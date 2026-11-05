@@ -1,4 +1,4 @@
-import { alert } from '@lobehub/cli-ui';
+import { alert, createTaskList } from '@lobehub/cli-ui';
 import chalk from 'chalk';
 import { consola } from 'consola';
 import { globSync } from 'glob';
@@ -54,36 +54,34 @@ class Seo {
         this.config.temperature,
       )}) ${this.config.experimental?.jsonMode ? chalk.red(' [JSON Mode]') : ''}`,
     );
+    const tasks = createTaskList({ total: this.query.length });
     let totalTokenUsage = 0;
 
-    await pMap(
-      this.query,
-      async (item) => {
-        const data = await this.seo.run({
-          ...item,
-          onProgress: ({ isLoading }) => {
-            if (isLoading) {
-              consola.start(item.entry);
-            }
-          },
-        });
+    try {
+      await pMap(
+        this.query.entries(),
+        async ([index, item]) => {
+          const id = String(index);
+          tasks.start(id, { title: item.entry });
 
-        if (data?.result && Object.keys(data.result).length > 0) {
-          const result = matter.stringify(item.rawContent, data.result);
-          writeMarkdown(item.entry, result);
-          totalTokenUsage += data.tokenUsage;
-          consola.success(
-            chalk.yellow(item.entry),
-            chalk.gray(`[Token usage: ${data.tokenUsage}]`),
-          );
-        } else {
-          consola.warn('No SEO result was generated:', chalk.yellow(item.entry));
-        }
-      },
-      { concurrency: this.config.concurrency || 5 },
-    );
+          const data = await this.seo.run(item);
 
-    if (totalTokenUsage > 0) consola.info('Total token usage:', chalk.cyan(totalTokenUsage));
+          if (data?.result && Object.keys(data.result).length > 0) {
+            writeMarkdown(item.entry, matter.stringify(item.rawContent, data.result));
+            totalTokenUsage += data.tokenUsage;
+            tasks.finish(id, 'done', `${data.tokenUsage.toLocaleString('en-US')} tokens`);
+          } else {
+            tasks.finish(id, 'warning', 'no SEO result');
+          }
+        },
+        { concurrency: this.config.concurrency || 5 },
+      );
+    } finally {
+      await tasks.stop();
+    }
+
+    if (totalTokenUsage > 0)
+      consola.info('Total token usage:', chalk.cyan(totalTokenUsage.toLocaleString('en-US')));
   }
 
   genFilesQuery(files: string[], skipLog?: boolean) {

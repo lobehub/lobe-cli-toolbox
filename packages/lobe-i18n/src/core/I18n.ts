@@ -127,20 +127,7 @@ export class I18n {
 
     const updateProgress = () => {
       const completedChunks = chunkProgress.filter((status) => status === 2).length;
-      const inProgressChunks = chunkProgress.filter((status) => status === 1).length;
-
-      let progress: number;
-      if (completedChunks === this.maxStep) {
-        progress = 100;
-      } else if (inProgressChunks > 0) {
-        // 有正在进行的chunk，计算接近完成的进度
-        const baseProgress = (completedChunks / this.maxStep) * 100;
-        const nextMilestone = ((completedChunks + 1) / this.maxStep) * 100;
-        progress = Math.floor(Math.max(baseProgress, nextMilestone - 1));
-      } else {
-        // 只有已完成的chunk
-        progress = Math.floor((completedChunks / this.maxStep) * 100);
-      }
+      const progress = Math.floor((completedChunks / this.maxStep) * 100);
 
       onProgress?.({
         isLoading: completedChunks < this.maxStep,
@@ -283,20 +270,7 @@ export class I18n {
 
     const updateProgress = () => {
       const completedChunks = chunkProgress.filter((status) => status === 2).length;
-      const inProgressChunks = chunkProgress.filter((status) => status === 1).length;
-
-      let progress: number;
-      if (completedChunks === this.maxStep) {
-        progress = 100;
-      } else if (inProgressChunks > 0) {
-        // 有正在进行的chunk，计算接近完成的进度
-        const baseProgress = (completedChunks / this.maxStep) * 100;
-        const nextMilestone = ((completedChunks + 1) / this.maxStep) * 100;
-        progress = Math.floor(Math.max(baseProgress, nextMilestone - 1));
-      } else {
-        // 只有已完成的chunk
-        progress = Math.floor((completedChunks / this.maxStep) * 100);
-      }
+      const progress = Math.floor((completedChunks / this.maxStep) * 100);
 
       onProgress?.({
         isLoading: completedChunks < this.maxStep,

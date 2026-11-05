@@ -1,89 +1,156 @@
-import { type BoxProps, Text, useApp } from 'ink';
+import { Box, Text, useApp, useInput } from 'ink';
 import type { ReactNode } from 'react';
-import { memo, useMemo, useState } from 'react';
+import { memo, useState } from 'react';
 
 import { useTheme } from '../hooks/useTheme';
-import Panel from '../Panel';
-import SelectInput, { type SelectInputItem, type SelectInputProps } from '../SelectInput';
-import ConfigSelectLabel from './ConfigSelectLabel';
+import type { KeyHint } from '../KeyHints';
+import Panel, { Intro } from '../Panel';
+import SelectInput from '../SelectInput';
+import symbols from '../styles/symbols';
 
 export interface ConfigPanelItem {
-  children: ReactNode;
-  defaultValue: any;
   desc?: string;
+  /** Key hints of the edit view, defaults to enter / esc. */
+  hints?: KeyHint[];
   key: string;
   label: string;
-  showValue?: boolean;
-  value: any;
+  /** Differs from the default; shown with a marker. */
+  modified?: boolean;
+  /** The editor handles esc itself (calling `close`), e.g. a multi-step form. */
+  ownsEscape?: boolean;
+  /** `close(true)` returns to the list with a "saved" notice. */
+  render: (close: (saved?: boolean) => void) => ReactNode;
+  /** Hide the value, only show whether it is set. */
+  secret?: boolean;
+  value?: string | number | boolean;
 }
-export interface ConfigPanelProps extends BoxProps {
-  active?: string;
+
+export interface ConfigPanelProps {
   items: ConfigPanelItem[];
+  /** Prepended to the title, e.g. an emoji. */
   logo?: string;
-  maxLength?: number;
-  setActive?: (key: string) => void;
-  show?: boolean;
-  title?: string;
+  subtitle?: string;
+  title: string;
 }
-const ConfigPanel = memo<ConfigPanelProps>(
-  ({ active, setActive, maxLength = 30, show = true, items, logo, title, ...props }) => {
-    const [activeItem, setAciveItem] = useState<ConfigPanelItem>();
-    const theme = useTheme();
-    const { exit } = useApp();
-    const options: SelectInputProps['items'] = useMemo(
-      () => [
-        ...items.map((item) => ({
-          label: (
-            <ConfigSelectLabel
-              defaultValue={item.defaultValue}
-              label={item.label}
-              maxLength={maxLength}
-              showValue={item.showValue}
-              value={item.value}
-            />
-          ),
-          value: item.key,
-        })),
-        {
-          label: 'Exit',
-          value: 'exit',
-        },
-      ],
-      [items],
-    );
 
-    const handleSelect = (e: SelectInputItem) => {
-      if (e.value === 'exit') exit();
-      const activeOption = items.find((item) => item.key === e.value);
-      if (activeOption) {
-        setAciveItem(activeOption);
-        setActive?.(e.value);
+const EDIT_HINTS: KeyHint[] = [
+  ['enter', 'save'],
+  ['esc', 'back'],
+];
+
+const ValueText = memo<{ item: ConfigPanelItem }>(({ item }) => {
+  const theme = useTheme();
+  const { modified, secret, value } = item;
+  const empty = value === undefined || value === '';
+  const text = secret
+    ? empty
+      ? 'not set'
+      : '••••••••'
+    : typeof value === 'boolean'
+      ? value
+        ? 'on'
+        : 'off'
+      : empty
+        ? 'not set'
+        : String(value);
+
+  return (
+    <Text wrap="truncate-end">
+      <Text dimColor={!modified}>{text}</Text>
+      {modified && <Text color={theme.colorPrimary}>{` ${symbols.bullet}`}</Text>}
+    </Text>
+  );
+});
+
+/** A list of settings; enter edits one, esc goes back to the list and then exits. */
+const ConfigPanel = memo<ConfigPanelProps>(({ items, logo, subtitle, title }) => {
+  const theme = useTheme();
+  const { exit } = useApp();
+  const [editing, setEditing] = useState<string>();
+  const [highlighted, setHighlighted] = useState(items[0]?.key);
+  const [notice, setNotice] = useState<string>();
+
+  const active = items.find((item) => item.key === editing);
+  const current = items.find((item) => item.key === highlighted);
+  const labelWidth = Math.max(...items.map((item) => item.label.length)) + 4;
+
+  const close = (saved?: boolean) => {
+    setNotice(saved && active ? `${active.label} saved` : undefined);
+    setEditing(undefined);
+  };
+
+  useInput(
+    (input, key) => {
+      if (active) {
+        if (key.escape && !active.ownsEscape) close();
+        return;
       }
-    };
+      if (key.escape || input === 'q') exit();
+    },
+    { isActive: !active || !active.ownsEscape },
+  );
 
-    if (!show) return;
+  const heading = <Intro subtitle={subtitle} title={[logo, title].filter(Boolean).join(' ')} />;
 
-    return active && activeItem ? (
-      <Panel
-        title={[logo, activeItem.label].filter(Boolean).join(' ')}
-        footer={
-          activeItem.desc && (
-            <Text color={theme.colorTextDescription}>
-              <Text bold>{`👉NOTE: `}</Text>
-              {activeItem.desc}
-            </Text>
-          )
-        }
-        {...props}
-      >
-        {activeItem.children}
-      </Panel>
-    ) : (
-      <Panel show={!active} title={[logo, title].filter(Boolean).join(' ')} {...props}>
-        <SelectInput items={options} onSelect={handleSelect} />
-      </Panel>
+  if (active) {
+    return (
+      <Box flexDirection="column" key={`edit-${active.key}`}>
+        {heading}
+        <Panel
+          hints={active.ownsEscape ? undefined : (active.hints ?? EDIT_HINTS)}
+          title={active.label}
+        >
+          {active.render(close)}
+          {active.desc && (
+            <Box marginTop={1}>
+              <Text dimColor>{active.desc}</Text>
+            </Box>
+          )}
+        </Panel>
+      </Box>
     );
-  },
-);
+  }
+
+  return (
+    <Box flexDirection="column" key="list">
+      {heading}
+      <Panel
+        title="Settings"
+        hints={[
+          ['↑↓', 'move'],
+          ['enter', 'edit'],
+          ['esc', 'exit'],
+        ]}
+      >
+        <SelectInput
+          initialValue={highlighted}
+          labelWidth={labelWidth}
+          items={items.map((item) => ({
+            hint: <ValueText item={item} />,
+            label: item.label,
+            value: item.key,
+          }))}
+          onHighlight={(item) => {
+            if (item.value !== highlighted) setNotice(undefined);
+            setHighlighted(item.value);
+          }}
+          onSelect={(item) => {
+            setNotice(undefined);
+            setEditing(item.value);
+          }}
+        />
+        <Box marginTop={1}>
+          {notice ? (
+            <Text color={theme.colorSuccess}>{`${symbols.tick} ${notice}`}</Text>
+          ) : (
+            <Text dimColor wrap="truncate-end">
+              {current?.desc ?? ' '}
+            </Text>
+          )}
+        </Box>
+      </Panel>
+    </Box>
+  );
+});
 
 export default ConfigPanel;

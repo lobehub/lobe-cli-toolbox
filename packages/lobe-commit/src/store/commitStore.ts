@@ -3,148 +3,141 @@ import { createWithEqualityFn } from 'zustand/traditional';
 
 import { commitMessageToObj, commitObjToMessage, type IssuesType } from '@/utils/genCommitMessage';
 import getIssuesList, { type Issue, type IssuesResult } from '@/utils/getIssuesList';
-import getRepo from '@/utils/getRepo';
 
-export type Step = 'type' | 'scope' | 'subject' | 'issues' | 'issuesType' | 'ai' | 'commit';
+export type Step = 'type' | 'scope' | 'subject' | 'issues' | 'issuesType' | 'ai';
+
+export type IssuesStatus = 'idle' | 'loading' | 'ready' | 'unavailable';
+
+/** Where esc leads from each step; `type` is the first step. */
+const PREVIOUS_STEP: Record<Step, Step | undefined> = {
+  ai: 'type',
+  issues: 'subject',
+  issuesType: 'issues',
+  scope: 'type',
+  subject: 'scope',
+  type: undefined,
+};
 
 export interface CommitStore {
+  /** Goes to the previous step, returns `false` on the first step. */
+  back: () => boolean;
   body: string;
   emoji: string;
-  fetchIssuesList: () => void;
-  isGithubRepo: boolean;
+  /** Loads open issues once; later calls are no-ops. */
+  fetchIssuesList: () => Promise<void>;
   issueList: Issue[];
   issues: string;
+  /** Why the issue list is unavailable. */
   issuesError?: string;
-  issuesLoading: boolean;
+  issuesStatus: IssuesStatus;
   issuesType: IssuesType;
   message: string;
-  refreshMessage: () => void;
   scope: string;
   setEmoji: (emoji: string) => void;
   setIssues: (issues: string) => void;
   setIssuesType: (type: IssuesType) => void;
+  /** Parses a full message (e.g. from AI) into the fields. */
   setMessage: (message: string) => void;
   setScope: (scope: string) => void;
   setStep: (step: Step) => void;
   setSubject: (subject: string) => void;
   setType: (type: string) => void;
-  shouldSkipIssues: boolean;
   step: Step;
   subject: string;
   type: string;
 }
 
-const getErrorMessage = (error: IssuesResult['error']): string => {
+export const getIssuesErrorMessage = (error: IssuesResult['error']): string => {
   switch (error) {
     case 'NO_TOKEN': {
-      return 'No GitHub token provided';
+      return 'Add a GitHub token with `lobe-commit --option` or GITHUB_TOKEN to pick from open issues';
     }
     case 'INVALID_TOKEN': {
-      return 'Invalid GitHub token';
+      return 'The GitHub token is invalid';
     }
     case 'PERMISSION_DENIED': {
-      return 'Permission denied or private repository';
+      return 'No access to the repository issues';
     }
     case 'TIMEOUT': {
-      return 'Request timeout';
+      return 'GitHub did not respond in time';
     }
     case 'NETWORK_ERROR': {
-      return 'Network connection error';
+      return 'Could not reach GitHub';
     }
     case 'NO_REPO': {
-      return 'Not a GitHub repository';
+      return 'The origin remote is not a GitHub repository';
     }
     default: {
-      return 'Unknown error occurred';
+      return 'Could not load issues';
     }
   }
 };
 
-export const useCommitStore = createWithEqualityFn<CommitStore>((set, get) => ({
-  body: '',
-  emoji: '',
-  fetchIssuesList: async () => {
-    const data = await getRepo();
-    if (data) {
-      set({ isGithubRepo: true, issuesError: undefined, issuesLoading: true });
+export const useCommitStore = createWithEqualityFn<CommitStore>((set, get) => {
+  const update = (patch: Partial<CommitStore>) => {
+    const next = { ...get(), ...patch };
+    set({
+      ...patch,
+      message: commitObjToMessage({
+        body: next.body,
+        emoji: next.emoji,
+        issues: next.issues,
+        issuesType: next.issuesType,
+        scope: next.scope,
+        subject: next.subject,
+        type: next.type,
+      }),
+    });
+  };
+
+  return {
+    back: () => {
+      const previous = PREVIOUS_STEP[get().step];
+      if (!previous) return false;
+      set({ step: previous });
+      return true;
+    },
+    body: '',
+    emoji: '',
+    fetchIssuesList: async () => {
+      if (get().issuesStatus !== 'idle') return;
+      set({ issuesStatus: 'loading' });
       const result = await getIssuesList();
-
-      if (result.success && result.data) {
-        const issueList = result.data;
-        if (issueList.length > 0) {
-          set({ issueList, issuesLoading: false, shouldSkipIssues: false });
-        } else {
-          // 没有 issues，但不需要跳过步骤，用户可能想手动输入
-          set({ isGithubRepo: false, issuesLoading: false, shouldSkipIssues: false });
-        }
+      if (result.success && result.data && result.data.length > 0) {
+        set({ issueList: result.data, issuesStatus: 'ready' });
       } else {
-        // 根据错误类型决定是否自动跳过
-        const shouldSkip =
-          result.error === 'NO_TOKEN' ||
-          result.error === 'INVALID_TOKEN' ||
-          result.error === 'PERMISSION_DENIED' ||
-          result.error === 'TIMEOUT' ||
-          result.error === 'NETWORK_ERROR';
-
         set({
-          isGithubRepo: false,
-          issuesError: getErrorMessage(result.error),
-          issuesLoading: false,
-          shouldSkipIssues: shouldSkip,
+          issuesError: result.success ? 'No open issues' : getIssuesErrorMessage(result.error),
+          issuesStatus: 'unavailable',
         });
       }
-    } else {
-      set({ shouldSkipIssues: false });
-    }
-  },
-  isGithubRepo: false,
-  issueList: [],
-  issues: '',
-  issuesError: undefined,
-  issuesLoading: false,
-  issuesType: '',
-  message: '',
-  refreshMessage: () => {
-    const { issues, scope, subject, type, emoji, body, issuesType } = get();
-    const message = commitObjToMessage({ body, emoji, issues, issuesType, scope, subject, type });
-    set({ message });
-  },
-  scope: '',
-  setEmoji: (emoji) => {
-    set({ emoji });
-    get().refreshMessage();
-  },
-  setIssues: (issues) => {
-    set({ issues });
-    get().refreshMessage();
-  },
-  setIssuesType: (issuesType) => {
-    set({ issuesType });
-    get().refreshMessage();
-  },
-  setMessage: (message) => {
-    const obj = commitMessageToObj(message);
-    set({ ...obj });
-    get().refreshMessage();
-  },
-  setScope: (scope) => {
-    set({ scope: kebabCase(scope) });
-    get().refreshMessage();
-  },
-  setStep: (step) => {
-    set({ step });
-    get().refreshMessage();
-  },
-  setSubject: (subject) => {
-    set({ subject });
-    get().refreshMessage();
-  },
-  setType: (type) => {
-    set({ type });
-    get().refreshMessage();
-  },
-  shouldSkipIssues: false,
-  step: 'type',
-  subject: '',
-  type: '',
-}));
+    },
+    issueList: [],
+    issues: '',
+    issuesStatus: 'idle',
+    issuesType: '',
+    message: '',
+    scope: '',
+    setEmoji: (emoji) => update({ emoji }),
+    setIssues: (issues) => update({ issues }),
+    setIssuesType: (issuesType) => update({ issuesType }),
+    setMessage: (message) => {
+      const {
+        body = '',
+        emoji = '',
+        issues = '',
+        scope = '',
+        subject,
+        type,
+      } = commitMessageToObj(message);
+      update({ body, emoji, issues, scope, subject, type });
+    },
+    setScope: (scope) => update({ scope: kebabCase(scope) }),
+    setStep: (step) => set({ step }),
+    setSubject: (subject) => update({ subject }),
+    setType: (type) => update({ type }),
+    step: 'type',
+    subject: '',
+    type: '',
+  };
+});

@@ -1,18 +1,18 @@
 import { relative, resolve } from 'node:path';
 
-import { alert, render } from '@lobehub/cli-ui';
+import { alert, createTaskList } from '@lobehub/cli-ui';
 import chalk from 'chalk';
 import { consola } from 'consola';
 import { globSync } from 'glob';
 import matter from 'gray-matter';
 import { isString } from 'lodash-es';
 
-import Progress from '@/components/Progress';
 import type { I18nMarkdownWriteOptions } from '@/core/I18n';
 import { I18n } from '@/core/I18n';
 import { selectors } from '@/store';
 import type { I18nConfig, MarkdownConfig } from '@/types/config';
 import { MarkdownModeType } from '@/types/config';
+import { formatTokens, progressDetail } from '@/utils/formatProgress';
 import { readMarkdown, writeMarkdown } from '@/utils/fs';
 import { getDefaultExtension } from '@/utils/getDefaultExtension';
 import { hashContent, MarkdownCache } from '@/utils/markdownCache';
@@ -88,45 +88,45 @@ class TranslateMarkdown {
         this.config.temperature,
       )}) ${this.config.experimental?.jsonMode ? chalk.red(' [JSON Mode]') : ''}`,
     );
+    const tasks = createTaskList({
+      tagWidth: Math.max(...this.query.map((item) => item.to.length)) + 1,
+      total: this.query.length,
+    });
     let totalTokenUsage = 0;
-    for (const { hash, source, ...item } of this.query) {
-      const props = {
-        filename: item.filename,
-        from: item.from || this.markdownConfig.entryLocale || this.config.entryLocale,
-        to: item.to,
-      };
 
-      this.cache.markPending(source, item.filename);
-      const { rerender, clear } = render(
-        <Progress hide isLoading maxStep={1} progress={0} step={0} {...props} />,
-      );
-      const data = await this.i18n.translateMarkdown({
-        ...item,
-        onProgress: (rest) => {
-          if (rest.maxStep > 0) {
-            rerender(<Progress {...rest} {...props} />);
-          } else {
-            clear();
-          }
-        },
-      });
-      clear();
-      const outputPath = relative('.', item.filename);
-      if (data?.result && Object.keys(data.result).length > 0) {
-        let mdResut = data.result;
-        if (!this.markdownConfig.includeMatter) {
-          mdResut = matter.stringify(data.result, item.matter);
+    try {
+      for (const [index, { hash, source, ...item }] of this.query.entries()) {
+        const id = String(index);
+        const outputPath = relative('.', item.filename);
+        this.cache.markPending(source, item.filename);
+        tasks.start(id, { tag: item.to, title: outputPath });
+
+        const data = await this.i18n.translateMarkdown({
+          ...item,
+          onProgress: ({ maxStep, needToken, progress, step }) => {
+            if (maxStep > 0)
+              tasks.update(id, { detail: progressDetail(step, maxStep, needToken), progress });
+          },
+        });
+
+        if (data?.result && Object.keys(data.result).length > 0) {
+          const content = this.markdownConfig.includeMatter
+            ? data.result
+            : matter.stringify(data.result, item.matter);
+          writeMarkdown(item.filename, content);
+          this.cache.set(source, item.filename, hash);
+          totalTokenUsage += data.tokenUsage;
+          tasks.finish(id, 'done', formatTokens(data.tokenUsage));
+        } else {
+          tasks.finish(id, 'warning', 'no translation result');
         }
-
-        writeMarkdown(item.filename, mdResut);
-        this.cache.set(source, item.filename, hash);
-        totalTokenUsage += data.tokenUsage;
-        consola.success(chalk.yellow(outputPath), chalk.gray(`[Token usage: ${data.tokenUsage}]`));
-      } else {
-        consola.warn('No translation result was found:', chalk.yellow(outputPath));
       }
+    } finally {
+      await tasks.stop();
     }
-    if (totalTokenUsage > 0) consola.info('Total token usage:', chalk.cyan(totalTokenUsage));
+
+    if (totalTokenUsage > 0)
+      consola.info('Total token usage:', chalk.cyan(formatTokens(totalTokenUsage)));
   }
 
   genFilesQuery(files: string[], skipLog?: boolean) {

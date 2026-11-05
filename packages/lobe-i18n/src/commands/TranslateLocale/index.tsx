@@ -1,10 +1,9 @@
 import { relative, resolve } from 'node:path';
 
-import { render } from '@lobehub/cli-ui';
+import { createTaskList } from '@lobehub/cli-ui';
 import chalk from 'chalk';
 import { consola } from 'consola';
 
-import Progress from '@/components/Progress';
 import type { I18nWriteOptions } from '@/core/I18n';
 import { I18n } from '@/core/I18n';
 import { selectors } from '@/store';
@@ -12,6 +11,7 @@ import type { LocaleFolderObj, LocaleObj } from '@/types';
 import type { I18nConfig } from '@/types/config';
 import { checkLocaleFolders, checkLocales } from '@/utils/checkLocales';
 import { diff } from '@/utils/diffJson';
+import { formatTokens, progressDetail } from '@/utils/formatProgress';
 import { writeJSON } from '@/utils/fs';
 import { getEntryFile, getEntryFolderFiles } from '@/utils/getEntryFile';
 import { getLocaleObj } from '@/utils/getLocaleObj';
@@ -51,43 +51,40 @@ class TranslateLocale {
         this.config.temperature,
       )}) ${this.config.experimental?.jsonMode ? chalk.red(' [JSON Mode]') : ''}`,
     );
+    const tasks = createTaskList({
+      tagWidth: Math.max(...this.query.map((item) => item.to.length)) + 1,
+      total: this.query.length,
+    });
     let totalTokenUsage = 0;
 
-    for (const item of this.query) {
-      const props = {
-        filename: item.filename,
-        from: item.from || this.config.entryLocale,
-        to: item.to,
-      };
-      const { rerender, clear } = render(
-        <Progress hide isLoading maxStep={1} progress={0} step={0} {...props} />,
-      );
-      const data = await this.i18n.translate({
-        ...item,
-        filename: item.filename,
-        onChunkComplete: () => {
-          // 可以在这里添加额外的日志或处理逻辑
-          // 例如显示当前完成的 chunk 进度
-        },
-        onProgress: (rest) => {
-          if (rest.maxStep > 0) {
-            rerender(<Progress {...rest} {...props} />);
-          } else {
-            clear();
-          }
-        },
-      });
-      clear();
-      const outputPath = relative('.', item.filename);
-      if (data?.result && Object.keys(data.result).length > 0) {
-        writeJSON(item.filename, data.result);
-        totalTokenUsage += data.tokenUsage;
-        consola.success(chalk.yellow(outputPath), chalk.gray(`[Token usage: ${data.tokenUsage}]`));
-      } else {
-        consola.warn('No translation result was found:', chalk.yellow(outputPath));
+    try {
+      for (const [index, item] of this.query.entries()) {
+        const id = String(index);
+        const outputPath = relative('.', item.filename);
+        tasks.start(id, { tag: item.to, title: outputPath });
+
+        const data = await this.i18n.translate({
+          ...item,
+          onProgress: ({ maxStep, needToken, progress, step }) => {
+            if (maxStep > 0)
+              tasks.update(id, { detail: progressDetail(step, maxStep, needToken), progress });
+          },
+        });
+
+        if (data?.result && Object.keys(data.result).length > 0) {
+          writeJSON(item.filename, data.result);
+          totalTokenUsage += data.tokenUsage;
+          tasks.finish(id, 'done', formatTokens(data.tokenUsage));
+        } else {
+          tasks.finish(id, 'warning', 'no translation result');
+        }
       }
+    } finally {
+      await tasks.stop();
     }
-    if (totalTokenUsage > 0) consola.info('Total token usage:', chalk.cyan(totalTokenUsage));
+
+    if (totalTokenUsage > 0)
+      consola.info('Total token usage:', chalk.cyan(formatTokens(totalTokenUsage)));
   }
 
   genFolderQuery() {

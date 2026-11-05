@@ -1,46 +1,35 @@
-import { ConfigPanel, type ConfigPanelProps, TextInput } from '@lobehub/cli-ui';
-import { memo, useMemo, useState } from 'react';
+import { ConfigPanel, type ConfigPanelItem, TextField } from '@lobehub/cli-ui';
+import { memo, useReducer } from 'react';
 
-import { type Config as LocalConfig, type ConfigKeys, useConfStore } from '@/store/confStore';
+import { useConfStore } from '@/store/confStore';
 
 const Config = memo(() => {
-  const [active, setActive] = useState<string>();
-  const { store, set, getDefault } = useConfStore();
+  const [, refresh] = useReducer((x: number) => x + 1, 0);
+  const { set, store } = useConfStore();
 
-  const setConfig = <K extends ConfigKeys>(key: K, value: LocalConfig[K]) => {
-    set(key, value);
-    setActive('');
-  };
+  const items: ConfigPanelItem[] = [
+    {
+      desc: 'Needs write access to the target repo, falls back to GITHUB_TOKEN / GH_TOKEN',
+      key: 'githubToken',
+      label: 'GitHub token',
+      modified: !!store.githubToken,
+      render: (close) => (
+        <TextField
+          mask="•"
+          placeholder="Paste a token, or leave empty to remove it"
+          onSubmit={(value) => {
+            set('githubToken', value.trim());
+            refresh();
+            close(true);
+          }}
+        />
+      ),
+      secret: true,
+      value: store.githubToken,
+    },
+  ];
 
-  const items: ConfigPanelProps['items'] = useMemo(
-    () => [
-      {
-        children: (
-          <TextInput
-            defaultValue={store.githubToken}
-            placeholder="Input Github token..."
-            onSubmit={(v: string) => setConfig('githubToken', v)}
-          />
-        ),
-        defaultValue: getDefault('githubToken'),
-        key: 'githubToken',
-        label: 'Github token',
-        showValue: false,
-        value: store.githubToken,
-      },
-    ],
-    [store],
-  );
-
-  return (
-    <ConfigPanel
-      active={active}
-      items={items}
-      logo="🤯"
-      setActive={setActive}
-      title="Lobe Label Config"
-    />
-  );
+  return <ConfigPanel items={items} logo="🏷️" subtitle="settings" title="Lobe Label" />;
 });
 
 export default Config;

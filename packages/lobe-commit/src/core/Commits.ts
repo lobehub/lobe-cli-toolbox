@@ -53,7 +53,7 @@ export class Commits {
     onStreamMessage,
     onTokenUsage,
   }: GenAiCommitProps) {
-    setLoadingInfo(' Generating...');
+    setLoadingInfo('Generating commit message');
 
     // STEP 1
     const summary = cacheSummary || (await this.genSummary({ setLoadingInfo, setSummary }));
@@ -99,7 +99,7 @@ export class Commits {
     });
     const documents = textSplitter.createDocuments([diff]);
     setLoadingInfo(
-      ` [1/2] Summarizing diff in ${documents.length} chunks of ${chunkSize} tokens...`,
+      `Summarizing the diff in ${documents.length} chunks of ${chunkSize} tokens (1/2)`,
     );
 
     const summary = await summarizeDocuments(this.client, documents, {
@@ -109,7 +109,7 @@ export class Commits {
     if (!summary)
       alert.error('Diff summary failed, please check your network or try again...', true);
 
-    setLoadingInfo(' [2/2] Generating commit message...');
+    setLoadingInfo('Generating commit message (2/2)');
     setSummary(summary);
     return summary;
   }

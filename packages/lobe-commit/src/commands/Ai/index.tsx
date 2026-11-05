@@ -1,49 +1,37 @@
-import { Panel, useTheme } from '@lobehub/cli-ui';
-import { Text } from 'ink';
-import { memo, useEffect, useState } from 'react';
+import { Intro } from '@lobehub/cli-ui';
+import { Box, useApp } from 'ink';
+import { memo, useEffect } from 'react';
 
-import AiMessageDisplay from '@/components/AiMessageDisplay';
+import AiPanel from '@/components/AiPanel';
 import { useCommits } from '@/hooks/useCommits';
-import { selectors } from '@/store';
 
+/** Generates a message for the staged diff and prints it, without committing. */
 const Ai = memo(() => {
-  const [message, setMessage] = useState<string>('');
-  const theme = useTheme();
-  const commitConfig = selectors.getCommitConfig();
-
-  const {
-    summary,
-    start,
-    loadingInfo,
-    loading,
-    tokenUsage,
-    message: streamingMessage,
-  } = useCommits({ setMessage });
+  const { exit } = useApp();
+  const { loading, loadingInfo, message, start, summary, tokenUsage } = useCommits();
 
   useEffect(() => {
     start();
   }, [start]);
 
+  const done = !loading && !!message;
+
+  useEffect(() => {
+    if (done) exit();
+  }, [done, exit]);
+
   return (
-    <Panel
-      reverse
-      title={`🤯 AI Commit Generator ${commitConfig.stream ? '(Streaming)' : ''} ${tokenUsage > 0 ? `[Tokens: ${tokenUsage}]` : ''}`}
-      footer={
-        summary && (
-          <Text color={theme.colorTextDescription}>
-            <Text bold>{`👉 DIFF SUMMARY: `}</Text>
-            {summary}
-          </Text>
-        )
-      }
-    >
-      <AiMessageDisplay
+    <Box flexDirection="column">
+      <Intro title="🤯 Lobe Commit" />
+      <AiPanel
         loading={loading}
         loadingInfo={loadingInfo}
         message={message}
-        streamingMessage={streamingMessage}
+        status={done ? 'done' : 'active'}
+        summary={summary}
+        tokenUsage={tokenUsage}
       />
-    </Panel>
+    </Box>
   );
 });
 

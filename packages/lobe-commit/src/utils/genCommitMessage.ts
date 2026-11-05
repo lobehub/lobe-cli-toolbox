@@ -14,18 +14,22 @@ export interface CommitMessageObj {
   type: string;
 }
 
-export const commitMessageToObj = (msg: string): CommitMessageObj => {
-  const emojiReg = /^(\S+)\s/;
-  const typeReg = /\s(\w+)(?=\(|:)/;
-  const scopeReg = /\(([^)]+)\)/;
-  const subjectReg = /:\s([^\n:]+)/;
+const HEADER = /^(?:(\S+)\s+)?(\w+)(?:\(([^)]*)\))?!?:\s?(.*)$/;
 
+export const commitMessageToObj = (msg: string): CommitMessageObj => {
+  const [header = '', ...rest] = msg.trim().split('\n');
+  const body = rest.join('\n').trim() || undefined;
+  const match = HEADER.exec(header.trim());
+
+  if (!match) return { body, emoji: '🔧', subject: header.trim(), type: 'chore' };
+
+  const [, emoji, type = 'chore', scope, subject = ''] = match;
   return {
-    body: msg.indexOf('\n') > 0 ? msg.slice(Math.max(0, msg.indexOf('\n') + 1)).trim() : undefined,
-    emoji: emojiReg.test(msg) ? msg.match(emojiReg)?.[1] || '🔧' : '🔧',
-    scope: scopeReg.test(msg) ? msg.match(scopeReg)?.[1] : undefined,
-    subject: subjectReg.test(msg) ? msg.match(subjectReg)?.[1] || 'Nothing' : 'Nothing',
-    type: typeReg.test(msg) ? msg.match(typeReg)?.[1] || 'chore' : 'chore',
+    body,
+    emoji: emoji || gitmojis.find((item) => item.type === type.toLowerCase())?.emoji || '🔧',
+    scope: scope || undefined,
+    subject: subject.trim(),
+    type,
   };
 };
 
