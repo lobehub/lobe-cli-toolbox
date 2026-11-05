@@ -569,13 +569,13 @@ $ bun dev
 
 ## 🔗 链接
 
-- **[LobeHub](https://github.com/lobehub/lobehub)**
-- **[lobe ui](https://github.com/lobehub/lobe-ui)**
-- **[lobe icons](https://github.com/lobehub/lobe-icons)**
-- **[lobe charts](https://github.com/lobehub/lobe-charts)**
-- **[lobe editor](https://github.com/lobehub/lobe-editor)**
-- **[docs kit](https://github.com/lobehub/docs-kit)**
-- **[stream down](https://github.com/lobehub/streamdown)**
+- 🤯 [LobeHub](https://github.com/lobehub/lobehub) - 首席 Agent 运营官，帮你招募、调度并汇报整个 AI 团队的 7×24 运转
+- 🍭 [Lobe UI](https://github.com/lobehub/lobe-ui) - 面向 AI 应用的 React 组件库
+- 🥨 [Lobe Icons](https://github.com/lobehub/lobe-icons) - AI / LLM 品牌 Logo 与图标
+- 📊 [Lobe Charts](https://github.com/lobehub/lobe-charts) - React 图表组件
+- 🖋️ [Lobe Editor](https://github.com/lobehub/lobe-editor) - 基于 Lexical 的 React 富文本编辑器，支持 Markdown、插件与聊天输入框
+- 📖 [Docs Kit](https://github.com/lobehub/docs-kit) - 可复用的文档工具包与 lobedocs CLI，用于 LobeHub 组件库文档
+- 🌊 [Streamdown](https://github.com/lobehub/streamdown) - 面向 React 的无头流式 Markdown 引擎
 
 <div align="right">
 

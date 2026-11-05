@@ -266,13 +266,13 @@ We welcome contributions in all forms. If you are interested in contributing cod
 
 ## 🔗 Links
 
-- **[LobeHub](https://github.com/lobehub/lobehub)**
-- **[lobe ui](https://github.com/lobehub/lobe-ui)**
-- **[lobe icons](https://github.com/lobehub/lobe-icons)**
-- **[lobe charts](https://github.com/lobehub/lobe-charts)**
-- **[lobe editor](https://github.com/lobehub/lobe-editor)**
-- **[docs kit](https://github.com/lobehub/docs-kit)**
-- **[stream down](https://github.com/lobehub/streamdown)**
+- 🤯 [LobeHub](https://github.com/lobehub/lobehub) - Chief Agent Operator for hiring, scheduling, and reporting on your AI team
+- 🍭 [Lobe UI](https://github.com/lobehub/lobe-ui) - React component library for AI apps
+- 🥨 [Lobe Icons](https://github.com/lobehub/lobe-icons) - AI / LLM brand logos and icons
+- 📊 [Lobe Charts](https://github.com/lobehub/lobe-charts) - React chart components
+- 🖋️ [Lobe Editor](https://github.com/lobehub/lobe-editor) - Lexical-based rich text editor for React, with Markdown, plugins and a chat composer
+- 📖 [Docs Kit](https://github.com/lobehub/docs-kit) - Reusable documentation toolkit and lobedocs CLI for LobeHub component libraries
+- 🌊 [Streamdown](https://github.com/lobehub/streamdown) - Headless streaming markdown engine for React
 
 <div align="right">
 
