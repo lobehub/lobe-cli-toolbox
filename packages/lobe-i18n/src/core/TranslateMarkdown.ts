@@ -60,13 +60,13 @@ export class TranslateMarkdown {
     };
   }
 
-  async genSplitMarkdown(md: string, prompt: string) {
+  async genSplitMarkdown(md: string) {
     this.definition = '';
     const { content, definition } = await this.clearMarkdownString(md);
     this.definition = definition;
     const textSplitter = RecursiveCharacterTextSplitter.fromLanguage('markdown', {
       chunkOverlap: 0,
-      chunkSize: getSplitToken(this.config, prompt),
+      chunkSize: getSplitToken(this.config),
       lengthFunction: (text) => calcToken(text),
     });
     return await textSplitter.splitText(content);

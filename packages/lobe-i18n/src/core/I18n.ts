@@ -9,12 +9,20 @@ import { writeJSON, writeMarkdown } from '@/utils/fs';
 import { mergeJsonFromChunks } from '@/utils/mergeJsonFromChunks';
 import { splitJsonToChunks } from '@/utils/splitJsonToChunks';
 
+import { type ResolvedProviderConfig, resolveProviderConfig } from '../../../common/providers';
 import { TranslateLocale } from './TranslateLocale';
 
 export interface I18nOptions {
   config: I18nConfig;
-  openAIApiKey: string;
-  openAIProxyUrl: string;
+  /**
+   * @deprecated Use `provider` instead, kept for OpenAI compatible endpoints
+   */
+  openAIApiKey?: string;
+  /**
+   * @deprecated Use `provider` instead, kept for OpenAI compatible endpoints
+   */
+  openAIProxyUrl?: string;
+  provider?: ResolvedProviderConfig;
 }
 
 export interface onProgressProps {
@@ -34,8 +42,10 @@ export interface I18nTranslateOptions {
   to: string;
 }
 
-export interface I18nMarkdownTranslateOptions
-  extends Pick<I18nTranslateOptions, 'from' | 'to' | 'onProgress'> {
+export interface I18nMarkdownTranslateOptions extends Pick<
+  I18nTranslateOptions,
+  'from' | 'to' | 'onProgress'
+> {
   filename?: string;
   matter?: any;
   md: string;
@@ -56,9 +66,17 @@ export class I18n {
   private maxStep: number = 1;
   private translateLocaleService: TranslateLocale;
   private translateMarkdownService: TranslateMarkdown;
-  constructor({ openAIApiKey, openAIProxyUrl, config }: I18nOptions) {
+  constructor({ openAIApiKey, openAIProxyUrl, config, provider }: I18nOptions) {
+    const resolved =
+      provider ||
+      resolveProviderConfig({
+        apiKey: openAIApiKey,
+        baseURL: openAIProxyUrl,
+        model: config.modelName,
+      });
     this.config = config;
-    this.translateLocaleService = new TranslateLocale(config, openAIApiKey, openAIProxyUrl);
+    this.config.modelName = resolved.model;
+    this.translateLocaleService = new TranslateLocale(config, resolved);
     this.translateMarkdownService = new TranslateMarkdown(config);
   }
 
@@ -87,10 +105,7 @@ export class I18n {
       text: '',
       to,
     });
-    const splitString = await this.translateMarkdownService.genSplitMarkdown(
-      md,
-      JSON.stringify(prompt),
-    );
+    const splitString = await this.translateMarkdownService.genSplitMarkdown(md);
 
     this.maxStep = splitString.length;
 
@@ -168,11 +183,12 @@ export class I18n {
         if (this.config.saveImmediately && filename) {
           // 存储当前结果到临时数组
           tempResults[index] = result;
-          // 只有当前面的 chunks 都完成了，才能正确组装
+          // 只有当前面的 chunks 都完成了，才能正确组装；只取连续完成的前缀，避免顺序错乱
           if (index === 0 || chunkProgress.slice(0, index).every((status) => status === 2)) {
-            mergedResult = await this.translateMarkdownService.genMarkdownByString(
-              tempResults.filter(Boolean),
-            );
+            const firstPending = chunkProgress.findIndex((status) => status !== 2);
+            const completedPrefix =
+              firstPending === -1 ? tempResults : tempResults.slice(0, firstPending);
+            mergedResult = await this.translateMarkdownService.genMarkdownByString(completedPrefix);
             writeMarkdown(filename, mergedResult);
             onChunkComplete?.(result, mergedResult);
           }
@@ -193,11 +209,7 @@ export class I18n {
       step: this.maxStep,
     });
 
-    // 如果开启了立即保存且有合并结果，则使用合并结果，否则使用原有逻辑
-    const result =
-      this.config.saveImmediately && mergedResult
-        ? mergedResult
-        : await this.translateMarkdownService.genMarkdownByString(translatedSplitString);
+    const result = await this.translateMarkdownService.genMarkdownByString(translatedSplitString);
 
     return {
       result,
@@ -216,7 +228,8 @@ export class I18n {
 
     // 过滤掉 Markdown 特有的参数，只保留 translate 方法需要的参数
     /* eslint-disable @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars */
-    const { matter, mode, onChunkComplete, ...translateOptions } = rest;
+    // filename 指向 .md 文件，不能传给 translate，否则会被立即保存写成 JSON
+    const { filename, matter, mode, onChunkComplete, ...translateOptions } = rest;
     /* eslint-enable @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars */
 
     const translatedTarget = await this.translate({
@@ -257,7 +270,7 @@ export class I18n {
       json: JSON.stringify({}),
       to,
     });
-    const splitJson = splitJsonToChunks(this.config, entry, target, JSON.stringify(prompt));
+    const splitJson = splitJsonToChunks(this.config, entry, target);
 
     this.maxStep = splitJson.length;
 
@@ -349,10 +362,10 @@ export class I18n {
       step: this.maxStep,
     });
 
-    // 如果没有开启立即保存，则使用原有逻辑
-    const result = filename
-      ? mergedResult
-      : await merge(target, mergeJsonFromChunks(translatedSplitJson));
+    const result =
+      this.config.saveImmediately && filename
+        ? mergedResult
+        : merge(target, mergeJsonFromChunks(translatedSplitJson));
 
     return {
       result,

@@ -1,5 +1,4 @@
-import OpenAI from 'openai';
-
+import { LLMClient } from './llm';
 import { PromptTemplate } from './promptTemplate';
 import { Document } from './textSplitter';
 
@@ -10,11 +9,11 @@ export interface SummarizationChainOptions {
 }
 
 export class SummarizationChain {
-  private client: OpenAI;
+  private client: LLMClient;
   private questionPrompt: PromptTemplate;
   private refinePrompt: PromptTemplate;
 
-  constructor(client: OpenAI, options: SummarizationChainOptions) {
+  constructor(client: LLMClient, options: SummarizationChainOptions) {
     this.client = client;
     this.questionPrompt = options.questionPrompt;
     this.refinePrompt = options.refinePrompt;
@@ -38,13 +37,12 @@ export class SummarizationChain {
         text: firstDoc.pageContent,
       });
 
-      const completion = await this.client.chat.completions.create({
+      const { text } = await this.client.generate({
         messages: [{ content: prompt, role: 'user' }],
-        model: 'gpt-3.5-turbo',
         temperature: 0.5,
       });
 
-      return { text: completion.choices[0]?.message?.content || '' };
+      return { text };
     }
 
     // 多个文档，使用 refine 方法
@@ -68,13 +66,12 @@ export class SummarizationChain {
         });
       }
 
-      const completion = await this.client.chat.completions.create({
+      const { text } = await this.client.generate({
         messages: [{ content: prompt, role: 'user' }],
-        model: 'gpt-3.5-turbo',
         temperature: 0.5,
       });
 
-      currentSummary = completion.choices[0]?.message?.content || '';
+      currentSummary = text;
     }
 
     return { text: currentSummary };
@@ -82,7 +79,7 @@ export class SummarizationChain {
 }
 
 export function loadSummarizationChain(
-  client: OpenAI,
+  client: LLMClient,
   options: SummarizationChainOptions,
 ): SummarizationChain {
   return new SummarizationChain(client, options);

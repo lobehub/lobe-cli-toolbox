@@ -1,5 +1,3 @@
-import { LanguageModel } from '../../../common/models';
-
 export type KeyStyle = 'auto' | 'flat' | 'nested';
 
 export interface I18nConfigLocale {
@@ -21,9 +19,9 @@ export interface I18nConfigLocale {
    */
   keyStyle?: KeyStyle;
   /**
-   * @description ChatGPT model name to use
+   * @description Model id to use, overrides the model chosen by `lobe-i18n --option`
    */
-  modelName?: LanguageModel;
+  modelName?: string;
   /**
    * @description Where you store your locale files
    */
@@ -38,11 +36,12 @@ export interface I18nConfigLocale {
   reference?: string;
   /**
    * @description Save translation results immediately after each chunk is completed
-   * @default false
+   * @default true
    */
   saveImmediately?: boolean;
   /**
-   * @description Split locale JSON by token
+   * @description Split locale JSON / markdown into chunks of this many tokens
+   * @default 4000
    */
   splitToken?: number;
   /**
@@ -67,6 +66,11 @@ export type MarkdownModeFunction = (config: {
 }) => MarkdownModeType;
 
 export interface MarkdownConfig {
+  /**
+   * @description Where to store source hashes used to detect changed markdown files
+   * @default '.i18n-cache.json'
+   */
+  cacheFile?: string;
   /**
    * @description The entry file or folder, support glob
    */
@@ -123,7 +127,10 @@ export type OptionKeys = keyof I18nConfig;
 
 export interface Config {
   apiBaseUrl: string;
+  apiType: string;
+  modelName: string;
   openaiToken: string;
+  provider: string;
 }
 
 export type ConfigKeys = keyof Config;

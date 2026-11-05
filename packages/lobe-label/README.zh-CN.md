@@ -71,11 +71,30 @@ $ lobe-label -t lobehub/chat
 $ lobe-label -t lobehub/chat -s lobehub/commit
 ```
 
+> \[!WARNING]\
+> 复制前会删除目标仓库现有的全部标签。
+
+GitHub 令牌依次读取 `lobe-label -o` 中的配置、`GITHUB_TOKEN` / `GH_TOKEN` 环境变量，例如 `GITHUB_TOKEN=$(gh auth token) lobe-label -t lobehub/chat`。
+
 <div align="right">
 
 [![][back-to-top]](#readme-top)
 
 </div>
+
+## 🤖 AI Agent Skill
+
+安装 `lobe-label` skill，让 Claude Code、Cursor、Codex、Copilot 等编程 Agent 知道如何使用它：
+
+```shell
+$ lobe-label skill                # 当前项目：.agents/skills，存在 .claude 时同时安装到 .claude/skills
+$ lobe-label skill --global       # 安装到用户目录
+$ lobe-label skill --agent claude # 只安装到 .claude/skills（可选 agents / claude）
+```
+
+旧版本写入的配置会在下次运行任意 `lobe-label` 命令时自动迁移到新格式。
+
+<br/>
 
 ## ⌨️ 本地开发
 

@@ -4,7 +4,6 @@ import { minimatch } from 'minimatch';
 import { execSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import OpenAI from 'openai';
 
 import { SUMMARY_PROMPT, SUMMARY_REFINE_PROMPT, promptCommits } from '@/prompts/commits';
 import { selectors } from '@/store';
@@ -12,8 +11,9 @@ import { Config } from '@/types/config';
 import { calcToken } from '@/utils/calcToken';
 import { addEmojiToMessage } from '@/utils/genCommitMessage';
 
-import { ModelTokens } from '../../../common/models';
+import { type ChatMessage, LLMClient } from '../../../common/llm';
 import { ChatPromptTemplate } from '../../../common/promptTemplate';
+import { getProviderConfigError } from '../../../common/providers';
 import { loadSummarizationChain } from '../../../common/summarizationChain';
 import { RecursiveCharacterTextSplitter } from '../../../common/textSplitter';
 
@@ -24,32 +24,25 @@ export interface GenAiCommitProps {
   setLoadingInfo: (text: string) => void;
   setSummary: (text: string) => void;
 }
+
+const formatMessage = (message: string) =>
+  addEmojiToMessage(
+    message.replace(/\((.*?)\):/, (match, p1) => match && `(${p1.toLowerCase()}):`),
+  );
+
 export class Commits {
-  private client: OpenAI;
+  private client: LLMClient;
   private config: Config;
-  private textSplitter: RecursiveCharacterTextSplitter;
   prompt: ChatPromptTemplate<{ summary: string }>;
 
   constructor() {
     this.config = selectors.getCommitConfig();
 
-    if (!this.config.openaiToken) {
-      alert.error(
-        `Please set the OpenAI Token by ${chalk.bold.yellow('lobe-commit --config')}`,
-        true,
-      );
-    }
+    const provider = selectors.getProviderConfig();
+    const error = getProviderConfigError(provider, chalk.bold.yellow('lobe-commit --option'));
+    if (error) alert.error(error, true);
 
-    this.client = new OpenAI({
-      apiKey: this.config.openaiToken,
-      baseURL: this.config.apiBaseUrl,
-      maxRetries: 10,
-    });
-    this.textSplitter = new RecursiveCharacterTextSplitter({
-      chunkOverlap: 0,
-      chunkSize: this.config.diffChunkSize,
-      lengthFunction: (text) => calcToken(text),
-    });
+    this.client = new LLMClient(provider, { maxRetries: 10 });
     this.prompt = promptCommits();
   }
 
@@ -70,88 +63,29 @@ export class Commits {
       summary,
     });
 
-    // Calculate input tokens
     const inputTokens = calcToken(JSON.stringify(messages));
+    const onText =
+      this.config.stream && onStreamMessage
+        ? (text: string) => onStreamMessage(formatMessage(text))
+        : undefined;
 
-    if (this.config.stream && onStreamMessage) {
-      return this.genCommitStream(messages, onStreamMessage, onTokenUsage, inputTokens);
-    } else {
-      return this.genCommitNonStream(messages, onTokenUsage, inputTokens);
-    }
-  }
-
-  private async genCommitStream(
-    messages: any[],
-    onStreamMessage: (message: string) => void,
-    onTokenUsage?: (tokenUsage: number) => void,
-    inputTokens?: number,
-  ): Promise<string> {
     // 开始流式输出，先调用一次回调来切换UI状态
-    onStreamMessage('');
+    onText?.('');
 
-    const stream = await this.client.chat.completions.create({
-      messages: messages as OpenAI.Chat.Completions.ChatCompletionMessageParam[],
-      model: this.config.modelName,
-      stream: true,
-      temperature: 0.5,
-    });
+    const request = { messages: messages as ChatMessage[], temperature: 0.5 };
+    const { text, totalTokens } = onText
+      ? await this.client.stream(request, onText)
+      : await this.client.generate(request);
 
-    let fullMessage = '';
-    let tokenUsage = inputTokens || 0;
+    if (!text) alert.error('Diff summary failed, please check your network or try again...', true);
 
-    for await (const chunk of stream) {
-      const content = chunk.choices[0]?.delta?.content || '';
-      if (content) {
-        fullMessage += content;
-        // 实时更新显示的消息
-        const processedMessage = addEmojiToMessage(
-          fullMessage.replace(/\((.*?)\):/, (match, p1) => match && `(${p1.toLowerCase()}):`),
-        );
-        onStreamMessage(processedMessage);
-        tokenUsage += calcToken(content);
-      }
-    }
+    onTokenUsage?.(totalTokens || inputTokens + calcToken(text));
 
-    if (!fullMessage) {
-      alert.error('Diff summary failed, please check your network or try again...', true);
-    }
-
-    onTokenUsage?.(tokenUsage);
-
-    return addEmojiToMessage(
-      fullMessage.replace(/\((.*?)\):/, (match, p1) => match && `(${p1.toLowerCase()}):`),
-    );
-  }
-
-  private async genCommitNonStream(
-    messages: any[],
-    onTokenUsage?: (tokenUsage: number) => void,
-    inputTokens?: number,
-  ): Promise<string> {
-    const completion = await this.client.chat.completions.create({
-      messages: messages as OpenAI.Chat.Completions.ChatCompletionMessageParam[],
-      model: this.config.modelName,
-      temperature: 0.5,
-    });
-
-    const result = completion.choices[0]?.message?.content;
-
-    if (!result)
-      alert.error('Diff summary failed, please check your network or try again...', true);
-
-    const outputTokens = calcToken(result!);
-    const totalTokenUsage = (inputTokens || 0) + outputTokens;
-    onTokenUsage?.(totalTokenUsage);
-
-    return addEmojiToMessage(
-      result!.replace(/\((.*?)\):/, (match, p1) => match && `(${p1.toLowerCase()}):`),
-    );
+    return formatMessage(text);
   }
 
   async checkDiffMaxToken(diff: string) {
-    const prompt = await this.prompt.formatMessages({ summary: diff });
-    const token = calcToken(JSON.stringify(prompt));
-    return token > ModelTokens[this.config.modelName] - 1024;
+    return calcToken(diff) > selectors.getDiffChunkTokens();
   }
 
   async genSummary({
@@ -168,10 +102,16 @@ export class Commits {
 
       if (!diff) alert.warn('No changes to commit', true);
 
-      const diffDocument = await this.textSplitter.createDocuments([diff]);
+      const chunkSize = selectors.getDiffChunkTokens();
+      const textSplitter = new RecursiveCharacterTextSplitter({
+        chunkOverlap: 0,
+        chunkSize,
+        lengthFunction: (text) => calcToken(text),
+      });
+      const diffDocument = await textSplitter.createDocuments([diff]);
       summary = diff;
       setLoadingInfo(
-        ` [1/3] Split diff info to (${diffDocument.length}) by ${this.config.diffChunkSize} chunk size...`,
+        ` [1/3] Split diff info to (${diffDocument.length}) by ${chunkSize} chunk size...`,
       );
 
       // STEP 2
@@ -181,7 +121,7 @@ export class Commits {
         type: 'refine',
       });
       setLoadingInfo(
-        ` [2/3] Split diff info to (${diffDocument.length} * ${this.config.diffChunkSize} chunk-size), generate summary...`,
+        ` [2/3] Split diff info to (${diffDocument.length} * ${chunkSize} chunk-size), generate summary...`,
       );
 
       // STEP 3

@@ -33,6 +33,7 @@ Lobe Commit 是一款使用 ChatGPT 生成基于 Gitmoji 的 CLI 提交工具
 - [📦 安装](#-安装)
 - [🤯 使用](#-使用)
   - [Git hook](#git-hook)
+  - [AI Agent Skill](#ai-agent-skill)
   - [配置](#配置)
   - [运行](#运行)
   - [选项](#选项)
@@ -71,7 +72,7 @@ npm install -g @lobehub/commit-cli
 ```
 
 > \[!IMPORTANT]\
-> 请确保环境中 `Node.js` 版本 **>= 18**
+> 请确保环境中 `Node.js` 版本 **>= 22**
 
 <div align="right">
 
@@ -98,7 +99,7 @@ $ lobe-commit
 在 AI 模式下，可以使用 ChatGPT 生成完整的提交信息
 
 > \[!IMPORTANT]\
-> 需要在设置中 `lobe-commit -o` 配置 OpenAI 令牌，同时如果有特殊的网络要求，也可以在设置中配置 OpenAI 的转发地址
+> 需要在设置中 `lobe-commit -o` 选择模型供应商（OpenAI、Anthropic、Gemini、DeepSeek、通义千问、Kimi、智谱 GLM、OpenRouter、Ollama 及任意 OpenAI 兼容接口等），依次选择接口协议（Chat Completions / Responses / Anthropic Messages / Gemini）、API 地址、API 密钥，再从供应商的模型列表中搜索选择模型。任意兼容接口可选择 `custom`。也可以用 `LOBE_PROVIDER` `LOBE_API_TYPE` `LOBE_BASE_URL` `LOBE_API_KEY` 环境变量覆盖设置。较大的 diff 会按 `Diff chunk tokens`（默认 `32000`）分片
 
 ![](https://gw.alipayobjects.com/zos/kitchen/qmXcNvnjKf/preview-ai.webp)
 
@@ -123,7 +124,7 @@ $ lobe-commit
 
 ### Git hook
 
-可以通过 `prepare-commit-msg`钩子将 Lobe Commit 与 Git 集成，允许像往常一样使用 Git 并在提交之前编辑提交信息
+可以通过 `prepare-commit-msg`钩子将 Lobe Commit 与 Git 集成，允许像往常一样使用 Git 并在提交之前编辑提交信息。`git commit -m` / `-F`、合并、squash 和 amend 会保留已有信息，不会打开向导
 
 <br/>
 
@@ -151,6 +152,20 @@ $ lobe-commit --remove # 或使用短标志 -r
 
 </div>
 
+### AI Agent Skill
+
+安装 `lobe-commit` skill，让 Claude Code、Cursor、Codex、Copilot 等编程 Agent 知道如何使用它，包括按 lobe-commit 的格式编写提交信息：
+
+```shell
+$ lobe-commit skill                # 当前项目：.agents/skills，存在 .claude 时同时安装到 .claude/skills
+$ lobe-commit skill --global       # 安装到用户目录
+$ lobe-commit skill --agent claude # 只安装到 .claude/skills（可选 agents / claude）
+```
+
+旧版本写入的配置会在下次运行任意 `lobe-commit` 命令时自动迁移到新格式。
+
+<br/>
+
 ### 配置
 
 要配置 Lobe Commit，请运行以下命令：
@@ -174,7 +189,7 @@ $ git commit
 
 </div>
 
-- 要使用 AI 自动生成，需要在设置中填写 [OpenAI 令牌](https://platform.openai.com/account/api-keys)
+- 要使用 AI 自动生成，需要在设置中选择供应商和模型
 - 要自动拉取私人仓库 issues，需要在设置中填写具有 repo 权限的 [GitHub 令牌](https://github.com/settings/tokens)
 
 > \[!NOTE]\

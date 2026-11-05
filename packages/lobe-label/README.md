@@ -71,11 +71,30 @@ $ lobe-label -t lobehub/chat
 $ lobe-label -t lobehub/chat -s lobehub/commit
 ```
 
+> \[!WARNING]\
+> All existing labels of the target repo are deleted before copying.
+
+The GitHub token is read from `lobe-label -o`, then the `GITHUB_TOKEN` / `GH_TOKEN` environment variables, e.g. `GITHUB_TOKEN=$(gh auth token) lobe-label -t lobehub/chat`.
+
 <div align="right">
 
 [![][back-to-top]](#readme-top)
 
 </div>
+
+## 🤖 AI Agent Skill
+
+Install the `lobe-label` skill so coding agents (Claude Code, Cursor, Codex, Copilot...) know how to use it:
+
+```shell
+$ lobe-label skill                # project: .agents/skills, plus .claude/skills if .claude exists
+$ lobe-label skill --global       # home directory
+$ lobe-label skill --agent claude # only .claude/skills (agents / claude)
+```
+
+Configs written by older versions are migrated automatically the next time any `lobe-label` command runs.
+
+<br/>
 
 ## ⌨️ Local Development
 

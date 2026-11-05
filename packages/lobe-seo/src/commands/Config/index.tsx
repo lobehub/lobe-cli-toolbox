@@ -1,52 +1,48 @@
-import { TextInput } from '@lobehub/cli-ui';
 import { ConfigPanel, type ConfigPanelProps } from '@lobehub/cli-ui';
 import { memo, useMemo, useState } from 'react';
 
-import { type ConfigKeys, type Config as LocalConfig, useConfStore } from '@/store';
+import { selectors, useConfStore } from '@/store';
+
+import ProviderSetup, { saveProviderSetup } from '../../../../common/ProviderSetup';
+import { API_TYPE_SHORT } from '../../../../common/llm';
 
 const Config = memo(() => {
   const [active, setActive] = useState<string>();
-  const { store, set, getDefault } = useConfStore();
+  const { store, set } = useConfStore();
+  const provider = selectors.getProviderConfig();
 
-  const setConfig = <K extends ConfigKeys>(key: K, value: LocalConfig[K]) => {
-    set(key, value);
-    setActive('');
-  };
+  const items: ConfigPanelProps['items'] = useMemo(() => {
+    const providerSetup = (mode: 'full' | 'model') => (
+      <ProviderSetup
+        current={provider}
+        mode={mode}
+        onCancel={() => setActive('')}
+        onSubmit={(value) => {
+          saveProviderSetup(value, provider, set);
+          setActive('');
+        }}
+      />
+    );
 
-  const items: ConfigPanelProps['items'] = useMemo(
-    () => [
+    return [
       {
-        children: (
-          <TextInput
-            defaultValue={store.openaiToken}
-            onSubmit={(v) => setConfig('openaiToken', v)}
-            placeholder="Input OpenAI token..."
-          />
-        ),
-        defaultValue: getDefault('openaiToken'),
-        key: 'openaiToken',
-        label: 'OpenAI token',
-        showValue: false,
-        value: store.openaiToken,
+        children: providerSetup('full'),
+        defaultValue: 'OpenAI',
+        desc: 'Pick a provider or a custom endpoint, then the API type, base URL, API key and model',
+        key: 'provider',
+        label: 'Provider',
+        value: `${provider.providerName} · ${API_TYPE_SHORT[provider.apiType]}`,
       },
       {
-        children: (
-          <TextInput
-            defaultValue={store.apiBaseUrl}
-            onSubmit={(v) => setConfig('apiBaseUrl', v)}
-            placeholder="Set openAI API proxy, default value: https://api.openai.com/v1/..."
-          />
-        ),
-        defaultValue: getDefault('apiBaseUrl'),
-        desc: 'OpenAI API proxy, default value: https://api.openai.com/v1/',
-        key: 'apiBaseUrl',
-        label: 'OpenAI API proxy',
-        showValue: false,
-        value: store.apiBaseUrl,
+        children: providerSetup('model'),
+        defaultValue: '',
+        desc: '`modelName` in the project config file takes precedence over this',
+        key: 'modelName',
+        label: 'Model',
+        value: provider.model || '(not set)',
       },
-    ],
-    [store],
-  );
+    ];
+  }, [store]);
 
   return (
     <ConfigPanel

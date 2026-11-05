@@ -35,8 +35,7 @@
     "release": "multi-semantic-release --sequential-prepare",
     "start": "npm run dev",
     "test": "lerna run test --parallel && npm run lint",
-    "type-check": "lerna run type-check --parallel",
-    "update-models": "tsx scripts/update-models.ts"
+    "type-check": "lerna run type-check --parallel"
   },
   "lint-staged": {
     "*.md": [
@@ -56,6 +55,10 @@
     ]
   },
   "devDependencies": {
+    "@ai-sdk/anthropic": "^4.0.97",
+    "@ai-sdk/google": "^4.0.112",
+    "@ai-sdk/openai": "^4.0.109",
+    "@ai-sdk/openai-compatible": "^3.0.85",
     "@commitlint/cli": "^19.8.1",
     "@lobehub/cli-shebang": "^1.1.0",
     "@lobehub/lint": "^1.26.2",
@@ -68,17 +71,19 @@
     "@types/update-notifier": "^6.0.8",
     "@umijs/lint": "^4.4.11",
     "@vitest/coverage-v8": "~1.2.2",
+    "ai": "^7.0.163",
     "clean-pkg-json": "^1.3.0",
     "commitlint": "^19.8.1",
     "eslint": "^8.57.1",
     "husky": "^9.1.7",
+    "ink": "^6.0.0",
     "ink-testing-library": "^4.0.0",
     "lerna": "^8.2.2",
     "lint-staged": "^15.5.2",
     "lodash-es": "^4.17.21",
-    "openai": "^4.103.0",
     "pkgroll": "^2.12.2",
     "prettier": "^3.5.3",
+    "react": "^19.0.0",
     "remark": "^15.0.1",
     "remark-cli": "^12.0.1",
     "semantic-release": "^21.1.2",
@@ -91,7 +96,7 @@
   },
   "packageManager": "pnpm@10.10.0",
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "publishConfig": {
     "access": "public",

@@ -1,18 +1,21 @@
-import { LanguageModel } from '../../../common/models';
-
 export interface Config {
   apiBaseUrl: string;
-  diffChunkSize: number;
+  apiType: string;
+  /**
+   * Diffs larger than this are summarized chunk by chunk
+   */
+  diffChunkTokens: number;
   emoji: 'emoji' | 'code';
   githubToken: string;
   includeWhy: boolean;
   locale: string;
   maxLength: number;
   messageTemplate: string;
-  modelName: LanguageModel;
+  modelName: string;
   oneLineCommit: boolean;
   openaiToken: string;
   prompt: string;
+  provider: string;
   stream: boolean;
   useFullGitmoji: boolean;
 }

@@ -3,14 +3,12 @@ import { isPlainObject, reduce } from 'lodash-es';
 import { LocaleObj } from '@/types';
 import { I18nConfig } from '@/types/config';
 
-import { ModelTokens, defaultModel } from '../../../common/models';
 import {
   KEY_EXTRA_TOKENS,
   OBJECT_EXTRA_TOKENS,
   calcEncodedKeyToken,
   calcJsonToken,
   calcPrimitiveValueToken,
-  calcToken,
 } from './calcToken';
 import { diff } from './diffJson';
 
@@ -37,23 +35,22 @@ const splitJSONtoSmallChunks = (object: LocaleObj, splitToken: number) =>
     [],
   ).map(([chunk]) => chunk);
 
-export const getSplitToken = (config: I18nConfig, prompt: string) => {
-  let splitToken = (ModelTokens[config.modelName || defaultModel] - calcToken(prompt)) / 3;
-  if (config.splitToken && config.splitToken < splitToken) {
-    splitToken = config.splitToken;
-  }
-  splitToken = Math.floor(splitToken);
-  return splitToken;
-};
+/**
+ * Translated output is about as long as the input, so chunks are bounded by the
+ * model's max output tokens (often 8k), not its context window.
+ */
+export const DEFAULT_SPLIT_TOKEN = 4000;
+
+export const getSplitToken = (config: I18nConfig) =>
+  Math.floor(config.splitToken && config.splitToken > 0 ? config.splitToken : DEFAULT_SPLIT_TOKEN);
 
 export const splitJsonToChunks = (
   config: I18nConfig,
   entry: LocaleObj,
   target: LocaleObj,
-  prompt: string,
 ): LocaleObj[] => {
   const extraJSON = diff(entry, target, config).entry;
-  const splitToken = getSplitToken(config, prompt);
+  const splitToken = getSplitToken(config);
   const splitObj = splitJSONtoSmallChunks(extraJSON, splitToken);
   return splitObj;
 };

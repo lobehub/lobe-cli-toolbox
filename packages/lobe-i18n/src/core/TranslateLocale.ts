@@ -1,27 +1,25 @@
 import { alert } from '@lobehub/cli-ui';
 // @ts-ignore
 import dJSON from 'dirty-json';
-import OpenAI from 'openai';
 
 import { promptJsonTranslate, promptStringTranslate } from '@/prompts/translate';
 import { LocaleObj } from '@/types';
 import { I18nConfig } from '@/types/config';
 import { ChatPromptTemplate } from '@/utils/promptTemplate';
 
+import { type ChatMessage, LLMClient } from '../../../common/llm';
+import type { ResolvedProviderConfig } from '../../../common/providers';
+
 export class TranslateLocale {
-  private client: OpenAI;
+  client: LLMClient;
   private config: I18nConfig;
   private isJsonMode: boolean;
   promptJson: ChatPromptTemplate<{ from?: string; json: string; to: string }>;
   promptString: ChatPromptTemplate<{ from?: string; text: string; to: string }>;
 
-  constructor(config: I18nConfig, openAIApiKey: string, openAIProxyUrl?: string) {
+  constructor(config: I18nConfig, provider: ResolvedProviderConfig) {
     this.config = config;
-    this.client = new OpenAI({
-      apiKey: openAIApiKey,
-      baseURL: openAIProxyUrl,
-      maxRetries: 4,
-    });
+    this.client = new LLMClient(provider);
     this.promptJson = promptJsonTranslate(config.reference);
     this.promptString = promptStringTranslate(config.reference);
     this.isJsonMode = Boolean(this.config?.experimental?.jsonMode);
@@ -43,14 +41,11 @@ export class TranslateLocale {
         to,
       });
 
-      const completion = await this.client.chat.completions.create({
-        messages: messages as OpenAI.Chat.Completions.ChatCompletionMessageParam[],
-        model: this.config.modelName || 'gpt-3.5-turbo',
+      const { text: result } = await this.client.generate({
+        messages: messages as ChatMessage[],
         temperature: this.config.temperature,
-        top_p: this.config.topP,
+        topP: this.config.topP,
       });
-
-      const result = completion.choices[0]?.message?.content;
 
       if (!result) this.handleError();
       return result;
@@ -75,17 +70,12 @@ export class TranslateLocale {
         to,
       });
 
-      const completion = await this.client.chat.completions.create({
-        messages: messages as OpenAI.Chat.Completions.ChatCompletionMessageParam[],
-        model: this.config.modelName || 'gpt-3.5-turbo',
+      const { text: result } = await this.client.generate({
+        json: this.isJsonMode,
+        messages: messages as ChatMessage[],
         temperature: this.config.temperature,
-        top_p: this.config.topP,
-        ...(this.isJsonMode && {
-          response_format: { type: 'json_object' },
-        }),
+        topP: this.config.topP,
       });
-
-      const result = completion.choices[0]?.message?.content;
 
       if (!result) this.handleError();
 

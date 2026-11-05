@@ -40,7 +40,8 @@
     "lobe-i18n": "dist/cli.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "skills"
   ],
   "scripts": {
     "build": "npm run type-check && pkgroll --minify -p tsconfig.prod.json --env.NODE_ENV=production && npm run shebang",
@@ -55,7 +56,12 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^4.0.97",
+    "@ai-sdk/google": "^4.0.112",
+    "@ai-sdk/openai": "^4.0.109",
+    "@ai-sdk/openai-compatible": "^3.0.85",
     "@lobehub/cli-ui": "1.13.0",
+    "ai": "^7.0.163",
     "chalk": "^5.4.1",
     "commander": "^13.0.0",
     "conf": "^13.1.0",
@@ -72,7 +78,6 @@
     "json-stable-stringify": "^1.2.1",
     "just-diff": "^6.0.2",
     "lodash-es": "^4.17.21",
-    "openai": "^4.103.0",
     "p-map": "^7.0.3",
     "pangu": "^4.0.7",
     "react": "^19.0.0",
@@ -95,7 +100,7 @@
   },
   "packageManager": "pnpm@10.10.0",
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "publishConfig": {
     "access": "public",

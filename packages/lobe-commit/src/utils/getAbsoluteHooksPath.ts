@@ -4,7 +4,10 @@ import path from 'node:path';
 
 export const ERROR_CODE = 'not git';
 
-export default (hookName: string): string => {
+/**
+ * Returns `undefined` outside a git repository.
+ */
+export const resolveHooksPath = (hookName: string): string | undefined => {
   try {
     try {
       const { stdout: coreHooksPath }: any = execaSync('git', [
@@ -20,7 +23,14 @@ export default (hookName: string): string => {
       return path.resolve(gitDirectoryPath + '/hooks', hookName);
     }
   } catch {
-    alert.error('Please check if this is a git folder', true);
-    return ERROR_CODE;
+    return undefined;
   }
+};
+
+export default (hookName: string): string => {
+  const hookPath = resolveHooksPath(hookName);
+  if (hookPath) return hookPath;
+
+  alert.error('Please check if this is a git folder', true);
+  return ERROR_CODE;
 };

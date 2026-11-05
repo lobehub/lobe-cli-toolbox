@@ -23,8 +23,7 @@ class TranslateLocale {
     this.config = selectors.getLocaleConfig();
     this.i18n = new I18n({
       config: this.config,
-      openAIApiKey: selectors.getOpenAIApiKey(),
-      openAIProxyUrl: selectors.getOpenAIProxyUrl(),
+      provider: selectors.getCheckedProviderConfig(this.config.modelName),
     });
   }
 
@@ -79,13 +78,7 @@ class TranslateLocale {
       clear();
       const outputPath = relative('.', item.filename);
       if (data?.result && Object.keys(data.result).length > 0) {
-        // 使用立即保存时，文件已经被保存，无需再次保存
-        // writeJSON(item.filename, data.result);
-
-        // 如果没有开启立即保存，则需要保存文件
-        if (!this.config.saveImmediately) {
-          writeJSON(item.filename, data.result);
-        }
+        writeJSON(item.filename, data.result);
         totalTokenUsage += data.tokenUsage;
         consola.success(chalk.yellow(outputPath), chalk.gray(`[Token usage: ${data.tokenUsage}]`));
       } else {

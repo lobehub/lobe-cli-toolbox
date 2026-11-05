@@ -20,8 +20,7 @@ class Seo {
     this.config = selectors.getSeoConfig();
     this.seo = new SeoCore({
       config: this.config,
-      openAIApiKey: selectors.getOpenAIApiKey(),
-      openAIProxyUrl: selectors.getOpenAIProxyUrl(),
+      provider: selectors.getCheckedProviderConfig(this.config.modelName),
     });
   }
 

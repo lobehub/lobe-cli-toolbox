@@ -1,5 +1,7 @@
 import Conf from 'conf';
 
+import { type StoredConfig, migrateConfigStore } from '../../../common/configMigration';
+
 export interface Config {
   githubToken: string;
 }
@@ -23,12 +25,34 @@ export const schema: ConfigSchema = {
 };
 
 export const config = new Conf({
-  projectName: 'lobe-i18n',
+  projectName: 'lobe-label',
   schema,
 });
+
+/**
+ * Brings configs written by older versions up to date, returns whether anything changed.
+ */
+export const migrateConfig = () => {
+  const result = migrateConfigStore(config.store, {
+    // Older versions shared the lobe-i18n config file by mistake.
+    2: (store: StoredConfig & { githubToken?: unknown }) => {
+      if (store.githubToken) return;
+      const legacy = new Conf<Record<string, unknown>>({ projectName: 'lobe-i18n' });
+      if (typeof legacy.get('githubToken') === 'string') {
+        store.githubToken = legacy.get('githubToken');
+      }
+    },
+  });
+  if (result) config.store = result.store as typeof config.store;
+  return Boolean(result?.changed);
+};
+
 export const getConfig = <K extends ConfigKeys>(key: K): Config[K] => config.get(key) as Config[K];
 export const getDefulatConfig = <K extends ConfigKeys>(key: K) => schema[key].default as Config[K];
 export const setConfig = <K extends ConfigKeys>(key: K, value: Config[K]) => config.set(key, value);
+
+export const getGithubToken = () =>
+  getConfig('githubToken') || process.env['GITHUB_TOKEN'] || process.env['GH_TOKEN'] || '';
 
 export const useConfStore = () => {
   const store = config.store as Config;

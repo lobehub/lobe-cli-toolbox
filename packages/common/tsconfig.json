@@ -5,6 +5,7 @@
     "moduleResolution": "bundler",
     "strict": true,
     "esModuleInterop": true,
+    "jsx": "react-jsx",
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "declaration": true,
@@ -12,5 +13,5 @@
     "rootDir": "."
   },
   "exclude": ["node_modules", "dist"],
-  "include": ["*.ts"]
+  "include": ["*.ts", "*.tsx"]
 }

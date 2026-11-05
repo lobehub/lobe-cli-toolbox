@@ -2,15 +2,22 @@ import Conf from 'conf';
 
 import { ConfigSchema } from '@/types/config';
 
-import { ModelTokens, defaultModel } from '../../../common/models';
+import { migrateConfigStore, migrateLegacyProvider } from '../../../common/configMigration';
+import { migrateDiffChunkSize } from './migrations';
+
+export const DEFAULT_DIFF_CHUNK_TOKENS = 32_000;
 
 export const schema: ConfigSchema = {
   apiBaseUrl: {
     default: '',
     type: 'string',
   },
-  diffChunkSize: {
-    default: ModelTokens[defaultModel] - 512,
+  apiType: {
+    default: '',
+    type: 'string',
+  },
+  diffChunkTokens: {
+    default: DEFAULT_DIFF_CHUNK_TOKENS,
     type: 'number',
   },
   emoji: {
@@ -38,7 +45,7 @@ export const schema: ConfigSchema = {
     type: 'string',
   },
   modelName: {
-    default: defaultModel,
+    default: '',
     type: 'string',
   },
   oneLineCommit: {
@@ -50,6 +57,10 @@ export const schema: ConfigSchema = {
     type: 'string',
   },
   prompt: {
+    default: '',
+    type: 'string',
+  },
+  provider: {
     default: '',
     type: 'string',
   },
@@ -67,3 +78,17 @@ export const config = new Conf({
   projectName: 'lobe-commit',
   schema,
 });
+
+/**
+ * Brings configs written by older versions up to date, returns whether anything changed.
+ */
+export const migrateConfig = () => {
+  const result = migrateConfigStore(config.store, {
+    2: (store) => {
+      migrateLegacyProvider(store);
+      migrateDiffChunkSize(store);
+    },
+  });
+  if (result) config.store = result.store as typeof config.store;
+  return Boolean(result?.changed);
+};

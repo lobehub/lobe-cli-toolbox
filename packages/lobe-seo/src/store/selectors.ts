@@ -7,6 +7,7 @@ import { DEFAULT_CONFIG } from '@/store/initialState';
 import { Config, ConfigKeys, SeoConfig } from '@/types/config';
 import { checkOptionKeys } from '@/utils/checkOptionKeys';
 
+import { getProviderConfigError, resolveProviderConfig } from '../../../common/providers';
 import { config, explorer, schema } from './config';
 
 dotenv.config();
@@ -14,8 +15,25 @@ dotenv.config();
 const getConfig = <K extends ConfigKeys>(key: K): Config[K] => config.get(key) as Config[K];
 const getDefulatConfig = <K extends ConfigKeys>(key: K) => schema[key].default as Config[K];
 const setConfig = <K extends ConfigKeys>(key: K, value: Config[K]) => config.set(key, value);
-const getOpenAIApiKey = () => process.env.OPENAI_API_KEY || getConfig('openaiToken');
-const getOpenAIProxyUrl = () => process.env.OPENAI_PROXY_URL || getConfig('apiBaseUrl');
+
+/**
+ * `modelName` from the project config file wins over the globally configured model.
+ */
+const getProviderConfig = (modelName?: string) =>
+  resolveProviderConfig({
+    apiKey: getConfig('openaiToken'),
+    apiType: getConfig('apiType'),
+    baseURL: getConfig('apiBaseUrl'),
+    model: modelName || getConfig('modelName'),
+    provider: getConfig('provider'),
+  });
+
+const getCheckedProviderConfig = (modelName?: string) => {
+  const provider = getProviderConfig(modelName);
+  const error = getProviderConfigError(provider, chalk.bold.yellow('lobe-seo --option'));
+  if (error) alert.error(error, true);
+  return provider;
+};
 
 const getConfigFile = (): SeoConfig => {
   const config: any = explorer.getConfigFile();
@@ -31,11 +49,11 @@ const getSeoConfig = (): SeoConfig => {
 };
 
 export default {
+  getCheckedProviderConfig,
   getConfig,
   getConfigFile,
   getDefulatConfig,
-  getOpenAIApiKey,
-  getOpenAIProxyUrl,
+  getProviderConfig,
   getSeoConfig,
   setConfig,
 };

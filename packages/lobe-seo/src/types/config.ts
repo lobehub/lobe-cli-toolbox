@@ -1,5 +1,3 @@
-import { LanguageModel } from '../../../common/models';
-
 export interface SeoConfig {
   /**
    * @description Number of concurrently pending promises returned
@@ -25,9 +23,9 @@ export interface SeoConfig {
    */
   groupKey?: string;
   /**
-   * @description ChatGPT model name to use
+   * @description Model id to use, overrides the model chosen by `lobe-seo --option`
    */
-  modelName?: LanguageModel;
+  modelName?: string;
   /**
    * @description Provide some context for a more accurate translation
    */
@@ -46,7 +44,10 @@ export type OptionKeys = keyof SeoConfig;
 
 export interface Config {
   apiBaseUrl: string;
+  apiType: string;
+  modelName: string;
   openaiToken: string;
+  provider: string;
 }
 
 export type ConfigKeys = keyof Config;

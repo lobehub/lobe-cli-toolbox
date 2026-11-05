@@ -3,10 +3,11 @@ import { BlogPost } from '@/types/blog';
 import { SeoConfig } from '@/types/config';
 import { calcToken } from '@/utils/calcToken';
 
+import type { ResolvedProviderConfig } from '../../../common/providers';
+
 export interface SeoOptions {
   config: SeoConfig;
-  openAIApiKey: string;
-  openAIProxyUrl: string;
+  provider: ResolvedProviderConfig;
 }
 
 export interface onProgressProps {
@@ -24,9 +25,9 @@ export interface SeoQueryItem {
 export class SeoCore {
   private seoService: SeoMdx;
   private config: SeoConfig;
-  constructor({ openAIApiKey, openAIProxyUrl, config }: SeoOptions) {
+  constructor({ provider, config }: SeoOptions) {
     this.config = config;
-    this.seoService = new SeoMdx(config, openAIApiKey, openAIProxyUrl);
+    this.seoService = new SeoMdx(config, provider);
   }
 
   async run({ content, onProgress, matter }: SeoQueryItem): Promise<

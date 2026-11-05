@@ -1,12 +1,12 @@
 import { Octokit } from '@octokit/rest';
 import { consola } from 'consola';
 
-import { getConfig } from '@/store/confStore';
+import { getGithubToken } from '@/store/confStore';
 
 const octokitClient = (): Octokit => {
-  const token = getConfig('githubToken');
+  const token = getGithubToken();
   if (!token) {
-    consola.error('Need token!');
+    consola.error('Need a GitHub token: run `lobe-label -o` or set GITHUB_TOKEN');
     process.exit(1);
   }
   const octokit = new Octokit({ auth: `token ${token}` });
