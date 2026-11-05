@@ -1,10 +1,9 @@
+import { API_TYPE_SHORT } from '@lobehub/cli-common/llm';
+import ProviderSetup, { saveProviderSetup } from '@lobehub/cli-common/ProviderSetup';
 import { ConfigPanel, type ConfigPanelProps } from '@lobehub/cli-ui';
 import { memo, useMemo, useState } from 'react';
 
 import { selectors, useConfStore } from '@/store';
-
-import ProviderSetup, { saveProviderSetup } from '../../../../common/ProviderSetup';
-import { API_TYPE_SHORT } from '../../../../common/llm';
 
 const Config = memo(() => {
   const [active, setActive] = useState<string>();

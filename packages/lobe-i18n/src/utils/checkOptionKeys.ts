@@ -1,10 +1,16 @@
 import { alert } from '@lobehub/cli-ui';
 import chalk from 'chalk';
 
-import { OptionKeys } from '@/types/config';
+import type { OptionKeys } from '@/types/config';
 
-export const checkOptionKeys = (opt: any, key: OptionKeys) => {
-  if (!opt[key]) {
-    alert.error(`Can't find ${chalk.bold.yellow('outputLocales')} in config`);
-  }
+const isMissing = (value: unknown) =>
+  value === undefined ||
+  value === null ||
+  value === '' ||
+  (Array.isArray(value) && value.length === 0);
+
+/** Exits with an error when a required config option is missing or empty. */
+export const checkOptionKeys = (opt: object, key: OptionKeys) => {
+  if (isMissing((opt as Record<string, unknown>)[key]))
+    alert.error(`Can't find ${chalk.bold.yellow(key)} in config`, true);
 };

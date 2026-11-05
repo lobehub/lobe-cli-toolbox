@@ -14,7 +14,7 @@
     "aicommit",
     "ai-commit"
   ],
-  "homepage": "https://github.comlobehub/lobe-cli-toolbox/tree/master/packages/lobe-commit",
+  "homepage": "https://github.com/lobehub/lobe-cli-toolbox/tree/master/packages/lobe-commit",
   "bugs": {
     "url": "https://github.com/lobehub/lobe-cli-toolbox/issues/new"
   },
@@ -26,9 +26,6 @@
   "author": "LobeHub <i@lobehub.com>",
   "sideEffects": false,
   "type": "module",
-  "imports": {
-    "@": "./src"
-  },
   "bin": {
     "lobe": "dist/cli.js",
     "lobe-commit": "dist/cli.js"
@@ -38,15 +35,13 @@
     "skills"
   ],
   "scripts": {
-    "build": "npm run type-check && pkgroll --minify -p tsconfig.prod.json --env.NODE_ENV=production && npm run shebang",
-    "dev": "pkgroll -p tsconfig.prod.json --env.NODE_ENV=development --watch",
-    "link": "npm run build && npm link -f",
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "link": "pnpm run build && npm link -f",
     "prepack": "clean-package",
     "postpack": "clean-package restore",
-    "shebang": "lobe-shebang -t ./dist/cli.js",
     "start": "node ./dist/cli.js",
-    "test": "vitest --passWithNoTests",
-    "test:coverage": "vitest run --coverage --passWithNoTests",
+    "test": "vitest run",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
@@ -54,31 +49,34 @@
     "@ai-sdk/google": "^4.0.112",
     "@ai-sdk/openai": "^4.0.109",
     "@ai-sdk/openai-compatible": "^3.0.85",
-    "@lobehub/cli-ui": "1.13.0",
+    "@octokit/rest": "^22.0.1",
     "ai": "^7.0.163",
-    "chalk": "^5.4.1",
-    "commander": "^13.0.0",
-    "conf": "^13.1.0",
-    "dotenv": "^16.4.7",
-    "execa": "^9.5.2",
+    "chalk": "^6.0.1",
+    "cli-spinners": "^3.4.0",
+    "commander": "^15.0.0",
+    "conf": "^16.0.0",
+    "consola": "^3.4.2",
+    "deepmerge": "^4.3.1",
     "fast-deep-equal": "^3.1.3",
-    "gitconfig": "^2.0.8",
-    "gpt-tokenizer": "^2.8.1",
-    "ink": "^6.0.0",
-    "lodash-es": "^4",
-    "minimatch": "^10.0.1",
-    "octokit": "^4.0.3",
-    "pangu": "^4.0.7",
-    "path-exists": "^5.0.0",
-    "react": "^19.0.0",
-    "swr": "^2.3.0",
+    "figures": "^6.1.0",
+    "gpt-tokenizer": "^4.1.0",
+    "ink": "^8.0.0",
+    "lodash-es": "^4.18.1",
+    "minimatch": "^11.0.4",
+    "pangu": "^10.4.1",
+    "react": "^19.3.1",
     "update-notifier": "^7.3.1",
-    "zustand": "^5.0.3",
-    "zustand-utils": "^1.3.2"
+    "use-sync-external-store": "^1.7.0",
+    "zustand": "^5.0.16"
   },
-  "packageManager": "pnpm@10.10.0",
+  "devDependencies": {
+    "@lobehub/cli-common": "workspace:*",
+    "@lobehub/cli-ui": "workspace:*",
+    "@types/lodash-es": "^4.17.12",
+    "clean-package": "^2.2.0"
+  },
   "engines": {
-    "node": ">=22"
+    "node": ">=22.18.0"
   },
   "publishConfig": {
     "access": "public",

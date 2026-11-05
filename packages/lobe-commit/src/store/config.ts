@@ -1,8 +1,8 @@
+import { migrateConfigStore, migrateLegacyProvider } from '@lobehub/cli-common/configMigration';
 import Conf from 'conf';
 
-import { ConfigSchema } from '@/types/config';
+import type { ConfigSchema } from '@/types/config';
 
-import { migrateConfigStore, migrateLegacyProvider } from '../../../common/configMigration';
 import { migrateDiffChunkSize } from './migrations';
 
 export const DEFAULT_DIFF_CHUNK_TOKENS = 32_000;

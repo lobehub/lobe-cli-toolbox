@@ -17,9 +17,11 @@ node_modules
 *.log
 *.lock
 package-lock.json
+pnpm-lock.yaml
 
 # ci
 .coverage
+coverage
 .eslintcache
 .stylelintcache
 
@@ -40,4 +42,3 @@ test-output
 
 # misc
 # add other ignore file below
-bun.lockb

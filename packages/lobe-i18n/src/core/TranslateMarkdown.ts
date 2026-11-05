@@ -1,5 +1,7 @@
-import { LocaleObj } from '@/types';
-import { I18nConfig } from '@/types/config';
+import { RecursiveCharacterTextSplitter } from '@lobehub/cli-common/textSplitter';
+
+import type { LocaleObj } from '@/types';
+import type { I18nConfig } from '@/types/config';
 import { calcToken } from '@/utils/calcToken';
 import {
   convertMarkdownToMdast,
@@ -9,7 +11,6 @@ import {
   pickMdastObj,
 } from '@/utils/convertMarkdown';
 import { getSplitToken } from '@/utils/splitJsonToChunks';
-import { RecursiveCharacterTextSplitter } from '@/utils/textSplitter';
 
 export class TranslateMarkdown {
   mdast: any;
@@ -69,7 +70,7 @@ export class TranslateMarkdown {
       chunkSize: getSplitToken(this.config),
       lengthFunction: (text) => calcToken(text),
     });
-    return await textSplitter.splitText(content);
+    return textSplitter.splitText(content);
   }
 
   async genMarkdownByString(translatedMarkdown: string[]) {

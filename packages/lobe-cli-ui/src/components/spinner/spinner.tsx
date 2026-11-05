@@ -2,7 +2,7 @@ import { Box, Text } from 'ink';
 
 import { useComponentTheme } from '../../theme';
 import { type Theme } from './theme';
-import { type UseSpinnerProps, useSpinner } from './use-spinner';
+import { useSpinner, type UseSpinnerProps } from './use-spinner';
 
 export type SpinnerProps = UseSpinnerProps & {
   /**

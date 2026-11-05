@@ -1,10 +1,3 @@
-import { defineConfig } from 'vitest/config';
+import { defineLobeProject } from '../../vitest.shared';
 
-export default defineConfig({
-  test: {
-    alias: {
-      '@': './src',
-    },
-    globals: true,
-  },
-});
+export default defineLobeProject('lobe-cli-shebang');

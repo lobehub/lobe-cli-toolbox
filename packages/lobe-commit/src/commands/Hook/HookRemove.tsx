@@ -1,7 +1,8 @@
-import { Alert, Spinner, useTheme } from '@lobehub/cli-ui';
-import { Text } from 'ink';
 import fs from 'node:fs';
 import process from 'node:process';
+
+import { Alert, Spinner, useTheme } from '@lobehub/cli-ui';
+import { Text } from 'ink';
 import { memo, useEffect, useState } from 'react';
 
 import { HOOK } from '@/constants/hook';

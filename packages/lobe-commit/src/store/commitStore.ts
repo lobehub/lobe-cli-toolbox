@@ -1,8 +1,8 @@
 import { kebabCase } from 'lodash-es';
 import { createWithEqualityFn } from 'zustand/traditional';
 
-import { type IssuesType, commitMessageToObj, commotObjToMessage } from '@/utils/genCommitMessage';
-import getIssuesList, { type IssuesResult } from '@/utils/getIssuesList';
+import { commitMessageToObj, commitObjToMessage, type IssuesType } from '@/utils/genCommitMessage';
+import getIssuesList, { type Issue, type IssuesResult } from '@/utils/getIssuesList';
 import getRepo from '@/utils/getRepo';
 
 export type Step = 'type' | 'scope' | 'subject' | 'issues' | 'issuesType' | 'ai' | 'commit';
@@ -12,7 +12,7 @@ export interface CommitStore {
   emoji: string;
   fetchIssuesList: () => void;
   isGithubRepo: boolean;
-  issueList: any[];
+  issueList: Issue[];
   issues: string;
   issuesError?: string;
   issuesLoading: boolean;
@@ -70,7 +70,7 @@ export const useCommitStore = createWithEqualityFn<CommitStore>((set, get) => ({
       const result = await getIssuesList();
 
       if (result.success && result.data) {
-        const issueList = result.data.filter((item: any) => item.state === 'open') || [];
+        const issueList = result.data;
         if (issueList.length > 0) {
           set({ issueList, issuesLoading: false, shouldSkipIssues: false });
         } else {
@@ -106,7 +106,7 @@ export const useCommitStore = createWithEqualityFn<CommitStore>((set, get) => ({
   message: '',
   refreshMessage: () => {
     const { issues, scope, subject, type, emoji, body, issuesType } = get();
-    const message = commotObjToMessage({ body, emoji, issues, issuesType, scope, subject, type });
+    const message = commitObjToMessage({ body, emoji, issues, issuesType, scope, subject, type });
     set({ message });
   },
   scope: '',

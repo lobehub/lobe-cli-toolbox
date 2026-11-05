@@ -1,8 +1,9 @@
 {
   "name": "@lobehub/cli-ui",
   "version": "1.13.0",
-  "description": "Lobe CLI uikits",
-  "homepage": "https://github.comlobehub/lobe-cli-toolbox/tree/master/packages/lobe-cli-ui",
+  "private": true,
+  "description": "Ink components shared by the Lobe CLIs, bundled into each of them at build time",
+  "homepage": "https://github.com/lobehub/lobe-cli-toolbox/tree/master/packages/lobe-cli-ui",
   "bugs": {
     "url": "https://github.com/lobehub/lobe-cli-toolbox/issues/new"
   },
@@ -14,50 +15,26 @@
   "author": "LobeHub <i@lobehub.com>",
   "sideEffects": false,
   "type": "module",
-  "imports": {
-    "@": "./src"
-  },
   "exports": {
-    "types": "./dist/index.d.ts",
-    "default": "./dist/index.js"
+    ".": "./src/index.ts"
   },
-  "files": [
-    "dist"
-  ],
   "scripts": {
-    "build": "npm run type-check && pkgroll --minify -p tsconfig.prod.json --env.NODE_ENV=production",
-    "dev": "pkgroll -p tsconfig.prod.json --env.NODE_ENV=development --watch",
-    "example": "NODE_NO_WARNINGS=1 node --loader=ts-node/esm",
-    "prepack": "clean-package",
-    "postpack": "clean-package restore",
-    "prepare": "npm run build",
-    "start": "node ./dist/cli.js",
-    "test": "npm run type-check",
-    "test:coverage": "vitest run --coverage  --passWithNoTests",
-    "test:ui": "vitest --passWithNoTests",
-    "test:update": "vitest -u",
+    "test": "vitest run",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "arr-rotate": "^1.0.0",
-    "chalk": "^5.3.0",
-    "cli-spinners": "^3.0.0",
-    "consola": "^3.3.3",
+    "chalk": "^6.0.1",
+    "cli-spinners": "^3.4.0",
+    "consola": "^3.4.2",
     "deepmerge": "^4.3.1",
     "fast-deep-equal": "^3.1.3",
-    "figures": "^6.1.0",
-    "ink": "^6.0.0",
-    "react": "^19.0.0"
+    "figures": "^6.1.0"
   },
   "devDependencies": {
-    "clean-package": "^2.2.0"
+    "ink": "^8.0.0",
+    "react": "^19.3.1"
   },
-  "packageManager": "pnpm@10.10.0",
   "engines": {
-    "node": ">=18"
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
+    "node": ">=22.18.0"
   }
 }

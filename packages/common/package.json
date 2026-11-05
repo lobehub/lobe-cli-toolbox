@@ -1,0 +1,37 @@
+{
+  "name": "@lobehub/cli-common",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Source shared by the Lobe CLIs, bundled into each of them at build time",
+  "license": "MIT",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    "./configMigration": "./src/configMigration.ts",
+    "./env": "./src/env.ts",
+    "./llm": "./src/llm.ts",
+    "./promptTemplate": "./src/promptTemplate.ts",
+    "./ProviderSetup": "./src/ProviderSetup.tsx",
+    "./providers": "./src/providers.ts",
+    "./skill": "./src/skill.ts",
+    "./skillCommand": "./src/skillCommand.ts",
+    "./summarize": "./src/summarize.ts",
+    "./textSplitter": "./src/textSplitter.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@ai-sdk/anthropic": "^4.0.97",
+    "@ai-sdk/google": "^4.0.112",
+    "@ai-sdk/openai": "^4.0.109",
+    "@ai-sdk/openai-compatible": "^3.0.85",
+    "ai": "^7.0.163",
+    "ink": "^8.0.0",
+    "react": "^19.3.1"
+  },
+  "devDependencies": {
+    "@lobehub/cli-ui": "workspace:*"
+  }
+}

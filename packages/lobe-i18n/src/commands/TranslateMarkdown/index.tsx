@@ -1,19 +1,21 @@
+import { relative, resolve } from 'node:path';
+
 import { alert, render } from '@lobehub/cli-ui';
 import chalk from 'chalk';
 import { consola } from 'consola';
 import { globSync } from 'glob';
 import matter from 'gray-matter';
 import { isString } from 'lodash-es';
-import { relative, resolve } from 'node:path';
 
 import Progress from '@/components/Progress';
-import { I18n, I18nMarkdownWriteOptions } from '@/core/I18n';
+import type { I18nMarkdownWriteOptions } from '@/core/I18n';
+import { I18n } from '@/core/I18n';
 import { selectors } from '@/store';
-import type { I18nConfig } from '@/types/config';
-import { MarkdownConfig, MarkdownModeType } from '@/types/config';
+import type { I18nConfig, MarkdownConfig } from '@/types/config';
+import { MarkdownModeType } from '@/types/config';
 import { readMarkdown, writeMarkdown } from '@/utils/fs';
 import { getDefaultExtension } from '@/utils/getDefaultExtension';
-import { MarkdownCache, hashContent } from '@/utils/markdownCache';
+import { hashContent, MarkdownCache } from '@/utils/markdownCache';
 import { matchInputPattern } from '@/utils/matchInputPattern';
 
 interface MarkdownQueryItem extends I18nMarkdownWriteOptions {
@@ -84,7 +86,7 @@ class TranslateMarkdown {
     consola.info(
       `Current model setting: ${chalk.cyan(this.config.modelName)} (temperature: ${chalk.cyan(
         this.config.temperature,
-      )}) ${this.config.experimental?.jsonMode ? chalk.red(' [JSON Mode]') : ''}}`,
+      )}) ${this.config.experimental?.jsonMode ? chalk.red(' [JSON Mode]') : ''}`,
     );
     let totalTokenUsage = 0;
     for (const { hash, source, ...item } of this.query) {

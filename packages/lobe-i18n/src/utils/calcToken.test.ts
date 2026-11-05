@@ -1,13 +1,13 @@
 import { describe, expect, it } from 'vitest';
 
 import {
-  KEY_EXTRA_TOKENS,
-  OBJECT_EXTRA_TOKENS,
-  PRIMITIVE_EXTRA_TOKENS,
   calcEncodedKeyToken,
   calcJsonToken,
   calcPrimitiveValueToken,
   calcToken,
+  KEY_EXTRA_TOKENS,
+  OBJECT_EXTRA_TOKENS,
+  PRIMITIVE_EXTRA_TOKENS,
 } from './calcToken';
 
 describe('calcToken', () => {

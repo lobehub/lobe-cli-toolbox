@@ -1,14 +1,13 @@
+import { LLMClient } from '@lobehub/cli-common/llm';
+import type { ChatPromptTemplate } from '@lobehub/cli-common/promptTemplate';
+import type { ResolvedProviderConfig } from '@lobehub/cli-common/providers';
 import { alert } from '@lobehub/cli-ui';
 // @ts-ignore
 import dJSON from 'dirty-json';
 
 import { promptSeo } from '@/prompts/seo';
-import { PostSEO } from '@/types/blog';
-import { SeoConfig } from '@/types/config';
-
-import { type ChatMessage, LLMClient } from '../../../common/llm';
-import { ChatPromptTemplate } from '../../../common/promptTemplate';
-import type { ResolvedProviderConfig } from '../../../common/providers';
+import type { PostSEO } from '@/types/blog';
+import type { SeoConfig } from '@/types/config';
 
 export class SeoMdx {
   private client: LLMClient;
@@ -26,13 +25,13 @@ export class SeoMdx {
 
   async run(content: string): Promise<PostSEO | any> {
     try {
-      const messages = await this.prompt.formatMessages({
+      const messages = this.prompt.formatMessages({
         content,
       });
 
       const { text: result } = await this.client.generate({
         json: this.isJsonMode,
-        messages: messages as ChatMessage[],
+        messages,
         temperature: this.config.temperature,
       });
 

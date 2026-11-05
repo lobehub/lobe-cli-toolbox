@@ -5,9 +5,10 @@ import { globSync } from 'glob';
 import matter from 'gray-matter';
 import pMap from 'p-map';
 
-import { SeoCore, SeoQueryItem } from '@/core/SeoCore';
+import type { SeoQueryItem } from '@/core/SeoCore';
+import { SeoCore } from '@/core/SeoCore';
 import { selectors } from '@/store';
-import { BlogPost, PostSEO } from '@/types/blog';
+import type { BlogPost, PostSEO } from '@/types/blog';
 import type { SeoConfig } from '@/types/config';
 import { readMarkdown, writeMarkdown } from '@/utils/fs';
 import { matchInputPattern } from '@/utils/matchInputPattern';
@@ -30,7 +31,7 @@ class Seo {
 
     if (!entry || entry.length === 0) alert.error('No mdx entry was found.', true);
 
-    let files = globSync(matchInputPattern(entry, this.config.entryExtension), {
+    const files = globSync(matchInputPattern(entry, this.config.entryExtension), {
       ignore: matchInputPattern(this.config.exclude || [], this.config.entryExtension),
       nodir: true,
     }).filter((file) => file.includes(this.config.entryExtension));
@@ -51,7 +52,7 @@ class Seo {
     consola.info(
       `Current model setting: ${chalk.cyan(this.config.modelName)} (temperature: ${chalk.cyan(
         this.config.temperature,
-      )}) ${this.config.experimental?.jsonMode ? chalk.red(' [JSON Mode]') : ''}}`,
+      )}) ${this.config.experimental?.jsonMode ? chalk.red(' [JSON Mode]') : ''}`,
     );
     let totalTokenUsage = 0;
 
@@ -76,7 +77,7 @@ class Seo {
             chalk.gray(`[Token usage: ${data.tokenUsage}]`),
           );
         } else {
-          consola.warn('No translation result was found:', chalk.yellow(item.entry));
+          consola.warn('No SEO result was generated:', chalk.yellow(item.entry));
         }
       },
       { concurrency: this.config.concurrency || 5 },
@@ -94,8 +95,7 @@ class Seo {
         const { data, content } = matter(md);
         let gptContent = content;
         if (data) {
-          let seo: PostSEO;
-          seo = this.config.groupKey
+          const seo: PostSEO = this.config.groupKey
             ? ((data as BlogPost)?.[this.config.groupKey] as PostSEO)
             : (data as BlogPost);
 

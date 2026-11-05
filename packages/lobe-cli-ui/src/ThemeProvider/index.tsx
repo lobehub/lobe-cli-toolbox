@@ -1,8 +1,8 @@
-import { ReactNode, memo, useEffect } from 'react';
+import type { ReactNode } from 'react';
+import { memo, useEffect } from 'react';
 
-import { useTheme } from '@/hooks/useTheme';
-
-import { ThemeProvider as InkThemeProvider, defaultTheme, extendTheme } from '../theme';
+import { useTheme } from '../hooks/useTheme';
+import { defaultTheme, extendTheme, ThemeProvider as InkThemeProvider } from '../theme';
 
 const ThemeProvider = memo<{ children: ReactNode }>(({ children }) => {
   const theme = useTheme();

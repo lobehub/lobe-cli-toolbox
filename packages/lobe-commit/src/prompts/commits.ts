@@ -1,9 +1,9 @@
+import { ChatPromptTemplate, PromptTemplate } from '@lobehub/cli-common/promptTemplate';
+
 import gitmojis from '@/constants/gitmojis';
 import { selectors } from '@/store';
 
-import { ChatPromptTemplate, PromptTemplate } from '../../../common/promptTemplate';
-
-const ENHANCED_BASE_PROMPT = [
+export const DEFAULT_PROMPT = [
   `You are an expert developer assistant specialized in generating high-quality Git commit messages.`,
   `Your mission is to create clean, comprehensive, and meaningful commit messages following the conventional commit convention.`,
   ``,
@@ -36,29 +36,24 @@ const CONTEXT_AWARENESS_PROMPT = [
 
 const TYPES_EXAMPLE = gitmojis.map((item) => `- ${item.type}: ${item.desc}`).join('\n');
 
-const PROMPT = selectors.getConfig('prompt') || ENHANCED_BASE_PROMPT;
-const LOCALE = selectors.getConfig('locale');
-const MAX_LENGTH = selectors.getConfig('maxLength');
-const INCLUDE_WHY = selectors.getConfig('includeWhy') || false;
-
 export const promptCommits = () => {
-  return ChatPromptTemplate.fromMessages<{
-    summary: string;
-  }>([
+  const { includeWhy, locale, maxLength, prompt } = selectors.getCommitConfig();
+
+  return ChatPromptTemplate.fromMessages<{ summary: string }>([
     [
       'system',
       [
-        PROMPT,
+        prompt || DEFAULT_PROMPT,
         ``,
         CONTEXT_AWARENESS_PROMPT,
         ``,
         `## Rules and Constraints:`,
         `- Choose ONLY 1 type from the type-to-description below: <${TYPES_EXAMPLE}>`,
-        `- Commit message must be a maximum of ${MAX_LENGTH} characters`,
+        `- Commit message must be a maximum of ${maxLength} characters`,
         `- Lines must not be longer than 74 characters`,
         `- Use clear, professional language`,
-        LOCALE && `- Write the commit message in: ${LOCALE}`,
-        INCLUDE_WHY &&
+        locale && `- Write the commit message in: ${locale}`,
+        includeWhy &&
           `- Include a brief explanation of WHY the change was made after the main message`,
         `- Avoid redundant phrases like "This commit" or "This change"`,
         `- Focus on user/business value when applicable`,
@@ -79,7 +74,7 @@ export const promptCommits = () => {
   ]);
 };
 
-const enhancedSummaryTemplate = [
+const SUMMARY_TEMPLATE = [
   `You are an expert at analyzing code changes and creating meaningful summaries.`,
   `Your task is to analyze the git diff and extract the key information needed for generating a commit message.`,
   ``,
@@ -95,23 +90,30 @@ const enhancedSummaryTemplate = [
   ``,
   `Provide a clear, technical summary that highlights the most important changes and their context.`,
   `This summary will be used to generate a commit message, so focus on actionable information.`,
-]
-  .filter(Boolean)
-  .join('\n');
+].join('\n');
 
-const enhancedSummaryRefineTemplate = [
-  enhancedSummaryTemplate,
+const REFINE_TEMPLATE = [
+  `You are an expert at analyzing code changes and creating meaningful summaries.`,
+  `The diff is too large to read at once, so it is summarized one part at a time.`,
   ``,
-  `## Additional Guidelines:`,
-  `- Choose only 1 type from the type-to-description below: <${TYPES_EXAMPLE}>`,
+  `Summary of the previous parts:`,
+  `--------`,
+  `{existing_answer}`,
+  `--------`,
+  ``,
+  `Next part of the git diff:`,
+  `--------`,
+  `{text}`,
+  `--------`,
+  ``,
+  `Refine the summary so it covers every part seen so far.`,
   `- Keep technical accuracy while being concise`,
   `- Highlight breaking changes or important behavioral modifications`,
-  `- Consider the business impact of the changes`,
-  LOCALE && `- Maintain consistency with ${LOCALE} language conventions`,
-  `- Maximum output length: ${MAX_LENGTH} characters`,
-]
-  .filter(Boolean)
-  .join('\n');
+  `- This summary will be used to generate a commit message, so focus on actionable information`,
+].join('\n');
 
-export const SUMMARY_PROMPT = PromptTemplate.fromTemplate(enhancedSummaryTemplate);
-export const SUMMARY_REFINE_PROMPT = PromptTemplate.fromTemplate(enhancedSummaryRefineTemplate);
+export const SUMMARY_PROMPT = PromptTemplate.fromTemplate<{ text: string }>(SUMMARY_TEMPLATE);
+export const SUMMARY_REFINE_PROMPT = PromptTemplate.fromTemplate<{
+  existing_answer: string;
+  text: string;
+}>(REFINE_TEMPLATE);

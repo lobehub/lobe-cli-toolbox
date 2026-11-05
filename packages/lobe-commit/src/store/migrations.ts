@@ -1,4 +1,4 @@
-import type { StoredConfig } from '../../../common/configMigration';
+import type { StoredConfig } from '@lobehub/cli-common/configMigration';
 
 /**
  * Values older versions stored automatically: context window of the default model minus 512.

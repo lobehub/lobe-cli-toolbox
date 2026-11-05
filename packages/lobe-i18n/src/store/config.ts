@@ -1,9 +1,9 @@
+import { migrateConfigStore, migrateLegacyProvider } from '@lobehub/cli-common/configMigration';
 import Conf from 'conf';
-import { PublicExplorerSync, cosmiconfigSync } from 'cosmiconfig';
+import type { PublicExplorerSync } from 'cosmiconfig';
+import { cosmiconfigSync } from 'cosmiconfig';
 
-import { ConfigSchema } from '@/types/config';
-
-import { migrateConfigStore, migrateLegacyProvider } from '../../../common/configMigration';
+import type { ConfigSchema } from '@/types/config';
 
 export const schema: ConfigSchema = {
   apiBaseUrl: {

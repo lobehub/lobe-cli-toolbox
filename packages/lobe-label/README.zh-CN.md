@@ -72,7 +72,7 @@ $ lobe-label -t lobehub/chat -s lobehub/commit
 ```
 
 > \[!WARNING]\
-> 复制前会删除目标仓库现有的全部标签。
+> 目标仓库最终只保留源仓库的标签：同名标签原地更新（issue 上的标签不会丢失），缺少的会新建，仅存在于目标仓库的标签会被删除。
 
 GitHub 令牌依次读取 `lobe-label -o` 中的配置、`GITHUB_TOKEN` / `GH_TOKEN` 环境变量，例如 `GITHUB_TOKEN=$(gh auth token) lobe-label -t lobehub/chat`。
 

@@ -1,5 +1,5 @@
 import { Box } from 'ink';
-import React, { type ReactNode, isValidElement, useContext } from 'react';
+import React, { isValidElement, type ReactNode, useContext } from 'react';
 
 import { useComponentTheme } from '../../theme';
 import { OrderedListContext } from './ordered-list-context';
@@ -41,9 +41,8 @@ export function OrderedList({ children }: OrderedListProps) {
         const marker = `${parentMarker}${paddedMarker}`;
 
         return (
-          // eslint-disable-next-line react/jsx-no-constructed-context-values
           <OrderedListContext.Provider value={{ marker }}>
-            {/* eslint-disable-next-line react/jsx-no-constructed-context-values */}
+            {}
             <OrderedListItemContext.Provider value={{ marker }}>
               {child}
             </OrderedListItemContext.Provider>

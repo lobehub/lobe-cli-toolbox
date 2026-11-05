@@ -8,6 +8,8 @@ describe('ConfigPanel', () => {
   it('render', () => {
     const { lastFrame } = render(
       <ConfigPanel
+        logo="🤯"
+        title="setting"
         items={[
           {
             children: <Text>test</Text>,
@@ -17,8 +19,6 @@ describe('ConfigPanel', () => {
             value: 200,
           },
         ]}
-        logo="🤯"
-        title="setting"
       />,
     );
     console.log(lastFrame());

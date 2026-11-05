@@ -1,4 +1,5 @@
-import { I18nConfig, MarkdownModeType } from '@/types/config';
+import type { I18nConfig } from '@/types/config';
+import { MarkdownModeType } from '@/types/config';
 import { getDefaultExtension } from '@/utils/getDefaultExtension';
 
 export const DEFAULT_CONFIG: Partial<I18nConfig> = {

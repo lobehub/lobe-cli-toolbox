@@ -1,97 +1,82 @@
 import { alert } from '@lobehub/cli-ui';
-import { useCallback, useRef, useState } from 'react';
-import useSWR, { type SWRConfiguration } from 'swr';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Commits } from '@/core/Commits';
 import { selectors } from '@/store';
 
-export interface CommitConfig extends SWRConfiguration {
+export interface CommitConfig {
   setMessage?: (msg: string) => void;
 }
-export const useCommits = ({ setMessage, onSuccess, onError, ...config }: CommitConfig = {}) => {
-  const commits = useRef(new Commits());
-  const [summary, setSummary] = useState<string>('');
-  const [loadingInfo, setLoadingInfo] = useState<string>(' Generating...');
-  const [shouldFetch, setShouldFetch] = useState(false);
-  const [isGlobalLoading, setIsGlobalLoading] = useState(true);
-  const [key, setKey] = useState<string>(Date.now().toString());
-  const [streamingMessage, setStreamingMessage] = useState<string>('');
-  const [tokenUsage, setTokenUsage] = useState<number>(0);
-  const commitConfig = selectors.getCommitConfig();
 
-  const handleStreamMessage = useCallback(
-    (message: string) => {
-      setStreamingMessage(message);
-      setMessage?.(message);
-      setIsGlobalLoading(false);
+/**
+ * Generates a commit message on `start()`. A newer `start()`/`restart()`/`stop()` discards the
+ * result of the run in flight.
+ */
+export const useCommits = ({ setMessage }: CommitConfig = {}) => {
+  const commits = useRef<Commits | null>(null);
+  const runId = useRef(0);
+  const summaryRef = useRef('');
+  const [summary, setSummary] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [loadingInfo, setLoadingInfo] = useState(' Generating...');
+  const [message, setLocalMessage] = useState<string>();
+  const [tokenUsage, setTokenUsage] = useState(0);
+
+  useEffect(() => () => void runId.current++, []);
+
+  const run = useCallback(
+    async (cacheSummary: string) => {
+      const id = ++runId.current;
+      const isCurrent = () => id === runId.current;
+      const { stream } = selectors.getCommitConfig();
+
+      setLoading(true);
+      setLocalMessage(undefined);
+      setTokenUsage(0);
+
+      try {
+        commits.current ??= new Commits();
+        const result = await commits.current.genCommit({
+          cacheSummary,
+          onStreamMessage: stream
+            ? (text) => {
+                if (!isCurrent()) return;
+                setLoading(false);
+                setLocalMessage(text);
+                setMessage?.(text);
+              }
+            : undefined,
+          onTokenUsage: (usage) => isCurrent() && setTokenUsage(usage),
+          setLoadingInfo: (info) => isCurrent() && setLoadingInfo(info),
+          setSummary: (text) => {
+            summaryRef.current = text;
+            if (isCurrent()) setSummary(text);
+          },
+        });
+        if (!isCurrent()) return;
+        setLocalMessage(result);
+        setMessage?.(result);
+      } catch (error) {
+        if (isCurrent()) alert.error(String((error as Error)?.message ?? error), true);
+      } finally {
+        if (isCurrent()) setLoading(false);
+      }
     },
     [setMessage],
   );
 
-  const handleTokenUsage = useCallback((usage: number) => {
-    setTokenUsage(usage);
-  }, []);
-
-  const { data, isLoading } = useSWR(
-    shouldFetch ? key : null,
-    async () => {
-      if (commitConfig.stream) {
-        setIsGlobalLoading(false);
-      }
-      return commits.current.genCommit({
-        cacheSummary: summary,
-        onStreamMessage: commitConfig.stream ? handleStreamMessage : undefined,
-        onTokenUsage: handleTokenUsage,
-        setLoadingInfo,
-        setSummary,
-      });
-    },
-    {
-      onError: (err, ...rest) => {
-        onError?.(err, ...rest);
-        alert.error(err, true);
-      },
-      onErrorRetry: () => false,
-      onSuccess: (data, ...rest) => {
-        setShouldFetch(false);
-        if (data && !commitConfig.stream) setMessage?.(data);
-        onSuccess?.(data, ...rest);
-        setIsGlobalLoading(false);
-      },
-      ...config,
-    },
-  );
-
-  const start = useCallback(() => {
-    setKey(Date.now().toString());
-    setIsGlobalLoading(true);
-    setStreamingMessage('');
-    setTokenUsage(0);
-    setShouldFetch(true);
-  }, []);
+  const start = useCallback(() => void run(summaryRef.current), [run]);
 
   const restart = useCallback(() => {
+    summaryRef.current = '';
     setSummary('');
-    setKey(Date.now().toString());
-    setIsGlobalLoading(true);
-    setStreamingMessage('');
-    setTokenUsage(0);
-    setShouldFetch(true);
-  }, []);
+    void run('');
+  }, [run]);
 
   const stop = useCallback(() => {
-    setIsGlobalLoading(false);
-    setShouldFetch(false);
+    runId.current++;
+    setLoading(false);
   }, []);
 
-  return {
-    loading: isLoading || isGlobalLoading,
-    loadingInfo: loadingInfo,
-    message: commitConfig.stream ? streamingMessage : data,
-    restart,
-    start,
-    stop,
-    summary,
-    tokenUsage,
-  };
+  return { loading, loadingInfo, message, restart, start, stop, summary, tokenUsage };
 };

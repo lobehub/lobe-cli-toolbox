@@ -46,9 +46,9 @@ const InputScope = memo(() => {
     >
       <TextInput
         defaultValue={subject}
+        placeholder="Input commit <subject>..."
         onChange={debounce(setSubject, 100)}
         onSubmit={handleSubmit}
-        placeholder="Input commit <subject>..."
       />
     </Panel>
   );

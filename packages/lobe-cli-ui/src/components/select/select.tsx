@@ -66,7 +66,6 @@ export function Select({
   return (
     <Box {...styles.container()}>
       {state.visibleOptions.map((option) => {
-        // eslint-disable-next-line prefer-destructuring
         let label: ReactNode = option.label;
 
         if (highlightText && option.label.includes(highlightText)) {

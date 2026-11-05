@@ -1,4 +1,4 @@
-import { ChatPromptTemplate } from '@/utils/promptTemplate';
+import { ChatPromptTemplate } from '@lobehub/cli-common/promptTemplate';
 
 const DEFAULT_REFERENCE =
   'You can adjust the tone and style, taking into account the cultural connotations and regional differences of certain words. As a translator, you need to translate the original text into a translation that meets the standards of accuracy and elegance.';

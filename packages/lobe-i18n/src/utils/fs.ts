@@ -1,5 +1,6 @@
-import stringify from 'json-stable-stringify';
 import { readFileSync, writeFileSync } from 'node:fs';
+
+import stringify from 'json-stable-stringify';
 
 export const readJSON = (filePath: string) => {
   const data = readFileSync(filePath, 'utf8');

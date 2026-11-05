@@ -1,14 +1,14 @@
 import { isPlainObject, reduce } from 'lodash-es';
 
-import { LocaleObj } from '@/types';
-import { I18nConfig } from '@/types/config';
+import type { LocaleObj } from '@/types';
+import type { I18nConfig } from '@/types/config';
 
 import {
-  KEY_EXTRA_TOKENS,
-  OBJECT_EXTRA_TOKENS,
   calcEncodedKeyToken,
   calcJsonToken,
   calcPrimitiveValueToken,
+  KEY_EXTRA_TOKENS,
+  OBJECT_EXTRA_TOKENS,
 } from './calcToken';
 import { diff } from './diffJson';
 
@@ -16,7 +16,8 @@ const splitJSONtoSmallChunks = (object: LocaleObj, splitToken: number) =>
   reduce(
     Object.entries(object),
     (chunks: any[], [key, value]: [string, any]) => {
-      let [chunk, chunkSize]: [LocaleObj, number] = chunks.pop() || [{}, OBJECT_EXTRA_TOKENS];
+      const [chunk, initialSize]: [LocaleObj, number] = chunks.pop() || [{}, OBJECT_EXTRA_TOKENS];
+      let chunkSize = initialSize;
       const nextValueSize = isPlainObject(value)
         ? calcJsonToken(value, 1)
         : calcPrimitiveValueToken(value);

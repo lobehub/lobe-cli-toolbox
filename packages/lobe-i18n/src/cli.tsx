@@ -1,13 +1,13 @@
+import { skillAgents } from '@lobehub/cli-common/skill';
+import { runSkillInstall, type SkillFlags } from '@lobehub/cli-common/skillCommand';
 import { alert, render } from '@lobehub/cli-ui';
 import { Command, Option } from 'commander';
 import updateNotifier from 'update-notifier';
 
-import packageJson from '@/../package.json';
 import { Config, Lint, TranslateLocale, TranslateMarkdown } from '@/commands';
 import { explorer, migrateConfig } from '@/store/config';
 
-import { skillAgents } from '../../common/skill';
-import { type SkillFlags, runSkillInstall } from '../../common/skillCommand';
+import packageJson from '../package.json';
 
 const notifier = updateNotifier({
   pkg: packageJson,

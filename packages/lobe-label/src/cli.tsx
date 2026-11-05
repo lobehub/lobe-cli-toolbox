@@ -1,15 +1,15 @@
+import { skillAgents } from '@lobehub/cli-common/skill';
+import { runSkillInstall, type SkillFlags } from '@lobehub/cli-common/skillCommand';
 import { alert, render } from '@lobehub/cli-ui';
 import { Command, Option } from 'commander';
 import { consola } from 'consola';
 import updateNotifier from 'update-notifier';
 
-import packageJson from '@/../package.json';
 import Config from '@/commands/Config';
 import Copy from '@/commands/Copy';
 import { migrateConfig } from '@/store/confStore';
 
-import { skillAgents } from '../../common/skill';
-import { type SkillFlags, runSkillInstall } from '../../common/skillCommand';
+import packageJson from '../package.json';
 
 const notifier = updateNotifier({
   pkg: packageJson,
@@ -41,9 +41,10 @@ program
     if (options.config) {
       render(<Config />);
     } else if (options.target) {
-      await Copy(options.target, options.source);
+      if (!(await Copy(options.target, options.source))) process.exitCode = 1;
     } else {
       consola.error('Please input target repo with -t owner/repo');
+      process.exitCode = 1;
     }
   });
 

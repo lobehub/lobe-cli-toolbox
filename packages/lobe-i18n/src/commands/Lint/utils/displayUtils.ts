@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import { consola } from 'consola';
 
-import { LintResult } from '../types';
+import type { LintResult } from '../types';
 import { getAbsolutePath, getRelativePath } from './fileUtils';
 
 /**
@@ -70,7 +70,7 @@ function displayIssue(issue: any, absolutePath: string): void {
   // 输出格式：6:1  error   bg → be at 'tab.home': "Начална страница" (confidence 85%)
   const output = `${chalk.gray(`${lineNumber}:1`)}  ${paddedSeverity}  ${formattedMessage}`;
 
-  console.log(output);
+  consola.log(output);
 }
 
 /**
@@ -110,7 +110,7 @@ export function displayResults(results: LintResult[], quiet?: boolean): void {
   if (warningCount > 0)
     summary.push(chalk.yellow(`${warningCount} warning${warningCount !== 1 ? 's' : ''}`));
 
-  console.log(
+  consola.log(
     `${chalk.bold('✖')} ${totalIssues} problem${totalIssues !== 1 ? 's' : ''} (${summary.join(', ')})`,
   );
 
@@ -128,7 +128,7 @@ export function displayResults(results: LintResult[], quiet?: boolean): void {
     if (filteredIssues.length === 0) continue;
 
     // 显示文件路径（可点击）
-    console.log(`\n${chalk.white.underline(relativePath)}`);
+    consola.log(`\n${chalk.white.underline(relativePath)}`);
 
     // 显示该文件的所有问题
     for (const issue of filteredIssues) {
@@ -138,9 +138,8 @@ export function displayResults(results: LintResult[], quiet?: boolean): void {
 
   // 显示总结（不换行）
   if (errorCount > 0) {
-    consola.error(
-      `${chalk.bold.red('✖')} Found ${errorCount} error${errorCount !== 1 ? 's' : ''}`,
-    );
+    process.exitCode = 1;
+    consola.error(`${chalk.bold.red('✖')} Found ${errorCount} error${errorCount !== 1 ? 's' : ''}`);
   }
   if (warningCount > 0) {
     consola.warn(

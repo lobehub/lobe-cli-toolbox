@@ -89,15 +89,14 @@ describe('Error Handling and Edge Cases', () => {
     it('should validate empty array behavior', () => {
       vi.clearAllMocks(); // Clear previous mock calls
 
-      // Empty arrays are truthy in JavaScript, so they pass validation
+      // An empty locale list is as unusable as a missing one
       const emptyOpt = {
         outputLocales: [],
       };
 
       checkOptionKeys(emptyOpt, 'outputLocales');
 
-      // Empty array is truthy, so no error expected
-      expect(alert.error).not.toHaveBeenCalled();
+      expect(alert.error).toHaveBeenCalledTimes(1);
     });
 
     it('should handle whitespace-only strings', () => {
@@ -199,8 +198,10 @@ describe('Error Handling and Edge Cases', () => {
       const opt = {};
       checkOptionKeys(opt, 'outputLocales');
 
-      expect(alert.error).toHaveBeenCalledWith(expect.stringContaining("Can't find"));
-      expect(alert.error).toHaveBeenCalledWith(expect.stringContaining('outputLocales'));
+      expect(alert.error).toHaveBeenCalledWith(
+        expect.stringMatching(/Can't find .*outputLocales/),
+        true,
+      );
     });
 
     it('should handle different option keys in error messages', () => {

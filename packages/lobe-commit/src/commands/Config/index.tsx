@@ -1,13 +1,11 @@
-import { TextInput } from '@lobehub/cli-ui';
-import { ConfigPanel, type ConfigPanelProps, SelectInput } from '@lobehub/cli-ui';
+import { API_TYPE_SHORT } from '@lobehub/cli-common/llm';
+import ProviderSetup, { saveProviderSetup } from '@lobehub/cli-common/ProviderSetup';
+import { ConfigPanel, type ConfigPanelProps, SelectInput, TextInput } from '@lobehub/cli-ui';
 import { memo, useMemo, useState } from 'react';
 
-import { BASE_PROMPT } from '@/constants/template';
+import { DEFAULT_PROMPT } from '@/prompts/commits';
 import { selectors, useConfStore } from '@/store';
-import type { ConfigKeys, Config as LocalConfig } from '@/types/config';
-
-import ProviderSetup, { saveProviderSetup } from '../../../../common/ProviderSetup';
-import { API_TYPE_SHORT } from '../../../../common/llm';
+import type { Config as LocalConfig, ConfigKeys } from '@/types/config';
 
 const Config = memo(() => {
   const [active, setActive] = useState<string>();
@@ -74,8 +72,8 @@ const Config = memo(() => {
         children: (
           <TextInput
             defaultValue={store.locale}
-            onSubmit={(v) => setConfig('locale', v)}
             placeholder="Input commit message locale..."
+            onSubmit={(v) => setConfig('locale', v)}
           />
         ),
         defaultValue: getDefault('locale') || 'en_US',
@@ -88,25 +86,25 @@ const Config = memo(() => {
         children: (
           <TextInput
             defaultValue={store.prompt}
-            onSubmit={(v) => setConfig('prompt', v)}
             placeholder="Input ChatGPT prompt..."
+            onSubmit={(v) => setConfig('prompt', v)}
           />
         ),
-        defaultValue: getDefault('prompt') || BASE_PROMPT,
-        desc: BASE_PROMPT,
+        defaultValue: getDefault('prompt') || DEFAULT_PROMPT,
+        desc: DEFAULT_PROMPT,
         key: 'prompt',
         label: 'Custom prompt',
         showValue: false,
-        value: store.prompt || BASE_PROMPT,
+        value: store.prompt || DEFAULT_PROMPT,
       },
       {
         children: (
           <TextInput
             defaultValue={String(store.diffChunkTokens)}
+            placeholder="Input diff chunk size in tokens..."
             onSubmit={(v) =>
               setConfig('diffChunkTokens', Number(v) || getDefault('diffChunkTokens'))
             }
-            placeholder="Input diff chunk size in tokens..."
           />
         ),
         defaultValue: getDefault('diffChunkTokens'),
@@ -119,8 +117,8 @@ const Config = memo(() => {
         children: (
           <TextInput
             defaultValue={String(store.maxLength)}
-            onSubmit={(v) => setConfig('maxLength', Number(v))}
             placeholder={`Input maximum character length of the generated commit message...`}
+            onSubmit={(v) => setConfig('maxLength', Number(v))}
           />
         ),
         defaultValue: getDefault('maxLength'),
@@ -158,8 +156,8 @@ const Config = memo(() => {
         children: (
           <TextInput
             defaultValue={store.githubToken}
-            onSubmit={(v) => setConfig('githubToken', v)}
             placeholder="Input Github token..."
+            onSubmit={(v) => setConfig('githubToken', v)}
           />
         ),
         defaultValue: getDefault('githubToken'),

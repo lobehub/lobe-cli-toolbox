@@ -1,10 +1,10 @@
 import { type BoxProps, Text, useApp } from 'ink';
-import { ReactNode, memo, useMemo, useState } from 'react';
+import type { ReactNode } from 'react';
+import { memo, useMemo, useState } from 'react';
 
-import Panel from '@/Panel';
-import SelectInput, { type SelectInputItem, type SelectInputProps } from '@/SelectInput';
-import { useTheme } from '@/hooks/useTheme';
-
+import { useTheme } from '../hooks/useTheme';
+import Panel from '../Panel';
+import SelectInput, { type SelectInputItem, type SelectInputProps } from '../SelectInput';
 import ConfigSelectLabel from './ConfigSelectLabel';
 
 export interface ConfigPanelItem {
@@ -65,6 +65,7 @@ const ConfigPanel = memo<ConfigPanelProps>(
 
     return active && activeItem ? (
       <Panel
+        title={[logo, activeItem.label].filter(Boolean).join(' ')}
         footer={
           activeItem.desc && (
             <Text color={theme.colorTextDescription}>
@@ -73,7 +74,6 @@ const ConfigPanel = memo<ConfigPanelProps>(
             </Text>
           )
         }
-        title={[logo, activeItem.label].filter(Boolean).join(' ')}
         {...props}
       >
         {activeItem.children}

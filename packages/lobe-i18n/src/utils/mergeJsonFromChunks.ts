@@ -1,6 +1,6 @@
 import { merge } from 'lodash-es';
 
-import { LocaleObj } from '@/types';
+import type { LocaleObj } from '@/types';
 
 export const mergeJsonFromChunks = (arr: LocaleObj[]): LocaleObj => {
   let result = {};

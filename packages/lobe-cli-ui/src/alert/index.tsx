@@ -1,5 +1,6 @@
-import { consola } from 'consola';
 import process from 'node:process';
+
+import { consola } from 'consola';
 
 export default {
   error: (text: string, exit?: boolean) => {

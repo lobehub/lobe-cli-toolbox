@@ -72,7 +72,7 @@ $ lobe-label -t lobehub/chat -s lobehub/commit
 ```
 
 > \[!WARNING]\
-> All existing labels of the target repo are deleted before copying.
+> The target repo ends up with exactly the source labels: labels with the same name are updated in place (issues keep them), missing ones are created, and labels that only exist in the target are deleted.
 
 The GitHub token is read from `lobe-label -o`, then the `GITHUB_TOKEN` / `GH_TOKEN` environment variables, e.g. `GITHUB_TOKEN=$(gh auth token) lobe-label -t lobehub/chat`.
 

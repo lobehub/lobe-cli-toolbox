@@ -1,9 +1,10 @@
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
-import { MarkdownCache, hashContent } from './markdownCache';
+import { hashContent, MarkdownCache } from './markdownCache';
 
 describe('MarkdownCache', () => {
   let dir: string;

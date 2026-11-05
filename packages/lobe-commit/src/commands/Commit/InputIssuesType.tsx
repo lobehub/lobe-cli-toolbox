@@ -4,6 +4,7 @@ import { memo, useCallback } from 'react';
 import { shallow } from 'zustand/shallow';
 
 import { useCommitStore } from '@/store/commitStore';
+import type { IssuesType } from '@/utils/genCommitMessage';
 
 import Header from './Header';
 
@@ -44,7 +45,7 @@ const InputIssues = memo(() => {
     >
       <SelectInput
         items={items}
-        onHighlight={(item) => setIssuesType(item.value as any)}
+        onHighlight={(item) => setIssuesType(item.value as IssuesType)}
         onSelect={() => setStep('commit')}
       />
     </Panel>

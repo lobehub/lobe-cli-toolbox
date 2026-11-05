@@ -6,7 +6,7 @@ import { unified } from 'unified';
 import type { Node } from 'unist';
 import { visit } from 'unist-util-visit';
 
-import { LocaleObj } from '@/types';
+import type { LocaleObj } from '@/types';
 import { checkMdString } from '@/utils/checkMdString';
 
 export const convertMarkdownToMdast = async (md: string): Promise<Node> => {

@@ -1,14 +1,13 @@
+import { LLMClient } from '@lobehub/cli-common/llm';
+import type { ChatPromptTemplate } from '@lobehub/cli-common/promptTemplate';
+import type { ResolvedProviderConfig } from '@lobehub/cli-common/providers';
 import { alert } from '@lobehub/cli-ui';
 // @ts-ignore
 import dJSON from 'dirty-json';
 
 import { promptJsonTranslate, promptStringTranslate } from '@/prompts/translate';
-import { LocaleObj } from '@/types';
-import { I18nConfig } from '@/types/config';
-import { ChatPromptTemplate } from '@/utils/promptTemplate';
-
-import { type ChatMessage, LLMClient } from '../../../common/llm';
-import type { ResolvedProviderConfig } from '../../../common/providers';
+import type { LocaleObj } from '@/types';
+import type { I18nConfig } from '@/types/config';
 
 export class TranslateLocale {
   client: LLMClient;
@@ -35,14 +34,14 @@ export class TranslateLocale {
     to: string;
   }): Promise<string | any> {
     try {
-      const messages = await this.promptString.formatMessages({
+      const messages = this.promptString.formatMessages({
         from: from || this.config.entryLocale,
-        text: text,
+        text,
         to,
       });
 
       const { text: result } = await this.client.generate({
-        messages: messages as ChatMessage[],
+        messages,
         temperature: this.config.temperature,
         topP: this.config.topP,
       });
@@ -64,7 +63,7 @@ export class TranslateLocale {
     to: string;
   }): Promise<LocaleObj | any> {
     try {
-      const messages = await this.promptJson.formatMessages({
+      const messages = this.promptJson.formatMessages({
         from: from || this.config.entryLocale,
         json: JSON.stringify(json),
         to,
@@ -72,7 +71,7 @@ export class TranslateLocale {
 
       const { text: result } = await this.client.generate({
         json: this.isJsonMode,
-        messages: messages as ChatMessage[],
+        messages,
         temperature: this.config.temperature,
         topP: this.config.topP,
       });

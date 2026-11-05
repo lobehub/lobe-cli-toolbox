@@ -1,17 +1,3 @@
-import tsconfigPaths from 'vite-tsconfig-paths';
-import { defineConfig } from 'vitest/config';
+import { defineLobeProject } from '../../vitest.shared';
 
-export default defineConfig({
-  plugins: [tsconfigPaths()],
-  resolve: {
-    alias: {
-      '@': './src',
-    },
-  },
-  test: {
-    alias: {
-      '@': './src',
-    },
-    globals: true,
-  },
-});
+export default defineLobeProject('lobe-commit');

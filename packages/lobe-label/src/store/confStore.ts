@@ -1,6 +1,5 @@
+import { migrateConfigStore, type StoredConfig } from '@lobehub/cli-common/configMigration';
 import Conf from 'conf';
-
-import { type StoredConfig, migrateConfigStore } from '../../../common/configMigration';
 
 export interface Config {
   githubToken: string;
@@ -48,8 +47,9 @@ export const migrateConfig = () => {
 };
 
 export const getConfig = <K extends ConfigKeys>(key: K): Config[K] => config.get(key) as Config[K];
-export const getDefulatConfig = <K extends ConfigKeys>(key: K) => schema[key].default as Config[K];
-export const setConfig = <K extends ConfigKeys>(key: K, value: Config[K]) => config.set(key, value);
+export const getDefaultConfig = <K extends ConfigKeys>(key: K) => schema[key].default as Config[K];
+export const setConfig = <K extends ConfigKeys>(key: K, value: Config[K]) =>
+  config.set(key as string, value);
 
 export const getGithubToken = () =>
   getConfig('githubToken') || process.env['GITHUB_TOKEN'] || process.env['GH_TOKEN'] || '';
@@ -58,7 +58,7 @@ export const useConfStore = () => {
   const store = config.store as Config;
   return {
     get: getConfig,
-    getDefault: getDefulatConfig,
+    getDefault: getDefaultConfig,
     set: setConfig,
     store,
   };

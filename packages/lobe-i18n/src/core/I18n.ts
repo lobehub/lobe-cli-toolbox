@@ -1,15 +1,16 @@
+import { type ResolvedProviderConfig, resolveProviderConfig } from '@lobehub/cli-common/providers';
 import { merge } from 'lodash-es';
 import pMap from 'p-map';
 
 import { TranslateMarkdown } from '@/core/TranslateMarkdown';
-import { LocaleObj } from '@/types';
-import { I18nConfig, MarkdownModeType } from '@/types/config';
+import type { LocaleObj } from '@/types';
+import type { I18nConfig } from '@/types/config';
+import { MarkdownModeType } from '@/types/config';
 import { calcToken } from '@/utils/calcToken';
 import { writeJSON, writeMarkdown } from '@/utils/fs';
 import { mergeJsonFromChunks } from '@/utils/mergeJsonFromChunks';
 import { splitJsonToChunks } from '@/utils/splitJsonToChunks';
 
-import { type ResolvedProviderConfig, resolveProviderConfig } from '../../../common/providers';
 import { TranslateLocale } from './TranslateLocale';
 
 export interface I18nOptions {
@@ -100,7 +101,7 @@ export class I18n {
     filename,
     onChunkComplete,
   }: I18nMarkdownTranslateOptions): Promise<{ result: string; tokenUsage: number } | undefined> {
-    const prompt = await this.translateLocaleService.promptString.formatMessages({
+    const prompt = this.translateLocaleService.promptString.formatMessages({
       from: from || this.config.entryLocale,
       text: '',
       to,
@@ -128,7 +129,7 @@ export class I18n {
       const completedChunks = chunkProgress.filter((status) => status === 2).length;
       const inProgressChunks = chunkProgress.filter((status) => status === 1).length;
 
-      let progress = 0;
+      let progress: number;
       if (completedChunks === this.maxStep) {
         progress = 100;
       } else if (inProgressChunks > 0) {
@@ -164,11 +165,6 @@ export class I18n {
         // 标记为进行中
         chunkProgress[index] = 1;
         updateProgress();
-
-        // 延迟一下再更新进度，模拟处理过程
-        setTimeout(() => {
-          updateProgress();
-        }, 800);
 
         const result = await this.translateLocaleService.runByString({
           from: from || this.config.entryLocale,
@@ -227,10 +223,10 @@ export class I18n {
     const target = await this.translateMarkdownService.genTarget(md);
 
     // 过滤掉 Markdown 特有的参数，只保留 translate 方法需要的参数
-    /* eslint-disable @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars */
+    /* eslint-disable unused-imports/no-unused-vars */
     // filename 指向 .md 文件，不能传给 translate，否则会被立即保存写成 JSON
     const { filename, matter, mode, onChunkComplete, ...translateOptions } = rest;
-    /* eslint-enable @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars */
+    /* eslint-enable unused-imports/no-unused-vars */
 
     const translatedTarget = await this.translate({
       ...translateOptions,
@@ -265,7 +261,7 @@ export class I18n {
       }
     | undefined
   > {
-    const prompt = await this.translateLocaleService.promptJson.formatMessages({
+    const prompt = this.translateLocaleService.promptJson.formatMessages({
       from: from || this.config.entryLocale,
       json: JSON.stringify({}),
       to,
@@ -289,7 +285,7 @@ export class I18n {
       const completedChunks = chunkProgress.filter((status) => status === 2).length;
       const inProgressChunks = chunkProgress.filter((status) => status === 1).length;
 
-      let progress = 0;
+      let progress: number;
       if (completedChunks === this.maxStep) {
         progress = 100;
       } else if (inProgressChunks > 0) {
@@ -325,11 +321,6 @@ export class I18n {
         // 标记为进行中
         chunkProgress[index] = 1;
         updateProgress();
-
-        // 延迟一下再更新进度，模拟处理过程
-        setTimeout(() => {
-          updateProgress();
-        }, 800);
 
         const result = await this.translateLocaleService.runByJson({
           from: from || this.config.entryLocale,

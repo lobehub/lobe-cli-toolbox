@@ -1,2 +1,32 @@
 packages:
-  - 'packages/**'
+  - packages/*
+
+# @lobehub/cli-ui and @lobehub/cli-common are private workspace packages bundled
+# into each CLI. They stay on workspace:* in devDependencies, which clean-package
+# removes before npm publish.
+linkWorkspacePackages: true
+
+lockfile: false
+resolutionMode: highest
+
+# Lint configs from @lobehub/lint load their plugins by name from the repo root.
+publicHoistPattern:
+  - '*changelog*'
+  - '*commitlint*'
+  - '*eslint*'
+  - '*prettier*'
+  - '*remark*'
+  - '*semantic-release*'
+
+allowBuilds:
+  core-js: false
+  esbuild: true
+minimumReleaseAgeExclude:
+  - '@ai-sdk/anthropic@4.0.97'
+  - '@ai-sdk/gateway@4.0.136'
+  - '@ai-sdk/google@4.0.112'
+  - '@ai-sdk/openai-compatible@3.0.85'
+  - '@ai-sdk/openai@4.0.109'
+  - '@ai-sdk/provider-utils@5.0.75'
+  - '@ai-sdk/provider@4.0.36'
+  - ai@7.0.163

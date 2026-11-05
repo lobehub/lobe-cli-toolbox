@@ -1,14 +1,15 @@
-import dotenv from 'dotenv';
+import { loadEnv } from '@lobehub/cli-common/env';
+import { resolveProviderConfig } from '@lobehub/cli-common/providers';
 
-import { Config, ConfigKeys } from '@/types/config';
+import type { Config, ConfigKeys } from '@/types/config';
 
-import { resolveProviderConfig } from '../../../common/providers';
-import { DEFAULT_DIFF_CHUNK_TOKENS, config, schema } from './config';
+import { config, DEFAULT_DIFF_CHUNK_TOKENS, schema } from './config';
 
-dotenv.config();
+loadEnv();
 const getConfig = <K extends ConfigKeys>(key: K): Config[K] => config.get(key) as Config[K];
-const getDefulatConfig = <K extends ConfigKeys>(key: K) => schema[key].default as Config[K];
-const setConfig = <K extends ConfigKeys>(key: K, value: Config[K]) => config.set(key, value);
+const getDefaultConfig = <K extends ConfigKeys>(key: K) => schema[key].default as Config[K];
+const setConfig = <K extends ConfigKeys>(key: K, value: Config[K]) =>
+  config.set(key as string, value);
 
 const getProviderConfig = () =>
   resolveProviderConfig({
@@ -20,7 +21,7 @@ const getProviderConfig = () =>
   });
 
 const getGithubToken = () =>
-  process.env.GITHUB_TOKEN || process.env.GH_TOKEN || getConfig('githubToken');
+  process.env['GITHUB_TOKEN'] || process.env['GH_TOKEN'] || getConfig('githubToken');
 
 const getDiffChunkTokens = () => getConfig('diffChunkTokens') || DEFAULT_DIFF_CHUNK_TOKENS;
 
@@ -42,7 +43,7 @@ const getCommitConfig = (): Config => {
 export default {
   getCommitConfig,
   getConfig,
-  getDefulatConfig,
+  getDefaultConfig,
   getDiffChunkTokens,
   getGithubToken,
   getProviderConfig,

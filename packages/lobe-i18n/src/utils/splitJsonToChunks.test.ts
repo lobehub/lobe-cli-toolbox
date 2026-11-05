@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { LocaleObj } from '../types';
-import { I18nConfig } from '../types/config';
+import type { LocaleObj } from '../types';
+import type { I18nConfig } from '../types/config';
 import { DEFAULT_SPLIT_TOKEN, getSplitToken, splitJsonToChunks } from './splitJsonToChunks';
 
 // Mock dependencies

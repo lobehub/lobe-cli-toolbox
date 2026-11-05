@@ -2,25 +2,30 @@ name: Test CI
 on:
   pull_request:
   push:
-    branches:
-      - '!master'
+    branches-ignore:
+      - master
+
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - name: Install bun
-        uses: oven-sh/setup-bun@v2
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
         with:
-          bun-version: 1.0.31
+          node-version: 22
 
       - name: Install deps
-        run: bun i
+        run: pnpm install
 
-      - name: CI
-        run: bun run ci
+      - name: Lint, type-check and test
+        run: pnpm run ci
 
-      - name: Test
-        run: bun run test
+      - name: Build
+        run: pnpm run build
+
+      - name: Smoke test CLIs
+        run: pnpm run smoke

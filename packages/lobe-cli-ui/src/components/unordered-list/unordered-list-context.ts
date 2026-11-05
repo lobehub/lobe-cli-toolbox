@@ -7,7 +7,6 @@ export type UnorderedListContextProps = {
   depth: number;
 };
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export const UnorderedListContext = createContext<UnorderedListContextProps>({
   depth: 0,
 });

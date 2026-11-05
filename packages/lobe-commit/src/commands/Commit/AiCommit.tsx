@@ -1,6 +1,7 @@
 import { Panel, SelectInput, type SelectInputItem, SplitView, useTheme } from '@lobehub/cli-ui';
 import { Text, useInput } from 'ink';
 import { memo, useCallback, useEffect, useMemo } from 'react';
+import { shallow } from 'zustand/shallow';
 
 import AiMessageDisplay from '@/components/AiMessageDisplay';
 import { useCommits } from '@/hooks/useCommits';
@@ -8,11 +9,14 @@ import { selectors } from '@/store';
 import { useCommitStore } from '@/store/commitStore';
 
 const AiCommit = memo(() => {
-  const { message, setMessage, setStep } = useCommitStore((st) => ({
-    message: st.message,
-    setMessage: st.setMessage,
-    setStep: st.setStep,
-  }));
+  const { message, setMessage, setStep } = useCommitStore(
+    (st) => ({
+      message: st.message,
+      setMessage: st.setMessage,
+      setStep: st.setStep,
+    }),
+    shallow,
+  );
   useInput(useCallback((_, key) => key.tab && setStep('type'), []));
   const theme = useTheme();
   const commitConfig = selectors.getCommitConfig();

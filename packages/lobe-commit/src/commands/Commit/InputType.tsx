@@ -1,5 +1,10 @@
-import { TextInput } from '@lobehub/cli-ui';
-import { Panel, SelectInput, type SelectInputItem, type SelectInputProps } from '@lobehub/cli-ui';
+import {
+  Panel,
+  SelectInput,
+  type SelectInputItem,
+  type SelectInputProps,
+  TextInput,
+} from '@lobehub/cli-ui';
 import { debounce } from 'lodash-es';
 import { memo, useCallback, useMemo, useState } from 'react';
 import { shallow } from 'zustand/shallow';
@@ -67,15 +72,15 @@ const InputType = memo(() => {
 
   return (
     <Panel
+      reverse
+      header={<Header step={1} steps={4} title="Select commit type" />}
       footer={
         <TextInput
           defaultValue={type}
-          onChange={debounce(setTpeKeywords, 100)}
           placeholder="Search commit <type>..."
+          onChange={debounce(setTpeKeywords, 100)}
         />
       }
-      header={<Header step={1} steps={4} title="Select commit type" />}
-      reverse
     >
       <SelectInput
         itemComponent={({ label }) => label}

@@ -1,6 +1,6 @@
 import { eld } from 'eld/large';
 
-import { LanguageDetectionResult } from '../types';
+import type { LanguageDetectionResult } from '../types';
 
 /**
  * 检测文本的语言
@@ -23,7 +23,7 @@ export async function detectLanguage(text: string): Promise<LanguageDetectionRes
     confidence: Math.min(topScore, 1), // 确保置信度不超过1
     detected: result.language,
     isReliable: result.isReliable(),
-    scores: scores,
+    scores,
   };
 }
 

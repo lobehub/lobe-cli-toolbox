@@ -9,7 +9,6 @@ export type UnorderedListItemContextProps = {
   marker: string;
 };
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export const UnorderedListItemContext = createContext<UnorderedListItemContextProps>({
   marker: defaultMarker,
 });

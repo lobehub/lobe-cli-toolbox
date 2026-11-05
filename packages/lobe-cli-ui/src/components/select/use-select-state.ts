@@ -1,4 +1,5 @@
 import { isDeepStrictEqual } from 'node:util';
+
 import { type Reducer, useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 
 import OptionMap from '../../lib/option-map';
@@ -42,10 +43,7 @@ type State = {
 };
 
 type Action =
-  | FocusNextOptionAction
-  | FocusPreviousOptionAction
-  | SelectFocusedOptionAction
-  | ResetAction;
+  FocusNextOptionAction | FocusPreviousOptionAction | SelectFocusedOptionAction | ResetAction;
 
 type FocusNextOptionAction = {
   type: 'focus-next-option';
@@ -77,7 +75,6 @@ const reducer: Reducer<State, Action> = (state, action) => {
         return state;
       }
 
-      // eslint-disable-next-line prefer-destructuring
       const next = item.next;
 
       if (!next) {
@@ -116,7 +113,6 @@ const reducer: Reducer<State, Action> = (state, action) => {
         return state;
       }
 
-      // eslint-disable-next-line prefer-destructuring
       const previous = item.previous;
 
       if (!previous) {

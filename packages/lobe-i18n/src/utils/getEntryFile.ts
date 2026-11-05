@@ -1,12 +1,13 @@
-import { alert } from '@lobehub/cli-ui';
-import chalk from 'chalk';
-import { globSync } from 'glob';
 import { existsSync } from 'node:fs';
 import { join, relative, resolve } from 'node:path';
 import * as process from 'node:process';
 
-import { LocaleFolderObj, LocaleObj } from '@/types';
-import { I18nConfig } from '@/types/config';
+import { alert } from '@lobehub/cli-ui';
+import chalk from 'chalk';
+import { globSync } from 'glob';
+
+import type { LocaleFolderObj, LocaleObj } from '@/types';
+import type { I18nConfig } from '@/types/config';
 import { readJSON } from '@/utils/fs';
 
 export const getEntryFile = (config: I18nConfig): LocaleObj | void => {

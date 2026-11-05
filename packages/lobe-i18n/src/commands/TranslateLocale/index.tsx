@@ -1,10 +1,12 @@
+import { relative, resolve } from 'node:path';
+
 import { render } from '@lobehub/cli-ui';
 import chalk from 'chalk';
 import { consola } from 'consola';
-import { relative, resolve } from 'node:path';
 
 import Progress from '@/components/Progress';
-import { I18n, I18nWriteOptions } from '@/core/I18n';
+import type { I18nWriteOptions } from '@/core/I18n';
+import { I18n } from '@/core/I18n';
 import { selectors } from '@/store';
 import type { LocaleFolderObj, LocaleObj } from '@/types';
 import type { I18nConfig } from '@/types/config';
@@ -47,7 +49,7 @@ class TranslateLocale {
     consola.info(
       `Current model setting: ${chalk.cyan(this.config.modelName)} (temperature: ${chalk.cyan(
         this.config.temperature,
-      )}) ${this.config.experimental?.jsonMode ? chalk.red(' [JSON Mode]') : ''}}`,
+      )}) ${this.config.experimental?.jsonMode ? chalk.red(' [JSON Mode]') : ''}`,
     );
     let totalTokenUsage = 0;
 

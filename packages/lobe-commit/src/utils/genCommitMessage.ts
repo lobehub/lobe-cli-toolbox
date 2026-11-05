@@ -3,7 +3,7 @@ import pangu from 'pangu';
 
 import gitmojis from '@/constants/gitmojis';
 
-export type IssuesType = '' | 'fix' | 'close' | 'resove';
+export type IssuesType = '' | 'fix' | 'close' | 'resolve';
 export interface CommitMessageObj {
   body?: string;
   emoji?: string;
@@ -18,7 +18,7 @@ export const commitMessageToObj = (msg: string): CommitMessageObj => {
   const emojiReg = /^(\S+)\s/;
   const typeReg = /\s(\w+)(?=\(|:)/;
   const scopeReg = /\(([^)]+)\)/;
-  const subjectReg = /:\s([^\n:]+)/s;
+  const subjectReg = /:\s([^\n:]+)/;
 
   return {
     body: msg.indexOf('\n') > 0 ? msg.slice(Math.max(0, msg.indexOf('\n') + 1)).trim() : undefined,
@@ -29,7 +29,7 @@ export const commitMessageToObj = (msg: string): CommitMessageObj => {
   };
 };
 
-export const commotObjToMessage = ({
+export const commitObjToMessage = ({
   emoji,
   type,
   scope,
@@ -42,11 +42,11 @@ export const commotObjToMessage = ({
 
   const formateType = type.toLowerCase();
   const formateScope = scope && kebabCase(scope).replaceAll(/\s+/g, ' ');
-  const formateSubject = upperFirst(pangu.spacing(subject).replaceAll(/\s+/g, ' '));
+  const formateSubject = upperFirst(pangu.spaceText(subject).replaceAll(/\s+/g, ' '));
   const formateIssues =
     issues &&
     issues
-      .replace('#', '')
+      .replaceAll('#', '')
       .replaceAll(/\s+/g, ' ')
       .replaceAll(/[ ./|，]/g, ',')
       .split(',')
@@ -58,11 +58,15 @@ export const commotObjToMessage = ({
   }${body ? `\n\n${body}` : ''}`;
 };
 
+const TYPE_PREFIX = /^(\w+)(?:\([^)]*\))?!?:/;
+
+/** Prefixes a conventional commit message with the gitmoji of its type, unless it has one. */
 export const addEmojiToMessage = (message: string) => {
-  const [type, ...rest]: any = message.split(': ');
-  let emoji: string = '🔧';
-  for (const item of gitmojis) {
-    if (type.includes(item.type)) emoji = item.emoji;
-  }
-  return `${emoji} ${type}: ${rest.join(': ')}`;
+  const trimmed = message.trimStart();
+  if (gitmojis.some(({ code, emoji }) => trimmed.startsWith(emoji) || trimmed.startsWith(code)))
+    return trimmed;
+
+  const type = TYPE_PREFIX.exec(trimmed)?.[1]?.toLowerCase();
+  const emoji = gitmojis.find((item) => item.type === type)?.emoji ?? '🔧';
+  return `${emoji} ${trimmed}`;
 };

@@ -1,20 +1,21 @@
+import { loadEnv } from '@lobehub/cli-common/env';
+import { getProviderConfigError, resolveProviderConfig } from '@lobehub/cli-common/providers';
 import { alert } from '@lobehub/cli-ui';
 import chalk from 'chalk';
-import dotenv from 'dotenv';
 import { merge } from 'lodash-es';
 
 import { DEFAULT_CONFIG } from '@/store/initialState';
-import { Config, ConfigKeys, SeoConfig } from '@/types/config';
+import type { Config, ConfigKeys, SeoConfig } from '@/types/config';
 import { checkOptionKeys } from '@/utils/checkOptionKeys';
 
-import { getProviderConfigError, resolveProviderConfig } from '../../../common/providers';
 import { config, explorer, schema } from './config';
 
-dotenv.config();
+loadEnv();
 
 const getConfig = <K extends ConfigKeys>(key: K): Config[K] => config.get(key) as Config[K];
-const getDefulatConfig = <K extends ConfigKeys>(key: K) => schema[key].default as Config[K];
-const setConfig = <K extends ConfigKeys>(key: K, value: Config[K]) => config.set(key, value);
+const getDefaultConfig = <K extends ConfigKeys>(key: K) => schema[key].default as Config[K];
+const setConfig = <K extends ConfigKeys>(key: K, value: Config[K]) =>
+  config.set(key as string, value);
 
 /**
  * `modelName` from the project config file wins over the globally configured model.
@@ -36,10 +37,9 @@ const getCheckedProviderConfig = (modelName?: string) => {
 };
 
 const getConfigFile = (): SeoConfig => {
-  const config: any = explorer.getConfigFile();
-  // @ts-ignore
-  if (!config) return alert.error(`Can't find ${chalk.bold.yellow('config')}`, true);
-  return merge(DEFAULT_CONFIG, config);
+  const config = explorer.getConfigFile();
+  if (!config) alert.error(`Can't find ${chalk.bold.yellow('config')}`, true);
+  return merge({}, DEFAULT_CONFIG, config);
 };
 
 const getSeoConfig = (): SeoConfig => {
@@ -52,7 +52,7 @@ export default {
   getCheckedProviderConfig,
   getConfig,
   getConfigFile,
-  getDefulatConfig,
+  getDefaultConfig,
   getProviderConfig,
   getSeoConfig,
   setConfig,

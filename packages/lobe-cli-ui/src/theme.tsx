@@ -1,5 +1,5 @@
 import deepmerge from 'deepmerge';
-import { type ReactNode, createContext, useContext } from 'react';
+import { createContext, type ReactNode, useContext } from 'react';
 
 import alertTheme from './components/alert/theme';
 import badgeTheme from './components/badge/theme';
