@@ -1,8 +1,8 @@
 <div align="center"><a name="readme-top"></a>
 
-<img height="120" src="https://gw.alipayobjects.com/zos/kitchen/T6E4BDoMNb/lobe-cli.webp">
-<img height="120" src="https://raw.githubusercontent.com/lobehub/lobe-assets/master/packages/assets-logo/assets/split.svg">
-<img height="120" src="https://raw.githubusercontent.com/lobehub/lobe-assets/master/packages/assets-emoji/assets/globe-showing-asia-australia.webp">
+<img height="120" src="https://raw.githubusercontent.com/lobehub/lobe-cli-toolbox/master/docs/assets/lobe-cli.webp">
+<img height="120" src="https://raw.githubusercontent.com/lobehub/lobe-cli-toolbox/master/docs/assets/split.svg">
+<img height="120" src="https://raw.githubusercontent.com/lobehub/lobe-cli-toolbox/master/docs/assets/globe-showing-asia-australia.webp">
 
 <h1>Lobe i18n</h1>
 
@@ -22,7 +22,7 @@ English ・ [简体中文](./README.zh-CN.md) ・ [Changelog](./CHANGELOG.md) ·
 [![][github-issues-shield]][github-issues-link]
 [![][github-license-shield]][github-license-link]
 
-![](https://raw.githubusercontent.com/lobehub/lobe-assets/master/assets/lobe-i18n-preview.webp)
+![](https://raw.githubusercontent.com/lobehub/lobe-cli-toolbox/master/docs/preview-i18n.webp)
 
 </div>
 

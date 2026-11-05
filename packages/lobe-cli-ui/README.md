@@ -1,8 +1,8 @@
 <div align="center"><a name="readme-top"></a>
 
-<img height="120" src="https://gw.alipayobjects.com/zos/kitchen/T6E4BDoMNb/lobe-cli.webp">
-<img height="120" src="https://raw.githubusercontent.com/lobehub/lobe-assets/master/packages/assets-logo/assets/split.svg">
-<img height="120" src="https://github.com/vadimdemedes/ink/blob/master/media/logo.png?raw=true">
+<img height="120" src="https://raw.githubusercontent.com/lobehub/lobe-cli-toolbox/master/docs/assets/lobe-cli.webp">
+<img height="120" src="https://raw.githubusercontent.com/lobehub/lobe-cli-toolbox/master/docs/assets/split.svg">
+<img height="120" src="https://raw.githubusercontent.com/lobehub/lobe-cli-toolbox/master/docs/assets/ink-logo.png">
 
 <h1>Lobe CLI UI</h1>
 
@@ -19,7 +19,7 @@ Ink components shared by the Lobe CLIs. This package is private and bundled into
 
 [Changelog](./CHANGELOG.md) · [Report Bug][github-issues-link] · [Request Feature][github-issues-link]
 
-![](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+![](https://raw.githubusercontent.com/lobehub/lobe-cli-toolbox/master/docs/assets/rainbow.png)
 
 </div>
 

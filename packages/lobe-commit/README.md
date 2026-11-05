@@ -1,8 +1,8 @@
 <div align="center"><a name="readme-top"></a>
 
-<img height="120" src="https://gw.alipayobjects.com/zos/kitchen/T6E4BDoMNb/lobe-cli.webp">
-<img height="120" src="https://raw.githubusercontent.com/lobehub/lobe-assets/master/packages/assets-logo/assets/split.svg">
-<img height="120" src="https://raw.githubusercontent.com/lobehub/lobe-assets/master/packages/assets-emoji/assets/love-letter.webp">
+<img height="120" src="https://raw.githubusercontent.com/lobehub/lobe-cli-toolbox/master/docs/assets/lobe-cli.webp">
+<img height="120" src="https://raw.githubusercontent.com/lobehub/lobe-cli-toolbox/master/docs/assets/split.svg">
+<img height="120" src="https://raw.githubusercontent.com/lobehub/lobe-cli-toolbox/master/docs/assets/love-letter.webp">
 
 <h1>Lobe Commit</h1>
 
@@ -20,7 +20,7 @@ English · [简体中文](./README.zh-CN.md) · [Changelog](./CHANGELOG.md) · [
 [![][github-issues-shield]][github-issues-link]
 [![][github-license-shield]][github-license-link]
 
-![](https://gw.alipayobjects.com/zos/kitchen/3%26ByxtP39X/preview.webp)
+![](https://raw.githubusercontent.com/lobehub/lobe-cli-toolbox/master/docs/preview.webp)
 
 </div>
 
@@ -116,7 +116,7 @@ With AI mode, you can generate a complete commit message using ChatGPT.
 > \[!IMPORTANT]\
 > To use AI auto-generation, pick an AI provider (OpenAI, Anthropic, Gemini, DeepSeek, Qwen, Kimi, GLM, OpenRouter, Ollama, any OpenAI compatible endpoint...) in the settings by `lobe-commit -o`: choose the API protocol (Chat Completions / Responses / Anthropic Messages / Gemini), base URL, API key, then search and pick a model from the provider's model list. Any compatible endpoint works with `custom`. The settings can also be overridden by `LOBE_PROVIDER` `LOBE_API_TYPE` `LOBE_BASE_URL` `LOBE_API_KEY`. Large diffs are split by `Diff chunk tokens` (default `32000`).
 
-![](https://gw.alipayobjects.com/zos/kitchen/qmXcNvnjKf/preview-ai.webp)
+![](https://raw.githubusercontent.com/lobehub/lobe-cli-toolbox/master/docs/preview-ai.webp)
 
 <br/>
 
@@ -129,7 +129,7 @@ In Editor mode, you can choose the `<type>(<optional scope>): <subject> [<issues
 >
 > **Auto-Skip for Private Repositories**: When working with private repositories, if you haven't configured a GitHub token or encounter authentication issues, the tool will automatically skip the issues linking step and proceed to commit generation. This prevents the workflow from getting stuck while still allowing manual issue linking if needed.
 
-![](https://gw.alipayobjects.com/zos/kitchen/QkJ5V8nbY6/preview-editor.webp)
+![](https://raw.githubusercontent.com/lobehub/lobe-cli-toolbox/master/docs/preview-editor.webp)
 
 <div align="right">
 

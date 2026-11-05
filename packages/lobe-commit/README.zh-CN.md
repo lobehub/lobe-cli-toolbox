@@ -1,8 +1,8 @@
 <div align="center"><a name="readme-top"></a>
 
-<img height="120" src="https://gw.alipayobjects.com/zos/kitchen/T6E4BDoMNb/lobe-cli.webp">
-<img height="120" src="https://raw.githubusercontent.com/lobehub/lobe-assets/master/packages/assets-logo/assets/split.svg">
-<img height="120" src="https://raw.githubusercontent.com/lobehub/lobe-assets/master/packages/assets-emoji/assets/love-letter.webp">
+<img height="120" src="https://raw.githubusercontent.com/lobehub/lobe-cli-toolbox/master/docs/assets/lobe-cli.webp">
+<img height="120" src="https://raw.githubusercontent.com/lobehub/lobe-cli-toolbox/master/docs/assets/split.svg">
+<img height="120" src="https://raw.githubusercontent.com/lobehub/lobe-cli-toolbox/master/docs/assets/love-letter.webp">
 
 <h1>Lobe Commit</h1>
 
@@ -20,7 +20,7 @@ Lobe Commit 是一款使用 ChatGPT 生成基于 Gitmoji 的 CLI 提交工具
 [![][github-issues-shield]][github-issues-link]
 [![][github-license-shield]][github-license-link]
 
-![](https://gw.alipayobjects.com/zos/kitchen/3%26ByxtP39X/preview.webp)
+![](https://raw.githubusercontent.com/lobehub/lobe-cli-toolbox/master/docs/preview.webp)
 
 </div>
 
@@ -101,7 +101,7 @@ $ lobe-commit
 > \[!IMPORTANT]\
 > 需要在设置中 `lobe-commit -o` 选择模型供应商（OpenAI、Anthropic、Gemini、DeepSeek、通义千问、Kimi、智谱 GLM、OpenRouter、Ollama 及任意 OpenAI 兼容接口等），依次选择接口协议（Chat Completions / Responses / Anthropic Messages / Gemini）、API 地址、API 密钥，再从供应商的模型列表中搜索选择模型。任意兼容接口可选择 `custom`。也可以用 `LOBE_PROVIDER` `LOBE_API_TYPE` `LOBE_BASE_URL` `LOBE_API_KEY` 环境变量覆盖设置。较大的 diff 会按 `Diff chunk tokens`（默认 `32000`）分片
 
-![](https://gw.alipayobjects.com/zos/kitchen/qmXcNvnjKf/preview-ai.webp)
+![](https://raw.githubusercontent.com/lobehub/lobe-cli-toolbox/master/docs/preview-ai.webp)
 
 <br/>
 
@@ -114,7 +114,7 @@ $ lobe-commit
 >
 > **私密仓库自动跳过**: 当处理私密仓库时，如果您未配置 GitHub 令牌或遇到认证问题，工具将自动跳过 issues 链接步骤并继续进行提交生成。这样可以防止工作流程卡住，同时仍允许在需要时手动链接 issues。
 
-![](https://gw.alipayobjects.com/zos/kitchen/QkJ5V8nbY6/preview-editor.webp)
+![](https://raw.githubusercontent.com/lobehub/lobe-cli-toolbox/master/docs/preview-editor.webp)
 
 <div align="right">
 

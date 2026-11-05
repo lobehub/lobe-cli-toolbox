@@ -1,0 +1,8 @@
+[?2026h[?25l[38;2;75;75;75m┌  [1m[38;2;167;139;250m🏷️ Lobe Label[39m[22m[2m  settings[22m
+[38;2;75;75;75m│[39m
+[38;2;167;139;250m◆  [39m[1mSettings[22m
+[38;2;167;139;250m│[39m  [38;2;167;139;250m❯[39m [1m[38;2;167;139;250mGitHub token[39m[22m    [2mnot set[22m
+[38;2;167;139;250m│[39m
+[38;2;167;139;250m│[39m  [2mNeeds write access to the target repo, falls back to GITHUB_TOKEN / …[22m
+[38;2;167;139;250m└[39m  ↑↓[2m move · [22menter[2m edit · [22mesc[2m exit[22m
+[?2026l

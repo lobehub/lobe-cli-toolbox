@@ -1,0 +1,4 @@
+# Standalone package (not part of monorepo packages/*).
+# Keep allowBuilds here for pnpm v12.
+allowBuilds:
+  esbuild: true

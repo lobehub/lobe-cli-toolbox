@@ -51,6 +51,10 @@ Single package: `pnpm --filter @lobehub/commit-cli test`, or `pnpm vitest run --
 - Shell out with `execFileSync('git', [...args])` from `node:child_process`, not a shell string.
 - Do not change `packages/*/CHANGELOG.md`; release tooling writes them.
 
+## Docs screenshots
+
+CLI terminal diagrams for local docs / README come from `docs/shots` (Vite + Lobe UI + Grainient + Fluent Emoji). When you need a new shot or to refresh one, follow `.agents/skills/docs-shots`: prepare an `.ansi` fixture, then from `docs/shots` run `pnpm shot` / `pnpm shot -- path/to.ansi` (SnapDOM → `[data-shot]` → WebP @ 1920w; fallback `SHOT_ENGINE=playwright`). Preview with `pnpm dev` at `http://127.0.0.1:5179/`. Outputs land in `docs/shots/out/*.webp`; do not wire images into README unless asked.
+
 ## Commits and releases
 
 - Commit messages are gitmoji + Conventional Commits, enforced by commitlint in `.husky/commit-msg`: `✨ feat(i18n): add glossary support`, `🐛 fix(commit): …`, `♻️ refactor: …`, `👷 ci: …`. `pre-commit` runs `type-check` and `lint-staged`.

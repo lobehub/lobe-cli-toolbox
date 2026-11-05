@@ -1,8 +1,8 @@
 <div align="center"><a name="readme-top"></a>
 
-<img height="120" src="https://gw.alipayobjects.com/zos/kitchen/T6E4BDoMNb/lobe-cli.webp">
-<img height="120" src="https://raw.githubusercontent.com/lobehub/lobe-assets/master/packages/assets-logo/assets/split.svg">
-<img height="120" src="https://raw.githubusercontent.com/lobehub/lobe-assets/master/packages/assets-emoji/assets/label.webp">
+<img height="120" src="https://raw.githubusercontent.com/lobehub/lobe-cli-toolbox/master/docs/assets/lobe-cli.webp">
+<img height="120" src="https://raw.githubusercontent.com/lobehub/lobe-cli-toolbox/master/docs/assets/split.svg">
+<img height="120" src="https://raw.githubusercontent.com/lobehub/lobe-cli-toolbox/master/docs/assets/label.webp">
 
 <h1>Lobe Label</h1>
 
@@ -20,7 +20,7 @@ Automatically copy issues labels from template repo
 
 English ・ [简体中文](./README.zh-CN.md) ・ [Changelog](./CHANGELOG.md) · [Report Bug][github-issues-link] · [Request Feature][github-issues-link]
 
-![](https://gw.alipayobjects.com/zos/kitchen/qeTFEqgF8O/437shots_so.png)
+![](https://raw.githubusercontent.com/lobehub/lobe-cli-toolbox/master/docs/preview-label.webp)
 
 </div>
 

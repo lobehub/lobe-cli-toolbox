@@ -1,0 +1,18 @@
+[?2026h[?25l[38;2;75;75;75m┌  [1m[38;2;167;139;250m🤯 Lobe Commit[39m[22m
+[38;2;75;75;75m│[39m
+[38;2;167;139;250m◆  [39m[1mCommit type[22m
+[38;2;167;139;250m│[39m  [38;2;167;139;250m❯ [39m[7m [27m[2mSearch type, e.g. fix[22m
+[38;2;167;139;250m│[39m
+[38;2;167;139;250m│[39m  [38;2;167;139;250m❯[39m [1m[38;2;167;139;250m🤯 ai[39m[22m         [2mLet AI write the message from the staged diff[22m
+[38;2;167;139;250m│[39m  [38;2;167;139;250m [39m ✨ feat       [2mIntroduce new features[22m
+[38;2;167;139;250m│[39m  [38;2;167;139;250m [39m 🐛 fix        [2mFix a bug[22m
+[38;2;167;139;250m│[39m  [38;2;167;139;250m [39m ♻️ refactor   [2mRefactor code that neither fixes a bug nor adds a fe…[22m
+[38;2;167;139;250m│[39m  [38;2;167;139;250m [39m ⚡ perf       [2mA code change that improves performance[22m
+[38;2;167;139;250m│[39m  [38;2;167;139;250m [39m 💄 style      [2mAdd or update style files that do not affect the mea…[22m
+[38;2;167;139;250m│[39m  [38;2;167;139;250m [39m ✅ test       [2mAdding missing tests or correcting existing tests[22m
+[38;2;167;139;250m│[39m  [38;2;167;139;250m [39m 📝 docs       [2mDocumentation only changes[22m
+[38;2;167;139;250m│[39m  [38;2;167;139;250m [39m 👷 ci         [2mChanges to our CI configuration files and scripts[22m
+[38;2;167;139;250m│[39m  [38;2;167;139;250m [39m 🔧 chore      [2mOther changes that dont modify src or test file[22m
+[38;2;167;139;250m│[39m  [2m  ↓ 1 more[22m
+[38;2;167;139;250m└[39m  type[2m filter · [22m↑↓[2m move · [22menter[2m select · [22mesc[2m cancel[22m
+[?2026l

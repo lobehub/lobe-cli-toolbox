@@ -1,0 +1,22 @@
+[?2026h[?25l[38;2;75;75;75m┌  [1m[38;2;167;139;250m🤯 Lobe Commit[39m[22m
+[38;2;75;75;75m│[39m
+[38;2;75;75;75m◇  [39m[2mType[22m      ✨ feat
+[38;2;75;75;75m│[39m
+[38;2;75;75;75m◇  [39m[2mScope[22m     ui
+[38;2;75;75;75m│[39m
+[38;2;75;75;75m◇  [39m[2mSubject[22m   improve commit wizard UX
+[38;2;75;75;75m│[39m
+[38;2;167;139;250m◆  [39m[1mLink issues[22m[2m  optional[22m
+[38;2;167;139;250m│[39m  [38;2;167;139;250m❯ [39m[7m [27m[2mSearch 12 open issues[22m
+[38;2;167;139;250m│[39m
+[38;2;167;139;250m│[39m  [38;2;167;139;250m❯[39m [38;2;167;139;250m◼[39m [1m[38;2;167;139;250m#128[39m[22m   [2mAdd commit wizard preview shots[22m
+[38;2;167;139;250m│[39m  [38;2;167;139;250m [39m [2m◻[22m #142   [2mFix i18n progress bar flicker[22m
+[38;2;167;139;250m│[39m  [38;2;167;139;250m [39m [2m◻[22m #156   [2mDocument lobe-seo concurrency[22m
+[38;2;167;139;250m│[39m  [38;2;167;139;250m [39m [38;2;167;139;250m◼[39m #163   [2mSupport nested locale namespaces[22m
+[38;2;167;139;250m│[39m  [38;2;167;139;250m [39m [2m◻[22m #171   [2mAdd SEO frontmatter validation[22m
+[38;2;167;139;250m│[39m  [38;2;167;139;250m [39m [2m◻[22m #184   [2mPolish docs shots Grainient cards[22m
+[38;2;167;139;250m│[39m  [2m  ↓ 6 more[22m
+[38;2;167;139;250m│[39m
+[38;2;167;139;250m│[39m  [2mpreview[22m  ✨ feat(ui): Improve commit wizard UX
+[38;2;167;139;250m└[39m  type[2m filter · [22mspace[2m toggle · [22menter[2m confirm · [22mesc[2m back[22m
+[?2026l
