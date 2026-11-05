@@ -13,9 +13,6 @@
   "license": "MIT",
   "author": "LobeHub <i@lobehub.com>",
   "type": "module",
-  "workspaces": [
-    "packages/*"
-  ],
   "scripts": {
     "build": "pnpm -r build",
     "ci": "pnpm run lint && pnpm run type-check && pnpm run test",

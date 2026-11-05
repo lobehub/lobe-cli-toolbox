@@ -41,9 +41,8 @@ English ・ [简体中文](./README.zh-CN.md) ・ [Report Bug][github-issues-lin
 
 ## 📦 Ecosystem
 
-| NAME                                | REPO                                        | NPM                                | DOWNLOAD              |
-| ----------------------------------- | ------------------------------------------- | ---------------------------------- | --------------------- |
-| [@lobehub/cli-shebang][shebang-url] | [packages/lobe-cli-shebang][shebang-github] | [![][shebang-shield]][shebang-url] | ![][shebang-download] |
+| NAME | REPO | NPM | DOWNLOAD |
+| ---- | ---- | --- | -------- |
 
 <div align="right">
 
@@ -161,8 +160,4 @@ This project is [MIT](./LICENSE) licensed.
 [pr-welcome-link]: https://github.com/lobehub/lobe-cli-toolbox/pulls
 [pr-welcome-shield]: https://img.shields.io/badge/%F0%9F%A4%AF%20PR%20WELCOME-%E2%86%92-ffcb47?labelColor=black&style=for-the-badge
 [profile-link]: https://github.com/lobehub
-[shebang-download]: https://img.shields.io/npm/dt/@lobehub/cli-shebang?labelColor=black&style=flat-square
-[shebang-github]: https://github.com/lobehub/lobe-cli-toolbox/tree/master/packages/lobe-cli-shebang/README.md
-[shebang-shield]: https://img.shields.io/npm/v/@lobehub/cli-shebang?color=369eff&labelColor=black&logo=npm&logoColor=white&style=flat-square
-[shebang-url]: https://www.npmjs.com/package/@lobehub/cli-shebang
 [split]: https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png

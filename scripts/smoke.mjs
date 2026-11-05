@@ -2,7 +2,7 @@
 // Runs every built CLI the way users do (`node dist/cli.js`) inside a throwaway HOME, so it
 // catches bundling mistakes such as missing runtime dependencies. Run `pnpm build` first.
 import { execFileSync } from 'node:child_process';
-import { mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, readdirSync, readFileSync, rmSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -48,6 +48,14 @@ try {
     await check(`${pkg.name} --help`, () => {
       if (!run(cli, ['--help']).includes('Usage:')) throw new Error('missing usage');
     });
+    // The release step semantic-release runs; npm fails on `workspace:` if it sees an npm workspace.
+    await check(`${pkg.name} npm version`, () => {
+      execFileSync(
+        'npm',
+        ['version', pkg.version, '--no-git-tag-version', '--allow-same-version'],
+        { cwd: pkgDir, stdio: 'pipe' },
+      );
+    });
 
     if (pkg.exports?.['.']?.import) {
       await check(`${pkg.name} ESM and CJS entry`, async () => {
@@ -60,14 +68,6 @@ try {
       });
     }
   }
-
-  await check('@lobehub/cli-shebang adds a shebang', () => {
-    const file = join(home, 'bin.js');
-    writeFileSync(file, 'console.log(1);\n');
-    run(new URL('lobe-cli-shebang/dist/cli.js', root).pathname, ['-t', file]);
-    if (!readFileSync(file, 'utf8').startsWith('#!/usr/bin/env node\n'))
-      throw new Error('shebang missing');
-  });
 } finally {
   rmSync(home, { force: true, recursive: true });
 }

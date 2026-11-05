@@ -6,15 +6,14 @@ Guidance for AI coding agents working in this repository. Everything below was c
 
 Lobe CLI Toolbox is a pnpm monorepo of AI-powered command line tools built with [Ink](https://github.com/vadimdemedes/ink) (React for the terminal). Development needs Node.js `>=22.18.0` (root `engines`) and the pnpm version pinned in `packageManager` (`corepack enable` picks it up).
 
-| Path                        | Package                | Published | What it is                                                                     |
-| --------------------------- | ---------------------- | --------- | ------------------------------------------------------------------------------ |
-| `packages/lobe-commit`      | `@lobehub/commit-cli`  | yes       | `lobe-commit` / `lobe`: gitmoji commit messages from the staged diff, git hook |
-| `packages/lobe-i18n`        | `@lobehub/i18n-cli`    | yes       | `lobe-i18n`: translate locale JSON and markdown; also exports `defineConfig`   |
-| `packages/lobe-seo`         | `@lobehub/seo-cli`     | yes       | `lobe-seo`: generate SEO frontmatter for MDX; also exports `defineConfig`      |
-| `packages/lobe-label`       | `@lobehub/label-cli`   | yes       | `lobe-label`: sync GitHub issue labels from a template repo                    |
-| `packages/lobe-cli-shebang` | `@lobehub/cli-shebang` | yes       | `lobe-shebang`: add a shebang line to a file                                   |
-| `packages/lobe-cli-ui`      | `@lobehub/cli-ui`      | no        | Shared Ink components (`Panel`, `SelectInput`, `ConfigPanel`, `alert`, …)      |
-| `packages/common`           | `@lobehub/cli-common`  | no        | Shared logic: LLM providers, prompt templates, text splitter, agent skills     |
+| Path                   | Package               | Published | What it is                                                                     |
+| ---------------------- | --------------------- | --------- | ------------------------------------------------------------------------------ |
+| `packages/lobe-commit` | `@lobehub/commit-cli` | yes       | `lobe-commit` / `lobe`: gitmoji commit messages from the staged diff, git hook |
+| `packages/lobe-i18n`   | `@lobehub/i18n-cli`   | yes       | `lobe-i18n`: translate locale JSON and markdown; also exports `defineConfig`   |
+| `packages/lobe-seo`    | `@lobehub/seo-cli`    | yes       | `lobe-seo`: generate SEO frontmatter for MDX; also exports `defineConfig`      |
+| `packages/lobe-label`  | `@lobehub/label-cli`  | yes       | `lobe-label`: sync GitHub issue labels from a template repo                    |
+| `packages/lobe-cli-ui` | `@lobehub/cli-ui`     | no        | Shared Ink components (`Panel`, `SelectInput`, `ConfigPanel`, `alert`, …)      |
+| `packages/common`      | `@lobehub/cli-common` | no        | Shared logic: LLM providers, prompt templates, text splitter, agent skills     |
 
 Each CLI follows the same layout: `src/cli.tsx` (commander entry), `src/commands/` (Ink screens per command), `src/core/` (the actual work), `src/store/` (`conf` user config + selectors + migrations), `src/prompts/`, `src/utils/`, `src/types/`. `packages/*/skills/<name>/SKILL.md` are **product** skills shipped to users via `<cli> skill`; they are not instructions for working on this repo.
 
@@ -56,4 +55,4 @@ Single package: `pnpm --filter @lobehub/commit-cli test`, or `pnpm vitest run --
 
 - Commit messages are gitmoji + Conventional Commits, enforced by commitlint in `.husky/commit-msg`: `✨ feat(i18n): add glossary support`, `🐛 fix(commit): …`, `♻️ refactor: …`, `👷 ci: …`. `pre-commit` runs `type-check` and `lint-staged`.
 - Releases run on `master` via `.github/workflows/release.yml` with `multi-semantic-release` (`pnpm run release`). The commit type decides the bump per package: `feat` → minor; `fix`, `perf`, `refactor`, `style`, `build` → patch; `docs`, `test`, `ci`, `chore` → no release. Config: `.releaserc.cjs` (from `@lobehub/lint/release`); private packages are skipped.
-- `multi-semantic-release` publishes with npm, which does not rewrite `workspace:` protocols. That is why only devDependencies may use `workspace:*`.
+- `multi-semantic-release` publishes with npm, which does not rewrite `workspace:` protocols. That is why only devDependencies may use `workspace:*`, and why the root `package.json` must not declare `workspaces`: with it, `npm version` in a package loads the whole workspace and fails with `EUNSUPPORTEDPROTOCOL`. msr reads `pnpm-workspace.yaml` instead.
