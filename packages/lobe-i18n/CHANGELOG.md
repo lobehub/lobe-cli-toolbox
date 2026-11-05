@@ -2,6 +2,49 @@
 
 # Changelog
 
+## [Version&nbsp;1.29.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.28.0...@lobehub/i18n-cli@1.29.0)
+<sup>Released on **2026-11-05**</sup>
+
+
+#### ✨ Features
+
+- **lobe-i18n**: Add inline locale structure and matterKeys option, add validation, glossary and shared concurrency limiter.
+
+
+#### 💄 Styles
+
+- **misc**: Update ui.
+
+
+<br/>
+
+
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+
+
+#### What's improved
+
+* **lobe-i18n**: Add inline locale structure and matterKeys option ([98620dc](https://github.com/lobehub/lobe-cli-toolbox/commit/98620dc))
+* **lobe-i18n**: Add validation, glossary and shared concurrency limiter ([fa10a13](https://github.com/lobehub/lobe-cli-toolbox/commit/fa10a13))
+
+
+
+#### Styles
+
+* **misc**: Update ui ([12d5e04](https://github.com/lobehub/lobe-cli-toolbox/commit/12d5e04))
+
+</details>
+
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version&nbsp;1.28.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.27.0...@lobehub/i18n-cli@1.28.0)
 <sup>Released on **2026-11-05**</sup>
 
