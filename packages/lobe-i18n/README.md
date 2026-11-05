@@ -214,6 +214,7 @@ This project provides some additional configuration items set with environment v
 | topP              |          | `number`       | `1`              | Nucleus sampling threshold, controls the diversity of generated text                                                 |
 | concurrency       |          | `number`       | `5`              | Maximum parallel LLM requests, shared across all files and locales                                                   |
 | experimental      |          | `experimental` | `{}`             | Experimental features, see below                                                                                     |
+| inline            |          | `inline`       | -                | JSON files that keep every locale side by side, see [Inline Structure](#inline-structure)                            |
 | markdown          |          | `markdown`     | `{}`             | See `markdown` configuration below                                                                                   |
 
 #### `experimental`
@@ -290,7 +291,7 @@ module.exports = defineConfig({
 
 ### File Structure Selection
 
-There are two types of file structures supported: `flat` and `tree`.
+There are three types of file structures supported: `flat`, `tree` and `inline`.
 
 #### Flat Structure
 
@@ -353,6 +354,51 @@ A tree structure means that the translations for each language are stored in sep
 }
 ```
 
+#### Inline Structure
+
+An inline structure keeps every language in the same JSON file, next to the content it belongs to. An object whose keys are all locales (`entryLocale` plus `outputLocales`) and include `entryLocale` is a locale node. It can be the whole file or sit at any depth, and its value can be a string, an object or an array:
+
+```jsonc
+// content/chips/gpu/quiz.json
+{
+  "zh": [{ "q": "HBM 的作用是什么？", "opts": ["提供显存带宽", "存训练数据"], "ok": 0 }],
+  "en": [{ "q": "What does HBM do?", "opts": ["Provide memory bandwidth", "Store training data"], "ok": 0 }]
+}
+
+// content/curriculum.json
+{
+  "layers": [{ "code": "L4", "name": { "zh": "算力", "en": "Compute" }, "dirs": ["chips"] }]
+}
+```
+
+Each run fills in what is missing for every output locale and leaves the rest of the file alone. Strings that are already translated are kept. Numbers, booleans and `copyKeys` values are copied from the entry locale, and keys removed from the entry locale are removed. An array whose length no longer matches the entry locale is translated again as a whole.
+
+| Property Name | Required | Type       | Default | Description                                                                                |
+| ------------- | -------- | ---------- | ------- | ------------------------------------------------------------------------------------------ |
+| entry         | `*`      | `string[]` | -       | JSON files to translate, supports `glob`                                                   |
+| exclude       |          | `string[]` | `[]`    | Files to skip, supports `glob`                                                             |
+| copyKeys      |          | `string[]` | `[]`    | Keys whose values are identifiers rather than text (`id`, `kind`), copied as is, any depth |
+
+`entry` and `output` can be left out when the project only uses inline files:
+
+```js
+const { defineConfig } = require('@lobehub/i18n-cli');
+
+module.exports = defineConfig({
+  entryLocale: 'zh',
+  outputLocales: ['en'],
+  inline: {
+    entry: ['content/**/*.json'],
+    exclude: ['content/index.json'],
+    copyKeys: ['id', 'kind'],
+  },
+});
+```
+
+> \[!NOTE]
+>
+> Changed files are written with 2-space `JSON.stringify` formatting and keep their key order, so run your formatter (e.g. Prettier) afterwards if it formats JSON differently. Like the other structures, a changed source string is not retranslated; delete the translation to retranslate it.
+
 ### Running
 
 Use the `lobe-i18n` command to generate i18n files automatically:
@@ -369,18 +415,19 @@ $ lobe-i18n
 
 ## 📝 Markdown Configuration
 
-| Property Name    | Required | Type                        | Default                      | Description                                                             |
-| ---------------- | -------- | --------------------------- | ---------------------------- | ----------------------------------------------------------------------- |
-| entry            | `*`      | `string[]`                  | `[]`                         | Entry file or folder, supports `glob`                                   |
-| entryLocale      |          | `string`                    | _Inherit parent locale_      | Reference language for translation                                      |
-| entryExtension   |          | `string`                    | `.md`                        | Entry file extension                                                    |
-| exclude          |          | `string[]`                  | `[]`                         | Files to be filtered, supports `glob`                                   |
-| outputLocales    |          | `string[]`                  | _Inherit parent locale_      | All languages to be translated                                          |
-| outputExtensions |          | `function`                  | `(locale) => '.{locale}.md'` | Output file extension generation                                        |
-| mode             |          | `string`,`mdast`,`function` | `string`                     | Translation mode selection, explained below                             |
-| translateCode    |          | `boolean`                   | `false`                      | Whether to translate code blocks under `mdast`, other modes are invalid |
-| includeMatter    |          | `boolean`                   | `false`                      | Whether to include front matter in the translation                      |
-| cacheFile        |          | `string`                    | `.i18n-cache.json`           | File storing source hashes, used to retranslate changed markdown        |
+| Property Name    | Required | Type                        | Default                      | Description                                                              |
+| ---------------- | -------- | --------------------------- | ---------------------------- | ------------------------------------------------------------------------ |
+| entry            | `*`      | `string[]`                  | `[]`                         | Entry file or folder, supports `glob`                                    |
+| entryLocale      |          | `string`                    | _Inherit parent locale_      | Reference language for translation                                       |
+| entryExtension   |          | `string`                    | `.md`                        | Entry file extension                                                     |
+| exclude          |          | `string[]`                  | `[]`                         | Files to be filtered, supports `glob`                                    |
+| outputLocales    |          | `string[]`                  | _Inherit parent locale_      | All languages to be translated                                           |
+| outputExtensions |          | `function`                  | `(locale) => '.{locale}.md'` | Output file extension generation                                         |
+| mode             |          | `string`,`mdast`,`function` | `string`                     | Translation mode selection, explained below                              |
+| translateCode    |          | `boolean`                   | `false`                      | Whether to translate code blocks under `mdast`, other modes are invalid  |
+| includeMatter    |          | `boolean`                   | `false`                      | Whether to include front matter in the translation                       |
+| matterKeys       |          | `string[]`                  | `[]`                         | Front matter keys to translate when `includeMatter` is off, e.g. `title` |
+| cacheFile        |          | `string`                    | `.i18n-cache.json`           | File storing source hashes, used to retranslate changed markdown         |
 
 #### Markdown cache
 

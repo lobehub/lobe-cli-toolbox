@@ -69,8 +69,37 @@ module.exports = defineConfig({
 | `experimental.jsonMode` | `false`   | Ask the model for JSON output                                             |
 
 Markdown options: `entryExtension` (`.md`), `mode` (`string` / `mdast` / function),
-`translateCode`, `includeMatter`, `cacheFile` (`.i18n-cache.json`, records source hashes so only
-changed docs are retranslated; commit it).
+`translateCode`, `includeMatter`, `matterKeys` (front matter keys to translate when
+`includeMatter` is off, e.g. `['title', 'description']`), `cacheFile` (`.i18n-cache.json`, records
+source hashes so only changed docs are retranslated; commit it).
+
+### Every locale in one file (`inline`)
+
+For content JSON that keeps all locales side by side, e.g. `{ "zh": {…}, "en": {…} }` or
+`{ "name": { "zh": "算力", "en": "Compute" } }` at any depth:
+
+```js
+module.exports = defineConfig({
+  entryLocale: 'zh',
+  outputLocales: ['en'],
+  inline: {
+    entry: ['content/**/*.json'],
+    exclude: ['content/index.json'], // generated files
+    copyKeys: ['id', 'kind'], // identifiers, copied from the entry locale instead of translated
+  },
+  markdown: {
+    entry: ['content/**/index.zh.mdx'], // `index.zh.mdx` → `index.mdx`
+    matterKeys: ['title', 'description'],
+    outputExtensions: (locale) => (locale === 'en' ? '.mdx' : `.${locale}.mdx`),
+  },
+});
+```
+
+A locale node is an object whose keys are all locales and include `entryLocale`. Missing strings
+are translated, numbers, booleans and `copyKeys` follow the entry locale, removed keys are removed,
+and an array whose length changed is retranslated whole. `entry` / `output` may be omitted. Changed
+files are rewritten with `JSON.stringify` formatting, so run the project's formatter afterwards.
+`lobe-i18n lint` does not cover inline files.
 
 ## AI provider
 

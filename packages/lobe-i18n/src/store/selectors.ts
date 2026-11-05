@@ -42,11 +42,17 @@ const getConfigFile = (): I18nConfig => {
   return merge({}, DEFAULT_CONFIG, config);
 };
 
-const getLocaleConfig = (): I18nConfig => {
+/**
+ * With `allowInline`, a config that only has `inline` files may leave out `entry` and `output`.
+ */
+const getLocaleConfig = ({ allowInline = false } = {}): I18nConfig => {
   const config = getConfigFile();
-  checkOptionKeys(config, 'entry');
+  if (!allowInline || !config.inline || config.entry || config.output) {
+    checkOptionKeys(config, 'entry');
+    checkOptionKeys(config, 'output');
+  }
+  if (allowInline && config.inline) checkOptionKeys(config.inline, 'entry');
   checkOptionKeys(config, 'entryLocale');
-  checkOptionKeys(config, 'output');
   checkOptionKeys(config, 'outputLocales');
   return config;
 };

@@ -4,7 +4,7 @@ import { merge } from 'lodash-es';
 import { TranslateMarkdown } from '@/core/TranslateMarkdown';
 import { buildJsonTranslateMessages, buildMarkdownTranslateMessages } from '@/prompts/translate';
 import type { LocaleObj } from '@/types';
-import type { I18nConfig } from '@/types/config';
+import type { I18nConfig, KeyStyle } from '@/types/config';
 import { MarkdownModeType } from '@/types/config';
 import { calcToken } from '@/utils/calcToken';
 import { isFatalError } from '@/utils/errors';
@@ -42,8 +42,15 @@ export interface I18nTranslateOptions {
   entry: LocaleObj;
   filename?: string;
   from?: string;
+  /** Overrides `config.keyStyle`, e.g. when the entry is built from nested paths. */
+  keyStyle?: KeyStyle;
   onChunkComplete?: (chunkResult: LocaleObj, mergedResult: LocaleObj) => void;
   onProgress?: (props: onProgressProps) => void;
+  /**
+   * Persists the merged result after each chunk when `saveImmediately` is on, defaults to
+   * writing it to `filename` as JSON
+   */
+  save?: (mergedResult: LocaleObj) => void;
   target: LocaleObj;
   to: string;
 }
@@ -257,8 +264,10 @@ export class I18n {
     from,
     filename,
     onChunkComplete,
+    save,
+    keyStyle = this.config.keyStyle,
   }: I18nTranslateOptions): Promise<TranslateOutcome<LocaleObj> | undefined> {
-    const chunks = splitJsonToChunks(this.config, entry, target);
+    const chunks = splitJsonToChunks({ ...this.config, keyStyle }, entry, target);
     if (chunks.length === 0) return;
 
     const source = from || this.config.entryLocale;
@@ -294,8 +303,9 @@ export class I18n {
           failedKeys.push(...failed.map(formatKeyPath));
           mergedResult = merge(mergedResult, result);
 
-          if (this.config.saveImmediately && filename) {
-            writeJSON(filename, mergedResult);
+          if (this.config.saveImmediately && (save || filename)) {
+            if (save) save(mergedResult);
+            else writeJSON(filename!, mergedResult);
             onChunkComplete?.(result, mergedResult);
           }
         })

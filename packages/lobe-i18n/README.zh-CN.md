@@ -214,6 +214,7 @@ $ lobe-i18n skill --agent claude # 只安装到 .claude/skills（可选 agents /
 | topP              |      | `number`       | `1`        | 生成过程中的核采样方法概率阈值，取值越大生成的随机性越高                                      |
 | concurrency       |      | `number`       | `5`        | LLM 请求的最大并发数，由所有文件和语言共享                                                    |
 | experimental      |      | `experimental` | `{}`       | 实验性功能，见下文                                                                            |
+| inline            |      | `inline`       | -          | 所有语言写在同一个 JSON 文件里的结构，见 [内联结构](#内联结构)                                |
 | markdown          |      | `markdown`     | `{}`       | 见 `markdown` 配置说明                                                                        |
 
 #### `experimental`
@@ -290,7 +291,7 @@ module.exports = defineConfig({
 
 ### 文件结构选择
 
-支持两种文件结构，分别为 `单文件` 和 `文件夹` 结构
+支持三种文件结构，分别为 `单文件`、`文件夹` 和 `内联` 结构
 
 #### 单文件结构
 
@@ -353,6 +354,51 @@ module.exports = defineConfig({
 }
 ```
 
+#### 内联结构
+
+内联结构把所有语言写在同一个 JSON 文件里，和它所属的内容放在一起。如果一个对象的 key 全部是语言（`entryLocale` 加 `outputLocales`），并且包含 `entryLocale`，它就是一个语言节点。语言节点可以是整个文件，也可以在任意深度；值可以是字符串、对象或数组：
+
+```jsonc
+// content/chips/gpu/quiz.json
+{
+  "zh": [{ "q": "HBM 的作用是什么？", "opts": ["提供显存带宽", "存训练数据"], "ok": 0 }],
+  "en": [{ "q": "What does HBM do?", "opts": ["Provide memory bandwidth", "Store training data"], "ok": 0 }]
+}
+
+// content/curriculum.json
+{
+  "layers": [{ "code": "L4", "name": { "zh": "算力", "en": "Compute" }, "dirs": ["chips"] }]
+}
+```
+
+每次运行只补齐各目标语言缺少的内容，文件的其他部分保持不动。已有译文会保留；数字、布尔值和 `copyKeys` 的值从源语言复制；源语言里删掉的 key 也会被删除。数组长度和源语言不一致时，整个数组重新翻译。
+
+| 属性名称 | 必填 | 类型       | 默认值 | 描述                                                            |
+| -------- | ---- | ---------- | ------ | --------------------------------------------------------------- |
+| entry    | `*`  | `string[]` | -      | 需要翻译的 JSON 文件，支持 `glob`                               |
+| exclude  |      | `string[]` | `[]`   | 需要跳过的文件，支持 `glob`                                     |
+| copyKeys |      | `string[]` | `[]`   | 值是标识符而不是文本的 key（如 `id`、`kind`），任意深度原样复制 |
+
+如果项目只用内联文件，可以不写 `entry` 和 `output`：
+
+```js
+const { defineConfig } = require('@lobehub/i18n-cli');
+
+module.exports = defineConfig({
+  entryLocale: 'zh',
+  outputLocales: ['en'],
+  inline: {
+    entry: ['content/**/*.json'],
+    exclude: ['content/index.json'],
+    copyKeys: ['id', 'kind'],
+  },
+});
+```
+
+> \[!NOTE]
+>
+> 有改动的文件会按 2 空格的 `JSON.stringify` 格式写回，key 顺序不变。如果项目的格式化工具（如 Prettier）对 JSON 的格式不同，运行后再格式化一次即可。和其他结构一样，源语言的字符串改动后不会自动重译，删除对应译文后再运行即可。
+
 ### 运行
 
 使用 `lobe-i18n` 命令自动化生成 i18n 文件：
@@ -369,18 +415,19 @@ $ lobe-i18n
 
 ## 📝 Markdown 配置
 
-| 属性名称         | 必填 | 类型                        | 默认值                       | 描述                                      |
-| ---------------- | ---- | --------------------------- | ---------------------------- | ----------------------------------------- |
-| entry            | `*`  | `string[]`                  | `[]`                         | 入口文件或文件夹，支持 `glob`             |
-| entryLocale      |      | `string`                    | _继承同父级_                 | 作为翻译参考的语言                        |
-| entryExtension   |      | `string`                    | `.md`                        | 入口文件扩展名                            |
-| exclude          |      | `string[]`                  | `[]`                         | 需要过滤的文件，支持 `glob`               |
-| outputLocales    |      | `string[]`                  | _继承同父级_                 | 需要进行翻译的所有语言                    |
-| outputExtensions |      | `function`                  | `(locale) => '.{locale}.md'` | 输出文件的扩展名生成                      |
-| mode             |      | `string`,`mdast`,`function` | `string`                     | 翻译的模式选择，解释见下文                |
-| translateCode    |      | `boolean`                   | `false`                      | 在 `mdast` 下是否翻译代码块，其他模式无效 |
-| includeMatter    |      | `boolean`                   | `false`                      | 是否翻译 `front matter`                   |
-| cacheFile        |      | `string`                    | `.i18n-cache.json`           | 存储源文件 hash 的缓存文件，用于增量翻译  |
+| 属性名称         | 必填 | 类型                        | 默认值                       | 描述                                                             |
+| ---------------- | ---- | --------------------------- | ---------------------------- | ---------------------------------------------------------------- |
+| entry            | `*`  | `string[]`                  | `[]`                         | 入口文件或文件夹，支持 `glob`                                    |
+| entryLocale      |      | `string`                    | _继承同父级_                 | 作为翻译参考的语言                                               |
+| entryExtension   |      | `string`                    | `.md`                        | 入口文件扩展名                                                   |
+| exclude          |      | `string[]`                  | `[]`                         | 需要过滤的文件，支持 `glob`                                      |
+| outputLocales    |      | `string[]`                  | _继承同父级_                 | 需要进行翻译的所有语言                                           |
+| outputExtensions |      | `function`                  | `(locale) => '.{locale}.md'` | 输出文件的扩展名生成                                             |
+| mode             |      | `string`,`mdast`,`function` | `string`                     | 翻译的模式选择，解释见下文                                       |
+| translateCode    |      | `boolean`                   | `false`                      | 在 `mdast` 下是否翻译代码块，其他模式无效                        |
+| includeMatter    |      | `boolean`                   | `false`                      | 是否翻译 `front matter`                                          |
+| matterKeys       |      | `string[]`                  | `[]`                         | `includeMatter` 关闭时需要翻译的 `front matter` 字段，如 `title` |
+| cacheFile        |      | `string`                    | `.i18n-cache.json`           | 存储源文件 hash 的缓存文件，用于增量翻译                         |
 
 #### Markdown 缓存
 

@@ -110,6 +110,11 @@ export interface MarkdownConfig {
    */
   includeMatter?: boolean;
   /**
+   * @description Front matter keys to translate when `includeMatter` is off, e.g.
+   * `['title', 'description']`; other keys are copied from the source
+   */
+  matterKeys?: string[];
+  /**
    * @description Markdown translate mode
    */
   mode?: MarkdownMode | MarkdownModeFunction;
@@ -134,10 +139,31 @@ export interface MarkdownConfig {
   translateCode?: boolean;
 }
 
+export interface InlineConfig {
+  /**
+   * @description Keys whose values are identifiers rather than text (e.g. `id`, `kind`), they
+   * are copied from the entry locale instead of translated
+   */
+  copyKeys?: string[];
+  /**
+   * @description JSON files that keep every locale in the same file, support glob
+   */
+  entry: string[];
+  /**
+   * @description The files that will ignore, support glob
+   */
+  exclude?: string[];
+}
+
 export interface I18nConfig extends I18nConfigLocale {
   experimental?: {
     jsonMode?: boolean;
   };
+  /**
+   * @description Translate JSON files that keep every locale side by side, such as
+   * `{ "en": {…}, "zh": {…} }` or `{ "name": { "en": "…", "zh": "…" } }` at any depth
+   */
+  inline?: InlineConfig;
   markdown?: MarkdownConfig;
 }
 

@@ -19,6 +19,7 @@ import { readMarkdown, writeMarkdown } from '@/utils/fs';
 import { getDefaultExtension } from '@/utils/getDefaultExtension';
 import { hashContent, MarkdownCache } from '@/utils/markdownCache';
 import { matchInputPattern } from '@/utils/matchInputPattern';
+import { pickMatter } from '@/utils/pickMatter';
 
 interface MarkdownQueryItem extends I18nMarkdownWriteOptions {
   hash: string;
@@ -118,17 +119,25 @@ class TranslateMarkdown {
 
             if (!data) return tasks.finish(id, 'warning', 'no translation result');
             totalTokenUsage += data.tokenUsage;
+            const outcome = { ...data, errors: [...data.errors], failedKeys: [...data.failedKeys] };
 
             // A partial document stays pending in the cache, so the next run retranslates it.
             if (data.result) {
-              const content = this.markdownConfig.includeMatter
-                ? data.result
-                : matter.stringify(data.result, item.matter);
+              let content = data.result;
+              if (!this.markdownConfig.includeMatter) {
+                const matterData = await this.translateMatter(item);
+                totalTokenUsage += matterData.tokenUsage;
+                outcome.tokenUsage += matterData.tokenUsage;
+                outcome.errors.push(...matterData.errors);
+                outcome.failedKeys.push(...matterData.failedKeys);
+                content = matter.stringify(data.result, matterData.result);
+              }
               writeMarkdown(item.filename, content);
-              this.cache.set(source, item.filename, hash);
+              if (outcome.errors.length === 0 && outcome.failedKeys.length === 0)
+                this.cache.set(source, item.filename, hash);
             }
 
-            const { status, detail } = summarizeOutcome(data);
+            const { status, detail } = summarizeOutcome(outcome);
             if (status === 'error') process.exitCode = 1;
             tasks.finish(id, status, detail);
           } catch (error) {
@@ -195,6 +204,25 @@ class TranslateMarkdown {
         alert.error(`${file} not found`, true);
       }
     }
+  }
+
+  /** Translates the `matterKeys` of the front matter, a key that fails keeps the source text. */
+  private async translateMatter({
+    from,
+    matter: data = {},
+    to,
+  }: Pick<MarkdownQueryItem, 'from' | 'matter' | 'to'>) {
+    const entry = pickMatter(data, this.markdownConfig.matterKeys);
+    const translated =
+      Object.keys(entry).length > 0
+        ? await this.i18n.translate({ entry, from, target: {}, to })
+        : undefined;
+    return {
+      errors: translated?.errors ?? [],
+      failedKeys: translated?.failedKeys ?? [],
+      result: { ...data, ...translated?.result },
+      tokenUsage: translated?.tokenUsage ?? 0,
+    };
   }
 
   private getTargetExtension(locale: string, filePath: string, fileContent: string) {

@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { I18nConfig } from '../types/config';
+import { createInlineDocument } from '../utils/inlineLocale';
 import { I18n } from './I18n';
 import { TranslateLocale } from './TranslateLocale';
 
@@ -147,6 +148,40 @@ describe('I18n.translate', () => {
       i18n.translate({ entry: { a: 'first value', b: 'second value' }, target: {}, to: 'zh-CN' }),
     ).rejects.toThrow('Unauthorized');
     expect(generate).toHaveBeenCalledTimes(1);
+  });
+
+  it('translates an inline document and saves it through `save` after each chunk', async () => {
+    generate.mockImplementation(echoUppercase);
+
+    const data: any = {
+      en: [{ ok: 0, opts: ['old a', 'old b'], q: 'Old question' }],
+      zh: [
+        { ok: 0, opts: ['old a', 'old b'], q: 'old question' },
+        { ok: 1, opts: ['new a', 'new b'], q: 'new question' },
+      ],
+    };
+    const document = createInlineDocument(data, { entryLocale: 'zh', locales: ['en'] });
+    const save = vi.fn((result) => document.apply('en', result));
+
+    const i18n = new I18n({
+      config: config({ keyStyle: 'flat', saveImmediately: true }),
+      provider,
+    });
+    const outcome = await i18n.translate({
+      entry: document.entry,
+      filename: 'should-not-be-written.json',
+      keyStyle: 'nested',
+      save,
+      target: document.target('en'),
+      to: 'en',
+    });
+
+    expect(outcome?.errors).toEqual([]);
+    expect(save).toHaveBeenCalledTimes(1);
+    expect(data.en).toEqual([
+      { ok: 0, opts: ['OLD A', 'OLD B'], q: 'OLD QUESTION' },
+      { ok: 1, opts: ['NEW A', 'NEW B'], q: 'NEW QUESTION' },
+    ]);
   });
 
   it('sends existing translations of the target as examples', async () => {

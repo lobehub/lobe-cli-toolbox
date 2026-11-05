@@ -1,22 +1,25 @@
+import { writeFileSync } from 'node:fs';
 import { relative, resolve } from 'node:path';
 
 import { alert, createTaskList } from '@lobehub/cli-ui';
 import chalk from 'chalk';
 import { consola } from 'consola';
+import { globSync } from 'glob';
 import pMap from 'p-map';
 
 import type { I18nWriteOptions } from '@/core/I18n';
 import { DEFAULT_CONCURRENCY, I18n } from '@/core/I18n';
 import { selectors } from '@/store';
 import type { LocaleFolderObj, LocaleObj } from '@/types';
-import type { I18nConfig } from '@/types/config';
+import type { I18nConfig, InlineConfig } from '@/types/config';
 import { checkLocaleFolders, checkLocales } from '@/utils/checkLocales';
 import { diff } from '@/utils/diffJson';
 import { getErrorMessage } from '@/utils/errors';
 import { formatTokens, progressDetail, summarizeOutcome } from '@/utils/formatProgress';
-import { writeJSON } from '@/utils/fs';
+import { readJSON, writeJSON } from '@/utils/fs';
 import { getEntryFile, getEntryFolderFiles } from '@/utils/getEntryFile';
 import { getLocaleObj } from '@/utils/getLocaleObj';
+import { createInlineDocument, stringifyInlineJSON } from '@/utils/inlineLocale';
 import { isEqualJsonKeys } from '@/utils/isEqualJsonKeys';
 
 class TranslateLocale {
@@ -24,7 +27,7 @@ class TranslateLocale {
   query: I18nWriteOptions[] = [];
   i18n: I18n;
   constructor() {
-    this.config = selectors.getLocaleConfig();
+    this.config = selectors.getLocaleConfig({ allowInline: true });
     this.i18n = new I18n({
       config: this.config,
       provider: selectors.getCheckedProviderConfig(this.config.modelName),
@@ -33,12 +36,15 @@ class TranslateLocale {
 
   async start() {
     consola.start('Lobe I18N is analyzing your project... 🤯🌏🔍');
-    const isFolder = !this.config.entry.includes('.json') || this.config.entry.includes('*');
-    if (isFolder) {
-      this.genFolderQuery();
-    } else {
-      this.genFlatQuery();
+    if (this.config.entry) {
+      const isFolder = !this.config.entry.includes('.json') || this.config.entry.includes('*');
+      if (isFolder) {
+        this.genFolderQuery();
+      } else {
+        this.genFlatQuery();
+      }
     }
+    if (this.config.inline) this.genInlineQuery(this.config.inline);
     if (this.query.length > 0) {
       await this.runQuery();
     } else {
@@ -82,7 +88,8 @@ class TranslateLocale {
 
             totalTokenUsage += data.tokenUsage;
             if (data.result && Object.keys(data.result).length > 0) {
-              writeJSON(item.filename, data.result);
+              if (item.save) item.save(data.result);
+              else writeJSON(item.filename, data.result);
             }
 
             const { status, detail } = summarizeOutcome(data);
@@ -143,6 +150,67 @@ class TranslateLocale {
     if (process.stdout.isTTY) {
       process.stdout.clearLine(0);
       process.stdout.cursorTo(0);
+    }
+  }
+
+  genInlineQuery(inline: InlineConfig) {
+    const { entryLocale, outputLocales } = this.config;
+    const files = globSync(inline.entry, { ignore: inline.exclude, nodir: true }).sort();
+    if (files.length === 0)
+      alert.error(
+        `Can't find inline .json files matching ${chalk.bold.yellow(inline.entry)}`,
+        true,
+      );
+
+    consola.info(
+      `Running in ${chalk.bold.cyan('🧩 Inline Mode')} and has found ${chalk.bold.cyan(
+        files.length,
+      )} files.`,
+    );
+
+    for (const file of files) {
+      const filename = resolve(file);
+      let data: unknown;
+      try {
+        data = readJSON(filename);
+      } catch (error) {
+        consola.warn(`Skipped ${chalk.yellow(file)}, ${getErrorMessage(error)}`);
+        process.exitCode = 1;
+        continue;
+      }
+
+      const document = createInlineDocument(data, {
+        copyKeys: inline.copyKeys,
+        entryLocale,
+        locales: outputLocales,
+      });
+      if (document.nodes.length === 0) continue;
+
+      const write = () => writeFileSync(filename, stringifyInlineJSON(data), 'utf8');
+      let synced = false;
+
+      for (const locale of outputLocales) {
+        const target = document.target(locale);
+        // Nothing to translate, but removed keys and copied values may still need syncing.
+        if (diff(document.entry, target).add.length === 0) {
+          synced = document.apply(locale, target) || synced;
+          continue;
+        }
+
+        this.query.push({
+          entry: document.entry,
+          filename,
+          from: entryLocale,
+          keyStyle: 'nested',
+          save: (result) => {
+            if (document.apply(locale, result)) write();
+          },
+          target,
+          to: locale,
+        });
+      }
+
+      if (synced) write();
     }
   }
 
