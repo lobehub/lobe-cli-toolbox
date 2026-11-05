@@ -2,6 +2,52 @@
 
 # Changelog
 
+## [Version&nbsp;2.20.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.19.0...@lobehub/commit-cli@2.20.0)
+<sup>Released on **2026-11-05**</sup>
+
+
+#### ✨ Features
+
+- **misc**: Support any LLM provider, add agent skills and config migration.
+
+
+<br/>
+
+
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+
+
+#### What's improved
+
+* **misc**: Support any LLM provider, add agent skills and config migration, closes [#171](https://github.com/lobehub/lobe-cli-toolbox/issues/171) ([310f91f](https://github.com/lobehub/lobe-cli-toolbox/commit/310f91f))
+
+</details>
+
+
+#### 💥 BREAKING CHANGES
+
+* **misc**: requires Node.js >= 22. lobe-commit `diffChunkSize` is
+replaced by `diffChunkTokens`, and rc `provider` / `contextWindow` are
+no longer used.
+
+Co-authored-by: Cursor <cursoragent@cursor.com>
+
+* ♻️ refactor: modernize the monorepo toolchain
+
+Move the workspace from Lerna and pkgroll to pnpm and tsdown, and type-check with TypeScript 7 so the CLIs build and test under the current compiler and linter.
+
+Co-authored-by: Cursor <cursoragent@cursor.com>
+
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 2.19.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/commit-cli@2.18.1...@lobehub/commit-cli@2.19.0)
 
 <sup>Released on **2025-06-11**</sup>
