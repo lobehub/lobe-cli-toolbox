@@ -2,6 +2,65 @@
 
 # Changelog
 
+## [Version&nbsp;1.14.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/cli-ui@1.13.0...@lobehub/cli-ui@1.14.0)
+<sup>Released on **2026-11-09**</sup>
+
+
+#### ✨ Features
+
+- **cli-ui**: Add docs and publishable package.
+- **misc**: Support any LLM provider, add agent skills and config migration.
+
+
+#### 💄 Styles
+
+- **misc**: Update ui.
+
+
+<br/>
+
+
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+
+
+#### What's improved
+
+* **cli-ui**: Add docs and publishable package ([8e02d87](https://github.com/lobehub/lobe-cli-toolbox/commit/8e02d87))
+* **misc**: Support any LLM provider, add agent skills and config migration, closes [#171](https://github.com/lobehub/lobe-cli-toolbox/issues/171) ([310f91f](https://github.com/lobehub/lobe-cli-toolbox/commit/310f91f))
+
+
+
+#### Styles
+
+* **misc**: Update ui ([12d5e04](https://github.com/lobehub/lobe-cli-toolbox/commit/12d5e04))
+
+</details>
+
+
+#### 💥 BREAKING CHANGES
+
+* **misc**: requires Node.js >= 22. lobe-commit `diffChunkSize` is
+replaced by `diffChunkTokens`, and rc `provider` / `contextWindow` are
+no longer used.
+
+Co-authored-by: Cursor <cursoragent@cursor.com>
+
+* ♻️ refactor: modernize the monorepo toolchain
+
+Move the workspace from Lerna and pkgroll to pnpm and tsdown, and type-check with TypeScript 7 so the CLIs build and test under the current compiler and linter.
+
+Co-authored-by: Cursor <cursoragent@cursor.com>
+
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.13.0](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/cli-ui@1.12.0...@lobehub/cli-ui@1.13.0)
 
 <sup>Released on **2025-06-11**</sup>
