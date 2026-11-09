@@ -1,6 +1,6 @@
 {
   "name": "@lobehub/label-cli",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "description": "Automatically copy issues labels from template repo",
   "keywords": [
     "create",
@@ -48,7 +48,7 @@
   },
   "devDependencies": {
     "@lobehub/cli-common": "workspace:*",
-    "@lobehub/cli-ui": "workspace:*",
+    "@lobehub/cli-ui": "1.14.0",
     "clean-package": "^2.2.0"
   },
   "engines": {
