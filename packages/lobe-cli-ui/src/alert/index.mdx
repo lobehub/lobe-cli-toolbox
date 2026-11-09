@@ -1,0 +1,23 @@
+---
+title: alert
+description: Consola-backed success / info / warn / error helpers with optional process.exit.
+category: Feedback
+order: -10
+---
+
+import DemoBasic from './demos/index.tsx?demo';
+
+## Usage
+
+<Demo of={DemoBasic} editable={false} title="alert output" />
+
+## API
+
+| Call                      | Behavior                                  |
+| ------------------------- | ----------------------------------------- |
+| `alert.success(text)`     | Log success                               |
+| `alert.info(text)`        | Log info                                  |
+| `alert.warn(text)`        | Log warning                               |
+| `alert.error(text)`       | Log error                                 |
+| `alert.error(text, true)` | Log error and `process.exit(1)` (`never`) |
+| `setAlertSink(sink)`      | Divert logs into a live view              |

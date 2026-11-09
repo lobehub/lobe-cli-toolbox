@@ -1,0 +1,47 @@
+---
+title: Panel
+description: Wizard step chrome with a status icon, left rail, optional key hints and a footer.
+category: Layout
+order: -20
+---
+
+import DemoBasic from './demos/index.tsx?demo';
+import DemoStatus from './demos/status.tsx?demo';
+import DemoIntro from './demos/intro.tsx?demo';
+
+`Panel` is the frame every interactive Lobe CLI step uses: a colored status glyph + title, a single-line left rail around the body, and key hints after the closing `└`.
+
+## Basic
+
+<Demo of={DemoBasic} editable={false} title="Basic panel" />
+
+## Status
+
+`status` drives the icon and rail color: `active` (default), `done`, `warning`, `error`.
+
+<Demo of={DemoStatus} editable={false} title="Status variants" />
+
+## Intro and StepSummary
+
+`Intro` opens a flow (`┌  title`). `StepSummary` collapses a finished step to one line above the next panel.
+
+<Demo of={DemoIntro} editable={false} title="Intro + StepSummary" />
+
+## API
+
+<Api name="Panel" />
+
+### StepSummary
+
+| Prop         | Description                      | Type        |
+| ------------ | -------------------------------- | ----------- |
+| `label`      | Left column label                | `string`    |
+| `labelWidth` | Fixed label width (default `10`) | `number`    |
+| `value`      | Collapsed value                  | `ReactNode` |
+
+### Intro
+
+| Prop       | Description              | Type        |
+| ---------- | ------------------------ | ----------- |
+| `title`    | Bold title after `┌`     | `ReactNode` |
+| `subtitle` | Dim text after the title | `string`    |

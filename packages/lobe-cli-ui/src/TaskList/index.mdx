@@ -1,0 +1,23 @@
+---
+title: TaskList
+description: Live multi-task runner with spinner, progress, tags and alert sink integration.
+category: Feedback
+order: -11
+---
+
+import DemoBasic from './demos/index.tsx?demo';
+
+## Usage
+
+<Demo of={DemoBasic} editable={false} title="Task list" />
+
+## API
+
+`createTaskList(options?: TaskListOptions): TaskList`
+
+| Method                               | Description                          |
+| ------------------------------------ | ------------------------------------ |
+| `start(id, { tag?, title })`         | Add a running task                   |
+| `update(id, { detail?, progress? })` | Patch detail / 0–100 progress        |
+| `finish(id, status, detail?)`        | `done` \| `error` \| `warning`       |
+| `stop()`                             | Unmount and flush; returns a Promise |

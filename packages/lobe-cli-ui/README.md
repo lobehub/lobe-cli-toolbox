@@ -6,7 +6,7 @@
 
 <h1>Lobe CLI UI</h1>
 
-Ink components shared by the Lobe CLIs. This package is private and bundled into each CLI at build time.
+Ink components shared by the Lobe CLIs. Published as `@lobehub/cli-ui`; inside this monorepo the CLIs still bundle it from `workspace:*` at build time.
 
 [![][github-releasedate-shield]][github-releasedate-link]
 [![][github-action-test-shield]][github-action-test-link]
@@ -39,7 +39,14 @@ Ink components shared by the Lobe CLIs. This package is private and bundled into
 
 ## 📦 Installation
 
-This package is not published. The CLIs depend on it with `workspace:*` and bundle it at build time.
+```bash
+# npm / pnpm / yarn (peer: ink, react)
+pnpm add @lobehub/cli-ui ink react
+```
+
+Inside this monorepo the CLIs still use `workspace:*` and bundle the package at build time. Library artifacts build to `lib/` (`pnpm --filter @lobehub/cli-ui build`); the docs site continues to use `dist/`.
+
+> Registry note: `@lobehub/cli-ui@1.13.0` already exists on npm from an older toolchain. The next `multi-semantic-release` on `master` must bump past `1.13.0` before consumers get this package shape.
 
 <div align="right">
 

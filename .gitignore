@@ -27,6 +27,7 @@ coverage
 
 # production
 dist
+lib
 es
 logs
 test-output
@@ -42,3 +43,7 @@ test-output
 
 # misc
 # add other ignore file below
+
+# docs-kit
+.react-router/
+react-router.config.mjs

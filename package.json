@@ -22,6 +22,8 @@
     "dev:label": "pnpm --filter @lobehub/label-cli dev",
     "dev:seo": "pnpm --filter @lobehub/seo-cli dev",
     "dev:ui": "pnpm --filter @lobehub/cli-ui dev",
+    "docs:ui": "pnpm --filter @lobehub/cli-ui docs:dev",
+    "docs:ui:build": "pnpm --filter @lobehub/cli-ui docs:build",
     "lint": "eslint \"packages/*/src/**/*.{ts,tsx}\" \"packages/*/*.config.ts\" \"*.config.{mjs,ts}\" vitest.shared.ts scripts",
     "lint:fix": "eslint --fix \"packages/*/src/**/*.{ts,tsx}\" \"packages/*/*.config.ts\" \"*.config.{mjs,ts}\" vitest.shared.ts scripts",
     "lint:md": "remark . --quiet",

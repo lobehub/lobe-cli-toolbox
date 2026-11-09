@@ -1,0 +1,83 @@
+---
+title: Getting Started
+description: Install @lobehub/cli-ui and render your first Ink panel.
+category: Guides
+order: -10
+---
+
+`@lobehub/cli-ui` is the shared Ink component kit used by the Lobe CLIs (panels, selects, inputs, task lists, alerts).
+
+## Install
+
+### From npm (after the next publish)
+
+```bash
+pnpm add @lobehub/cli-ui
+# peer deps if your app does not already have them:
+pnpm add ink react
+```
+
+```json
+{
+  "dependencies": {
+    "@lobehub/cli-ui": "^1.13.0",
+    "ink": "^8.0.0",
+    "react": "^19.0.0"
+  }
+}
+```
+
+> npm currently has `@lobehub/cli-ui@1.13.0` from an older build. The workspace package shape in this repo (exports → `lib/` on pack) is prepared for the **next** semantic-release; do not expect that exact tarball until it is released.
+
+### Inside this monorepo
+
+From the repo root:
+
+```bash
+pnpm install
+```
+
+CLI packages still consume it as a `workspace:*` **devDependency** and bundle it with tsdown at build time (unchanged):
+
+```json
+{
+  "devDependencies": {
+    "@lobehub/cli-ui": "workspace:*",
+    "ink": "^8.0.0",
+    "react": "^19.3.1"
+  }
+}
+```
+
+Import from the package name (no subpaths):
+
+```tsx
+import { Panel, SelectInput, render, alert } from '@lobehub/cli-ui';
+```
+
+## Hello panel
+
+```tsx
+import { Text } from 'ink';
+import { Panel, render } from '@lobehub/cli-ui';
+
+render(
+  <Panel
+    hints={[
+      ['enter', 'continue'],
+      ['esc', 'back'],
+    ]}
+    title="Hello"
+  >
+    <Text>Body content sits on the left rail.</Text>
+  </Panel>,
+);
+```
+
+## Docs demos vs a real TTY
+
+Component pages use **static terminal previews** (unicode / ANSI rendered to HTML). They illustrate layout and show copy-pasteable Ink usage — they are **not** an interactive PTY. Keyboard handling (`useInput`, focus, Ink `render`) only works inside a real Node CLI process.
+
+## Next
+
+Open the component sidebar: start with [Panel](/components/panel), then [SelectInput](/components/select-input) and [TextInput](/components/text-input).

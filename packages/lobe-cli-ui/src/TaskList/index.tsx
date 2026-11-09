@@ -49,7 +49,7 @@ interface Snapshot {
 
 const STATUS = {
   done: { color: theme.colorSuccess, icon: symbols.tick },
-  error: { color: theme.colorError, icon: symbols.cross },
+  error: { color: theme.colorError, icon: symbols.error },
   warning: { color: theme.colorWarning, icon: symbols.warning },
 } as const;
 

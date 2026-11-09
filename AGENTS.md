@@ -6,14 +6,14 @@ Guidance for AI coding agents working in this repository. Everything below was c
 
 Lobe CLI Toolbox is a pnpm monorepo of AI-powered command line tools built with [Ink](https://github.com/vadimdemedes/ink) (React for the terminal). Development needs Node.js `>=22.18.0` (root `engines`) and the pnpm version pinned in `packageManager` (`corepack enable` picks it up).
 
-| Path                   | Package               | Published | What it is                                                                     |
-| ---------------------- | --------------------- | --------- | ------------------------------------------------------------------------------ |
-| `packages/lobe-commit` | `@lobehub/commit-cli` | yes       | `lobe-commit` / `lobe`: gitmoji commit messages from the staged diff, git hook |
-| `packages/lobe-i18n`   | `@lobehub/i18n-cli`   | yes       | `lobe-i18n`: translate locale JSON and markdown; also exports `defineConfig`   |
-| `packages/lobe-seo`    | `@lobehub/seo-cli`    | yes       | `lobe-seo`: generate SEO frontmatter for MDX; also exports `defineConfig`      |
-| `packages/lobe-label`  | `@lobehub/label-cli`  | yes       | `lobe-label`: sync GitHub issue labels from a template repo                    |
-| `packages/lobe-cli-ui` | `@lobehub/cli-ui`     | no        | Shared Ink components (`Panel`, `SelectInput`, `ConfigPanel`, `alert`, …)      |
-| `packages/common`      | `@lobehub/cli-common` | no        | Shared logic: LLM providers, prompt templates, text splitter, agent skills     |
+| Path                   | Package               | Published | What it is                                                                               |
+| ---------------------- | --------------------- | --------- | ---------------------------------------------------------------------------------------- |
+| `packages/lobe-commit` | `@lobehub/commit-cli` | yes       | `lobe-commit` / `lobe`: gitmoji commit messages from the staged diff, git hook           |
+| `packages/lobe-i18n`   | `@lobehub/i18n-cli`   | yes       | `lobe-i18n`: translate locale JSON and markdown; also exports `defineConfig`             |
+| `packages/lobe-seo`    | `@lobehub/seo-cli`    | yes       | `lobe-seo`: generate SEO frontmatter for MDX; also exports `defineConfig`                |
+| `packages/lobe-label`  | `@lobehub/label-cli`  | yes       | `lobe-label`: sync GitHub issue labels from a template repo                              |
+| `packages/lobe-cli-ui` | `@lobehub/cli-ui`     | yes       | Shared Ink components (`Panel`, `SelectInput`, `ConfigPanel`, `alert`, …); pack → `lib/` |
+| `packages/common`      | `@lobehub/cli-common` | no        | Shared logic: LLM providers, prompt templates, text splitter, agent skills               |
 
 Each CLI follows the same layout: `src/cli.tsx` (commander entry), `src/commands/` (Ink screens per command), `src/core/` (the actual work), `src/store/` (`conf` user config + selectors + migrations), `src/prompts/`, `src/utils/`, `src/types/`. `packages/*/skills/<name>/SKILL.md` are **product** skills shipped to users via `<cli> skill`; they are not instructions for working on this repo.
 
@@ -28,7 +28,7 @@ Run from the repo root:
 | `pnpm run lint:fix`       | ESLint (flat config from `@lobehub/lint`) with autofix, incl. import sorting    |
 | `pnpm run type-check`     | `tsc --noEmit` in every package; `tsc` is TypeScript 7 (the Go compiler)        |
 | `pnpm test`               | Vitest across all packages (`vitest.config.ts` → `projects: ['packages/*']`)    |
-| `pnpm run build`          | `tsdown` in every published package → `dist/`                                   |
+| `pnpm run build`          | `tsdown` in every published package → `dist/` (cli-ui → `lib/`)                 |
 | `pnpm run smoke`          | Runs every built CLI (`--version`, `--help`, entry imports) in a temporary HOME |
 | `pnpm --filter <pkg> dev` | `tsdown --watch` for one package, e.g. `pnpm --filter @lobehub/i18n-cli dev`    |
 
@@ -36,7 +36,7 @@ Single package: `pnpm --filter @lobehub/commit-cli test`, or `pnpm vitest run --
 
 ## How the packages fit together
 
-- **Bundling.** `@lobehub/cli-ui` and `@lobehub/cli-common` are private, source-only packages (`exports` point at `src/*.ts`). Each CLI lists them as `workspace:*` **devDependencies**; tsdown bundles devDependencies and keeps `dependencies` external. `clean-package` strips `devDependencies` (and `scripts`) on `npm pack`, so `workspace:*` never reaches npm.
+- **Bundling.** `@lobehub/cli-common` stays private/source-only (`exports` → `src/*.ts`). `@lobehub/cli-ui` is publishable: workspace `exports` still point at `src/index.ts` so CLIs type-check and tsdown-bundle it; `clean-package` rewrites exports to `lib/` on pack. Each CLI lists both as `workspace:*` **devDependencies**; tsdown bundles those and keeps `dependencies` external. `clean-package` strips `devDependencies` (and `scripts`) on `npm pack`, so `workspace:*` never reaches npm. cli-ui library build: `pnpm --filter @lobehub/cli-ui build` → `packages/lobe-cli-ui/lib/` (docs site keeps using `dist/`).
 - **Third-party imports of shared code are runtime deps of the CLI.** If `cli-ui` or `common` imports a package, every CLI that bundles that code must list it in its own `dependencies`. `pnpm run smoke` fails with `ERR_MODULE_NOT_FOUND` when one is missing. See `.agents/skills/managing-dependencies`.
 - **Imports.** Inside a CLI, `@/…` maps to that package's `src/` (tsconfig `paths`, picked up by Vitest via `resolve.tsconfigPaths`). `cli-ui` and `common` must use **relative** imports, because their source is type-checked and bundled from inside other packages. Shared code is imported by subpath: `@lobehub/cli-common/llm`, `/providers`, `/promptTemplate`, `/textSplitter`, `/summarize`, `/skill`, `/skillCommand`, `/configMigration`, `/env`, `/ProviderSetup`.
 - **LLM access** goes through `LLMClient` in `common/src/llm.ts` (Vercel AI SDK). Provider settings resolve in `common/src/providers.ts`: env vars `LOBE_PROVIDER`, `LOBE_API_TYPE`, `LOBE_BASE_URL`, `LOBE_API_KEY` override the stored config. `.env` in the working directory is loaded with `loadEnv()` (`process.loadEnvFile`, never overrides existing variables).

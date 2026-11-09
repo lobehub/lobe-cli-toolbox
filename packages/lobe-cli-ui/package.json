@@ -1,15 +1,23 @@
 {
   "name": "@lobehub/cli-ui",
   "version": "1.13.0",
-  "private": true,
-  "description": "Ink components shared by the Lobe CLIs, bundled into each of them at build time",
+  "description": "Ink (React for CLIs) components — panels, selects, inputs, task lists and alerts",
+  "keywords": [
+    "ink",
+    "cli",
+    "react",
+    "terminal",
+    "tui",
+    "lobehub"
+  ],
   "homepage": "https://github.com/lobehub/lobe-cli-toolbox/tree/master/packages/lobe-cli-ui",
   "bugs": {
     "url": "https://github.com/lobehub/lobe-cli-toolbox/issues/new"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lobehub/lobe-cli-toolbox.git"
+    "url": "https://github.com/lobehub/lobe-cli-toolbox.git",
+    "directory": "packages/lobe-cli-ui"
   },
   "license": "MIT",
   "author": "LobeHub <i@lobehub.com>",
@@ -18,19 +26,51 @@
   "exports": {
     ".": "./src/index.ts"
   },
+  "files": [
+    "lib"
+  ],
   "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "docs:build": "node ./scripts/docs-dev.mjs build",
+    "docs:dev": "node ./scripts/docs-dev.mjs dev",
+    "docs:typegen": "node ./scripts/docs-dev.mjs typegen",
+    "prepack": "clean-package",
+    "postpack": "clean-package restore",
     "test": "vitest run",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "chalk": "^6.0.1",
-    "consola": "^3.4.2"
+    "chalk": "^6.0.1"
   },
   "devDependencies": {
+    "@lobehub/docs-kit": "^6.4.1",
+    "@lobehub/ui": "^6.15.2",
+    "@react-router/dev": "8.4.0",
+    "@types/react-dom": "^19.3.0",
+    "@xterm/addon-fit": "0.10.0",
+    "@xterm/addon-unicode-graphemes": "0.4.0",
+    "@xterm/headless": "5.5.0",
+    "@xterm/xterm": "5.5.0",
+    "ansi-to-html": "^0.7.2",
+    "clean-package": "^2.2.0",
     "ink": "^8.0.0",
-    "react": "^19.3.1"
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router": "8.4.0",
+    "tsx": "^4.23.15",
+    "vite": "8.3.4",
+    "ws": "^8.22.1"
+  },
+  "peerDependencies": {
+    "ink": "^8.0.0",
+    "react": "^19.0.0"
   },
   "engines": {
     "node": ">=22.18.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

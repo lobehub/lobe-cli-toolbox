@@ -1,0 +1,18 @@
+/* Fit real terminal content, not a fixed three-column/equal-height bento. */
+.home-demo-gallery {
+  align-items: start;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr));
+  width: 100%;
+}
+
+.home-demo-gallery > * {
+  min-inline-size: 0;
+  width: 100%;
+}
+
+.home-demo-gallery a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}

@@ -5,5 +5,5 @@
     }
   },
   "extends": "../../tsconfig.json",
-  "include": ["src", "*.config.ts"]
+  "include": ["src", "*.config.ts", "docs", "docs.config.ts"]
 }

@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "noEmit": true,
+    "skipLibCheck": true,
+    "jsx": "react-jsx",
+    "moduleResolution": "bundler",
+    "types": ["vite/client"]
+  },
+  "extends": "../tsconfig.json",
+  "include": [
+    "./components/**/*.ts",
+    "./components/**/*.tsx",
+    "./home/**/*.ts",
+    "./home/**/*.tsx",
+    "./vite-env.d.ts"
+  ]
+}

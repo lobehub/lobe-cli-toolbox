@@ -30,3 +30,4 @@ minimumReleaseAgeExclude:
   - '@ai-sdk/provider-utils@5.0.75'
   - '@ai-sdk/provider@4.0.36'
   - ai@7.0.163
+  - '@lobehub/docs-kit@6.3.2 || 6.4.0 || 6.4.1'

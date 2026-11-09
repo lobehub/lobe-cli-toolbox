@@ -52,7 +52,7 @@ describe('ConfigPanel', () => {
 
     await press(stdin, ...'500', KEYS.enter);
     expect(onSave).toHaveBeenCalledWith('500');
-    expect(lastFrame()).toContain('✔ Timeout saved');
+    expect(lastFrame()).toContain('✓ Timeout saved');
   });
 
   it('goes back to the list on esc', async () => {
@@ -88,6 +88,6 @@ describe('ConfigPanel', () => {
 
     await press(stdin, KEYS.down, KEYS.enter);
     expect(lastFrame()).toContain('❯ Mode');
-    expect(lastFrame()).toContain('✔ Mode saved');
+    expect(lastFrame()).toContain('✓ Mode saved');
   });
 });
