@@ -1,6 +1,6 @@
 {
   "name": "@lobehub/commit-cli",
-  "version": "2.20.1",
+  "version": "2.20.2",
   "description": "Lobe Commit is a CLI tool that uses ChatGPT to generate Gitmoji-based commit messages",
   "keywords": [
     "ai",
@@ -67,7 +67,7 @@
   },
   "devDependencies": {
     "@lobehub/cli-common": "workspace:*",
-    "@lobehub/cli-ui": "workspace:*",
+    "@lobehub/cli-ui": "1.14.0",
     "@types/lodash-es": "^4.17.12",
     "clean-package": "^2.2.0"
   },
