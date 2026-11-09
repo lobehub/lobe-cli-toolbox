@@ -1,6 +1,6 @@
 {
   "name": "@lobehub/seo-cli",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "description": "Lobe seo is a CLI tool that automate generation seo content for mdx",
   "keywords": [
     "ai",
@@ -76,7 +76,7 @@
   },
   "devDependencies": {
     "@lobehub/cli-common": "workspace:*",
-    "@lobehub/cli-ui": "workspace:*",
+    "@lobehub/cli-ui": "1.14.0",
     "@types/lodash-es": "^4.17.12",
     "clean-package": "^2.2.0"
   },

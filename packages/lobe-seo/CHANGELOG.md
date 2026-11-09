@@ -2,6 +2,32 @@
 
 # Changelog
 
+### [Version&nbsp;1.8.2](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/seo-cli@1.8.1...@lobehub/seo-cli@1.8.2)
+<sup>Released on **2026-11-09**</sup>
+
+
+<br/>
+
+
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+</details>
+
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+
+
+### Dependencies
+
+* **@lobehub/cli-ui:** upgraded to 1.14.0
+
 ### [Version&nbsp;1.8.1](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/seo-cli@1.8.0...@lobehub/seo-cli@1.8.1)
 <sup>Released on **2026-11-05**</sup>
 
