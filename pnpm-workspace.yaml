@@ -21,6 +21,8 @@ publicHoistPattern:
 allowBuilds:
   core-js: false
   esbuild: true
+  # docs-kit -> code-inspector-plugin -> @code-inspector/core native PTY.
+  node-pty@1.1.0: true
 minimumReleaseAgeExclude:
   - '@ai-sdk/anthropic@4.0.97'
   - '@ai-sdk/gateway@4.0.136'
