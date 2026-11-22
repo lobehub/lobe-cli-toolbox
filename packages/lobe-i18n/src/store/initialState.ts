@@ -3,7 +3,7 @@ import { MarkdownModeType } from '@/types/config';
 import { getDefaultExtension } from '@/utils/getDefaultExtension';
 
 export const DEFAULT_CONFIG: Partial<I18nConfig> = {
-  concurrency: 5,
+  concurrency: 10,
   markdown: {
     entry: [],
     mode: MarkdownModeType.STRING,

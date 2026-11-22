@@ -290,6 +290,75 @@ describe('diffJson', () => {
         path: ['array', 3],
         value: 4,
       });
+      expect(result.entry).toEqual({ array: { '3': 4 } });
+      expect(result.target).toEqual({ array: [1, 2, 3] });
+    });
+
+    it('should truncate extra tail items without leaving holes', () => {
+      const entry = {
+        array: [1, 2],
+      };
+      const target = {
+        array: [1, 2, 3, 4],
+      };
+
+      const result = diff(entry, target);
+
+      expect(result.add).toHaveLength(0);
+      expect(result.remove).toEqual([
+        { op: 'remove', path: ['array', 3] },
+        { op: 'remove', path: ['array', 2] },
+      ]);
+      expect(result.target).toEqual({ array: [1, 2] });
+      expect(result.entry).toEqual({});
+    });
+
+    it('should not treat translated strings as new work', () => {
+      const entry = { title: 'Hello', tips: ['A', 'B'] };
+      const target = { title: '你好', tips: ['甲', '乙'] };
+
+      const result = diff(entry, target);
+
+      expect(result.add).toHaveLength(0);
+      expect(result.remove).toHaveLength(0);
+      expect(result.entry).toEqual({});
+      expect(result.target).toEqual(target);
+    });
+
+    it('should drop removed object keys and keep remaining translations', () => {
+      const entry = { title: 'Hello' };
+      const target = { gone: '已删除', title: '你好' };
+
+      const result = diff(entry, target);
+
+      expect(result.add).toHaveLength(0);
+      expect(result.remove).toEqual([{ op: 'remove', path: ['gone'] }]);
+      expect(result.entry).toEqual({});
+      expect(result.target).toEqual({ title: '你好' });
+    });
+
+    it('should recurse into overlapping array objects for new and removed fields', () => {
+      const entry = {
+        list: [{ title: 'First', extra: 'New' }, { title: 'Second' }],
+      };
+      const target = {
+        list: [{ title: '第一', gone: '旧字段' }],
+      };
+
+      const result = diff(entry, target);
+
+      expect(result.remove).toEqual([{ op: 'remove', path: ['list', 0, 'gone'] }]);
+      expect(result.add).toEqual(
+        expect.arrayContaining([
+          { op: 'add', path: ['list', 0, 'extra'], value: 'New' },
+          { op: 'add', path: ['list', 1], value: { title: 'Second' } },
+        ]),
+      );
+      expect(result.add).toHaveLength(2);
+      expect(result.target).toEqual({ list: [{ title: '第一' }] });
+      expect(result.entry).toEqual({
+        list: { '0': { extra: 'New' }, '1': { title: 'Second' } },
+      });
     });
   });
 });

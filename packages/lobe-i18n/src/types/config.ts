@@ -9,7 +9,7 @@ export type Glossary = Record<string, string | Record<string, string>>;
 export interface I18nConfigLocale {
   /**
    * @description Maximum number of parallel LLM requests, shared across all files and locales
-   * @default 5
+   * @default 10
    */
   concurrency?: number;
   /**

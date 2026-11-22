@@ -7,6 +7,7 @@ import type { LocaleObj } from '@/types';
 import type { I18nConfig, KeyStyle } from '@/types/config';
 import { MarkdownModeType } from '@/types/config';
 import { calcToken } from '@/utils/calcToken';
+import { diff } from '@/utils/diffJson';
 import { isFatalError } from '@/utils/errors';
 import { writeJSON, writeMarkdown } from '@/utils/fs';
 import { createLimiter, type Limiter } from '@/utils/limiter';
@@ -16,7 +17,7 @@ import { formatKeyPath } from '@/utils/translateOutput';
 
 import { TranslateLocale } from './TranslateLocale';
 
-export const DEFAULT_CONCURRENCY = 5;
+export const DEFAULT_CONCURRENCY = 10;
 
 export interface I18nOptions {
   config: I18nConfig;
@@ -267,8 +268,13 @@ export class I18n {
     save,
     keyStyle = this.config.keyStyle,
   }: I18nTranslateOptions): Promise<TranslateOutcome<LocaleObj> | undefined> {
-    const chunks = splitJsonToChunks({ ...this.config, keyStyle }, entry, target);
-    if (chunks.length === 0) return;
+    const resolvedConfig = { ...this.config, keyStyle };
+    const cleanedTarget = diff(entry, target, resolvedConfig).target;
+    const chunks = splitJsonToChunks(resolvedConfig, entry, cleanedTarget);
+    // Removals are already applied to `cleanedTarget`; with nothing new to translate, just persist it.
+    if (chunks.length === 0) {
+      return { errors: [], failedKeys: [], result: cleanedTarget, tokenUsage: 0 };
+    }
 
     const source = from || this.config.entryLocale;
     const promptToken = calcToken(
@@ -278,9 +284,9 @@ export class I18n {
     const progress = createProgress(chunks.length, needToken, onProgress);
 
     const exampleLimit = this.config.referenceExamples ?? MAX_EXAMPLES;
-    const pickExamples = exampleLimit > 0 ? createExamplePicker(entry, target) : undefined;
+    const pickExamples = exampleLimit > 0 ? createExamplePicker(entry, cleanedTarget) : undefined;
 
-    let mergedResult: LocaleObj = merge({}, target);
+    let mergedResult: LocaleObj = merge({}, cleanedTarget);
     const errors: unknown[] = [];
     const failedKeys: string[] = [];
     let tokenUsage = 0;

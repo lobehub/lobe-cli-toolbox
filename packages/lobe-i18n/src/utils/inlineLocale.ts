@@ -79,13 +79,14 @@ const encodeSource = (source: unknown, copyKeys: Set<string>): unknown => {
 };
 
 /**
- * Existing translations in the shape of the source. An array with a different length than the
- * source is dropped, because its items no longer line up and have to be translated again.
+ * Existing translations in the shape of the source. Arrays are encoded by index for the
+ * current source length: new tail items are missing (to be translated), extra tail items
+ * in the target are ignored and dropped when decoding.
  */
 const encodeTarget = (source: unknown, target: unknown, copyKeys: Set<string>): unknown => {
   if (typeof source === 'string') return typeof target === 'string' ? target : undefined;
   if (Array.isArray(source)) {
-    if (!Array.isArray(target) || target.length !== source.length) return undefined;
+    if (!Array.isArray(target)) return undefined;
   } else if (!isPlainObject(source) || !isPlainObject(target)) {
     return undefined;
   }

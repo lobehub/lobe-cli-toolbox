@@ -1,5 +1,6 @@
 import { type ChatMessage, LLMClient } from '@lobehub/cli-common/llm';
 import type { ResolvedProviderConfig } from '@lobehub/cli-common/providers';
+import { consola } from 'consola';
 // @ts-ignore
 import dJSON from 'dirty-json';
 import { merge } from 'lodash-es';
@@ -12,6 +13,7 @@ import {
 import type { LocaleObj } from '@/types';
 import type { I18nConfig } from '@/types/config';
 import { calcToken } from '@/utils/calcToken';
+import { getErrorMessage, isFatalError } from '@/utils/errors';
 import { collectText, pickGlossary } from '@/utils/translateContext';
 import {
   type AlignResult,
@@ -25,6 +27,8 @@ import {
 
 /** First attempt plus one retry limited to the keys that came back missing or broken. */
 const MAX_ATTEMPTS = 2;
+/** Extra try for a failed LLM request (network, 5xx, rate limit), not for auth / missing model. */
+const REQUEST_RETRIES = 1;
 const MAX_HINT_KEYS = 30;
 
 export interface JsonTranslateResult {
@@ -147,16 +151,29 @@ export class TranslateLocale {
   }
 
   private async generate(messages: ChatMessage[], json?: boolean) {
-    const { text, totalTokens } = await this.client.generate({
+    const request = {
       json,
       messages,
       temperature: this.config.temperature,
       topP: this.config.topP,
-    });
-    const output = text ?? '';
-    return {
-      text: output,
-      totalTokens: totalTokens ?? calcToken(JSON.stringify(messages)) + calcToken(output),
     };
+
+    let lastError: unknown;
+    for (let attempt = 0; attempt <= REQUEST_RETRIES; attempt++) {
+      try {
+        const { text, totalTokens } = await this.client.generate(request);
+        const output = text ?? '';
+        return {
+          text: output,
+          totalTokens: totalTokens ?? calcToken(JSON.stringify(messages)) + calcToken(output),
+        };
+      } catch (error) {
+        lastError = error;
+        if (isFatalError(error) || attempt === REQUEST_RETRIES) throw error;
+        consola.warn(`Translation request failed, retrying once: ${getErrorMessage(error)}`);
+      }
+    }
+
+    throw lastError;
   }
 }

@@ -210,7 +210,7 @@ $ lobe-i18n skill --agent claude # 只安装到 .claude/skills（可选 agents /
 | splitToken        |      | `number`       | `4000`     | 按令牌分割本地化 JSON 文件，单块过大可能超出模型的最大输出长度                                |
 | temperature       |      | `number`       | `0`        | 使用的采样温度                                                                                |
 | topP              |      | `number`       | `1`        | 生成过程中的核采样方法概率阈值，取值越大生成的随机性越高                                      |
-| concurrency       |      | `number`       | `5`        | LLM 请求的最大并发数，由所有文件和语言共享                                                    |
+| concurrency       |      | `number`       | `10`       | LLM 请求的最大并发数，由所有文件和语言共享，可在 `.i18nrc` 中覆盖                             |
 | experimental      |      | `experimental` | `{}`       | 实验性功能，见下文                                                                            |
 | inline            |      | `inline`       | -          | 所有语言写在同一个 JSON 文件里的结构，见 [内联结构](#内联结构)                                |
 | markdown          |      | `markdown`     | `{}`       | 见 `markdown` 配置说明                                                                        |

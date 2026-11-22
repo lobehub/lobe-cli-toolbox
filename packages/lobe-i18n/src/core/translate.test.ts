@@ -137,7 +137,7 @@ describe('I18n.translate', () => {
     });
 
     expect(outcome?.errors).toHaveLength(1);
-    expect(outcome?.result).toEqual({ k1: 'SECOND VALUE', old: '旧' });
+    expect(outcome?.result).toEqual({ k1: 'SECOND VALUE' });
   });
 
   it('stops every pending request after an authentication error', async () => {
@@ -179,7 +179,7 @@ describe('I18n.translate', () => {
     expect(outcome?.errors).toEqual([]);
     expect(save).toHaveBeenCalledTimes(1);
     expect(data.en).toEqual([
-      { ok: 0, opts: ['OLD A', 'OLD B'], q: 'OLD QUESTION' },
+      { ok: 0, opts: ['old a', 'old b'], q: 'Old question' },
       { ok: 1, opts: ['NEW A', 'NEW B'], q: 'NEW QUESTION' },
     ]);
   });
@@ -211,5 +211,78 @@ describe('I18n.translate', () => {
 
     const system = generate.mock.calls[0]![0].messages[0].content;
     expect(system).toContain('"Send message" → "发送消息"');
+  });
+
+  it('persists deletions without calling the model', async () => {
+    const i18n = new I18n({ config: config(), provider });
+    const outcome = await i18n.translate({
+      entry: { keep: 'Keep' },
+      target: { gone: '已删除', keep: '保留' },
+      to: 'zh-CN',
+    });
+
+    expect(generate).not.toHaveBeenCalled();
+    expect(outcome).toEqual({
+      errors: [],
+      failedKeys: [],
+      result: { keep: '保留' },
+      tokenUsage: 0,
+    });
+  });
+
+  it('truncates removed tail array items and keeps existing translations', async () => {
+    const i18n = new I18n({ config: config(), provider });
+    const outcome = await i18n.translate({
+      entry: { tips: ['Hello'] },
+      target: { tips: ['你好', '世界'] },
+      to: 'zh-CN',
+    });
+
+    expect(generate).not.toHaveBeenCalled();
+    expect(outcome?.result).toEqual({ tips: ['你好'] });
+  });
+
+  it('retries a failed request once, then succeeds', async () => {
+    generate
+      .mockRejectedValueOnce(Object.assign(new Error('rate limited'), { statusCode: 429 }))
+      .mockImplementationOnce(echoUppercase);
+
+    const i18n = new I18n({ config: config(), provider });
+    const outcome = await i18n.translate({
+      entry: { a: 'hello world' },
+      target: {},
+      to: 'zh-CN',
+    });
+
+    expect(generate).toHaveBeenCalledTimes(2);
+    expect(outcome?.errors).toEqual([]);
+    expect(outcome?.result).toEqual({ a: 'HELLO WORLD' });
+  });
+
+  it('does not retry an authentication error', async () => {
+    generate.mockRejectedValue(Object.assign(new Error('Unauthorized'), { statusCode: 401 }));
+
+    const i18n = new I18n({ config: config(), provider });
+    await expect(
+      i18n.translate({ entry: { a: 'hello world' }, target: {}, to: 'zh-CN' }),
+    ).rejects.toThrow('Unauthorized');
+    expect(generate).toHaveBeenCalledTimes(1);
+  });
+
+  it('reports the error after the request retry also fails', async () => {
+    generate.mockRejectedValue(
+      Object.assign(new Error('service unavailable'), { statusCode: 503 }),
+    );
+
+    const i18n = new I18n({ config: config(), provider });
+    const outcome = await i18n.translate({
+      entry: { a: 'hello world', keep: 'Keep' },
+      target: { keep: '保留' },
+      to: 'zh-CN',
+    });
+
+    expect(generate).toHaveBeenCalledTimes(2);
+    expect(outcome?.errors).toHaveLength(1);
+    expect(outcome?.result).toEqual({ keep: '保留' });
   });
 });

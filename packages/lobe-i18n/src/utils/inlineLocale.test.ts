@@ -86,10 +86,11 @@ describe('createInlineDocument', () => {
     expect(data.en).toEqual({ msgs: { few: '{n} requests', one: 'One' }, title: 'Title' });
   });
 
-  it('retranslates an array whose length changed', () => {
+  it('keeps overlapping array items when the length changed', () => {
     const data: any = { en: { opts: ['A', 'B'] }, zh: { opts: ['甲', '乙', '丙'] } };
     const document = createInlineDocument(data, options);
-    expect(document.target('en')).toEqual({});
+    expect(document.target('en')).toEqual({ opts: { '0': 'A', '1': 'B' } });
+    expect(diff(document.entry, document.target('en')).entry).toEqual({ opts: { '2': '丙' } });
   });
 
   it('leaves an array out until every item is translated', () => {

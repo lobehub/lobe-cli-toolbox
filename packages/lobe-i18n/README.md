@@ -210,7 +210,7 @@ This project provides some additional configuration items set with environment v
 | splitToken        |          | `number`       | `4000`           | Split the localized JSON file by tokens. Large chunks may exceed the max output tokens of the model                  |
 | temperature       |          | `number`       | `0`              | Sampling temperature to use                                                                                          |
 | topP              |          | `number`       | `1`              | Nucleus sampling threshold, controls the diversity of generated text                                                 |
-| concurrency       |          | `number`       | `5`              | Maximum parallel LLM requests, shared across all files and locales                                                   |
+| concurrency       |          | `number`       | `10`             | Maximum parallel LLM requests, shared across all files and locales; set this in `.i18nrc` to override                |
 | experimental      |          | `experimental` | `{}`             | Experimental features, see below                                                                                     |
 | inline            |          | `inline`       | -                | JSON files that keep every locale side by side, see [Inline Structure](#inline-structure)                            |
 | markdown          |          | `markdown`     | `{}`             | See `markdown` configuration below                                                                                   |

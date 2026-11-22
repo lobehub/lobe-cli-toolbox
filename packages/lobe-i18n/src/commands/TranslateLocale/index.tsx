@@ -20,7 +20,6 @@ import { readJSON, writeJSON } from '@/utils/fs';
 import { getEntryFile, getEntryFolderFiles } from '@/utils/getEntryFile';
 import { getLocaleObj } from '@/utils/getLocaleObj';
 import { createInlineDocument, stringifyInlineJSON } from '@/utils/inlineLocale';
-import { isEqualJsonKeys } from '@/utils/isEqualJsonKeys';
 
 class TranslateLocale {
   config: I18nConfig;
@@ -87,7 +86,7 @@ class TranslateLocale {
             if (!data) return tasks.finish(id, 'warning', 'no translation result');
 
             totalTokenUsage += data.tokenUsage;
-            if (data.result && Object.keys(data.result).length > 0) {
+            if (data.result !== undefined) {
               if (item.save) item.save(data.result);
               else writeJSON(item.filename, data.result);
             }
@@ -134,14 +133,14 @@ class TranslateLocale {
         );
         const targetFilename = resolve(config.output, locale, filename);
         const entryObj = entry[filename] as LocaleObj;
-        const targetObj = diff(entryObj, getLocaleObj(targetFilename), config).target;
-        if (isEqualJsonKeys(entryObj, targetObj)) continue;
+        const diffed = diff(entryObj, getLocaleObj(targetFilename), config);
+        if (diffed.add.length === 0 && diffed.remove.length === 0) continue;
 
         this.query.push({
           entry: entryObj,
           filename: targetFilename,
           from: config.entryLocale,
-          target: targetObj,
+          target: diffed.target,
           to: locale,
         });
       }
@@ -226,14 +225,14 @@ class TranslateLocale {
     for (const locale of config.outputLocales) {
       const targetFilename = resolve(config.output, locale) + '.json';
       const entryObj = entry;
-      const targetObj = diff(entryObj, getLocaleObj(targetFilename), config).target;
-      if (isEqualJsonKeys(entryObj, targetObj)) continue;
+      const diffed = diff(entryObj, getLocaleObj(targetFilename), config);
+      if (diffed.add.length === 0 && diffed.remove.length === 0) continue;
 
       this.query.push({
         entry: entryObj,
         filename: targetFilename,
         from: config.entryLocale,
-        target: targetObj,
+        target: diffed.target,
         to: locale,
       });
     }
