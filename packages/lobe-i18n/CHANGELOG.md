@@ -2,6 +2,37 @@
 
 # Changelog
 
+### [Version&nbsp;1.29.3](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.29.2...@lobehub/i18n-cli@1.29.3)
+<sup>Released on **2026-11-22**</sup>
+
+
+#### 🐛 Bug Fixes
+
+- **i18n**: Retry failed translations and sync array diffs.
+
+
+<br/>
+
+
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+
+
+#### What's fixed
+
+* **i18n**: Retry failed translations and sync array diffs ([ae5cbcc](https://github.com/lobehub/lobe-cli-toolbox/commit/ae5cbcc))
+
+</details>
+
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version&nbsp;1.29.2](https://github.com/lobehub/lobe-cli-toolbox/compare/@lobehub/i18n-cli@1.29.1...@lobehub/i18n-cli@1.29.2)
 <sup>Released on **2026-11-09**</sup>
 
